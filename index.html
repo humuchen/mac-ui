@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mac UI - Dev</title>
+    <script type="module" src="/src/mac-ui.ts"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        background: #1a1a2e;
+        color: #e0e0e0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 16px;
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #5ac8fa, #007aff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .subtitle {
+        font-size: 14px;
+        color: #8e8ea0;
+        margin-bottom: 32px;
+      }
+      .demo-section {
+        width: 100%;
+        max-width: 960px;
+        margin-bottom: 40px;
+      }
+      .demo-section h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #c0c0d0;
+      }
+      .demo-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 12px;
+      }
+      .desktop-frame {
+        width: 100%;
+        height: 520px;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(255, 255, 255, 0.06);
+      }
+      .controls {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .controls mac-button {
+        --md-font-size-sm: 12px;
+      }
+      .info-bar {
+        display: flex;
+        gap: 16px;
+        margin-top: 12px;
+        font-size: 12px;
+        color: #8e8ea0;
+      }
+      .info-bar span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MacDesktop UI</h1>
+    <p class="subtitle">macOS 风格桌面组件库 — 图标排布与拖拽</p>
+
+    <div class="demo-section">
+      <h2>Desktop 桌面组件</h2>
+      <div class="controls">
+        <mac-button
+          id="btn-vertical"
+          variant="primary"
+          size="sm"
+          onclick="document.getElementById('main-desktop').layout = 'vertical'"
+          >垂直排列</mac-button
+        >
+        <mac-button
+          id="btn-horizontal"
+          variant="secondary"
+          size="sm"
+          onclick="document.getElementById('main-desktop').layout = 'horizontal'"
+          >横向排列</mac-button
+        >
+        <mac-button
+          id="btn-cleanup"
+          variant="text"
+          size="sm"
+          onclick="
+            const d = document.getElementById('main-desktop')
+            if (d) d.layout = d.layout
+          "
+          >整理图标</mac-button
+        >
+        <mac-button
+          id="btn-open-dialog"
+          variant="primary"
+          size="sm"
+          onclick="createDialog('测试弹框', 100, 50, 420, 280, '这是一个测试弹框')"
+          >打开弹框</mac-button
+        >
+      </div>
+      <div
+        class="desktop-frame"
+        id="desktop-frame"
+        style="display: flex; flex-direction: column; position: relative"
+      >
+        <mac-desktop
+          id="main-desktop"
+          layout="vertical"
+          style="flex: 1; width: 100%; position: relative"
+        >
+          <mac-desktop-icon icon-id="finder" label="Finder" color="#007AFF"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="safari" label="Safari" color="#5AC8FA"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="mail" label="邮件" color="#34C759"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="calendar" label="日历" color="#FF3B30"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="notes" label="备忘录" color="#FFCC00"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="maps" label="地图" color="#30B0C7"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="photos" label="照片" color="#FF2D55"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="music" label="音乐" color="#AF52DE"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="terminal" label="终端" color="#1D1D1F"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="settings" label="系统设置" color="#8E8E93"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="appstore" label="App Store" color="#007AFF"></mac-desktop-icon>
+          <mac-desktop-icon icon-id="xcode" label="Xcode" color="#5856D6"></mac-desktop-icon>
+
+          <mac-dock
+            magnification="1.6"
+            icon-size="48"
+            magnify-range="120"
+            style="position: absolute; bottom: 0; left: 0; right: 0"
+          >
+            <mac-dock-item item-id="finder" label="Finder" color="#1C7FF2" running></mac-dock-item>
+            <mac-dock-item item-id="safari" label="Safari" color="#5AC8FA" running></mac-dock-item>
+            <mac-dock-item item-id="mail" label="邮件" color="#34C759" running></mac-dock-item>
+            <mac-dock-item item-id="calendar" label="日历" color="#FF3B30"></mac-dock-item>
+            <mac-dock-item item-id="notes" label="备忘录" color="#FFCC00"></mac-dock-item>
+            <mac-dock-item item-id="music" label="音乐" color="#FF2D55" running></mac-dock-item>
+            <mac-dock-item item-id="photos" label="照片" color="#FF9500"></mac-dock-item>
+            <mac-dock-item item-id="messages" label="信息" color="#34C759"></mac-dock-item>
+            <div
+              style="
+                width: 1px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.18);
+                margin: 0 6px;
+                align-self: center;
+                border-radius: 1px;
+                flex-shrink: 0;
+              "
+            ></div>
+            <mac-dock-item item-id="downloads" label="下载" color="#5AC8FA"></mac-dock-item>
+            <mac-dock-item item-id="trash" label="废纸篓" color="#8E8E93"></mac-dock-item>
+          </mac-dock>
+        </mac-desktop>
+      </div>
+      <div class="info-bar">
+        <span>右键桌面 → 排列方式</span>
+        <span>拖拽图标移动位置</span>
+        <span>框选多个图标</span>
+        <span>双击打开</span>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Button 按钮</h2>
+      <div class="demo-row">
+        <mac-button variant="primary">Primary</mac-button>
+        <mac-button variant="secondary">Secondary</mac-button>
+        <mac-button variant="text">Text</mac-button>
+      </div>
+      <div class="demo-row">
+        <mac-button size="sm">Small</mac-button>
+        <mac-button size="md">Medium</mac-button>
+        <mac-button size="lg">Large</mac-button>
+      </div>
+      <div class="demo-row">
+        <mac-button disabled>Disabled</mac-button>
+        <mac-button loading>Loading</mac-button>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Card 卡片</h2>
+      <div class="demo-row">
+        <mac-card style="width: 300px; background: #2a2a3e; border-color: #3a3a4e">
+          <div slot="header" style="font-weight: 600; color: #e0e0e0">Basic Card</div>
+          <p style="color: #a0a0b0">This is a basic card with some content.</p>
+        </mac-card>
+        <mac-card hoverable style="width: 300px; background: #2a2a3e; border-color: #3a3a4e">
+          <div slot="header" style="font-weight: 600; color: #e0e0e0">Hoverable Card</div>
+          <p style="color: #a0a0b0">Hover over me to see the shadow effect.</p>
+          <div slot="footer" style="display: flex; gap: 8px; justify-content: flex-end">
+            <mac-button variant="secondary" size="sm">Cancel</mac-button>
+            <mac-button variant="primary" size="sm">Confirm</mac-button>
+          </div>
+        </mac-card>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Input 输入框</h2>
+      <div style="max-width: 400px; display: flex; flex-direction: column; gap: 16px">
+        <mac-input label="Username" placeholder="Enter username"></mac-input>
+        <mac-input label="Email" required placeholder="you@example.com"></mac-input>
+        <mac-input
+          label="Password"
+          type="password"
+          helper-text="Must be at least 8 characters"
+        ></mac-input>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const desktop = document.getElementById('main-desktop')
+
+        // Set wallpaper gradient via inline style on the inner desktop div
+        if (desktop) {
+          const desktopInner = desktop.shadowRoot?.querySelector('.desktop')
+          if (desktopInner) {
+            desktopInner.style.background =
+              'radial-gradient(ellipse at 20% 80%, #1a3a5c 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, #2d1b4e 0%, transparent 50%), radial-gradient(ellipse at 50% 50%, #0d2137 0%, transparent 70%), linear-gradient(160deg, #0a1628 0%, #132742 30%, #1a3555 50%, #0f2440 70%, #0a1628 100%)'
+          }
+        }
+
+        // Listen for events
+        desktop?.addEventListener('mac-layout-change', (e) => {
+          console.log('Layout changed:', e.detail.layout)
+        })
+
+        // Double-click to open dialog
+        let dialogZIndex = 100
+        let activeDialog = null
+
+        function bringToFront(dialog) {
+          dialogZIndex++
+          dialog.style.zIndex = dialogZIndex
+          if (activeDialog && activeDialog !== dialog) activeDialog.removeAttribute('active')
+          dialog.setAttribute('active', '')
+          activeDialog = dialog
+        }
+
+        window.createDialog = function createDialog(title, x, y, w, h, content) {
+          const dialog = document.createElement('mac-dialog')
+          dialog.setAttribute('title', title)
+          dialog.setAttribute('x', String(x))
+          dialog.setAttribute('y', String(y))
+          dialog.setAttribute('width', String(w))
+          dialog.setAttribute('height', String(h))
+          dialog.addEventListener('mac-dialog-focus', () => bringToFront(dialog))
+          dialog.addEventListener('mac-dialog-close', () => dialog.remove())
+          bringToFront(dialog)
+          document.body.appendChild(dialog)
+          requestAnimationFrame(() => {
+            const p = document.createElement('p')
+            p.style.cssText = 'margin:0;color:#1d1d1f;'
+            p.textContent = content
+            dialog.appendChild(p)
+          })
+          return dialog
+        }
+
+        const dialogMap = {
+          finder: ['Finder', '浏览文件和文件夹'],
+          safari: ['Safari', '探索互联网'],
+          mail: ['邮件', '收发电子邮件'],
+          calendar: ['日历', '管理日程安排'],
+          notes: ['备忘录', '记录灵感与想法'],
+          maps: ['地图', '探索世界'],
+          photos: ['照片', '管理和编辑照片'],
+          music: ['音乐', '聆听你喜爱的音乐'],
+          terminal: ['终端', '$ echo "Hello, macOS!"<br>Hello, macOS!<br>$ _'],
+          settings: ['系统设置', '调整系统偏好设置'],
+          appstore: ['App Store', '发现精选 App'],
+          xcode: ['Xcode', '开发与调试工具'],
+        }
+
+        desktop?.addEventListener('mac-icon-dblclick', (e) => {
+          console.log('mac-icon-dblclick received:', e.detail)
+          const iconId = e.detail.iconId
+          const info = dialogMap[iconId]
+          if (!info) {
+            console.log('No dialog mapping for iconId:', iconId)
+            return
+          }
+          const offsetX = 80 + Math.random() * 200
+          const offsetY = 20 + Math.random() * 80
+          console.log('Creating dialog:', info[0])
+          createDialog(info[0], offsetX, offsetY, 420, 280, info[1])
+        })
+      })
+    </script>
+  </body>
+</html>
