@@ -1,0 +1,30 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published] # 当你发布 GitHub Release 时触发，也可以改为 push
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npmjs.org' # 设置官方源
+
+      - name: Install dependencies
+        run: npm ci
+
+      # 如果需要构建，请取消下面这行的注释
+      # - name: Build package
+      #   run: npm run build
+
+      - name: Publish Package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 自动注入 Token 认证
