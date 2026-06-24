@@ -111,12 +111,24 @@ export const Basic: Story = {
 }
 
 export const WithDescription: Story = {
-  render: () => html`
+  args: {
+    title: '确认删除此项目？',
+    description: '删除后将无法恢复，所有关联数据将被永久移除。',
+    danger: true,
+  },
+  render: (args) => html`
     <div style="padding:100px 0;text-align:center;">
       <mac-popconfirm
-        title="确认删除此项目？"
-        description="删除后将无法恢复，所有关联数据将被永久移除。"
-        danger
+        .title=${args.title}
+        .description=${args.description}
+        ?danger=${args.danger}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        ?disabled=${args.disabled}
+        .width=${args.width}
       >
         <mac-button variant="danger">删除项目</mac-button>
       </mac-popconfirm>
@@ -125,9 +137,23 @@ export const WithDescription: Story = {
 }
 
 export const DangerStyle: Story = {
-  render: () => html`
+  args: {
+    title: '确认执行此危险操作？',
+    danger: true,
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
-      <mac-popconfirm title="确认执行此危险操作？" danger>
+      <mac-popconfirm
+        .title=${args.title}
+        ?danger=${args.danger}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        ?disabled=${args.disabled}
+        .width=${args.width}
+      >
         <mac-button variant="danger">危险操作</mac-button>
       </mac-popconfirm>
     </div>
@@ -135,24 +161,28 @@ export const DangerStyle: Story = {
 }
 
 export const Placements: Story = {
-  render: () => html`
+  args: {
+    confirmText: '确认',
+    cancelText: '取消',
+  },
+  render: (args) => html`
     <div style="padding:120px 0;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <mac-popconfirm title="顶部弹出" placement="top">
+      <mac-popconfirm title="顶部弹出" placement="top" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Top</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="顶部左对齐" placement="top-start">
+      <mac-popconfirm title="顶部左对齐" placement="top-start" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Top Start</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="顶部右对齐" placement="top-end">
+      <mac-popconfirm title="顶部右对齐" placement="top-end" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Top End</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="底部弹出" placement="bottom">
+      <mac-popconfirm title="底部弹出" placement="bottom" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Bottom</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="左侧弹出" placement="left">
+      <mac-popconfirm title="左侧弹出" placement="left" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Left</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="右侧弹出" placement="right">
+      <mac-popconfirm title="右侧弹出" placement="right" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
         <mac-button size="sm">Right</mac-button>
       </mac-popconfirm>
     </div>
@@ -160,12 +190,23 @@ export const Placements: Story = {
 }
 
 export const HoverTrigger: Story = {
-  render: () => html`
+  args: {
+    title: '悬停触发',
+    description: '鼠标悬停即可触发确认弹窗。',
+    trigger: 'hover',
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
       <mac-popconfirm
-        title="悬停触发"
-        description="鼠标悬停即可触发确认弹窗。"
-        trigger="hover"
+        .title=${args.title}
+        .description=${args.description}
+        .trigger=${args.trigger}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        ?disabled=${args.disabled}
+        .width=${args.width}
       >
         <mac-button>悬停我</mac-button>
       </mac-popconfirm>
@@ -174,9 +215,22 @@ export const HoverTrigger: Story = {
 }
 
 export const NoIcon: Story = {
-  render: () => html`
+  args: {
+    title: '没有图标的确认',
+    showIcon: false,
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
-      <mac-popconfirm title="没有图标的确认" ?show-icon=${false}>
+      <mac-popconfirm
+        .title=${args.title}
+        ?show-icon=${args.showIcon}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        ?disabled=${args.disabled}
+        .width=${args.width}
+      >
         <mac-button>无图标</mac-button>
       </mac-popconfirm>
     </div>
@@ -184,12 +238,22 @@ export const NoIcon: Story = {
 }
 
 export const CustomText: Story = {
-  render: () => html`
+  args: {
+    title: '是否保存更改？',
+    confirmText: '保存',
+    cancelText: '不保存',
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
       <mac-popconfirm
-        title="是否保存更改？"
-        confirm-text="保存"
-        cancel-text="不保存"
+        .title=${args.title}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        ?disabled=${args.disabled}
+        .width=${args.width}
       >
         <mac-button variant="primary">关闭编辑器</mac-button>
       </mac-popconfirm>
@@ -198,9 +262,22 @@ export const CustomText: Story = {
 }
 
 export const Disabled: Story = {
-  render: () => html`
+  args: {
+    title: '禁用状态',
+    disabled: true,
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
-      <mac-popconfirm title="禁用状态" disabled>
+      <mac-popconfirm
+        .title=${args.title}
+        ?disabled=${args.disabled}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        .width=${args.width}
+      >
         <mac-button disabled>禁用按钮</mac-button>
       </mac-popconfirm>
     </div>
@@ -208,12 +285,23 @@ export const Disabled: Story = {
 }
 
 export const CustomWidth: Story = {
-  render: () => html`
+  args: {
+    title: '自定义宽度',
+    description: '这是一个较宽的确认弹窗，可以容纳更多内容。',
+    width: '320px',
+  },
+  render: (args) => html`
     <div style="padding:80px 0;text-align:center;">
       <mac-popconfirm
-        title="自定义宽度"
-        description="这是一个较宽的确认弹窗，可以容纳更多内容。"
-        width="320px"
+        .title=${args.title}
+        .description=${args.description}
+        .width=${args.width}
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+        ?show-icon=${args.showIcon}
+        .placement=${args.placement}
+        .trigger=${args.trigger}
+        ?disabled=${args.disabled}
       >
         <mac-button>宽弹窗</mac-button>
       </mac-popconfirm>

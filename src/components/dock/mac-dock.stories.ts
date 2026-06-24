@@ -53,6 +53,10 @@ const dockItems = html`
 `
 
 export const Basic: Story = {
+  args: {
+    iconSize: 68,
+  },
+
   render: (args) => html`
     <div
       style="

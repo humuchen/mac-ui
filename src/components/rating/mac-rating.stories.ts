@@ -73,9 +73,10 @@ export const Basic: Story = {
 }
 
 export const WithValue: Story = {
-  render: () => html`
+  args: { value: 3, showValue: true },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 12px;">
-      <mac-rating value="3" show-value></mac-rating>
+      <mac-rating .value=${args.value} show-value></mac-rating>
       <mac-rating value="4.5" allow-half show-value></mac-rating>
       <mac-rating value="5" show-value></mac-rating>
     </div>
@@ -87,11 +88,12 @@ export const HalfStar: Story = {
     allowHalf: true,
     showValue: true,
     icon: 'circle',
+    value: 3.5,
   },
 
-  render: () => html`
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 12px;">
-      <mac-rating value="3.5" allow-half show-value></mac-rating>
+      <mac-rating .value=${args.value} allow-half show-value></mac-rating>
       <mac-rating value="2.5" allow-half show-value></mac-rating>
       <mac-rating value="0.5" allow-half show-value></mac-rating>
     </div>
@@ -99,11 +101,12 @@ export const HalfStar: Story = {
 }
 
 export const IconVariants: Story = {
-  render: () => html`
+  args: { value: 3, icon: 'star' },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Star</div>
-        <mac-rating value="3" icon="star"></mac-rating>
+        <mac-rating .value=${args.value} icon="star"></mac-rating>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Heart</div>
@@ -126,9 +129,10 @@ export const IconVariants: Story = {
 }
 
 export const Readonly: Story = {
-  render: () => html`
+  args: { value: 3.5, allowHalf: true, readonly: true, showValue: true },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 12px;">
-      <mac-rating value="3.5" allow-half readonly show-value></mac-rating>
+      <mac-rating .value=${args.value} allow-half readonly show-value></mac-rating>
       <mac-rating value="5" readonly show-value></mac-rating>
       <mac-rating value="0" readonly show-value></mac-rating>
     </div>
@@ -136,27 +140,29 @@ export const Readonly: Story = {
 }
 
 export const Disabled: Story = {
-  render: () => html` <mac-rating value="3" disabled show-value></mac-rating> `,
+  args: { value: 3, disabled: true, showValue: true },
+  render: (args) => html` <mac-rating .value=${args.value} disabled show-value></mac-rating> `,
 }
 
 export const CustomSize: Story = {
-  render: () => html`
+  args: { value: 3 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Small</div>
         <mac-rating
-          value="3"
+          .value=${args.value}
           style="--md-rating-icon-size: var(--sm-rating-icon-size); --md-rating-gap: var(--sm-rating-gap);"
         ></mac-rating>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Default</div>
-        <mac-rating value="3"></mac-rating>
+        <mac-rating .value=${args.value}></mac-rating>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Large</div>
         <mac-rating
-          value="3"
+          .value=${args.value}
           style="--md-rating-icon-size: var(--lg-rating-icon-size); --md-rating-gap: var(--lg-rating-gap);"
         ></mac-rating>
       </div>
@@ -165,12 +171,13 @@ export const CustomSize: Story = {
 }
 
 export const CustomColor: Story = {
-  render: () => html`
+  args: { value: 4 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Red</div>
         <mac-rating
-          value="4"
+          .value=${args.value}
           style="--md-rating-color-active: #ef4444; --md-rating-color-hover: #dc2626;"
         ></mac-rating>
       </div>
@@ -200,19 +207,21 @@ export const CustomColor: Story = {
 }
 
 export const MaxCount: Story = {
-  render: () => html`
+  args: { value: 7, max: 10, showValue: true },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 12px;">
-      <mac-rating value="7" max="10" show-value></mac-rating>
+      <mac-rating .value=${args.value} .max=${args.max} show-value></mac-rating>
       <mac-rating value="3" max="3" show-value></mac-rating>
     </div>
   `,
 }
 
 export const ClickToClear: Story = {
-  render: () => html`
+  args: { value: 3, showValue: true },
+  render: (args) => html`
     <div style="font-size: 13px; color: #6b7280; margin-bottom: 8px;">
       Click the same value again to clear the rating
     </div>
-    <mac-rating value="3" show-value></mac-rating>
+    <mac-rating .value=${args.value} show-value></mac-rating>
   `,
 }

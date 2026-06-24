@@ -90,9 +90,15 @@ export const Basic: Story = {
 }
 
 export const LineType: Story = {
-  render: () => html`
+  args: { type: 'line' },
+  render: (args) => html`
     <mac-tabs
-      type="line"
+      type=${args.type}
+      size=${args.size}
+      ?closable=${args.closable}
+      ?addable=${args.addable}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="tab1"
       .items=${[
         { key: 'tab1', label: '标签一' },
@@ -114,9 +120,15 @@ export const LineType: Story = {
 }
 
 export const CardType: Story = {
-  render: () => html`
+  args: { type: 'card' },
+  render: (args) => html`
     <mac-tabs
-      type="card"
+      type=${args.type}
+      size=${args.size}
+      ?closable=${args.closable}
+      ?addable=${args.addable}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="tab1"
       .items=${[
         { key: 'tab1', label: '标签一' },
@@ -138,9 +150,15 @@ export const CardType: Story = {
 }
 
 export const SegmentType: Story = {
-  render: () => html`
+  args: { type: 'segment' },
+  render: (args) => html`
     <mac-tabs
-      type="segment"
+      type=${args.type}
+      size=${args.size}
+      ?closable=${args.closable}
+      ?addable=${args.addable}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="all"
       .items=${[
         { key: 'all', label: '全部' },
@@ -162,11 +180,15 @@ export const SegmentType: Story = {
 }
 
 export const ClosableAndAddable: Story = {
-  render: () => html`
+  args: { type: 'card', closable: true, addable: true },
+  render: (args) => html`
     <mac-tabs
-      type="card"
+      type=${args.type}
       closable
       addable
+      size=${args.size}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="tab1"
       .items=${[
         { key: 'tab1', label: '文档 1' },
@@ -188,8 +210,14 @@ export const ClosableAndAddable: Story = {
 }
 
 export const DisabledTab: Story = {
-  render: () => html`
+  render: (args) => html`
     <mac-tabs
+      type=${args.type}
+      size=${args.size}
+      ?closable=${args.closable}
+      ?addable=${args.addable}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="tab1"
       .items=${[
         { key: 'tab1', label: '可用标签' },
@@ -211,9 +239,15 @@ export const DisabledTab: Story = {
 }
 
 export const HoverTrigger: Story = {
-  render: () => html`
+  args: { trigger: 'hover' },
+  render: (args) => html`
     <mac-tabs
-      trigger="hover"
+      type=${args.type}
+      size=${args.size}
+      ?closable=${args.closable}
+      ?addable=${args.addable}
+      ?animated=${args.animated}
+      trigger=${args.trigger}
       default-value="tab1"
       .items=${[
         { key: 'tab1', label: '标签一' },
@@ -235,19 +269,47 @@ export const HoverTrigger: Story = {
 }
 
 export const AllSizes: Story = {
-  render: () => html`
+  args: { size: 'md' },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:24px">
-      <mac-tabs size="sm" default-value="overview" .items=${tabItems}>
+      <mac-tabs
+        size="sm"
+        type=${args.type}
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
+        default-value="overview"
+        .items=${tabItems}
+      >
         <mac-tab-pane tab-key="overview" label="概览"><p>Small 尺寸</p></mac-tab-pane>
         <mac-tab-pane tab-key="detail" label="详情"><p>Small 尺寸详情</p></mac-tab-pane>
         <mac-tab-pane tab-key="settings" label="设置"><p>Small 尺寸设置</p></mac-tab-pane>
       </mac-tabs>
-      <mac-tabs size="md" default-value="overview" .items=${tabItems}>
+      <mac-tabs
+        size="md"
+        type=${args.type}
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
+        default-value="overview"
+        .items=${tabItems}
+      >
         <mac-tab-pane tab-key="overview" label="概览"><p>Medium 尺寸</p></mac-tab-pane>
         <mac-tab-pane tab-key="detail" label="详情"><p>Medium 尺寸详情</p></mac-tab-pane>
         <mac-tab-pane tab-key="settings" label="设置"><p>Medium 尺寸设置</p></mac-tab-pane>
       </mac-tabs>
-      <mac-tabs size="lg" default-value="overview" .items=${tabItems}>
+      <mac-tabs
+        size="lg"
+        type=${args.type}
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
+        default-value="overview"
+        .items=${tabItems}
+      >
         <mac-tab-pane tab-key="overview" label="概览"><p>Large 尺寸</p></mac-tab-pane>
         <mac-tab-pane tab-key="detail" label="详情"><p>Large 尺寸详情</p></mac-tab-pane>
         <mac-tab-pane tab-key="settings" label="设置"><p>Large 尺寸设置</p></mac-tab-pane>
@@ -257,11 +319,16 @@ export const AllSizes: Story = {
 }
 
 export const SegmentAllSizes: Story = {
-  render: () => html`
+  args: { type: 'segment' },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:24px">
       <mac-tabs
-        type="segment"
+        type=${args.type}
         size="sm"
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
         default-value="all"
         .items=${[
           { key: 'all', label: '全部' },
@@ -274,8 +341,12 @@ export const SegmentAllSizes: Story = {
         <mac-tab-pane tab-key="done" label="已完成"><p>Small segment done</p></mac-tab-pane>
       </mac-tabs>
       <mac-tabs
-        type="segment"
+        type=${args.type}
         size="md"
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
         default-value="all"
         .items=${[
           { key: 'all', label: '全部' },
@@ -288,8 +359,12 @@ export const SegmentAllSizes: Story = {
         <mac-tab-pane tab-key="done" label="已完成"><p>Medium segment done</p></mac-tab-pane>
       </mac-tabs>
       <mac-tabs
-        type="segment"
+        type=${args.type}
         size="lg"
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
         default-value="all"
         .items=${[
           { key: 'all', label: '全部' },
@@ -306,13 +381,22 @@ export const SegmentAllSizes: Story = {
 }
 
 export const ManyTabs: Story = {
-  render: () => {
+  render: (args) => {
     const manyItems = Array.from({ length: 12 }, (_, i) => ({
       key: `tab${i + 1}`,
       label: `标签 ${i + 1}`,
     }))
     return html`
-      <mac-tabs default-value="tab1" .items=${manyItems}>
+      <mac-tabs
+        type=${args.type}
+        size=${args.size}
+        ?closable=${args.closable}
+        ?addable=${args.addable}
+        ?animated=${args.animated}
+        trigger=${args.trigger}
+        default-value="tab1"
+        .items=${manyItems}
+      >
         ${manyItems.map(
           (item) => html`
             <mac-tab-pane tab-key=${item.key} label=${item.label}>

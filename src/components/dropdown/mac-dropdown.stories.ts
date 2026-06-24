@@ -93,7 +93,7 @@ export const Basic: Story = {
 }
 
 export const WithIcons: Story = {
-  render: () => {
+  render: (args) => {
     const items = [
       { value: 'profile', label: 'Profile', icon: '👤' },
       { value: 'settings', label: 'Settings', icon: '⚙️', shortcut: '⌘,' },
@@ -105,7 +105,15 @@ export const WithIcons: Story = {
       { value: 'logout', label: 'Log Out', icon: '🚪', danger: true },
     ]
     return html`
-      <mac-dropdown .items=${items}>
+      <mac-dropdown
+        .items=${items}
+        .placement=${args.placement}
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?open-on-hover=${args.openOnHover}
+        .hoverDelay=${args.hoverDelay}
+        .trigger=${args.trigger}
+      >
         <button
           slot="trigger"
           style="
@@ -136,7 +144,7 @@ export const WithIcons: Story = {
 }
 
 export const WithSubmenu: Story = {
-  render: () => {
+  render: (args) => {
     const items = [
       { value: 'new', label: 'New', shortcut: '⌘N' },
       { value: 'open', label: 'Open', shortcut: '⌘O' },
@@ -168,7 +176,15 @@ export const WithSubmenu: Story = {
       },
     ]
     return html`
-      <mac-dropdown .items=${items}>
+      <mac-dropdown
+        .items=${items}
+        .placement=${args.placement}
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?open-on-hover=${args.openOnHover}
+        .hoverDelay=${args.hoverDelay}
+        .trigger=${args.trigger}
+      >
         <button
           slot="trigger"
           style="
@@ -199,7 +215,7 @@ export const WithSubmenu: Story = {
 }
 
 export const DangerItems: Story = {
-  render: () => {
+  render: (args) => {
     const items = [
       { value: 'edit', label: 'Edit', icon: '✏️' },
       { value: 'duplicate', label: 'Duplicate', icon: '📋' },
@@ -209,7 +225,15 @@ export const DangerItems: Story = {
       { value: 'archive', label: 'Archive', icon: '📦', danger: true },
     ]
     return html`
-      <mac-dropdown .items=${items}>
+      <mac-dropdown
+        .items=${items}
+        .placement=${args.placement}
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?open-on-hover=${args.openOnHover}
+        .hoverDelay=${args.hoverDelay}
+        .trigger=${args.trigger}
+      >
         <button
           slot="trigger"
           style="
@@ -240,7 +264,8 @@ export const DangerItems: Story = {
 }
 
 export const OpenOnHover: Story = {
-  render: () => {
+  args: { openOnHover: true },
+  render: (args) => {
     const items = [
       { value: 'about', label: 'About This Mac' },
       { value: 'system', label: 'System Settings...', shortcut: '⌘,' },
@@ -253,7 +278,15 @@ export const OpenOnHover: Story = {
       { value: 'logout', label: 'Log Out...', shortcut: '⇧⌘Q', danger: true },
     ]
     return html`
-      <mac-dropdown .items=${items} open-on-hover>
+      <mac-dropdown
+        .items=${items}
+        .placement=${args.placement}
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?open-on-hover=${args.openOnHover}
+        .hoverDelay=${args.hoverDelay}
+        .trigger=${args.trigger}
+      >
         <button
           slot="trigger"
           style="
@@ -284,7 +317,8 @@ export const OpenOnHover: Story = {
 }
 
 export const Placements: Story = {
-  render: () => {
+  args: { placement: 'bottom-start' },
+  render: (args) => {
     const items = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -292,7 +326,15 @@ export const Placements: Story = {
     ]
     return html`
       <div style="display: flex; gap: 24px; padding: 120px 0;">
-        <mac-dropdown .items=${items} placement="bottom-start">
+        <mac-dropdown
+          .items=${items}
+          placement="bottom-start"
+          .value=${args.value}
+          ?disabled=${args.disabled}
+          ?open-on-hover=${args.openOnHover}
+          .hoverDelay=${args.hoverDelay}
+          .trigger=${args.trigger}
+        >
           <button
             slot="trigger"
             style="padding:8px 16px;border:1px solid var(--md-color-border);border-radius:6px;background:var(--md-color-bg);font-size:14px;cursor:pointer;"
@@ -300,7 +342,15 @@ export const Placements: Story = {
             Bottom Start
           </button>
         </mac-dropdown>
-        <mac-dropdown .items=${items} placement="bottom-end">
+        <mac-dropdown
+          .items=${items}
+          placement="bottom-end"
+          .value=${args.value}
+          ?disabled=${args.disabled}
+          ?open-on-hover=${args.openOnHover}
+          .hoverDelay=${args.hoverDelay}
+          .trigger=${args.trigger}
+        >
           <button
             slot="trigger"
             style="padding:8px 16px;border:1px solid var(--md-color-border);border-radius:6px;background:var(--md-color-bg);font-size:14px;cursor:pointer;"
@@ -308,7 +358,15 @@ export const Placements: Story = {
             Bottom End
           </button>
         </mac-dropdown>
-        <mac-dropdown .items=${items} placement="top-start">
+        <mac-dropdown
+          .items=${items}
+          placement="top-start"
+          .value=${args.value}
+          ?disabled=${args.disabled}
+          ?open-on-hover=${args.openOnHover}
+          .hoverDelay=${args.hoverDelay}
+          .trigger=${args.trigger}
+        >
           <button
             slot="trigger"
             style="padding:8px 16px;border:1px solid var(--md-color-border);border-radius:6px;background:var(--md-color-bg);font-size:14px;cursor:pointer;"
@@ -316,7 +374,15 @@ export const Placements: Story = {
             Top Start
           </button>
         </mac-dropdown>
-        <mac-dropdown .items=${items} placement="top-end">
+        <mac-dropdown
+          .items=${items}
+          placement="top-end"
+          .value=${args.value}
+          ?disabled=${args.disabled}
+          ?open-on-hover=${args.openOnHover}
+          .hoverDelay=${args.hoverDelay}
+          .trigger=${args.trigger}
+        >
           <button
             slot="trigger"
             style="padding:8px 16px;border:1px solid var(--md-color-border);border-radius:6px;background:var(--md-color-bg);font-size:14px;cursor:pointer;"
@@ -330,8 +396,17 @@ export const Placements: Story = {
 }
 
 export const Disabled: Story = {
-  render: () => html`
-    <mac-dropdown .items=${basicItems} disabled>
+  args: { disabled: true },
+  render: (args) => html`
+    <mac-dropdown
+      .items=${basicItems}
+      ?disabled=${args.disabled}
+      .placement=${args.placement}
+      .value=${args.value}
+      ?open-on-hover=${args.openOnHover}
+      .hoverDelay=${args.hoverDelay}
+      .trigger=${args.trigger}
+    >
       <button
         slot="trigger"
         style="
@@ -357,7 +432,8 @@ export const Disabled: Story = {
 }
 
 export const ContextMenu: Story = {
-  render: () => {
+  args: { trigger: 'contextmenu' },
+  render: (args) => {
     const contextItems = [
       { value: 'new-file', label: 'New File', icon: '📄', shortcut: '⌘N' },
       { value: 'new-folder', label: 'New Folder', icon: '📁', shortcut: '⇧⌘N' },
@@ -385,7 +461,15 @@ export const ContextMenu: Story = {
           user-select: none;
         "
       >
-        <mac-dropdown .items=${contextItems} trigger="contextmenu">
+        <mac-dropdown
+          .items=${contextItems}
+          .trigger=${args.trigger}
+          .placement=${args.placement}
+          .value=${args.value}
+          ?disabled=${args.disabled}
+          ?open-on-hover=${args.openOnHover}
+          .hoverDelay=${args.hoverDelay}
+        >
           <span slot="trigger" style="cursor: context-menu;">Right-click this area</span>
         </mac-dropdown>
       </div>

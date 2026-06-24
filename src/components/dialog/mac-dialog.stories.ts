@@ -77,13 +77,13 @@ export const Default: Story = {
 }
 
 export const MultipleDialogs: Story = {
-  render: () => html`
+  render: (args) => html`
     <div style="${containerStyle}">
       <mac-dialog
-        title="Finder"
-        draggable
-        resizable
-        show-buttons
+        title=${args.title}
+        draggable=${args.draggable}
+        resizable=${args.resizable}
+        show-buttons=${args.showButtons}
         active
         .width=${420}
         .height=${300}
@@ -102,9 +102,9 @@ export const MultipleDialogs: Story = {
 
       <mac-dialog
         title="Notes"
-        draggable
-        resizable
-        show-buttons
+        draggable=${args.draggable}
+        resizable=${args.resizable}
+        show-buttons=${args.showButtons}
         .width=${360}
         .height=${260}
         x="280"
@@ -122,9 +122,9 @@ export const MultipleDialogs: Story = {
 
       <mac-dialog
         title="Terminal"
-        draggable
-        resizable
-        show-buttons
+        draggable=${args.draggable}
+        resizable=${args.resizable}
+        show-buttons=${args.showButtons}
         .width=${400}
         .height=${240}
         x="180"
