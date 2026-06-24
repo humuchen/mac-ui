@@ -57,10 +57,13 @@ export const Small: Story = {
   args: {
     size: 'sm',
     value: 'list',
+
     items: [
       { value: 'list', label: 'List' },
       { value: 'grid', label: 'Grid' },
     ],
+
+    disabled: true,
   },
   render: (args) =>
     html`<mac-group-button
@@ -133,10 +136,7 @@ export const TwoButtons: Story = {
     ],
   },
   render: (args) =>
-    html`<mac-group-button
-      .items=${args.items}
-      value=${args.value}
-    ></mac-group-button>`,
+    html`<mac-group-button .items=${args.items} value=${args.value}></mac-group-button>`,
 }
 
 export const ManyButtons: Story = {
@@ -152,46 +152,46 @@ export const ManyButtons: Story = {
     ],
   },
   render: (args) =>
-    html`<mac-group-button
-      .items=${args.items}
-      value=${args.value}
-    ></mac-group-button>`,
+    html`<mac-group-button .items=${args.items} value=${args.value}></mac-group-button>`,
 }
 
 export const AllSizes: Story = {
-  render: () => html`
+  args: {
+    size: 'md',
+    disabled: false,
+    value: 'list',
+    items: [
+      { value: 'list', label: 'List' },
+      { value: 'grid', label: 'Grid' },
+    ],
+  },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
       <div>
         <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">Small</p>
         <mac-group-button
-          .items=${[
-            { value: 'list', label: 'List' },
-            { value: 'grid', label: 'Grid' },
-          ]}
-          value="list"
+          .items=${args.items}
+          value=${args.value}
           size="sm"
+          ?disabled=${args.disabled}
         ></mac-group-button>
       </div>
       <div>
         <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">Medium</p>
         <mac-group-button
-          .items=${[
-            { value: 'list', label: 'List' },
-            { value: 'grid', label: 'Grid' },
-          ]}
-          value="list"
+          .items=${args.items}
+          value=${args.value}
           size="md"
+          ?disabled=${args.disabled}
         ></mac-group-button>
       </div>
       <div>
         <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">Large</p>
         <mac-group-button
-          .items=${[
-            { value: 'list', label: 'List' },
-            { value: 'grid', label: 'Grid' },
-          ]}
-          value="list"
+          .items=${args.items}
+          value=${args.value}
           size="lg"
+          ?disabled=${args.disabled}
         ></mac-group-button>
       </div>
     </div>

@@ -52,10 +52,11 @@ export const Basic: Story = {
 }
 
 export const LineClamp2: Story = {
-  render: () => html`
+  args: { lineClamp: 2 },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">line-clamp="2"</p>
-      <mac-text-ellipsis line-clamp="2">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
       </mac-text-ellipsis>
     </div>
@@ -63,10 +64,11 @@ export const LineClamp2: Story = {
 }
 
 export const LineClamp1: Story = {
-  render: () => html`
+  args: { lineClamp: 1 },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">line-clamp="1" 单行省略</p>
-      <mac-text-ellipsis line-clamp="1">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
       </mac-text-ellipsis>
     </div>
@@ -74,10 +76,11 @@ export const LineClamp1: Story = {
 }
 
 export const ClickToExpand: Story = {
-  render: () => html`
+  args: { lineClamp: 3, expandTrigger: 'click' },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">expand-trigger="click" 点击展开/收起</p>
-      <mac-text-ellipsis line-clamp="3" expand-trigger="click">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
       </mac-text-ellipsis>
     </div>
@@ -85,10 +88,11 @@ export const ClickToExpand: Story = {
 }
 
 export const ClickToExpandLine2: Story = {
-  render: () => html`
+  args: { lineClamp: 2, expandTrigger: 'click' },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">line-clamp="2" + expand-trigger="click"</p>
-      <mac-text-ellipsis line-clamp="2" expand-trigger="click">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
       </mac-text-ellipsis>
     </div>
@@ -96,10 +100,11 @@ export const ClickToExpandLine2: Story = {
 }
 
 export const WithTooltip: Story = {
-  render: () => html`
+  args: { lineClamp: 2 },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">悬停省略文本显示自定义 Tooltip</p>
-      <mac-text-ellipsis line-clamp="2">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
         <span slot="tooltip">${longText}</span>
       </mac-text-ellipsis>
@@ -108,10 +113,11 @@ export const WithTooltip: Story = {
 }
 
 export const WithTooltipAndExpand: Story = {
-  render: () => html`
+  args: { lineClamp: 2, expandTrigger: 'click' },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">expand-trigger="click" + tooltip slot</p>
-      <mac-text-ellipsis line-clamp="2" expand-trigger="click">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${longText}
         <span slot="tooltip">${longText}</span>
       </mac-text-ellipsis>
@@ -120,10 +126,11 @@ export const WithTooltipAndExpand: Story = {
 }
 
 export const ShortText: Story = {
-  render: () => html`
+  args: { lineClamp: 3, expandTrigger: 'click' },
+  render: (args) => html`
     <div style="width: 400px;">
       <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">文本未超出时不显示省略和展开</p>
-      <mac-text-ellipsis line-clamp="3" expand-trigger="click">
+      <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
         ${mediumText}
       </mac-text-ellipsis>
     </div>
@@ -131,23 +138,24 @@ export const ShortText: Story = {
 }
 
 export const DifferentWidths: Story = {
-  render: () => html`
+  args: { lineClamp: 2, expandTrigger: 'click' },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div style="width: 300px;">
         <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">width: 300px</p>
-        <mac-text-ellipsis line-clamp="2" expand-trigger="click">
+        <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
           ${longText}
         </mac-text-ellipsis>
       </div>
       <div style="width: 500px;">
         <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">width: 500px</p>
-        <mac-text-ellipsis line-clamp="2" expand-trigger="click">
+        <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
           ${longText}
         </mac-text-ellipsis>
       </div>
       <div style="width: 100%;">
         <p style="font-size: 12px; color: #8e8ea0; margin-bottom: 8px;">width: 100%</p>
-        <mac-text-ellipsis line-clamp="2" expand-trigger="click">
+        <mac-text-ellipsis .lineClamp=${args.lineClamp} expand-trigger=${args.expandTrigger} ?expanded=${args.expanded}>
           ${longText}
         </mac-text-ellipsis>
       </div>

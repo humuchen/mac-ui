@@ -84,12 +84,14 @@ export const Basic: Story = {
 }
 
 export const WithTitle: Story = {
-  render: () => html` <mac-descriptions title="用户信息" .items=${userInfo}></mac-descriptions> `,
+  args: { title: '用户信息' },
+  render: (args) => html` <mac-descriptions title=${args.title} .items=${userInfo}></mac-descriptions> `,
 }
 
 export const WithExtra: Story = {
-  render: () => html`
-    <mac-descriptions title="用户信息">
+  args: { title: '用户信息' },
+  render: (args) => html`
+    <mac-descriptions title=${args.title}>
       <mac-button slot="extra" size="sm" variant="primary">编辑</mac-button>
       ${userInfo.map(
         (item) => html`
@@ -101,10 +103,16 @@ export const WithExtra: Story = {
 }
 
 export const LabelPlacementTop: Story = {
-  render: () => html`
+  args: { labelPlacement: 'top', title: '产品详情' },
+  render: (args) => html`
     <mac-descriptions
-      title="产品详情"
-      label-placement="top"
+      title=${args.title}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      .size=${args.size}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '产品名称', value: 'MacBook Pro 16"' },
         { label: '芯片', value: 'Apple M3 Pro' },
@@ -118,11 +126,16 @@ export const LabelPlacementTop: Story = {
 }
 
 export const LabelPlacementTopBordered: Story = {
-  render: () => html`
+  args: { labelPlacement: 'top', bordered: true, title: '服务器配置' },
+  render: (args) => html`
     <mac-descriptions
-      title="服务器配置"
-      label-placement="top"
+      title=${args.title}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      .size=${args.size}
       bordered
+      .separator=${args.separator}
       .items=${[
         { label: '主机名', value: 'prod-server-01' },
         { label: 'IP 地址', value: '192.168.1.100' },
@@ -136,10 +149,16 @@ export const LabelPlacementTopBordered: Story = {
 }
 
 export const Bordered: Story = {
-  render: () => html`
+  args: { bordered: true, title: '服务器配置' },
+  render: (args) => html`
     <mac-descriptions
-      title="服务器配置"
+      title=${args.title}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      .size=${args.size}
       bordered
+      .separator=${args.separator}
       .items=${[
         { label: '主机名', value: 'prod-server-01' },
         { label: 'IP 地址', value: '192.168.1.100' },
@@ -153,7 +172,8 @@ export const Bordered: Story = {
 }
 
 export const LabelAlign: Story = {
-  render: () => html`
+  args: { labelAlign: 'left' },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions
         title="左对齐 (默认)"
@@ -175,7 +195,8 @@ export const LabelAlign: Story = {
 }
 
 export const Separator: Story = {
-  render: () => html`
+  args: { separator: ':' },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions title="默认分隔符 (:)" .items=${userInfo.slice(0, 3)}></mac-descriptions>
       <mac-descriptions
@@ -193,10 +214,16 @@ export const Separator: Story = {
 }
 
 export const SmallSize: Story = {
-  render: () => html`
+  args: { size: 'sm', title: '摘要' },
+  render: (args) => html`
     <mac-descriptions
-      title="摘要"
-      size="sm"
+      title=${args.title}
+      size=${args.size}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '名称', value: '项目 A' },
         { label: '类型', value: 'Web 应用' },
@@ -207,10 +234,16 @@ export const SmallSize: Story = {
 }
 
 export const LargeSize: Story = {
-  render: () => html`
+  args: { size: 'lg', title: '系统信息' },
+  render: (args) => html`
     <mac-descriptions
-      title="系统信息"
-      size="lg"
+      title=${args.title}
+      size=${args.size}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '系统版本', value: 'macOS 15.0 Sequoia' },
         { label: '处理器', value: 'Apple M3 Max' },
@@ -221,10 +254,16 @@ export const LargeSize: Story = {
 }
 
 export const TwoColumns: Story = {
-  render: () => html`
+  args: { column: 2, title: '个人信息' },
+  render: (args) => html`
     <mac-descriptions
-      title="个人信息"
-      .column=${2}
+      title=${args.title}
+      .column=${args.column}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .size=${args.size}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '姓名', value: '李明' },
         { label: '年龄', value: '28' },
@@ -237,10 +276,16 @@ export const TwoColumns: Story = {
 }
 
 export const Span: Story = {
-  render: () => html`
+  args: { column: 3, title: '订单信息' },
+  render: (args) => html`
     <mac-descriptions
-      title="订单信息"
-      .column=${3}
+      title=${args.title}
+      .column=${args.column}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .size=${args.size}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '订单号', value: 'ORD-2024-001234' },
         { label: '下单时间', value: '2024-06-15 14:30' },
@@ -254,8 +299,9 @@ export const Span: Story = {
 }
 
 export const SlotMode: Story = {
-  render: () => html`
-    <mac-descriptions title="设备信息" column="2">
+  args: { column: 2, title: '设备信息' },
+  render: (args) => html`
+    <mac-descriptions title=${args.title} column=${args.column} label-placement=${args.labelPlacement} label-align=${args.labelAlign} .size=${args.size} ?bordered=${args.bordered} .separator=${args.separator}>
       <mac-description-item label="设备" value="iPhone 15 Pro Max"></mac-description-item>
       <mac-description-item label="系统" value="iOS 18.0"></mac-description-item>
       <mac-description-item label="芯片" value="A17 Pro"></mac-description-item>
@@ -267,9 +313,16 @@ export const SlotMode: Story = {
 }
 
 export const ItemStyle: Story = {
-  render: () => html`
+  args: { title: '自定义样式' },
+  render: (args) => html`
     <mac-descriptions
-      title="自定义样式"
+      title=${args.title}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .column=${args.column}
+      .size=${args.size}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
       .items=${[
         { label: '普通项', value: '默认样式' },
         { label: '高亮标签', value: '红色标签', labelStyle: 'color: #ef4444; font-weight: 600' },
@@ -281,7 +334,8 @@ export const ItemStyle: Story = {
 }
 
 export const AllSizesBordered: Story = {
-  render: () => html`
+  args: { bordered: true },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions
         title="Small"
@@ -306,24 +360,25 @@ export const AllSizesBordered: Story = {
 }
 
 export const AllSizesTopPlacement: Story = {
-  render: () => html`
+  args: { labelPlacement: 'top' },
+  render: (args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions
         title="Small"
         size="sm"
-        label-placement="top"
+        label-placement=${args.labelPlacement}
         .items=${userInfo.slice(0, 3)}
       ></mac-descriptions>
       <mac-descriptions
         title="Medium"
         size="md"
-        label-placement="top"
+        label-placement=${args.labelPlacement}
         .items=${userInfo.slice(0, 3)}
       ></mac-descriptions>
       <mac-descriptions
         title="Large"
         size="lg"
-        label-placement="top"
+        label-placement=${args.labelPlacement}
         .items=${userInfo.slice(0, 3)}
       ></mac-descriptions>
     </div>

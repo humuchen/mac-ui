@@ -94,97 +94,101 @@ export const Basic: Story = {
 }
 
 export const WithSeparator: Story = {
-  render: () => html`
+  args: { separator: ',', duration: 2500, to: 1234567 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
-      <mac-number-animation to="1234567" separator="," duration="2500"></mac-number-animation>
+      <mac-number-animation .to=${args.to} separator=${args.separator} .duration=${args.duration}></mac-number-animation>
       <mac-number-animation
         to="9876543.21"
         separator=" "
         precision="2"
-        duration="2500"
+        .duration=${args.duration}
       ></mac-number-animation>
     </div>
   `,
 }
 
 export const WithPrecision: Story = {
-  render: () => html`
+  args: { precision: 2, duration: 2000, to: 99.86 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">2 decimal places</div>
-        <mac-number-animation to="99.86" precision="2" duration="2000"></mac-number-animation>
+        <mac-number-animation .to=${args.to} .precision=${args.precision} .duration=${args.duration}></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">4 decimal places</div>
-        <mac-number-animation to="3.1416" precision="4" duration="2000"></mac-number-animation>
+        <mac-number-animation to="3.1416" precision="4" .duration=${args.duration}></mac-number-animation>
       </div>
     </div>
   `,
 }
 
 export const WithPrefixSuffix: Story = {
-  render: () => html`
+  args: { duration: 2000, to: 12800, prefix: '¥', suffix: '', separator: ',' },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <mac-number-animation
-        to="12800"
-        prefix="¥"
-        separator=","
-        duration="2000"
+        .to=${args.to}
+        prefix=${args.prefix}
+        separator=${args.separator}
+        .duration=${args.duration}
       ></mac-number-animation>
       <mac-number-animation
         to="99.9"
         prefix="$"
         suffix="M"
         precision="1"
-        duration="2000"
+        .duration=${args.duration}
       ></mac-number-animation>
       <mac-number-animation
         to="2048"
         suffix="MB"
         separator=","
-        duration="2000"
+        .duration=${args.duration}
       ></mac-number-animation>
     </div>
   `,
 }
 
 export const EasingComparison: Story = {
-  render: () => html`
+  args: { to: 1000, duration: 3000, size: 'sm' },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 20px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">linear</div>
         <mac-number-animation
-          to="1000"
+          .to=${args.to}
           easing="linear"
-          duration="3000"
-          size="sm"
+          .duration=${args.duration}
+          size=${args.size}
         ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">easeIn</div>
         <mac-number-animation
-          to="1000"
+          .to=${args.to}
           easing="easeIn"
-          duration="3000"
-          size="sm"
+          .duration=${args.duration}
+          size=${args.size}
         ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">easeOut</div>
         <mac-number-animation
-          to="1000"
+          .to=${args.to}
           easing="easeOut"
-          duration="3000"
-          size="sm"
+          .duration=${args.duration}
+          size=${args.size}
         ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">easeInOut</div>
         <mac-number-animation
-          to="1000"
+          .to=${args.to}
           easing="easeInOut"
-          duration="3000"
-          size="sm"
+          .duration=${args.duration}
+          size=${args.size}
         ></mac-number-animation>
       </div>
     </div>
@@ -192,33 +196,34 @@ export const EasingComparison: Story = {
 }
 
 export const Sizes: Story = {
-  render: () => html`
+  args: { to: 1024, separator: ',', duration: 2000 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Small</div>
         <mac-number-animation
-          to="1024"
+          .to=${args.to}
           size="sm"
-          separator=","
-          duration="2000"
+          separator=${args.separator}
+          .duration=${args.duration}
         ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Medium (default)</div>
         <mac-number-animation
-          to="1024"
+          .to=${args.to}
           size="md"
-          separator=","
-          duration="2000"
+          separator=${args.separator}
+          .duration=${args.duration}
         ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">Large</div>
         <mac-number-animation
-          to="1024"
+          .to=${args.to}
           size="lg"
-          separator=","
-          duration="2000"
+          separator=${args.separator}
+          .duration=${args.duration}
         ></mac-number-animation>
       </div>
     </div>
@@ -226,28 +231,30 @@ export const Sizes: Story = {
 }
 
 export const Countdown: Story = {
-  render: () => html`
+  args: { from: 100, to: 0, duration: 5000, suffix: 's', easing: 'linear' },
+  render: (args) => html`
     <mac-number-animation
-      from="100"
-      to="0"
-      duration="5000"
-      suffix="s"
-      easing="linear"
+      .from=${args.from}
+      .to=${args.to}
+      .duration=${args.duration}
+      suffix=${args.suffix}
+      easing=${args.easing}
     ></mac-number-animation>
   `,
 }
 
 export const ManualControl: Story = {
-  render: () => {
+  args: { to: 5000, from: 0, separator: ',', duration: 2000, autoplay: false },
+  render: (args) => {
     return html`
       <div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start;">
         <mac-number-animation
           id="manual-anim"
-          to="5000"
-          from="0"
-          separator=","
-          duration="2000"
-          .autoplay=${false}
+          .to=${args.to}
+          .from=${args.from}
+          separator=${args.separator}
+          .duration=${args.duration}
+          ?autoplay=${args.autoplay}
         ></mac-number-animation>
         <div style="display: flex; gap: 8px;">
           <mac-button
@@ -274,13 +281,14 @@ export const ManualControl: Story = {
 }
 
 export const FinishCallback: Story = {
-  render: () => html`
+  args: { to: 9999, separator: ',', duration: 2500 },
+  render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 12px; align-items: flex-start;">
       <mac-number-animation
         id="callback-anim"
-        to="9999"
-        separator=","
-        duration="2500"
+        .to=${args.to}
+        separator=${args.separator}
+        .duration=${args.duration}
       ></mac-number-animation>
       <div id="callback-msg" style="font-size: 13px; color: #22c55e; min-height: 20px;"></div>
       <mac-button
@@ -302,8 +310,9 @@ export const FinishCallback: Story = {
 }
 
 export const SlotPrefixSuffix: Story = {
-  render: () => html`
-    <mac-number-animation to="8848" suffix="m" separator="," duration="2000">
+  args: { to: 8848, suffix: 'm', separator: ',', duration: 2000 },
+  render: (args) => html`
+    <mac-number-animation .to=${args.to} suffix=${args.suffix} separator=${args.separator} .duration=${args.duration}>
       <span slot="prefix" style="font-size: 14px; color: #3b82f6; margin-right: 4px;">🏔️</span>
     </mac-number-animation>
   `,

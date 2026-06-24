@@ -146,8 +146,22 @@ export const HorizontalLayout: Story = {
 }
 
 export const CustomIconImages: Story = {
-  render: () => html`
-    <mac-desktop style="width: 100%; height: 600px; display: block;">
+  args: {
+    layout: 'vertical',
+    cellSize: 90,
+    spacing: 8,
+    padding: 16,
+    showDock: true,
+  },
+  render: (args) => html`
+    <mac-desktop
+      .layout=${args.layout}
+      .cellSize=${args.cellSize}
+      .spacing=${args.spacing}
+      .padding=${args.padding}
+      ?show-dock=${args.showDock}
+      style="width: 100%; height: 600px; display: block;"
+    >
       <mac-desktop-icon icon-id="folder1" label="Work">
         <img src="https://picsum.photos/seed/folder1/112/112" alt="Work" />
       </mac-desktop-icon>
@@ -166,44 +180,95 @@ export const CustomIconImages: Story = {
 }
 
 export const RightClickMenu: Story = {
-  render: () => html`
+  args: {
+    layout: 'vertical',
+    cellSize: 90,
+    spacing: 8,
+    padding: 16,
+    showDock: true,
+  },
+  render: (args) => html`
     <div style="margin-bottom: 12px; font-size: 13px; color: #6b7280;">
       Right-click on the desktop to see the context menu with layout options
     </div>
-    <mac-desktop style="width: 100%; height: 600px; display: block;">
+    <mac-desktop
+      .layout=${args.layout}
+      .cellSize=${args.cellSize}
+      .spacing=${args.spacing}
+      .padding=${args.padding}
+      ?show-dock=${args.showDock}
+      style="width: 100%; height: 600px; display: block;"
+    >
       ${desktopIcons} ${dockSlot}
     </mac-desktop>
   `,
 }
 
 export const IconSelection: Story = {
-  render: () => html`
+  args: {
+    layout: 'vertical',
+    cellSize: 90,
+    spacing: 8,
+    padding: 16,
+    showDock: true,
+  },
+  render: (args) => html`
     <div style="margin-bottom: 12px; font-size: 13px; color: #6b7280;">
       Click to select, Shift+click for multi-select, drag on empty area for box selection
     </div>
-    <mac-desktop style="width: 100%; height: 600px; display: block;">
+    <mac-desktop
+      .layout=${args.layout}
+      .cellSize=${args.cellSize}
+      .spacing=${args.spacing}
+      .padding=${args.padding}
+      ?show-dock=${args.showDock}
+      style="width: 100%; height: 600px; display: block;"
+    >
       ${desktopIcons} ${dockSlot}
     </mac-desktop>
   `,
 }
 
 export const IconDrag: Story = {
-  render: () => html`
+  args: {
+    layout: 'vertical',
+    cellSize: 90,
+    spacing: 8,
+    padding: 16,
+    showDock: true,
+  },
+  render: (args) => html`
     <div style="margin-bottom: 12px; font-size: 13px; color: #6b7280;">
       Drag icons to reposition them on the desktop
     </div>
-    <mac-desktop style="width: 100%; height: 600px; display: block;">
+    <mac-desktop
+      .layout=${args.layout}
+      .cellSize=${args.cellSize}
+      .spacing=${args.spacing}
+      .padding=${args.padding}
+      ?show-dock=${args.showDock}
+      style="width: 100%; height: 600px; display: block;"
+    >
       ${desktopIcons} ${dockSlot}
     </mac-desktop>
   `,
 }
 
 export const DenseGrid: Story = {
-  render: () => html`
+  args: {
+    layout: 'vertical',
+    cellSize: 80,
+    spacing: 4,
+    padding: 12,
+    showDock: true,
+  },
+  render: (args) => html`
     <mac-desktop
-      cell-size="80"
-      spacing="4"
-      padding="12"
+      .layout=${args.layout}
+      .cellSize=${args.cellSize}
+      .spacing=${args.spacing}
+      .padding=${args.padding}
+      ?show-dock=${args.showDock}
       style="width: 100%; height: 600px; display: block;"
     >
       <mac-desktop-icon icon-id="hd" label="Macintosh HD" color="#8E8E93"></mac-desktop-icon>

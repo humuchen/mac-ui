@@ -122,7 +122,8 @@ export const Basic: Story = {
 }
 
 export const Variants: Story = {
-  render: () => {
+  args: { variant: 'default' },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -131,16 +132,17 @@ export const Variants: Story = {
 
     return html`
       <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-        <mac-select variant="default" label="Default" .options=${options}></mac-select>
-        <mac-select variant="filled" label="Filled" .options=${options}></mac-select>
-        <mac-select variant="glass" label="Glass" .options=${options}></mac-select>
+        <mac-select variant="default" label="Default" .options=${options} .value=${args.value} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select variant="filled" label="Filled" .options=${options} .value=${args.value} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select variant="glass" label="Glass" .options=${options} .value=${args.value} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
       </div>
     `
   },
 }
 
 export const Sizes: Story = {
-  render: () => {
+  args: { size: 'md' },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -148,16 +150,17 @@ export const Sizes: Story = {
 
     return html`
       <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-        <mac-select size="sm" label="Small" .options=${options}></mac-select>
-        <mac-select size="md" label="Medium" .options=${options}></mac-select>
-        <mac-select size="lg" label="Large" .options=${options}></mac-select>
+        <mac-select size="sm" label="Small" .options=${options} .value=${args.value} variant=${args.variant} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select size="md" label="Medium" .options=${options} .value=${args.value} variant=${args.variant} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select size="lg" label="Large" .options=${options} .value=${args.value} variant=${args.variant} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
       </div>
     `
   },
 }
 
 export const States: Story = {
-  render: () => {
+  args: { error: false, success: false, disabled: false },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -165,17 +168,17 @@ export const States: Story = {
 
     return html`
       <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-        <mac-select label="Normal" .options=${options} value="1"></mac-select>
-        <mac-select label="Error" .options=${options} error helper-text="This field has an error"></mac-select>
-        <mac-select label="Success" .options=${options} success value="1" helper-text="Looks good!"></mac-select>
-        <mac-select label="Disabled" .options=${options} disabled value="1"></mac-select>
+        <mac-select label="Normal" .options=${options} .value=${args.value} variant=${args.variant} size=${args.size} ?required=${args.required} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select label="Error" .options=${options} error helper-text="This field has an error" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select label="Success" .options=${options} success value="1" helper-text="Looks good!" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select label="Disabled" .options=${options} disabled value="1" .value=${args.value} variant=${args.variant} size=${args.size} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
       </div>
     `
   },
 }
 
 export const WithIcons: Story = {
-  render: () => {
+  render: (args) => {
     const options = [
       { value: 'apple', label: 'Apple', icon: '🍎' },
       { value: 'banana', label: 'Banana', icon: '🍌' },
@@ -184,13 +187,13 @@ export const WithIcons: Story = {
     ]
 
     return html`
-      <mac-select label="Select Fruit" .options=${options} placeholder="Choose a fruit"></mac-select>
+      <mac-select label="Select Fruit" .options=${options} placeholder="Choose a fruit" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
     `
   },
 }
 
 export const WithDescriptions: Story = {
-  render: () => {
+  render: (args) => {
     const options = [
       {
         value: 'free',
@@ -213,13 +216,14 @@ export const WithDescriptions: Story = {
     ]
 
     return html`
-      <mac-select label="Choose Plan" .options=${options} placeholder="Select a plan"></mac-select>
+      <mac-select label="Choose Plan" .options=${options} placeholder="Select a plan" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
     `
   },
 }
 
 export const Searchable: Story = {
-  render: () => {
+  args: { searchable: true },
+  render: (args) => {
     const options = [
       { value: 'af', label: 'Afghanistan' },
       { value: 'al', label: 'Albania' },
@@ -241,13 +245,24 @@ export const Searchable: Story = {
         searchable
         search-placeholder="Search countries..."
         placeholder="Select a country"
+        .value=${args.value}
+        variant=${args.variant}
+        size=${args.size}
+        ?disabled=${args.disabled}
+        ?required=${args.required}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?multiple=${args.multiple}
+        ?clearable=${args.clearable}
+        ?loading=${args.loading}
       ></mac-select>
     `
   },
 }
 
 export const Multiple: Story = {
-  render: () => {
+  args: { multiple: true, clearable: true },
+  render: (args) => {
     const options = [
       { value: 'react', label: 'React', icon: '⚛️' },
       { value: 'vue', label: 'Vue', icon: '💚' },
@@ -263,13 +278,22 @@ export const Multiple: Story = {
         multiple
         clearable
         placeholder="Select frameworks"
+        .value=${args.value}
+        variant=${args.variant}
+        size=${args.size}
+        ?disabled=${args.disabled}
+        ?required=${args.required}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?searchable=${args.searchable}
+        ?loading=${args.loading}
       ></mac-select>
     `
   },
 }
 
 export const OptionGroups: Story = {
-  render: () => {
+  render: (args) => {
     const groups = [
       {
         label: 'Fruits',
@@ -290,26 +314,28 @@ export const OptionGroups: Story = {
     ]
 
     return html`
-      <mac-select label="Food" .groups=${groups} searchable placeholder="Select food"></mac-select>
+      <mac-select label="Food" .groups=${groups} searchable placeholder="Select food" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?loading=${args.loading}></mac-select>
     `
   },
 }
 
 export const Loading: Story = {
-  render: () => {
+  args: { loading: true },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
     ]
 
     return html`
-      <mac-select label="Loading" .options=${options} loading placeholder="Loading options..."></mac-select>
+      <mac-select label="Loading" .options=${options} loading placeholder="Loading options..." .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable}></mac-select>
     `
   },
 }
 
 export const Clearable: Story = {
-  render: () => {
+  args: { clearable: true },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -318,15 +344,15 @@ export const Clearable: Story = {
 
     return html`
       <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-        <mac-select label="Single Select" .options=${options} clearable value="1"></mac-select>
-        <mac-select label="Multiple Select" .options=${options} multiple clearable .value=${['1', '2']}></mac-select>
+        <mac-select label="Single Select" .options=${options} clearable value="1" .value=${args.value} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
+        <mac-select label="Multiple Select" .options=${options} multiple clearable .value=${['1', '2']} variant=${args.variant} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
       </div>
     `
   },
 }
 
 export const CompleteExample: Story = {
-  render: () => {
+  render: (args) => {
     const countryGroups = [
       {
         label: 'North America',
@@ -363,6 +389,15 @@ export const CompleteExample: Story = {
           search-placeholder="Search countries..."
           clearable
           helper-text="Choose your country of residence"
+          .value=${args.value}
+          variant=${args.variant}
+          size=${args.size}
+          ?disabled=${args.disabled}
+          ?required=${args.required}
+          ?error=${args.error}
+          ?success=${args.success}
+          ?multiple=${args.multiple}
+          ?loading=${args.loading}
         ></mac-select>
       </div>
     `
@@ -370,7 +405,8 @@ export const CompleteExample: Story = {
 }
 
 export const GlassSelect: Story = {
-  render: () => {
+  args: { variant: 'glass' },
+  render: (args) => {
     const options = [
       { value: '1', label: 'Option 1' },
       { value: '2', label: 'Option 2' },
@@ -380,7 +416,7 @@ export const GlassSelect: Story = {
     return html`
       <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px; border-radius: 16px;">
         <div style="max-width: 400px;">
-          <mac-select variant="glass" label="Glass Select" .options=${options} placeholder="Select an option"></mac-select>
+          <mac-select variant="glass" label="Glass Select" .options=${options} placeholder="Select an option" .value=${args.value} size=${args.size} ?disabled=${args.disabled} ?required=${args.required} ?error=${args.error} ?success=${args.success} ?multiple=${args.multiple} ?clearable=${args.clearable} ?searchable=${args.searchable} ?loading=${args.loading}></mac-select>
         </div>
       </div>
     `

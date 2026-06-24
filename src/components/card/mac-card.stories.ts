@@ -64,31 +64,56 @@ export const Default: Story = {
 }
 
 export const Variants: Story = {
-  render: () => html`
+  render: (args) => html`
     <div
       style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;"
     >
-      <mac-card variant="default">
+      <mac-card
+        variant="default"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Default</div>
         Standard card with subtle border and shadow.
       </mac-card>
 
-      <mac-card variant="elevated">
+      <mac-card
+        variant="elevated"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Elevated</div>
         Card with elevated shadow, no border.
       </mac-card>
 
-      <mac-card variant="glass">
+      <mac-card
+        variant="glass"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Glass</div>
         Frosted glass effect with blur.
       </mac-card>
 
-      <mac-card variant="outlined">
+      <mac-card
+        variant="outlined"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Outlined</div>
         Transparent background with visible border.
       </mac-card>
 
-      <mac-card variant="gradient">
+      <mac-card
+        variant="gradient"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Gradient</div>
         Subtle gradient background effect.
       </mac-card>
@@ -97,11 +122,17 @@ export const Variants: Story = {
 }
 
 export const WithMedia: Story = {
-  render: () => html`
+  render: (args) => html`
     <div
       style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;"
     >
-      <mac-card variant="elevated" mediaRatio="16-9">
+      <mac-card
+        variant="elevated"
+        mediaRatio="16-9"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <img
           slot="media"
           src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800"
@@ -114,7 +145,13 @@ export const WithMedia: Story = {
         </p>
       </mac-card>
 
-      <mac-card variant="gradient" mediaRatio="4-3">
+      <mac-card
+        variant="gradient"
+        mediaRatio="4-3"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <img
           slot="media"
           src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800"
@@ -211,21 +248,39 @@ export const ClickableCards: Story = {
 }
 
 export const AccentBorders: Story = {
-  render: () => html`
+  render: (args) => html`
     <div
       style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;"
     >
-      <mac-card variant="default" accent="top">
+      <mac-card
+        variant="default"
+        accent="top"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Top Accent</div>
         Card with a gradient accent border at the top.
       </mac-card>
 
-      <mac-card variant="elevated" accent="left">
+      <mac-card
+        variant="elevated"
+        accent="left"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Left Accent</div>
         Card with a gradient accent border on the left side.
       </mac-card>
 
-      <mac-card variant="outlined" accent="top">
+      <mac-card
+        variant="outlined"
+        accent="top"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div slot="header" style="font-weight: 600; font-size: 16px;">Outlined + Accent</div>
         Outlined card with top accent border.
       </mac-card>
@@ -263,8 +318,14 @@ export const LoadingState: Story = {
 }
 
 export const CompleteCard: Story = {
-  render: () => html`
-    <mac-card variant="elevated" hoverable mediaRatio="16-9">
+  render: (args) => html`
+    <mac-card
+      variant="elevated"
+      hoverable=${args.hoverable}
+      clickable=${args.clickable}
+      loading=${args.loading}
+      mediaRatio="16-9"
+    >
       <img
         slot="media"
         src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800"
@@ -285,11 +346,16 @@ export const CompleteCard: Story = {
 }
 
 export const DashboardCards: Story = {
-  render: () => html`
+  render: (args) => html`
     <div
       style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;"
     >
-      <mac-card variant="gradient" hoverable>
+      <mac-card
+        variant="gradient"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div style="display: flex; align-items: center; gap: 12px;">
           <div
             style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #007aff, #5856d6); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;"
@@ -303,7 +369,12 @@ export const DashboardCards: Story = {
         </div>
       </mac-card>
 
-      <mac-card variant="elevated" hoverable>
+      <mac-card
+        variant="elevated"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div style="display: flex; align-items: center; gap: 12px;">
           <div
             style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #34c759, #30d158); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;"
@@ -317,7 +388,12 @@ export const DashboardCards: Story = {
         </div>
       </mac-card>
 
-      <mac-card variant="glass" hoverable>
+      <mac-card
+        variant="glass"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div style="display: flex; align-items: center; gap: 12px;">
           <div
             style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #ff9500, #ff6b00); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;"
@@ -331,7 +407,12 @@ export const DashboardCards: Story = {
         </div>
       </mac-card>
 
-      <mac-card variant="outlined" hoverable>
+      <mac-card
+        variant="outlined"
+        hoverable=${args.hoverable}
+        clickable=${args.clickable}
+        loading=${args.loading}
+      >
         <div style="display: flex; align-items: center; gap: 12px;">
           <div
             style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #ff3b30, #ff2d55); display: flex; align-items: center; justify-content: center; color: white; font-size: 24px;"
