@@ -1,6 +1,6 @@
 {
-  "name": "mac-ui",
-  "version": "0.0.3",
+  "name": "@hy/mac-ui",
+  "version": "0.0.1",
   "type": "module",
   "description": "A modern web component library built with Lit",
   "keywords": [
@@ -15,17 +15,17 @@
     "type": "git",
     "url": ""
   },
-  "main": "./dist/mac-ui.cjs.js",
-  "module": "./dist/mac-ui.es.js",
-  "unpkg": "./dist/mac-ui.umd.js",
-  "types": "./dist/types/mac-ui.d.ts",
+  "main": "./dist/@hy/mac-ui.cjs.js",
+  "module": "./dist/@hy/mac-ui.es.js",
+  "unpkg": "./dist/@hy/mac-ui.umd.js",
+  "types": "./dist/types/@hy/mac-ui.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/mac-ui.d.ts",
-      "import": "./dist/mac-ui.es.js",
-      "require": "./dist/mac-ui.cjs.js"
+      "types": "./dist/types/@hy/mac-ui.d.ts",
+      "import": "./dist/@hy/mac-ui.es.js",
+      "require": "./dist/@hy/mac-ui.cjs.js"
     },
-    "./styles/*": "./dist/styles/*"
+    "./styles/*": "./dist/@hy/styles/*"
   },
   "files": [
     "dist",
