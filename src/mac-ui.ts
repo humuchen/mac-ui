@@ -24,6 +24,7 @@ export { MacTabs, MacTabPane } from './components/tabs/mac-tabs'
 export type { TabItem } from './components/tabs/mac-tabs'
 export { MacDrawer } from './components/drawer/mac-drawer'
 export { MacPopconfirm } from './components/popconfirm/mac-popconfirm'
+export { MacSplit, MacSplitPane } from './components/split/mac-split'
 
 // Base class (for extension)
 export { BaseElement } from './internal/base-element'

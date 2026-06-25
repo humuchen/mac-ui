@@ -10,6 +10,7 @@ import { themeTokens } from '../../styles/theme'
  *
  * @slot - Default slot for the text content.
  * @slot tooltip - Custom tooltip content shown on hover when text is truncated.
+ *   If not provided and `tooltip` is `true`, the full text will be used as tooltip content.
  *
  * @cssproperty --md-ellipsis-color - Text color.
  * @cssproperty --md-ellipsis-expand-color - Expand trigger link color.
@@ -56,17 +57,8 @@ export class MacTextEllipsis extends BaseElement {
         -webkit-line-clamp: unset;
       }
 
-      .expand-trigger {
-        color: var(--md-ellipsis-expand-color);
+      .ellipsis-content.clickable {
         cursor: pointer;
-        font-weight: 500;
-        white-space: nowrap;
-        user-select: none;
-        transition: opacity var(--md-transition-fast);
-      }
-
-      .expand-trigger:hover {
-        opacity: 0.8;
       }
 
       /* Tooltip */
@@ -115,6 +107,9 @@ export class MacTextEllipsis extends BaseElement {
   /** Whether the text is currently expanded. */
   @property({ type: Boolean, reflect: true }) expanded = false
 
+  /** Whether to show a tooltip on hover when text is truncated. */
+  @property({ type: Boolean }) tooltip = false
+
   @state() private _isTruncated = false
   @state() private _tooltipVisible = false
 
@@ -150,8 +145,8 @@ export class MacTextEllipsis extends BaseElement {
     this._isTruncated = fullHeight > clampedHeight + 2
   }
 
-  private _handleExpandClick(e: Event) {
-    e.stopPropagation()
+  private _handleContentClick() {
+    if (this.expandTrigger !== 'click' || !this._isTruncated) return
     this.expanded = !this.expanded
     this.emit('mac-ellipsis-expand', { detail: { expanded: this.expanded } })
   }
@@ -159,9 +154,9 @@ export class MacTextEllipsis extends BaseElement {
   // --- Tooltip ---
   private _handleMouseEnter() {
     if (!this._isTruncated || this.expanded) return
-    // Check if tooltip slot has content
-    const tooltipNodes = this._tooltipSlot?.assignedNodes() ?? []
-    if (tooltipNodes.length === 0) return
+    // Show tooltip if custom slot content exists or tooltip property is enabled
+    const hasCustomTooltip = (this._tooltipSlot?.assignedNodes() ?? []).length > 0
+    if (!hasCustomTooltip && !this.tooltip) return
     this._showTooltip()
   }
 
@@ -201,11 +196,13 @@ export class MacTextEllipsis extends BaseElement {
       document.body.appendChild(this._tooltipEl)
     }
 
-    // Get tooltip slot content
+    // Get tooltip content: prefer custom slot, fallback to full text
     const tooltipNodes = this._tooltipSlot?.assignedNodes() ?? []
-    const content = tooltipNodes
-      .map((n) => (n instanceof Element ? n.innerHTML : (n.textContent ?? '')))
-      .join('')
+    const content = tooltipNodes.length
+      ? tooltipNodes
+          .map((n) => (n instanceof Element ? n.innerHTML : (n.textContent ?? '')))
+          .join('')
+      : (this.textContent ?? '')
     this._tooltipEl.innerHTML = content
 
     // Position
@@ -246,7 +243,7 @@ export class MacTextEllipsis extends BaseElement {
 
   override render() {
     const isClamped = this._isTruncated && !this.expanded
-    const showExpand = this.expandTrigger === 'click' && this._isTruncated
+    const isClickable = this.expandTrigger === 'click' && this._isTruncated
 
     return html`
       <div
@@ -255,19 +252,14 @@ export class MacTextEllipsis extends BaseElement {
         @mouseleave=${this._handleMouseLeave}
       >
         <div
-          class="ellipsis-content ${isClamped ? 'clamped' : ''} ${this.expanded ? 'expanded' : ''}"
+          class="ellipsis-content ${isClamped ? 'clamped' : ''} ${this.expanded
+            ? 'expanded'
+            : ''} ${isClickable ? 'clickable' : ''}"
           style="--_line-clamp: ${this.lineClamp}"
+          @click=${this._handleContentClick}
         >
           <slot></slot>
         </div>
-
-        ${showExpand
-          ? html`
-              <span class="expand-trigger" @click=${this._handleExpandClick}>
-                ${this.expanded ? 'Collapse' : 'Expand'}
-              </span>
-            `
-          : nothing}
       </div>
 
       <slot name="tooltip" style="display:none"></slot>

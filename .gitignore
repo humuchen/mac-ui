@@ -25,3 +25,4 @@ storybook-static
 *.njsproj
 *.sln
 *.sw?
+.qoder

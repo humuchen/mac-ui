@@ -607,6 +607,15 @@ export const themeTokens: CSSResult = css`
     --md-popconfirm-dark-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
     --md-popconfirm-title-dark-color: rgba(255, 255, 255, 0.92);
     --md-popconfirm-desc-dark-color: rgba(255, 255, 255, 0.45);
+
+    /* ═══════════════════════════════════════════════════
+       Split 面板分割  --md-split-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-split-resizer-size: 1px;
+    --md-split-resizer-color: var(--md-color-border);
+    --md-split-resizer-hover-color: var(--md-color-primary);
+    --md-split-resizer-handle-bg: var(--md-color-bg-secondary);
+    --md-split-resizer-handle-dot-color: var(--md-color-text-secondary);
   }
 
   :host([data-theme='dark']) {
