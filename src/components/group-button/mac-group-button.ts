@@ -129,18 +129,31 @@ export class MacGroupButton extends BaseElement {
 
       /* Dark mode support */
       @media (prefers-color-scheme: dark) {
-        .group-container {
+        :host(:not([data-theme='light'])) .group-container {
           background: rgba(255, 255, 255, 0.08);
           border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .button {
+        :host(:not([data-theme='light'])) .button {
           color: rgba(255, 255, 255, 0.85);
         }
 
-        .button:hover:not(.button--selected):not(:disabled) {
+        :host(:not([data-theme='light'])) .button:hover:not(.button--selected):not(:disabled) {
           color: var(--md-mac-text-white);
         }
+      }
+
+      :host([data-theme='dark']) .group-container {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      :host([data-theme='dark']) .button {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      :host([data-theme='dark']) .button:hover:not(.button--selected):not(:disabled) {
+        color: var(--md-mac-text-white);
       }
     `,
   ]
@@ -152,7 +165,7 @@ export class MacGroupButton extends BaseElement {
   @property({ reflect: true }) value = ''
 
   /** The size of the buttons. */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** Disables all buttons. */
   @property({ type: Boolean, reflect: true }) disabled = false
@@ -161,6 +174,19 @@ export class MacGroupButton extends BaseElement {
   @queryAll('.button') private buttons!: NodeListOf<HTMLButtonElement>
 
   private _selectedIndex = 0
+
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
 
   protected override firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties)

@@ -259,101 +259,115 @@ export class MacDialog extends BaseElement {
       /* ─── Dark Mode (auto via OS) ─── */
 
       @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
+        :host(:not([data-theme='light'])) {
           box-shadow: var(--md-dialog-container-dark-shadow);
         }
 
-        :host(:not([theme])) .dialog {
+        :host(:not([data-theme='light'])) .dialog {
           background: var(--md-dialog-container-dark-bg);
         }
 
-        :host(:not([theme])) .titlebar {
+        :host(:not([data-theme='light'])) .titlebar {
           background: var(--md-dialog-header-dark-bg);
           border-bottom-color: var(--md-dialog-header-dark-border);
         }
 
-        :host(:not([theme])) .title {
+        :host(:not([data-theme='light'])) .title {
           color: var(--md-dialog-title-dark-color);
         }
 
-        :host(:not([theme])) .body {
+        :host(:not([data-theme='light'])) .body {
           color: var(--md-dialog-body-dark-color);
         }
 
-        :host(:not([theme]):not([active])) .titlebar {
+        :host(:not([data-theme='light']):not([active])) .titlebar {
           background: rgba(255, 255, 255, 0.02);
         }
 
-        :host(:not([theme]):not([active])) .title {
+        :host(:not([data-theme='light']):not([active])) .title {
           color: var(--md-dialog-title-dark-inactive-color);
         }
 
-        :host(:not([theme])) .resize-handle::after {
+        :host(:not([data-theme='light'])) .resize-handle::after {
           border-right-color: var(--md-dialog-resize-dark-border);
           border-bottom-color: var(--md-dialog-resize-dark-border);
         }
       }
 
-      /* ─── Dark Mode (manual via theme="dark") ─── */
+      /* ─── Dark Mode (manual via theme/data-theme="dark") ─── */
 
-      :host([theme='dark']) {
+      :host([theme='dark']),
+      :host([data-theme='dark']) {
         box-shadow: var(--md-dialog-container-dark-shadow);
       }
 
-      :host([theme='dark']) .dialog {
+      :host([theme='dark']) .dialog,
+      :host([data-theme='dark']) .dialog {
         background: var(--md-dialog-container-dark-bg);
       }
 
-      :host([theme='dark']) .titlebar {
+      :host([theme='dark']) .titlebar,
+      :host([data-theme='dark']) .titlebar {
         background: var(--md-dialog-header-dark-bg);
         border-bottom-color: var(--md-dialog-header-dark-border);
       }
 
-      :host([theme='dark']) .title {
+      :host([theme='dark']) .title,
+      :host([data-theme='dark']) .title {
         color: var(--md-dialog-title-dark-color);
       }
 
-      :host([theme='dark']) .body {
+      :host([theme='dark']) .body,
+      :host([data-theme='dark']) .body {
         color: var(--md-dialog-body-dark-color);
       }
 
-      :host([theme='dark']:not([active])) .titlebar {
+      :host([theme='dark']:not([active])) .titlebar,
+      :host([data-theme='dark']:not([active])) .titlebar {
         background: rgba(255, 255, 255, 0.02);
       }
 
-      :host([theme='dark']:not([active])) .title {
+      :host([theme='dark']:not([active])) .title,
+      :host([data-theme='dark']:not([active])) .title {
         color: var(--md-dialog-title-dark-inactive-color);
       }
 
-      :host([theme='dark']) .resize-handle::after {
+      :host([theme='dark']) .resize-handle::after,
+      :host([data-theme='dark']) .resize-handle::after {
         border-right-color: var(--md-dialog-resize-dark-border);
         border-bottom-color: var(--md-dialog-resize-dark-border);
       }
 
-      /* ─── Light Mode (manual via theme="light", overrides OS dark) ─── */
+      /* ─── Light Mode (manual via theme/data-theme="light", overrides OS dark) ─── */
 
-      :host([theme='light']) .titlebar {
+      :host([theme='light']) .titlebar,
+      :host([data-theme='light']) .titlebar {
         background: var(--md-dialog-header-bg);
         border-bottom-color: var(--md-dialog-header-border);
       }
 
-      :host([theme='light']) .title {
+      :host([theme='light']) .title,
+      :host([data-theme='light']) .title {
         color: var(--md-dialog-title-color);
       }
 
-      :host([theme='light']) .body {
+      :host([theme='light']) .body,
+      :host([data-theme='light']) .body {
         color: var(--md-dialog-title-color);
       }
 
-      :host([theme='light']:not([active])) .titlebar {
+      :host([theme='light']:not([active])) .titlebar,
+      :host([data-theme='light']:not([active])) .titlebar {
         background: rgba(255, 255, 255, 0.03);
       }
 
-      :host([theme='light']:not([active])) .title {
+      :host([theme='light']:not([active])) .title,
+      :host([data-theme='light']:not([active])) .title {
         color: var(--md-dialog-title-inactive-color);
       }
 
-      :host([theme='light']) .resize-handle::after {
+      :host([theme='light']) .resize-handle::after,
+      :host([data-theme='light']) .resize-handle::after {
         border-right-color: var(--md-dialog-resize-border);
         border-bottom-color: var(--md-dialog-resize-border);
       }
@@ -365,6 +379,15 @@ export class MacDialog extends BaseElement {
 
   /** Theme mode: 'auto' follows OS, 'light' forces light, 'dark' forces dark */
   @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
+
+  override willUpdate(): void {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
 
   override updated(changed: Map<string, unknown>): void {
     if (changed.has('x') || changed.has('y')) {

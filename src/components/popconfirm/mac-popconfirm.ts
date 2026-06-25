@@ -124,6 +124,15 @@ export class MacPopconfirm extends BaseElement {
     if (this._hoverTimeout) clearTimeout(this._hoverTimeout)
   }
 
+  override willUpdate(): void {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
   override updated(changed: Map<string, unknown>): void {
     if (changed.has('theme') && this.theme === 'auto') {
       this.removeAttribute('theme')
@@ -321,6 +330,30 @@ export class MacPopconfirm extends BaseElement {
         .mac-popconfirm-portal .popconfirm-btn:hover {
           background: rgba(255, 255, 255, 0.12);
         }
+      }
+
+      .mac-popconfirm-portal[data-theme='dark'] {
+        --md-popconfirm-bg: rgba(40, 40, 40, 0.92);
+        --md-popconfirm-border: rgba(255, 255, 255, 0.08);
+        --md-popconfirm-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
+        --md-popconfirm-title-color: rgba(255, 255, 255, 0.92);
+        --md-popconfirm-desc-color: rgba(255, 255, 255, 0.45);
+        --md-popconfirm-icon-color: #f5a623;
+      }
+
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-arrow {
+        background: rgba(40, 40, 40, 0.92);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
+
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-btn {
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.88);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
+
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
       }
     `
     document.head.appendChild(style)
@@ -580,6 +613,10 @@ export class MacPopconfirm extends BaseElement {
     popover.id = this._popoverId
     popover.className = 'mac-popconfirm-portal'
     popover.setAttribute('data-placement', this.placement)
+    const resolvedTheme = this._resolvedTheme
+    if (resolvedTheme) {
+      popover.setAttribute('data-theme', resolvedTheme)
+    }
     popover.style.width = this.width
 
     // Arrow

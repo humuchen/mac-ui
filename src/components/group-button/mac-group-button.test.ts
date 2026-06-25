@@ -2,6 +2,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { fixture } from '@open-wc/testing-helpers'
 import { MacGroupButton } from './mac-group-button'
 
+// Prevent Vite from tree-shaking the component import
+void MacGroupButton
+
 describe('MacGroupButton', () => {
   it('is defined', () => {
     expect(customElements.get('mac-group-button')).to.be.instanceOf(Function)

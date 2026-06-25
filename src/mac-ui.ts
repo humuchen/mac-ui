@@ -1,4 +1,5 @@
 // Components
+export { MacConfigProvider } from './components/config-provider/mac-config-provider'
 export { MacButton } from './components/button/mac-button'
 export { MacCard } from './components/card/mac-card'
 export { MacInput } from './components/input/mac-input'
