@@ -312,7 +312,7 @@ export class MacTabs extends BaseElement {
       /* ─── Dark Mode ─── */
 
       @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
+        :host(:not([data-theme='light'])) {
           --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
           --md-tabs-item-color: rgba(255, 255, 255, 0.55);
           --md-tabs-item-hover-color: rgba(255, 255, 255, 0.88);
@@ -333,7 +333,6 @@ export class MacTabs extends BaseElement {
         }
       }
 
-      :host([theme='dark']),
       :host([data-theme='dark']) {
         --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
         --md-tabs-item-color: rgba(255, 255, 255, 0.55);
@@ -354,7 +353,6 @@ export class MacTabs extends BaseElement {
         --md-tabs-segment-item-hover-bg: rgba(255, 255, 255, 0.08);
       }
 
-      :host([theme='light']),
       :host([data-theme='light']) {
         --md-tabs-nav-border: var(--md-glass-separator);
         --md-tabs-item-color: var(--md-color-text-secondary);
@@ -401,9 +399,6 @@ export class MacTabs extends BaseElement {
   /** Trigger mode: click or hover */
   @property() trigger: 'click' | 'hover' = 'click'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   /** Tab items data (alternative to slot) */
   @property({ type: Array }) items: TabItem[] = []
 
@@ -429,9 +424,6 @@ export class MacTabs extends BaseElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
-    }
     if (changed.has('value')) {
       this._activeKey = this.value
     }

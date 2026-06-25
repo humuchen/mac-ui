@@ -302,7 +302,7 @@ export class MacDescriptions extends BaseElement {
       /* ─── Dark Mode ─── */
 
       @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
+        :host(:not([data-theme='light'])) {
           --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
           --md-descriptions-container-border: rgba(255, 255, 255, 0.08);
           --md-descriptions-header-border: rgba(255, 255, 255, 0.08);
@@ -315,7 +315,6 @@ export class MacDescriptions extends BaseElement {
         }
       }
 
-      :host([theme='dark']),
       :host([data-theme='dark']) {
         --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
         --md-descriptions-container-border: rgba(255, 255, 255, 0.08);
@@ -328,7 +327,6 @@ export class MacDescriptions extends BaseElement {
         --md-descriptions-separator-color: rgba(255, 255, 255, 0.55);
       }
 
-      :host([theme='light']),
       :host([data-theme='light']) {
         --md-descriptions-container-bg: var(--md-glass-menu-bg);
         --md-descriptions-container-border: var(--md-glass-separator);
@@ -365,9 +363,6 @@ export class MacDescriptions extends BaseElement {
   /** Separator between label and value (only for label-placement='left' and not bordered) */
   @property() separator = ':'
 
-  /** Theme override: auto follows OS, light/dark forces mode */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   /** Data items (alternative to slot) */
   @property({ type: Array }) items: DescriptionItem[] = []
 
@@ -381,12 +376,6 @@ export class MacDescriptions extends BaseElement {
       this.setAttribute('data-theme', theme)
     } else {
       this.removeAttribute('data-theme')
-    }
-  }
-
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
     }
   }
 

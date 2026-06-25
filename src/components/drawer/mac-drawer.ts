@@ -284,7 +284,6 @@ export class MacDrawer extends BaseElement {
         }
       }
 
-      :host([theme='dark']),
       :host([data-theme='dark']) {
         --md-drawer-bg: rgba(40, 40, 40, 0.92);
         --md-drawer-border: rgba(255, 255, 255, 0.08);
@@ -297,7 +296,6 @@ export class MacDrawer extends BaseElement {
         --md-drawer-mask-bg: rgba(0, 0, 0, 0.5);
       }
 
-      :host([theme='light']),
       :host([data-theme='light']) {
         --md-drawer-bg: rgba(246, 246, 246, 0.88);
         --md-drawer-border: rgba(0, 0, 0, 0.06);
@@ -354,9 +352,6 @@ export class MacDrawer extends BaseElement {
   /** Maximum height for resize (top/bottom) */
   @property({ type: String, attribute: 'max-height' }) maxHeight = '80vh'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   @state() private _isOpen = false
 
   // Portal elements
@@ -382,9 +377,6 @@ export class MacDrawer extends BaseElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
-    }
     if (changed.has('open')) {
       if (this.open && !this._isOpen) {
         this._show()
@@ -547,9 +539,7 @@ export class MacDrawer extends BaseElement {
   }
 
   private _applyThemeVars(): void {
-    const isDark =
-      this.theme === 'dark' ||
-      (this.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const isDark = this._resolvedTheme === 'dark'
 
     if (isDark) {
       document.documentElement.style.setProperty('--md-drawer-bg', 'rgba(40, 40, 40, 0.92)')

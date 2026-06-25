@@ -98,9 +98,6 @@ export class MacPopconfirm extends BaseElement {
   /** Width of the popover */
   @property({ type: String }) width = '240px'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   @state() private _visible = false
 
   private _popoverEl: HTMLElement | null = null
@@ -130,12 +127,6 @@ export class MacPopconfirm extends BaseElement {
       this.setAttribute('data-theme', theme)
     } else {
       this.removeAttribute('data-theme')
-    }
-  }
-
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
     }
   }
 
@@ -360,9 +351,7 @@ export class MacPopconfirm extends BaseElement {
   }
 
   private _applyThemeVars(): void {
-    const isDark =
-      this.theme === 'dark' ||
-      (this.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const isDark = this._resolvedTheme === 'dark'
 
     const root = this._popoverEl || document.documentElement
     if (isDark) {

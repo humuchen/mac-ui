@@ -94,21 +94,19 @@ export class MacNumberAnimation extends BaseElement {
       /* ─── Dark Mode ─── */
 
       @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
+        :host(:not([data-theme='light'])) {
           --md-number-animation-color: rgba(255, 255, 255, 0.92);
           --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);
           --md-number-animation-suffix-color: rgba(255, 255, 255, 0.55);
         }
       }
 
-      :host([theme='dark']),
       :host([data-theme='dark']) {
         --md-number-animation-color: rgba(255, 255, 255, 0.92);
         --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);
         --md-number-animation-suffix-color: rgba(255, 255, 255, 0.55);
       }
 
-      :host([theme='light']),
       :host([data-theme='light']) {
         --md-number-animation-color: var(--md-color-text);
         --md-number-animation-prefix-color: var(--md-color-text-secondary);
@@ -147,9 +145,6 @@ export class MacNumberAnimation extends BaseElement {
   /** Component size */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   /** Callback when animation finishes (can be set as property) */
   @property({ attribute: false }) onFinish?: (value: number) => void
 
@@ -173,9 +168,6 @@ export class MacNumberAnimation extends BaseElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
-    }
     // Re-animate when `to` or `from` changes
     if (changed.has('to') || changed.has('from')) {
       if (this.autoplay && this._isAnimating === false) {

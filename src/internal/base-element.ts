@@ -60,8 +60,6 @@ export abstract class BaseElement extends LitElement {
   }
 
   protected get _resolvedTheme(): 'light' | 'dark' | undefined {
-    const ownTheme = (this as unknown as Record<string, unknown>).theme as string | undefined
-    if (ownTheme && ownTheme !== 'auto') return ownTheme as 'light' | 'dark'
     return this._globalTheme
   }
 
