@@ -268,22 +268,6 @@ export class MacDrawer extends BaseElement {
         cursor: ns-resize;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          --md-drawer-bg: rgba(40, 40, 40, 0.92);
-          --md-drawer-border: rgba(255, 255, 255, 0.08);
-          --md-drawer-shadow: -8px 0 40px rgba(0, 0, 0, 0.3), -2px 0 12px rgba(0, 0, 0, 0.2);
-          --md-drawer-header-border: rgba(255, 255, 255, 0.06);
-          --md-drawer-title-color: rgba(255, 255, 255, 0.92);
-          --md-drawer-footer-border: rgba(255, 255, 255, 0.06);
-          --md-drawer-close-color: rgba(255, 255, 255, 0.55);
-          --md-drawer-close-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-drawer-mask-bg: rgba(0, 0, 0, 0.5);
-        }
-      }
-
       :host([data-theme='dark']) {
         --md-drawer-bg: rgba(40, 40, 40, 0.92);
         --md-drawer-border: rgba(255, 255, 255, 0.08);

@@ -93,14 +93,6 @@ export class MacNumberAnimation extends BaseElement {
 
       /* ─── Dark Mode ─── */
 
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          --md-number-animation-color: rgba(255, 255, 255, 0.92);
-          --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);
-          --md-number-animation-suffix-color: rgba(255, 255, 255, 0.55);
-        }
-      }
-
       :host([data-theme='dark']) {
         --md-number-animation-color: rgba(255, 255, 255, 0.92);
         --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);

@@ -137,13 +137,6 @@ export class MacRating extends BaseElement {
       }
 
       /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          --md-rating-color-inactive: var(--md-rating-color-dark-inactive, #4b5563);
-          --md-rating-color-disabled: var(--md-rating-color-dark-inactive, #4b5563);
-        }
-      }
-
       :host([data-theme='dark']) {
         --md-rating-color-inactive: var(--md-rating-color-dark-inactive, #4b5563);
         --md-rating-color-disabled: var(--md-rating-color-dark-inactive, #4b5563);

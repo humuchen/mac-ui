@@ -329,38 +329,6 @@ export class MacInput extends BaseElement {
         font-size: var(--lg-input-font-size);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) .input-container--filled {
-          background: rgba(255, 255, 255, 0.05);
-        }
-
-        :host(:not([data-theme='light'])) .input-container--filled:focus-within {
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        :host(:not([data-theme='light'])) .input-container--glass {
-          background: rgba(255, 255, 255, 0.05);
-        }
-
-        :host(:not([data-theme='light'])) .input-container--glass:focus-within {
-          background: rgba(255, 255, 255, 0.08);
-        }
-
-        :host(:not([data-theme='light'])) .clear-button {
-          background: rgba(255, 255, 255, 0.1);
-        }
-
-        :host(:not([data-theme='light'])) .clear-button:hover {
-          background: rgba(255, 255, 255, 0.15);
-        }
-
-        :host(:not([data-theme='light'])) .loading-spinner {
-          border-color: rgba(255, 255, 255, 0.2);
-          border-top-color: var(--md-color-primary);
-        }
-      }
-
       :host([data-theme='dark']) .input-container--filled {
         background: rgba(255, 255, 255, 0.05);
       }

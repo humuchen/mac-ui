@@ -309,30 +309,6 @@ export class MacTabs extends BaseElement {
         --md-tabs-pane-padding: var(--md-spacing-xl) 0;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
-          --md-tabs-item-color: rgba(255, 255, 255, 0.55);
-          --md-tabs-item-hover-color: rgba(255, 255, 255, 0.88);
-          --md-tabs-item-active-color: rgba(0, 122, 255, 0.9);
-          --md-tabs-item-disabled-color: rgba(255, 255, 255, 0.3);
-          --md-tabs-indicator-color: rgba(0, 122, 255, 0.9);
-          --md-tabs-close-color: rgba(255, 255, 255, 0.4);
-          --md-tabs-close-hover-color: rgba(255, 255, 255, 0.8);
-          --md-tabs-close-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-tabs-add-color: rgba(255, 255, 255, 0.4);
-          --md-tabs-add-hover-color: rgba(255, 255, 255, 0.8);
-          --md-tabs-add-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-tabs-segment-bg: rgba(255, 255, 255, 0.06);
-          --md-tabs-segment-item-color: rgba(255, 255, 255, 0.55);
-          --md-tabs-segment-item-active-bg: rgba(255, 255, 255, 0.12);
-          --md-tabs-segment-item-active-color: rgba(255, 255, 255, 0.92);
-          --md-tabs-segment-item-hover-bg: rgba(255, 255, 255, 0.08);
-        }
-      }
-
       :host([data-theme='dark']) {
         --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
         --md-tabs-item-color: rgba(255, 255, 255, 0.55);

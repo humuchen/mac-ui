@@ -299,22 +299,6 @@ export class MacDescriptions extends BaseElement {
         --md-descriptions-label-width: 140px;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
-          --md-descriptions-container-border: rgba(255, 255, 255, 0.08);
-          --md-descriptions-header-border: rgba(255, 255, 255, 0.08);
-          --md-descriptions-title-color: rgba(255, 255, 255, 0.92);
-          --md-descriptions-label-color: rgba(255, 255, 255, 0.55);
-          --md-descriptions-label-bg: rgba(255, 255, 255, 0.04);
-          --md-descriptions-value-color: rgba(255, 255, 255, 0.88);
-          --md-descriptions-row-border: rgba(255, 255, 255, 0.06);
-          --md-descriptions-separator-color: rgba(255, 255, 255, 0.55);
-        }
-      }
-
       :host([data-theme='dark']) {
         --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
         --md-descriptions-container-border: rgba(255, 255, 255, 0.08);

@@ -244,40 +244,6 @@ export class MacCard extends BaseElement {
         }
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) .card--default {
-          background: rgba(255, 255, 255, 0.04);
-          border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        :host(:not([data-theme='light'])) .card--elevated {
-          background: rgba(255, 255, 255, 0.06);
-          box-shadow:
-            0 4px 6px -1px rgba(0, 0, 0, 0.3),
-            0 2px 4px -2px rgba(0, 0, 0, 0.2),
-            0 0 0 1px rgba(255, 255, 255, 0.05);
-        }
-
-        :host(:not([data-theme='light'])) .card--outlined {
-          border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        :host(:not([data-theme='light'])) .card--gradient {
-          background: linear-gradient(
-            135deg,
-            rgba(0, 122, 255, 0.15) 0%,
-            rgba(88, 86, 214, 0.15) 100%
-          );
-        }
-
-        :host(:not([data-theme='light'])) .card__header,
-        :host(:not([data-theme='light'])) .card__footer {
-          border-color: rgba(255, 255, 255, 0.08);
-          background: rgba(255, 255, 255, 0.02);
-        }
-      }
-
       :host([data-theme='dark']) .card--default {
         background: rgba(255, 255, 255, 0.04);
         border-color: rgba(255, 255, 255, 0.1);

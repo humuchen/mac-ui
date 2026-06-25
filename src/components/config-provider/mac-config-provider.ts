@@ -19,10 +19,15 @@ export class MacConfigProvider extends BaseElement {
   ]
 
   /** Global theme: 'light', 'dark', or 'auto' (follows system preference). */
-  @property({ reflect: true }) theme: 'light' | 'dark' | 'auto' = 'auto'
+  @property({ reflect: true }) theme: 'light' | 'dark' = 'light'
 
   /** Global size: 'sm', 'md', or 'lg'. */
   @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+
+  override connectedCallback() {
+    super.connectedCallback()
+    this._updateDataAttributes()
+  }
 
   override updated(changed: Map<string, unknown>) {
     if (changed.has('theme') || changed.has('size')) {
@@ -31,11 +36,12 @@ export class MacConfigProvider extends BaseElement {
   }
 
   private _updateDataAttributes() {
-    if (this.theme === 'auto') {
-      this.removeAttribute('data-theme')
-    } else {
-      this.setAttribute('data-theme', this.theme)
-    }
+    this.setAttribute('data-theme', this.theme)
+    // if (this.theme === 'auto') {
+    //   this.removeAttribute('data-theme')
+    // } else {
+    //   this.setAttribute('data-theme', this.theme)
+    // }
   }
 
   override render() {

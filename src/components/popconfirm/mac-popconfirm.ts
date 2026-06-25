@@ -296,33 +296,6 @@ export class MacPopconfirm extends BaseElement {
         background: rgba(180, 30, 25, 0.95);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .mac-popconfirm-portal {
-          --md-popconfirm-bg: rgba(40, 40, 40, 0.92);
-          --md-popconfirm-border: rgba(255, 255, 255, 0.08);
-          --md-popconfirm-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
-          --md-popconfirm-title-color: rgba(255, 255, 255, 0.92);
-          --md-popconfirm-desc-color: rgba(255, 255, 255, 0.45);
-          --md-popconfirm-icon-color: #f5a623;
-        }
-
-        .mac-popconfirm-portal .popconfirm-arrow {
-          background: rgba(40, 40, 40, 0.92);
-          border-color: rgba(255, 255, 255, 0.08);
-        }
-
-        .mac-popconfirm-portal .popconfirm-btn {
-          background: rgba(255, 255, 255, 0.08);
-          color: rgba(255, 255, 255, 0.88);
-          border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .mac-popconfirm-portal .popconfirm-btn:hover {
-          background: rgba(255, 255, 255, 0.12);
-        }
-      }
-
       .mac-popconfirm-portal[data-theme='dark'] {
         --md-popconfirm-bg: rgba(40, 40, 40, 0.92);
         --md-popconfirm-border: rgba(255, 255, 255, 0.08);

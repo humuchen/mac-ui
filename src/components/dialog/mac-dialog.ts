@@ -256,45 +256,7 @@ export class MacDialog extends BaseElement {
         color: var(--md-dialog-title-inactive-color);
       }
 
-      /* ─── Dark Mode (auto via OS) ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) {
-          box-shadow: var(--md-dialog-container-dark-shadow);
-        }
-
-        :host(:not([data-theme='light'])) .dialog {
-          background: var(--md-dialog-container-dark-bg);
-        }
-
-        :host(:not([data-theme='light'])) .titlebar {
-          background: var(--md-dialog-header-dark-bg);
-          border-bottom-color: var(--md-dialog-header-dark-border);
-        }
-
-        :host(:not([data-theme='light'])) .title {
-          color: var(--md-dialog-title-dark-color);
-        }
-
-        :host(:not([data-theme='light'])) .body {
-          color: var(--md-dialog-body-dark-color);
-        }
-
-        :host(:not([data-theme='light']):not([active])) .titlebar {
-          background: rgba(255, 255, 255, 0.02);
-        }
-
-        :host(:not([data-theme='light']):not([active])) .title {
-          color: var(--md-dialog-title-dark-inactive-color);
-        }
-
-        :host(:not([data-theme='light'])) .resize-handle::after {
-          border-right-color: var(--md-dialog-resize-dark-border);
-          border-bottom-color: var(--md-dialog-resize-dark-border);
-        }
-      }
-
-      /* ─── Dark Mode (manual via theme/data-theme="dark") ─── */
+      /* ─── Dark Mode ─── */
 
       :host([data-theme='dark']) {
         box-shadow: var(--md-dialog-container-dark-shadow);

@@ -5,6 +5,7 @@ import './mac-config-provider'
 import '../button/mac-button'
 import '../input/mac-input'
 import '../select/mac-select'
+import '../number-animation/mac-number-animation'
 
 const meta: Meta = {
   title: 'Config/ConfigProvider',
@@ -29,7 +30,7 @@ type Story = StoryObj
 
 export const Default: Story = {
   args: {
-    theme: 'auto',
+    theme: 'light',
     size: 'md',
   },
   render: (args) => html`
@@ -45,6 +46,7 @@ export const Default: Story = {
             { value: '3', label: 'Option 3' },
           ]}
         ></mac-select>
+        <mac-number-animation .to=${100}></mac-number-animation>
       </div>
     </mac-config-provider>
   `,
@@ -52,7 +54,7 @@ export const Default: Story = {
 
 export const LargeSize: Story = {
   args: {
-    theme: 'auto',
+    theme: 'light',
     size: 'lg',
   },
   render: (args) => html`
@@ -90,6 +92,7 @@ export const DarkTheme: Story = {
             { value: '2', label: 'Option 2' },
           ]}
         ></mac-select>
+        <mac-number-animation .to=${10}></mac-number-animation>
       </div>
     </mac-config-provider>
   `,

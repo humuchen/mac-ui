@@ -410,46 +410,6 @@ export class MacSelect extends BaseElement {
         min-height: var(--lg-select-trigger-min-height);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) .select-trigger--filled {
-          background: var(--md-select-container-dark-filled-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-trigger--glass {
-          background: var(--md-select-container-dark-glass-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-dropdown {
-          background: var(--md-select-container-dark-bg);
-          border-color: var(--md-select-container-dark-border);
-        }
-
-        :host(:not([data-theme='light'])) .select-option:hover {
-          background: var(--md-select-item-dark-hover-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-option.selected {
-          background: var(--md-select-item-dark-selected-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-option.focused {
-          background: var(--md-select-item-dark-focused-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-tag {
-          background: var(--md-select-tag-dark-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-clear {
-          background: var(--md-select-clear-dark-bg);
-        }
-
-        :host(:not([data-theme='light'])) .select-clear:hover {
-          background: var(--md-select-clear-dark-hover-bg);
-        }
-      }
-
       :host([data-theme='dark']) .select-trigger--filled {
         background: var(--md-select-container-dark-filled-bg);
       }

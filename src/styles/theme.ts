@@ -609,24 +609,6 @@ export const themeTokens: CSSResult = css`
     --md-popconfirm-desc-dark-color: rgba(255, 255, 255, 0.45);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :host(:not([data-theme='light'])) {
-      /* 基础颜色 */
-      --md-color-text: rgba(255, 255, 255, 0.92);
-      --md-color-text-secondary: rgba(255, 255, 255, 0.55);
-      --md-color-border: rgba(255, 255, 255, 0.1);
-      --md-color-bg: rgba(30, 30, 30, 0.95);
-      --md-color-bg-secondary: rgba(255, 255, 255, 0.05);
-
-      /* Glass 毛玻璃 */
-      --md-glass-menu-bg: rgba(40, 40, 40, 0.85);
-      --md-glass-separator: rgba(255, 255, 255, 0.08);
-
-      /* macOS 风格 */
-      --md-mac-text-primary: rgba(255, 255, 255, 0.92);
-    }
-  }
-
   :host([data-theme='dark']) {
     /* 基础颜色 */
     --md-color-text: rgba(255, 255, 255, 0.92);

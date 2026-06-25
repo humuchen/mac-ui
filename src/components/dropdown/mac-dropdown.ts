@@ -286,39 +286,6 @@ export class MacDropdown extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .mac-dropdown-portal:not([data-theme='light']),
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-submenu > .mac-dropdown-submenu-portal {
-          background: var(--md-dropdown-container-dark-bg);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-item:hover:not(.disabled) {
-          background: var(--md-dropdown-item-dark-hover-bg);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-item.active {
-          background: var(--md-dropdown-item-dark-active-bg);
-          color: var(--md-dropdown-item-active-color);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-item.danger:hover:not(.disabled) {
-          background: var(--md-dropdown-item-danger-hover-bg);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-divider {
-          background: var(--md-dropdown-divider-dark-color);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-item {
-          color: var(--md-dropdown-item-dark-color);
-        }
-
-        .mac-dropdown-portal:not([data-theme='light']) .dropdown-item-shortcut {
-          color: var(--md-dropdown-shortcut-dark-color);
-        }
-      }
-
       .mac-dropdown-portal[data-theme='dark'],
       .mac-dropdown-portal[data-theme='dark'] .dropdown-submenu > .mac-dropdown-submenu-portal {
         background: var(--md-dropdown-container-dark-bg);

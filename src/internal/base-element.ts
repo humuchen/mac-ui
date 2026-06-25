@@ -1,11 +1,14 @@
-import { LitElement } from 'lit'
-import { state } from 'lit/decorators.js'
+import { LitElement, PropertyValues } from 'lit'
+import { state, property } from 'lit/decorators.js'
 
 export abstract class BaseElement extends LitElement {
   static override shadowRootOptions: ShadowRootInit = {
     mode: 'open',
     delegatesFocus: true,
   }
+
+  /** Component-level theme override. Takes precedence over mac-config-provider. */
+  @property({ reflect: true }) theme?: 'light' | 'dark'
 
   @state() private _globalSize?: 'sm' | 'md' | 'lg'
   @state() private _globalTheme?: 'light' | 'dark'
@@ -60,7 +63,17 @@ export abstract class BaseElement extends LitElement {
   }
 
   protected get _resolvedTheme(): 'light' | 'dark' | undefined {
-    return this._globalTheme
+    return this.theme ?? this._globalTheme ?? undefined
+  }
+
+  override update(changedProperties: PropertyValues) {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+    super.update(changedProperties)
   }
 
   protected emit(name: string, options?: CustomEventInit): void {

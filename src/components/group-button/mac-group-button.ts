@@ -127,22 +127,6 @@ export class MacGroupButton extends BaseElement {
         font-size: var(--lg-group-button-item-font-size);
       }
 
-      /* Dark mode support */
-      @media (prefers-color-scheme: dark) {
-        :host(:not([data-theme='light'])) .group-container {
-          background: rgba(255, 255, 255, 0.08);
-          border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        :host(:not([data-theme='light'])) .button {
-          color: rgba(255, 255, 255, 0.85);
-        }
-
-        :host(:not([data-theme='light'])) .button:hover:not(.button--selected):not(:disabled) {
-          color: var(--md-mac-text-white);
-        }
-      }
-
       :host([data-theme='dark']) .group-container {
         background: rgba(255, 255, 255, 0.08);
         border-color: rgba(255, 255, 255, 0.15);
