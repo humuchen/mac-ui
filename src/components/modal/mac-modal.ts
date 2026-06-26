@@ -427,6 +427,67 @@ export class MacModal extends BaseElement {
         border-right-color: var(--md-modal-resize-border);
         border-bottom-color: var(--md-modal-resize-border);
       }
+
+      /* ─── 响应式：移动端全屏化 ─── */
+      @media (max-width: 768px) {
+        :host {
+          /* 占满视口，预留安全区 */
+          top: var(--md-safe-area-top, 0px);
+          left: var(--md-safe-area-left, 0px);
+          right: var(--md-safe-area-right, 0px);
+          bottom: var(--md-safe-area-bottom, 0px);
+          width: auto;
+          max-width: 100%;
+          max-height: 100%;
+          border-radius: 0;
+        }
+
+        :host .modal {
+          border-radius: 0;
+        }
+
+        /* 触屏无需调整尺寸手柄 */
+        .resize-handle,
+        .resize-n,
+        .resize-s,
+        .resize-e,
+        .resize-w,
+        .resize-ne,
+        .resize-nw,
+        .resize-se,
+        .resize-sw {
+          display: none;
+        }
+
+        /* 标题栏增高以适配触控 */
+        .traffic-lights {
+          gap: 10px;
+        }
+
+        .traffic-light {
+          width: 14px;
+          height: 14px;
+        }
+
+        .traffic-light svg {
+          width: 9px;
+          height: 9px;
+        }
+
+        .titlebar-spacer {
+          width: 64px;
+        }
+
+        /* 底部按钮拉宽，便于点击 */
+        .footer {
+          padding-top: var(--md-spacing-sm);
+          padding-bottom: var(--md-spacing-sm);
+        }
+
+        .footer-btn {
+          min-height: 40px;
+        }
+      }
     `,
   ]
 
