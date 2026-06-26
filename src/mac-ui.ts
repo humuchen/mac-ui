@@ -50,6 +50,24 @@ export { MacCarousel, MacCarouselItem } from './components/carousel/mac-carousel
 export { MacProgress } from './components/progress/mac-progress'
 export type { CircleConfig, GradientConfig } from './components/progress/mac-progress'
 export { MacAlert } from './components/alert/mac-alert'
+export { MacAnimation } from './components/animation/mac-animation'
+export {
+  registerAnimation,
+  getAnimation,
+  hasAnimation,
+  getAnimationNames,
+  getAllAnimations,
+  animationStyleSheet,
+  buildAnimationShorthand,
+  getAnimationStyleObject,
+  BUILT_IN,
+  BUILT_IN_ANIMATION_NAMES,
+} from './components/animation/animations'
+export type {
+  AnimationCategory,
+  AnimationDefinition,
+  AnimationOptions,
+} from './components/animation/animations'
 
 // Base class (for extension)
 export { BaseElement } from './internal/base-element'
