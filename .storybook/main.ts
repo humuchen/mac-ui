@@ -10,6 +10,10 @@ const config: StorybookConfig = {
   docs: {
     autodocs: 'tag',
   },
+  viteFinal: async (config) => {
+    config.base = process.env.CI ? '/mac-ui/' : '/'
+    return config
+  },
 }
 
 export default config
