@@ -57,8 +57,8 @@ export const Default: Story = {
         <mac-form-item label="邮箱" path="email">
           <mac-input placeholder="请输入邮箱"></mac-input>
         </mac-form-item>
-        <mac-form-item>
-          <mac-button type="primary">提交</mac-button>
+        <mac-form-item style="text-align:right;">
+          <mac-button variant="primary">提交</mac-button>
         </mac-form-item>
       </mac-form>
     `
@@ -70,17 +70,17 @@ export const LabelAlign: Story = {
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <mac-form .model=${{ name: '' }} label-align="left" label-width="100px">
         <mac-form-item label="左对齐" path="name">
-          <mac-input placeholder="label-align="left""></mac-input>
+          <mac-input placeholder="label-align=left"></mac-input>
         </mac-form-item>
       </mac-form>
       <mac-form .model=${{ name: '' }} label-align="right" label-width="100px">
         <mac-form-item label="右对齐" path="name">
-          <mac-input placeholder="label-align="right""></mac-input>
+          <mac-input placeholder="label-align=right"></mac-input>
         </mac-form-item>
       </mac-form>
       <mac-form .model=${{ name: '' }} label-align="top">
         <mac-form-item label="顶部对齐" path="name">
-          <mac-input placeholder="label-align="top""></mac-input>
+          <mac-input placeholder="label-align=top"></mac-input>
         </mac-form-item>
       </mac-form>
     </div>

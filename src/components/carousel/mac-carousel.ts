@@ -1,4 +1,4 @@
-import { html, css, nothing } from 'lit'
+import { html, css, nothing, svg } from 'lit'
 import { property, customElement, state, query } from 'lit/decorators.js'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
@@ -149,7 +149,9 @@ export class MacCarousel extends BaseElement {
         border: none;
         cursor: pointer;
         opacity: 0.7;
-        transition: opacity var(--md-transition-fast), background var(--md-transition-fast);
+        transition:
+          opacity var(--md-transition-fast),
+          background var(--md-transition-fast);
         z-index: 10;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -336,7 +338,11 @@ export class MacCarousel extends BaseElement {
   @property({ attribute: 'dot-type' }) dotType: 'dot' | 'line' = 'dot'
 
   /** Position of indicator dots. */
-  @property({ attribute: 'dot-position', reflect: true }) dotPosition: 'top' | 'bottom' | 'left' | 'right' = 'bottom'
+  @property({ attribute: 'dot-position', reflect: true }) dotPosition:
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right' = 'bottom'
 
   /** Whether the carousel is draggable. */
   @property({ type: Boolean }) draggable = false
@@ -431,6 +437,22 @@ export class MacCarousel extends BaseElement {
     if (changed.has('effect')) {
       this._syncFadeActiveClass()
     }
+    if (changed.has('wheel')) {
+      if (this.wheel) {
+        this.addEventListener('wheel', this._handleWheel, { passive: false })
+      } else {
+        this.removeEventListener('wheel', this._handleWheel)
+      }
+    }
+    if (changed.has('keyboard')) {
+      if (this.keyboard) {
+        this.addEventListener('keydown', this._handleKeydown)
+        this.setAttribute('tabindex', '0')
+      } else {
+        this.removeEventListener('keydown', this._handleKeydown)
+        this.removeAttribute('tabindex')
+      }
+    }
     this._applyTransform()
   }
 
@@ -460,7 +482,12 @@ export class MacCarousel extends BaseElement {
   }
 
   private _applyTransform() {
-    if (!this._track || this.effect === 'fade' || this.effect === 'custom') return
+    if (!this._track) return
+    if (this.effect === 'fade' || this.effect === 'custom') {
+      this._track.style.transform = ''
+      this._track.style.transition = ''
+      return
+    }
     const index = this._resolvedIndex
     const offset = this._isDragging ? this._dragOffset : 0
     const step = 100 / this.slidesPerView
@@ -481,8 +508,11 @@ export class MacCarousel extends BaseElement {
   }
 
   private _syncFadeActiveClass() {
-    if (this.effect !== 'fade') return
     const items = this._getItems()
+    if (this.effect !== 'fade') {
+      items.forEach((item) => item.classList.remove('active'))
+      return
+    }
     const activeIndex = this._resolvedIndex
     items.forEach((item, i) => {
       if (i === activeIndex) {
@@ -617,7 +647,10 @@ export class MacCarousel extends BaseElement {
     if ((isHorizontal && e.key === 'ArrowLeft') || (!isHorizontal && e.key === 'ArrowUp')) {
       e.preventDefault()
       this._prev()
-    } else if ((isHorizontal && e.key === 'ArrowRight') || (!isHorizontal && e.key === 'ArrowDown')) {
+    } else if (
+      (isHorizontal && e.key === 'ArrowRight') ||
+      (!isHorizontal && e.key === 'ArrowDown')
+    ) {
       e.preventDefault()
       this._next()
     }
@@ -659,14 +692,21 @@ export class MacCarousel extends BaseElement {
         aria-label=${isPrev ? 'Previous slide' : 'Next slide'}
         @click=${() => (isPrev ? this._prev() : this._next())}
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           ${isVertical
             ? isPrev
-              ? html`<path d="M12 19V5M5 12l7-7 7 7" />`
-              : html`<path d="M12 5v14M5 12l7 7 7-7" />`
+              ? svg`<path d="M12 19V5M5 12l7-7 7 7" />`
+              : svg`<path d="M12 5v14M5 12l7 7 7-7" />`
             : isPrev
-              ? html`<path d="M15 18l-6-6 6-6" />`
-              : html`<path d="M9 18l6-6-6-6" />`}
+              ? svg`<path d="M15 18l-6-6 6-6" />`
+              : svg`<path d="M9 18l6-6-6-6" />`}
         </svg>
       </button>
     `
@@ -677,16 +717,19 @@ export class MacCarousel extends BaseElement {
 
     return html`
       <div part="dots" class="dots">
-        ${Array.from({ length: this._slideCount }, (_, i) => html`
-          <button
-            part="dot"
-            class="dot dot--${this.dotType} ${i === this._resolvedIndex ? 'dot--active' : ''}"
-            type="button"
-            aria-label="Go to slide ${i + 1}"
-            aria-current=${i === this._resolvedIndex ? 'true' : 'false'}
-            @click=${() => this._goTo(i, true)}
-          ></button>
-        `)}
+        ${Array.from(
+          { length: this._slideCount },
+          (_, i) => html`
+            <button
+              part="dot"
+              class="dot dot--${this.dotType} ${i === this._resolvedIndex ? 'dot--active' : ''}"
+              type="button"
+              aria-label="Go to slide ${i + 1}"
+              aria-current=${i === this._resolvedIndex ? 'true' : 'false'}
+              @click=${() => this._goTo(i, true)}
+            ></button>
+          `,
+        )}
       </div>
     `
   }
