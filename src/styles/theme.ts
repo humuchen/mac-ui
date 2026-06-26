@@ -124,6 +124,53 @@ export const themeTokens: CSSResult = css`
     --lg-input-radius: var(--md-radius-md);
 
     /* ═══════════════════════════════════════════════════
+       Radio 单选框  --{size}-radio-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    /* sm */
+    --sm-radio-size: 14px;
+    --sm-radio-dot-size: 6px;
+    --sm-radio-gap: 6px;
+    --sm-radio-font-size: var(--md-font-size-sm);
+
+    /* md (default) */
+    --md-radio-size: 18px;
+    --md-radio-dot-size: 8px;
+    --md-radio-gap: 8px;
+    --md-radio-font-size: var(--md-font-size-base);
+
+    /* lg */
+    --lg-radio-size: 22px;
+    --lg-radio-dot-size: 10px;
+    --lg-radio-gap: 10px;
+    --lg-radio-font-size: var(--md-font-size-lg);
+
+    /* radio 颜色 */
+    --md-radio-bg: transparent;
+    --md-radio-bg-active: var(--md-color-primary);
+    --md-radio-border-color: var(--md-color-border);
+    --md-radio-border-hover-color: var(--md-color-text-secondary);
+    --md-radio-border-active-color: var(--md-color-primary);
+    --md-radio-border-active-hover-color: var(--md-color-primary-hover);
+    --md-radio-dot-color: #fff;
+    --md-radio-label-color: var(--md-color-text);
+    --md-radio-label-hover-color: var(--md-color-text);
+    --md-radio-group-gap: var(--md-spacing-md);
+
+    /* ═══════════════════════════════════════════════════
+       Checkbox 复选框  --{size}-checkbox-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-checkbox-bg: transparent;
+    --md-checkbox-bg-active: var(--md-color-primary);
+    --md-checkbox-border-color: var(--md-color-border);
+    --md-checkbox-border-hover-color: var(--md-color-text-secondary);
+    --md-checkbox-border-active-color: var(--md-color-primary);
+    --md-checkbox-border-active-hover-color: var(--md-color-primary-hover);
+    --md-checkbox-check-color: #fff;
+    --md-checkbox-label-color: var(--md-color-text);
+    --md-checkbox-label-hover-color: var(--md-color-text);
+    --md-checkbox-group-gap: var(--md-spacing-md);
+
+    /* ═══════════════════════════════════════════════════
        Select 选择器  --{size}-select-{part}-{state}
        ═══════════════════════════════════════════════════ */
     /* sm */
@@ -232,42 +279,67 @@ export const themeTokens: CSSResult = css`
     --md-card-close-radius: var(--md-radius-sm);
 
     /* ═══════════════════════════════════════════════════
-       Dialog 对话框  --{size}-dialog-{part}-{state}
+       Modal 模态框  --{size}-modal-{part}-{state}
        ═══════════════════════════════════════════════════ */
-    --md-dialog-min-width: 280px;
-    --md-dialog-min-height: 160px;
-    --md-dialog-container-radius: var(--md-radius-dock);
-    --md-dialog-container-bg: var(--md-glass-menu-bg);
-    --md-dialog-container-shadow: 0 22px 70px rgba(0, 0, 0, 0.28), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
-    --md-dialog-header-padding: 0 var(--md-spacing-md);
-    --md-dialog-header-bg: rgba(255, 255, 255, 0.06);
-    --md-dialog-header-border: var(--md-glass-separator);
-    --md-dialog-header-height: 38px;
-    --md-dialog-body-padding: var(--md-spacing-lg);
-    --md-dialog-body-font-size: var(--md-font-size-base);
-    --md-dialog-title-font-size: var(--md-font-size-menu);
-    --md-dialog-title-color: var(--md-mac-text-primary);
-    --md-dialog-title-inactive-color: rgba(29, 29, 31, 0.4);
-    --md-dialog-traffic-close-bg: #ff5f57;
-    --md-dialog-traffic-minimize-bg: #febc2e;
-    --md-dialog-traffic-maximize-bg: #28c840;
-    --md-dialog-traffic-border: rgba(0, 0, 0, 0.12);
-    --md-dialog-traffic-inactive-bg: #d4d4d4;
-    --md-dialog-traffic-close-stroke: #4d0000;
-    --md-dialog-traffic-minimize-stroke: #995700;
-    --md-dialog-traffic-maximize-stroke: #006500;
-    --md-dialog-resize-border: rgba(0, 0, 0, 0.18);
+    --md-modal-min-width: 280px;
+    --md-modal-min-height: 160px;
+    --md-modal-container-radius: var(--md-radius-dock);
+    --md-modal-container-bg: var(--md-glass-menu-bg);
+    --md-modal-container-shadow: 0 22px 70px rgba(0, 0, 0, 0.28), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+    --md-modal-header-padding: 0 var(--md-spacing-md);
+    --md-modal-header-bg: rgba(255, 255, 255, 0.06);
+    --md-modal-header-border: var(--md-glass-separator);
+    --md-modal-header-height: 38px;
+    --md-modal-body-padding: var(--md-spacing-lg);
+    --md-modal-body-font-size: var(--md-font-size-base);
+    --md-modal-title-font-size: var(--md-font-size-menu);
+    --md-modal-title-color: var(--md-mac-text-primary);
+    --md-modal-title-align: center;
+    --md-modal-title-inactive-color: rgba(29, 29, 31, 0.4);
+    --md-modal-traffic-close-bg: #ff5f57;
+    --md-modal-traffic-minimize-bg: #febc2e;
+    --md-modal-traffic-maximize-bg: #28c840;
+    --md-modal-traffic-border: rgba(0, 0, 0, 0.12);
+    --md-modal-traffic-inactive-bg: #d4d4d4;
+    --md-modal-traffic-close-stroke: #4d0000;
+    --md-modal-traffic-minimize-stroke: #995700;
+    --md-modal-traffic-maximize-stroke: #006500;
+    --md-modal-resize-border: rgba(0, 0, 0, 0.18);
+    --md-modal-footer-padding: var(--md-spacing-sm) var(--md-spacing-lg);
+    --md-modal-footer-bg: rgba(255, 255, 255, 0.04);
+    --md-modal-footer-border: var(--md-glass-separator);
+    --md-modal-footer-font-size: var(--md-font-size-sm);
+    --md-modal-footer-color: var(--md-mac-text-primary);
+    --md-modal-footer-btn-padding: 5px 14px;
+    --md-modal-footer-btn-radius: var(--md-radius-md);
+    --md-modal-footer-btn-font-size: var(--md-font-size-sm);
+    --md-modal-footer-btn-gap: var(--md-spacing-sm);
+    --md-modal-footer-cancel-bg: rgba(255, 255, 255, 0.5);
+    --md-modal-footer-cancel-border: rgba(0, 0, 0, 0.1);
+    --md-modal-footer-cancel-color: var(--md-mac-text-primary);
+    --md-modal-footer-cancel-hover-bg: rgba(255, 255, 255, 0.75);
+    --md-modal-footer-ok-bg: var(--md-color-primary);
+    --md-modal-footer-ok-color: #fff;
+    --md-modal-footer-ok-hover-bg: var(--md-color-primary-hover);
 
-    /* dialog 暗色模式 */
-    --md-dialog-container-dark-bg: rgba(40, 40, 40, 0.85);
-    --md-dialog-container-dark-shadow:
+    /* modal 暗色模式 */
+    --md-modal-container-dark-bg: rgba(40, 40, 40, 0.85);
+    --md-modal-container-dark-shadow:
       0 22px 70px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.08);
-    --md-dialog-header-dark-bg: rgba(255, 255, 255, 0.04);
-    --md-dialog-header-dark-border: rgba(255, 255, 255, 0.08);
-    --md-dialog-title-dark-color: rgba(255, 255, 255, 0.92);
-    --md-dialog-title-dark-inactive-color: rgba(255, 255, 255, 0.3);
-    --md-dialog-body-dark-color: rgba(255, 255, 255, 0.88);
-    --md-dialog-resize-dark-border: rgba(255, 255, 255, 0.2);
+    --md-modal-header-dark-bg: rgba(255, 255, 255, 0.04);
+    --md-modal-header-dark-border: rgba(255, 255, 255, 0.08);
+    --md-modal-title-dark-color: rgba(255, 255, 255, 0.92);
+    --md-modal-title-dark-inactive-color: rgba(255, 255, 255, 0.3);
+    --md-modal-body-dark-color: rgba(255, 255, 255, 0.88);
+    --md-modal-resize-dark-border: rgba(255, 255, 255, 0.2);
+    --md-modal-footer-dark-bg: rgba(255, 255, 255, 0.03);
+    --md-modal-footer-dark-border: rgba(255, 255, 255, 0.08);
+    --md-modal-footer-dark-color: rgba(255, 255, 255, 0.88);
+    --md-modal-footer-cancel-dark-bg: rgba(255, 255, 255, 0.08);
+    --md-modal-footer-cancel-dark-border: rgba(255, 255, 255, 0.12);
+    --md-modal-footer-cancel-dark-color: rgba(255, 255, 255, 0.88);
+    --md-modal-footer-cancel-dark-hover-bg: rgba(255, 255, 255, 0.12);
+    --md-modal-footer-ok-dark-hover-bg: var(--md-color-primary-hover);
 
     /* ═══════════════════════════════════════════════════
        GroupButton 按钮组  --{size}-group-button-{part}-{state}
@@ -609,6 +681,53 @@ export const themeTokens: CSSResult = css`
     --md-popconfirm-desc-dark-color: rgba(255, 255, 255, 0.45);
 
     /* ═══════════════════════════════════════════════════
+       Confirm 确认弹框  --md-confirm-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-confirm-mask-bg: rgba(0, 0, 0, 0.35);
+    --md-confirm-bg: rgba(246, 246, 246, 0.88);
+    --md-confirm-shadow: 0 22px 70px rgba(0, 0, 0, 0.28), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+    --md-confirm-border: rgba(255, 255, 255, 0.25);
+    --md-confirm-radius: var(--md-radius-dock);
+    --md-confirm-title-padding: var(--md-spacing-md) var(--md-spacing-lg);
+    --md-confirm-title-border: var(--md-glass-separator);
+    --md-confirm-title-font-size: var(--md-font-size-menu);
+    --md-confirm-title-color: var(--md-mac-text-primary);
+    --md-confirm-body-padding: var(--md-spacing-lg);
+    --md-confirm-body-color: var(--md-mac-text-primary);
+    --md-confirm-body-font-size: var(--md-font-size-base);
+    --md-confirm-icon-color: #f5a623;
+    --md-confirm-footer-padding: var(--md-spacing-sm) var(--md-spacing-lg);
+    --md-confirm-footer-border: var(--md-glass-separator);
+    --md-confirm-btn-gap: var(--md-spacing-sm);
+    --md-confirm-btn-padding: 5px 14px;
+    --md-confirm-btn-radius: var(--md-radius-md);
+    --md-confirm-btn-font-size: var(--md-font-size-sm);
+    --md-confirm-cancel-bg: rgba(255, 255, 255, 0.5);
+    --md-confirm-cancel-border: rgba(0, 0, 0, 0.1);
+    --md-confirm-cancel-color: var(--md-mac-text-primary);
+    --md-confirm-cancel-hover-bg: rgba(255, 255, 255, 0.75);
+    --md-confirm-ok-bg: var(--md-color-primary);
+    --md-confirm-ok-color: #fff;
+    --md-confirm-ok-hover-bg: var(--md-color-primary-hover);
+    --md-confirm-danger-bg: var(--md-color-danger);
+    --md-confirm-danger-color: #fff;
+    --md-confirm-danger-hover-bg: #dc2626;
+
+    /* confirm 暗色模式 */
+    --md-confirm-dark-bg: rgba(40, 40, 40, 0.92);
+    --md-confirm-dark-shadow: 0 22px 70px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+    --md-confirm-dark-border: rgba(255, 255, 255, 0.08);
+    --md-confirm-dark-title-color: rgba(255, 255, 255, 0.92);
+    --md-confirm-dark-title-border: rgba(255, 255, 255, 0.08);
+    --md-confirm-dark-body-color: rgba(255, 255, 255, 0.88);
+    --md-confirm-dark-footer-border: rgba(255, 255, 255, 0.08);
+    --md-confirm-dark-cancel-bg: rgba(255, 255, 255, 0.08);
+    --md-confirm-dark-cancel-border: rgba(255, 255, 255, 0.12);
+    --md-confirm-dark-cancel-color: rgba(255, 255, 255, 0.88);
+    --md-confirm-dark-cancel-hover-bg: rgba(255, 255, 255, 0.12);
+    --md-confirm-dark-ok-hover-bg: var(--md-color-primary-hover);
+
+    /* ═══════════════════════════════════════════════════
        Split 面板分割  --md-split-{part}-{state}
        ═══════════════════════════════════════════════════ */
     --md-split-resizer-size: 1px;
@@ -616,6 +735,63 @@ export const themeTokens: CSSResult = css`
     --md-split-resizer-hover-color: var(--md-color-primary);
     --md-split-resizer-handle-bg: var(--md-color-bg-secondary);
     --md-split-resizer-handle-dot-color: var(--md-color-text-secondary);
+
+    /* ═══════════════════════════════════════════════════
+       Alert 警示信息  --md-alert-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-alert-padding: var(--md-spacing-sm) var(--md-spacing-md);
+    --md-alert-radius: var(--md-radius-md);
+    --md-alert-font-size: var(--md-font-size-base);
+    --md-alert-title-font-size: var(--md-font-size-base);
+    --md-alert-gap: var(--md-spacing-sm);
+    --md-alert-content-gap: var(--md-spacing-xs);
+    --md-alert-icon-size: 18px;
+    --md-alert-close-size: 20px;
+    --md-alert-close-icon-size: 14px;
+    --md-alert-close-radius: var(--md-radius-sm);
+    --md-alert-close-hover-bg: rgba(0, 0, 0, 0.06);
+
+    /* alert default */
+    --md-alert-default-bg: var(--md-color-bg-secondary);
+    --md-alert-default-border: var(--md-color-border);
+    --md-alert-default-icon: var(--md-color-text-secondary);
+    --md-alert-default-title: var(--md-color-text);
+    --md-alert-default-content: var(--md-color-text-secondary);
+
+    /* alert primary */
+    --md-alert-primary-bg: rgba(0, 122, 255, 0.06);
+    --md-alert-primary-border: rgba(0, 122, 255, 0.2);
+    --md-alert-primary-icon: #007aff;
+    --md-alert-primary-title: #0058d0;
+    --md-alert-primary-content: #0058d0;
+
+    /* alert success */
+    --md-alert-success-bg: rgba(34, 197, 94, 0.06);
+    --md-alert-success-border: rgba(34, 197, 94, 0.2);
+    --md-alert-success-icon: #16a34a;
+    --md-alert-success-title: #15803d;
+    --md-alert-success-content: #15803d;
+
+    /* alert warning */
+    --md-alert-warning-bg: rgba(245, 158, 11, 0.06);
+    --md-alert-warning-border: rgba(245, 158, 11, 0.2);
+    --md-alert-warning-icon: #d97706;
+    --md-alert-warning-title: #b45309;
+    --md-alert-warning-content: #b45309;
+
+    /* alert error */
+    --md-alert-error-bg: rgba(239, 68, 68, 0.06);
+    --md-alert-error-border: rgba(239, 68, 68, 0.2);
+    --md-alert-error-icon: #dc2626;
+    --md-alert-error-title: #b91c1c;
+    --md-alert-error-content: #b91c1c;
+
+    /* alert info */
+    --md-alert-info-bg: rgba(107, 114, 128, 0.06);
+    --md-alert-info-border: rgba(107, 114, 128, 0.2);
+    --md-alert-info-icon: #4b5563;
+    --md-alert-info-title: #374151;
+    --md-alert-info-content: #374151;
 
     /* ═══════════════════════════════════════════════════
        LazyImage 图片懒加载  --md-lazy-image-{part}-{state}
@@ -641,6 +817,141 @@ export const themeTokens: CSSResult = css`
     --md-infinite-scroll-font-size: var(--md-font-size-sm);
     --md-infinite-scroll-gap: var(--md-spacing-sm);
     --md-infinite-scroll-spinner-size: 16px;
+
+    /* ═══════════════════════════════════════════════════
+       Carousel 轮播图  --md-carousel-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-carousel-arrow-size: 36px;
+    --md-carousel-arrow-bg: rgba(255, 255, 255, 0.72);
+    --md-carousel-arrow-color: var(--md-mac-text-primary);
+    --md-carousel-arrow-hover-bg: rgba(255, 255, 255, 0.92);
+    --md-carousel-arrow-offset: 12px;
+    --md-carousel-dot-size: 8px;
+    --md-carousel-dot-active-width: 20px;
+    --md-carousel-dot-active-radius: 4px;
+    --md-carousel-dot-bg: rgba(255, 255, 255, 0.5);
+    --md-carousel-dot-hover-bg: rgba(255, 255, 255, 0.75);
+    --md-carousel-dot-active-bg: rgba(255, 255, 255, 0.92);
+    --md-carousel-dot-gap: 8px;
+    --md-carousel-dots-offset: 16px;
+    --md-carousel-line-width: 16px;
+    --md-carousel-line-height: 3px;
+    --md-carousel-line-radius: 2px;
+    --md-carousel-line-active-width: 24px;
+
+    /* ═══════════════════════════════════════════════════
+       Progress 进度条  --{size}-progress-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-progress-height: 8px;
+    --md-progress-radius: 4px;
+    --md-progress-track-bg: var(--md-color-bg-secondary);
+    --md-progress-fill-default: var(--md-color-primary);
+    --md-progress-fill-success: var(--md-color-success);
+    --md-progress-fill-warning: var(--md-color-warning);
+    --md-progress-fill-error: var(--md-color-danger);
+    --md-progress-text-color: var(--md-color-text-secondary);
+    --md-progress-text-gap: var(--md-spacing-sm);
+    --md-progress-text-min-width: 40px;
+    --md-progress-circle-text-size: var(--md-font-size-lg);
+    --md-progress-circle-text-weight: 500;
+
+    /* sm */
+    --sm-progress-height: 4px;
+    --sm-progress-font-size: var(--md-font-size-xs);
+
+    /* md (default) */
+    --md-progress-height: 8px;
+    --md-progress-font-size: var(--md-font-size-sm);
+
+    /* lg */
+    --lg-progress-height: 12px;
+    --lg-progress-font-size: var(--md-font-size-base);
+
+    /* ═══════════════════════════════════════════════════
+       Tree 树  --md-tree-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-tree-node-padding: 6px 10px;
+    --md-tree-node-hover-bg: rgba(0, 122, 255, 0.06);
+    --md-tree-node-selected-bg: rgba(0, 122, 255, 0.1);
+    --md-tree-node-selected-hover-bg: rgba(0, 122, 255, 0.14);
+    --md-tree-node-selected-color: var(--md-color-primary);
+    --md-tree-disabled-opacity: 0.4;
+    --md-tree-indent: 20px;
+
+    /* ═══════════════════════════════════════════════════
+       Tag 标签  --{size}-tag-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    /* sm */
+    --sm-tag-padding-vertical: 1px;
+    --sm-tag-padding-horizontal: 6px;
+    --sm-tag-font-size: var(--md-font-size-xs);
+    --sm-tag-gap: 2px;
+    --sm-tag-radius: var(--md-radius-sm);
+    --sm-tag-round-radius: 10px;
+    --sm-tag-closable-padding-right: 4px;
+    --sm-tag-close-size: 12px;
+
+    /* md (default) */
+    --md-tag-padding-vertical: 2px;
+    --md-tag-padding-horizontal: 8px;
+    --md-tag-font-size: var(--md-font-size-sm);
+    --md-tag-gap: 4px;
+    --md-tag-radius: var(--md-radius-sm);
+    --md-tag-round-radius: 12px;
+    --md-tag-closable-padding-right: 6px;
+    --md-tag-close-size: 14px;
+
+    /* lg */
+    --lg-tag-padding-vertical: 4px;
+    --lg-tag-padding-horizontal: 12px;
+    --lg-tag-font-size: var(--md-font-size-base);
+    --lg-tag-gap: 6px;
+    --lg-tag-radius: var(--md-radius-md);
+    --lg-tag-round-radius: 16px;
+    --lg-tag-closable-padding-right: 8px;
+    --lg-tag-close-size: 16px;
+
+    /* tag default */
+    --md-tag-default-bg: var(--md-color-bg-secondary);
+    --md-tag-default-text: var(--md-color-text);
+    --md-tag-default-border: var(--md-color-border);
+    --md-tag-default-close-hover-bg: rgba(0, 0, 0, 0.06);
+    --md-tag-default-close-hover-color: var(--md-color-text);
+
+    /* tag primary */
+    --md-tag-primary-bg: rgba(0, 122, 255, 0.1);
+    --md-tag-primary-text: #007aff;
+    --md-tag-primary-border: rgba(0, 122, 255, 0.2);
+    --md-tag-primary-close-hover-bg: rgba(0, 122, 255, 0.15);
+    --md-tag-primary-close-hover-color: #0058d0;
+
+    /* tag success */
+    --md-tag-success-bg: rgba(34, 197, 94, 0.1);
+    --md-tag-success-text: #16a34a;
+    --md-tag-success-border: rgba(34, 197, 94, 0.2);
+    --md-tag-success-close-hover-bg: rgba(34, 197, 94, 0.15);
+    --md-tag-success-close-hover-color: #15803d;
+
+    /* tag warning */
+    --md-tag-warning-bg: rgba(245, 158, 11, 0.1);
+    --md-tag-warning-text: #d97706;
+    --md-tag-warning-border: rgba(245, 158, 11, 0.2);
+    --md-tag-warning-close-hover-bg: rgba(245, 158, 11, 0.15);
+    --md-tag-warning-close-hover-color: #b45309;
+
+    /* tag danger */
+    --md-tag-danger-bg: rgba(239, 68, 68, 0.1);
+    --md-tag-danger-text: #dc2626;
+    --md-tag-danger-border: rgba(239, 68, 68, 0.2);
+    --md-tag-danger-close-hover-bg: rgba(239, 68, 68, 0.15);
+    --md-tag-danger-close-hover-color: #b91c1c;
+
+    /* tag info */
+    --md-tag-info-bg: rgba(107, 114, 128, 0.1);
+    --md-tag-info-text: #4b5563;
+    --md-tag-info-border: rgba(107, 114, 128, 0.2);
+    --md-tag-info-close-hover-bg: rgba(107, 114, 128, 0.15);
+    --md-tag-info-close-hover-color: #374151;
   }
 
   :host([data-theme='dark']) {

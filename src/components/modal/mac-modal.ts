@@ -5,26 +5,30 @@ import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
 
 /**
- * @tag mac-dialog
- * @summary A macOS-style dialog/window with title bar, drag, and resize support.
+ * @tag mac-modal
+ * @summary A macOS-style modal/window with title bar, drag, and resize support.
  *
- * @slot - The dialog body content.
+ * @slot - The modal body content.
  * @slot titlebar - Custom title bar content (replaces default title + buttons).
+ * @slot footer - Custom footer content.
  *
- * @csspart base - The dialog container.
+ * @csspart base - The modal container.
  * @csspart titlebar - The title bar area.
  * @csspart title - The title text.
  * @csspart body - The body content area.
+ * @csspart footer - The footer area.
  * @csspart resize-handle - The resize handle at bottom-right.
  *
- * @event mac-dialog-close - Emitted when the close button is clicked.
- * @event mac-dialog-minimize - Emitted when the minimize button is clicked.
- * @event mac-dialog-maximize - Emitted when the maximize/fullscreen button is clicked.
- * @event mac-dialog-move - Emitted when the dialog is moved. Detail: { x, y }
- * @event mac-dialog-resize - Emitted when the dialog is resized. Detail: { width, height }
+ * @event mac-modal-close - Emitted when the close button is clicked.
+ * @event mac-modal-minimize - Emitted when the minimize button is clicked.
+ * @event mac-modal-maximize - Emitted when the maximize/fullscreen button is clicked.
+ * @event mac-modal-move - Emitted when the modal is moved. Detail: { x, y }
+ * @event mac-modal-resize - Emitted when the modal is resized. Detail: { width, height }
+ * @event mac-modal-ok - Emitted when the default OK button is clicked.
+ * @event mac-modal-cancel - Emitted when the default Cancel button is clicked.
  */
-@customElement('mac-dialog')
-export class MacDialog extends BaseElement {
+@customElement('mac-modal')
+export class MacModal extends BaseElement {
   static override styles = [
     themeTokens,
     sharedStyles,
@@ -32,23 +36,23 @@ export class MacDialog extends BaseElement {
       :host {
         display: block;
         position: fixed;
-        min-width: var(--md-dialog-min-width);
-        min-height: var(--md-dialog-min-height);
-        border-radius: var(--md-dialog-container-radius);
+        min-width: var(--md-modal-min-width);
+        min-height: var(--md-modal-min-height);
+        border-radius: var(--md-modal-container-radius);
         overflow: hidden;
-        box-shadow: var(--md-dialog-container-shadow);
+        box-shadow: var(--md-modal-container-shadow);
         font-family: var(--md-font-family);
       }
 
-      .dialog {
+      .modal {
         display: flex;
         flex-direction: column;
         width: 100%;
         height: 100%;
-        background: var(--md-dialog-container-bg);
+        background: var(--md-modal-container-bg);
         backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
         -webkit-backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
-        border-radius: var(--md-dialog-container-radius);
+        border-radius: var(--md-modal-container-radius);
         overflow: hidden;
       }
 
@@ -57,10 +61,10 @@ export class MacDialog extends BaseElement {
       .titlebar {
         display: flex;
         align-items: center;
-        height: var(--md-dialog-header-height);
-        padding: var(--md-dialog-header-padding);
-        background: var(--md-dialog-header-bg);
-        border-bottom: 0.5px solid var(--md-dialog-header-border);
+        height: var(--md-modal-header-height);
+        padding: var(--md-modal-header-padding);
+        background: var(--md-modal-header-bg);
+        border-bottom: 0.5px solid var(--md-modal-header-border);
         cursor: default;
         user-select: none;
         -webkit-user-select: none;
@@ -83,7 +87,7 @@ export class MacDialog extends BaseElement {
         align-items: center;
         justify-content: center;
         transition: filter var(--md-transition-fast);
-        border: 0.5px solid var(--md-dialog-traffic-border);
+        border: 0.5px solid var(--md-modal-traffic-border);
       }
 
       .traffic-light:hover {
@@ -102,23 +106,23 @@ export class MacDialog extends BaseElement {
       }
 
       .traffic-light--close {
-        background: var(--md-dialog-traffic-close-bg);
+        background: var(--md-modal-traffic-close-bg);
       }
 
       .traffic-light--minimize {
-        background: var(--md-dialog-traffic-minimize-bg);
+        background: var(--md-modal-traffic-minimize-bg);
       }
 
       .traffic-light--maximize {
-        background: var(--md-dialog-traffic-maximize-bg);
+        background: var(--md-modal-traffic-maximize-bg);
       }
 
       .title {
         flex: 1;
-        text-align: center;
-        font-size: var(--md-dialog-title-font-size);
+        text-align: var(--md-modal-title-align);
+        font-size: var(--md-modal-title-font-size);
         font-weight: 500;
-        color: var(--md-dialog-title-color);
+        color: var(--md-modal-title-color);
         letter-spacing: -0.01em;
         white-space: nowrap;
         overflow: hidden;
@@ -135,10 +139,65 @@ export class MacDialog extends BaseElement {
       .body {
         flex: 1;
         overflow: auto;
-        padding: var(--md-dialog-body-padding);
-        color: var(--md-dialog-title-color);
-        font-size: var(--md-dialog-body-font-size);
+        padding: var(--md-modal-body-padding);
+        color: var(--md-modal-title-color);
+        font-size: var(--md-modal-body-font-size);
         line-height: 1.5;
+      }
+
+      /* ─── Footer ─── */
+
+      .footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: var(--md-modal-footer-padding);
+        background: var(--md-modal-footer-bg);
+        border-top: 0.5px solid var(--md-modal-footer-border);
+        font-size: var(--md-modal-footer-font-size);
+        color: var(--md-modal-footer-color);
+        flex-shrink: 0;
+        gap: var(--md-modal-footer-btn-gap);
+      }
+
+      .footer-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--md-modal-footer-btn-gap);
+      }
+
+      .footer-btn {
+        padding: var(--md-modal-footer-btn-padding);
+        border-radius: var(--md-modal-footer-btn-radius);
+        font-size: var(--md-modal-footer-btn-font-size);
+        font-family: inherit;
+        cursor: pointer;
+        transition: background var(--md-transition-fast);
+        border: none;
+        outline: none;
+      }
+
+      .footer-btn--cancel {
+        background: var(--md-modal-footer-cancel-bg);
+        border: 0.5px solid var(--md-modal-footer-cancel-border);
+        color: var(--md-modal-footer-cancel-color);
+      }
+
+      .footer-btn--cancel:hover {
+        background: var(--md-modal-footer-cancel-hover-bg);
+      }
+
+      .footer-btn--ok {
+        background: var(--md-modal-footer-ok-bg);
+        color: var(--md-modal-footer-ok-color);
+      }
+
+      .footer-btn--ok:hover {
+        background: var(--md-modal-footer-ok-hover-bg);
+      }
+
+      ::slotted([slot='footer']) {
+        display: contents;
       }
 
       /* ─── Resize Handle ─── */
@@ -160,8 +219,8 @@ export class MacDialog extends BaseElement {
         bottom: 4px;
         width: 8px;
         height: 8px;
-        border-right: 2px solid var(--md-dialog-resize-border);
-        border-bottom: 2px solid var(--md-dialog-resize-border);
+        border-right: 2px solid var(--md-modal-resize-border);
+        border-bottom: 2px solid var(--md-modal-resize-border);
       }
 
       /* ─── Edge Resize Handles ─── */
@@ -238,6 +297,35 @@ export class MacDialog extends BaseElement {
         cursor: nesw-resize;
       }
 
+      /* ─── Minimized ─── */
+
+      :host([minimized]) .body,
+      :host([minimized]) .footer {
+        display: none;
+      }
+
+      /* ─── Maximized ─── */
+
+      :host([maximized]) {
+        border-radius: 0;
+      }
+
+      :host([maximized]) .modal {
+        border-radius: 0;
+      }
+
+      :host([maximized]) .resize-handle,
+      :host([maximized]) .resize-n,
+      :host([maximized]) .resize-s,
+      :host([maximized]) .resize-e,
+      :host([maximized]) .resize-w,
+      :host([maximized]) .resize-ne,
+      :host([maximized]) .resize-nw,
+      :host([maximized]) .resize-se,
+      :host([maximized]) .resize-sw {
+        display: none;
+      }
+
       /* ─── Inactive ─── */
 
       :host(:not([active])) .titlebar {
@@ -245,7 +333,7 @@ export class MacDialog extends BaseElement {
       }
 
       :host(:not([active])) .traffic-light {
-        background: var(--md-dialog-traffic-inactive-bg) !important;
+        background: var(--md-modal-traffic-inactive-bg) !important;
       }
 
       :host(:not([active])) .traffic-light svg {
@@ -253,30 +341,50 @@ export class MacDialog extends BaseElement {
       }
 
       :host(:not([active])) .title {
-        color: var(--md-dialog-title-inactive-color);
+        color: var(--md-modal-title-inactive-color);
       }
 
       /* ─── Dark Mode ─── */
 
       :host([data-theme='dark']) {
-        box-shadow: var(--md-dialog-container-dark-shadow);
+        box-shadow: var(--md-modal-container-dark-shadow);
       }
 
-      :host([data-theme='dark']) .dialog {
-        background: var(--md-dialog-container-dark-bg);
+      :host([data-theme='dark']) .modal {
+        background: var(--md-modal-container-dark-bg);
       }
 
       :host([data-theme='dark']) .titlebar {
-        background: var(--md-dialog-header-dark-bg);
-        border-bottom-color: var(--md-dialog-header-dark-border);
+        background: var(--md-modal-header-dark-bg);
+        border-bottom-color: var(--md-modal-header-dark-border);
       }
 
       :host([data-theme='dark']) .title {
-        color: var(--md-dialog-title-dark-color);
+        color: var(--md-modal-title-dark-color);
       }
 
       :host([data-theme='dark']) .body {
-        color: var(--md-dialog-body-dark-color);
+        color: var(--md-modal-body-dark-color);
+      }
+
+      :host([data-theme='dark']) .footer {
+        background: var(--md-modal-footer-dark-bg);
+        border-top-color: var(--md-modal-footer-dark-border);
+        color: var(--md-modal-footer-dark-color);
+      }
+
+      :host([data-theme='dark']) .footer-btn--cancel {
+        background: var(--md-modal-footer-cancel-dark-bg);
+        border-color: var(--md-modal-footer-cancel-dark-border);
+        color: var(--md-modal-footer-cancel-dark-color);
+      }
+
+      :host([data-theme='dark']) .footer-btn--cancel:hover {
+        background: var(--md-modal-footer-cancel-dark-hover-bg);
+      }
+
+      :host([data-theme='dark']) .footer-btn--ok:hover {
+        background: var(--md-modal-footer-ok-dark-hover-bg);
       }
 
       :host([data-theme='dark']:not([active])) .titlebar {
@@ -284,27 +392,27 @@ export class MacDialog extends BaseElement {
       }
 
       :host([data-theme='dark']:not([active])) .title {
-        color: var(--md-dialog-title-dark-inactive-color);
+        color: var(--md-modal-title-dark-inactive-color);
       }
 
       :host([data-theme='dark']) .resize-handle::after {
-        border-right-color: var(--md-dialog-resize-dark-border);
-        border-bottom-color: var(--md-dialog-resize-dark-border);
+        border-right-color: var(--md-modal-resize-dark-border);
+        border-bottom-color: var(--md-modal-resize-dark-border);
       }
 
       /* ─── Light Mode (manual via data-theme="light", overrides OS dark) ─── */
 
       :host([data-theme='light']) .titlebar {
-        background: var(--md-dialog-header-bg);
-        border-bottom-color: var(--md-dialog-header-border);
+        background: var(--md-modal-header-bg);
+        border-bottom-color: var(--md-modal-header-border);
       }
 
       :host([data-theme='light']) .title {
-        color: var(--md-dialog-title-color);
+        color: var(--md-modal-title-color);
       }
 
       :host([data-theme='light']) .body {
-        color: var(--md-dialog-title-color);
+        color: var(--md-modal-title-color);
       }
 
       :host([data-theme='light']:not([active])) .titlebar {
@@ -312,18 +420,21 @@ export class MacDialog extends BaseElement {
       }
 
       :host([data-theme='light']:not([active])) .title {
-        color: var(--md-dialog-title-inactive-color);
+        color: var(--md-modal-title-inactive-color);
       }
 
       :host([data-theme='light']) .resize-handle::after {
-        border-right-color: var(--md-dialog-resize-border);
-        border-bottom-color: var(--md-dialog-resize-border);
+        border-right-color: var(--md-modal-resize-border);
+        border-bottom-color: var(--md-modal-resize-border);
       }
     `,
   ]
 
-  /** Dialog title */
+  /** Modal title */
   @property({ reflect: true }) title = ''
+
+  /** Modal title text alignment */
+  @property({ reflect: true }) titleAlign = 'center'
 
   override willUpdate(): void {
     const theme = this._resolvedTheme
@@ -332,6 +443,7 @@ export class MacDialog extends BaseElement {
     } else {
       this.removeAttribute('data-theme')
     }
+    this.style.setProperty('--md-modal-title-align', this.titleAlign)
   }
 
   override updated(changed: Map<string, unknown>): void {
@@ -343,29 +455,32 @@ export class MacDialog extends BaseElement {
     }
   }
 
-  /** Dialog left position */
+  /** Modal left position */
   @property({ type: Number }) x = 100
 
-  /** Dialog top position */
+  /** Modal top position */
   @property({ type: Number }) y = 100
 
-  /** Dialog width */
+  /** Modal width */
   @property({ type: Number }) width = 480
 
-  /** Dialog height */
+  /** Modal height */
   @property({ type: Number }) height = 360
 
-  /** Whether the dialog is active (focused) */
+  /** Whether the modal is active (focused) */
   @property({ type: Boolean, reflect: true }) active = true
 
-  /** Whether the dialog can be dragged */
+  /** Whether the modal can be dragged */
   @property({ type: Boolean }) draggable = true
 
-  /** Whether the dialog can be resized */
+  /** Whether the modal can be resized */
   @property({ type: Boolean }) resizable = true
 
   /** Whether to show traffic light buttons */
   @property({ type: Boolean }) showButtons = true
+
+  /** Whether to show the footer area */
+  @property({ type: Boolean }) showFooter = true
 
   /** Minimum width for resize */
   @property({ type: Number }) minWidth = 280
@@ -373,8 +488,14 @@ export class MacDialog extends BaseElement {
   /** Minimum height for resize */
   @property({ type: Number }) minHeight = 160
 
-  @query('.dialog')
-  private _dialog!: HTMLDivElement
+  /** Whether the modal is minimized */
+  @property({ type: Boolean, reflect: true }) minimized = false
+
+  /** Whether the modal is maximized */
+  @property({ type: Boolean, reflect: true }) maximized = false
+
+  @query('.modal')
+  private _modal!: HTMLDivElement
 
   // Drag state
   private _isDragging = false
@@ -397,16 +518,31 @@ export class MacDialog extends BaseElement {
   private _dragCleanup: (() => void) | null = null
   private _resizeCleanup: (() => void) | null = null
 
+  // Saved state for minimize/maximize restore
+  private _prevX = 100
+  private _prevY = 100
+  private _prevWidth = 480
+  private _prevHeight = 360
+
+  private _onWindowResize = () => {
+    if (this.maximized) {
+      this.width = window.innerWidth
+      this.height = window.innerHeight
+    }
+  }
+
   override connectedCallback(): void {
     super.connectedCallback()
     this._updatePosition()
     this._updateSize()
+    window.addEventListener('resize', this._onWindowResize)
   }
 
   override disconnectedCallback(): void {
     super.disconnectedCallback()
     this._dragCleanup?.()
     this._resizeCleanup?.()
+    window.removeEventListener('resize', this._onWindowResize)
   }
 
   private _updatePosition(): void {
@@ -422,7 +558,7 @@ export class MacDialog extends BaseElement {
   // ─── Drag ───
 
   private _onTitleBarMouseDown(e: MouseEvent): void {
-    if (!this.draggable || e.button !== 0) return
+    if (!this.draggable || e.button !== 0 || this.maximized) return
     // 忽略点击在红绿灯按钮上
     if ((e.target as HTMLElement).closest('.traffic-light')) return
 
@@ -433,7 +569,7 @@ export class MacDialog extends BaseElement {
     this._dragOffsetX = this.x
     this._dragOffsetY = this.y
 
-    this.emit('mac-dialog-focus')
+    this.emit('mac-modal-focus')
 
     const onMove = (ev: MouseEvent) => {
       if (!this._isDragging) return
@@ -441,7 +577,7 @@ export class MacDialog extends BaseElement {
       const dy = ev.clientY - this._dragStartY
       this.x = this._dragOffsetX + dx
       this.y = this._dragOffsetY + dy
-      this.emit('mac-dialog-move', { detail: { x: this.x, y: this.y } })
+      this.emit('mac-modal-move', { detail: { x: this.x, y: this.y } })
     }
 
     const onUp = () => {
@@ -517,7 +653,7 @@ export class MacDialog extends BaseElement {
       this.height = newH
       this.x = newX
       this.y = newY
-      this.emit('mac-dialog-resize', { detail: { width: this.width, height: this.height } })
+      this.emit('mac-modal-resize', { detail: { width: this.width, height: this.height } })
     }
 
     const onUp = () => {
@@ -535,22 +671,67 @@ export class MacDialog extends BaseElement {
   // ─── Traffic Light Buttons ───
 
   private _onClose(): void {
-    this.emit('mac-dialog-close')
+    this.emit('mac-modal-close')
   }
 
   private _onMinimize(): void {
-    this.emit('mac-dialog-minimize')
+    if (this.minimized) {
+      this.minimized = false
+      this.width = this._prevWidth
+      this.height = this._prevHeight
+      this.x = this._prevX
+      this.y = this._prevY
+    } else {
+      if (!this.maximized) {
+        this._prevWidth = this.width
+        this._prevHeight = this.height
+        this._prevX = this.x
+        this._prevY = this.y
+      }
+      this.maximized = false
+      this.minimized = true
+      this.height = 38
+    }
+    this.emit('mac-modal-minimize')
   }
 
   private _onMaximize(): void {
-    this.emit('mac-dialog-maximize')
+    if (this.maximized) {
+      this.maximized = false
+      this.width = this._prevWidth
+      this.height = this._prevHeight
+      this.x = this._prevX
+      this.y = this._prevY
+    } else {
+      if (!this.minimized) {
+        this._prevWidth = this.width
+        this._prevHeight = this.height
+        this._prevX = this.x
+        this._prevY = this.y
+      }
+      this.minimized = false
+      this.maximized = true
+      this.x = 0
+      this.y = 0
+      this.width = window.innerWidth
+      this.height = window.innerHeight
+    }
+    this.emit('mac-modal-maximize')
+  }
+
+  private _onCancel(): void {
+    this.emit('mac-modal-cancel')
+  }
+
+  private _onOk(): void {
+    this.emit('mac-modal-ok')
   }
 
   // ─── Render ───
 
   override render() {
     return html`
-      <div class="dialog" part="base">
+      <div class="modal" part="base">
         <div class="titlebar" part="titlebar" @mousedown=${this._onTitleBarMouseDown}>
           ${this.showButtons
             ? html`
@@ -566,7 +747,7 @@ export class MacDialog extends BaseElement {
                         y1="3"
                         x2="9"
                         y2="9"
-                        stroke="var(--md-dialog-traffic-close-stroke)"
+                        stroke="var(--md-modal-traffic-close-stroke)"
                         stroke-width="1.2"
                       />
                       <line
@@ -574,7 +755,7 @@ export class MacDialog extends BaseElement {
                         y1="3"
                         x2="3"
                         y2="9"
-                        stroke="var(--md-dialog-traffic-close-stroke)"
+                        stroke="var(--md-modal-traffic-close-stroke)"
                         stroke-width="1.2"
                       />
                     </svg>
@@ -582,7 +763,7 @@ export class MacDialog extends BaseElement {
                   <div
                     class="traffic-light traffic-light--minimize"
                     @click=${this._onMinimize}
-                    title="最小化"
+                    title=${this.minimized ? '恢复' : '最小化'}
                   >
                     <svg viewBox="0 0 12 12">
                       <line
@@ -590,7 +771,7 @@ export class MacDialog extends BaseElement {
                         y1="6"
                         x2="9"
                         y2="6"
-                        stroke="var(--md-dialog-traffic-minimize-stroke)"
+                        stroke="var(--md-modal-traffic-minimize-stroke)"
                         stroke-width="1.2"
                       />
                     </svg>
@@ -598,22 +779,49 @@ export class MacDialog extends BaseElement {
                   <div
                     class="traffic-light traffic-light--maximize"
                     @click=${this._onMaximize}
-                    title="全屏"
+                    title=${this.maximized ? '恢复' : '全屏'}
                   >
-                    <svg viewBox="0 0 12 12">
-                      <polyline
-                        points="3,8 3,3 8,3"
-                        fill="none"
-                        stroke="var(--md-dialog-traffic-maximize-stroke)"
-                        stroke-width="1.2"
-                      />
-                      <polyline
-                        points="9,4 9,9 4,9"
-                        fill="none"
-                        stroke="var(--md-dialog-traffic-maximize-stroke)"
-                        stroke-width="1.2"
-                      />
-                    </svg>
+                    ${this.maximized
+                      ? html`
+                          <svg viewBox="0 0 12 12">
+                            <polyline
+                              points="7.5,2 10,2 10,4.5"
+                              fill="none"
+                              stroke="var(--md-modal-traffic-maximize-stroke)"
+                              stroke-width="1.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <polyline
+                              points="4.5,10 2,10 2,7.5"
+                              fill="none"
+                              stroke="var(--md-modal-traffic-maximize-stroke)"
+                              stroke-width="1.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        `
+                      : html`
+                          <svg viewBox="0 0 12 12">
+                            <polyline
+                              points="4.5,2 2,2 2,4.5"
+                              fill="none"
+                              stroke="var(--md-modal-traffic-maximize-stroke)"
+                              stroke-width="1.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <polyline
+                              points="7.5,10 10,10 10,7.5"
+                              fill="none"
+                              stroke="var(--md-modal-traffic-maximize-stroke)"
+                              stroke-width="1.2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        `}
                   </div>
                 </div>
               `
@@ -626,6 +834,20 @@ export class MacDialog extends BaseElement {
           <slot></slot>
         </div>
 
+        ${this.showFooter
+          ? html`
+              <div class="footer" part="footer">
+                <slot name="footer">
+                  <div class="footer-actions">
+                    <button class="footer-btn footer-btn--cancel" @click=${this._onCancel}>
+                      取消
+                    </button>
+                    <button class="footer-btn footer-btn--ok" @click=${this._onOk}>确认</button>
+                  </div>
+                </slot>
+              </div>
+            `
+          : ''}
         ${this.resizable
           ? html`
               <div
@@ -674,6 +896,6 @@ export class MacDialog extends BaseElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'mac-dialog': MacDialog
+    'mac-modal': MacModal
   }
 }
