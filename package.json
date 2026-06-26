@@ -13,7 +13,7 @@
   "author": "huyang",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/humuchen/mac-ui"
   },
   "main": "./dist/@hy/mac-ui.cjs.js",
   "module": "./dist/@hy/mac-ui.es.js",
@@ -28,10 +28,11 @@
     "./styles/*": "./dist/@hy/styles/*"
   },
   "files": [
-    "dist",
-    "README.md"
+    "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "./src/components/**/*.ts"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc --project tsconfig.build.json && vite build",
