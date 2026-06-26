@@ -7,6 +7,8 @@
 - **Accessible** — Built with ARIA best practices and keyboard navigation
 - **Lightweight** — Tree-shakeable, only import what you need
 
+  https://humuchen.github.io/mac-ui/?path=/docs/components-alert--docs
+
 ## Installation
 
 ```bash
