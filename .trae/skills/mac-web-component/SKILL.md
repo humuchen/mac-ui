@@ -19,7 +19,7 @@ description: 'Builds macOS-style Web Components with Lit. Invoke when creating m
 4. **添加主题变量** 在 `src/styles/theme.ts` 中添加组件专用变量
 5. **组件中使用主题变量** 在组件的 CSS 中使用主题变量，引用默认值，不要直接设置颜色。不要写死对应css样式，而要引用主题变量作为默认值
 
-6. 组件功能参考naive-ui
+6. 组件功能参考naive-ui https://www.naiveui.com/zh-CN/dark/components/
 
 ---
 

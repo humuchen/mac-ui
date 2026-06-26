@@ -124,6 +124,39 @@ export const themeTokens: CSSResult = css`
     --lg-input-radius: var(--md-radius-md);
 
     /* ═══════════════════════════════════════════════════
+       Radio 单选框  --{size}-radio-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    /* sm */
+    --sm-radio-size: 14px;
+    --sm-radio-dot-size: 6px;
+    --sm-radio-gap: 6px;
+    --sm-radio-font-size: var(--md-font-size-sm);
+
+    /* md (default) */
+    --md-radio-size: 18px;
+    --md-radio-dot-size: 8px;
+    --md-radio-gap: 8px;
+    --md-radio-font-size: var(--md-font-size-base);
+
+    /* lg */
+    --lg-radio-size: 22px;
+    --lg-radio-dot-size: 10px;
+    --lg-radio-gap: 10px;
+    --lg-radio-font-size: var(--md-font-size-lg);
+
+    /* radio 颜色 */
+    --md-radio-bg: transparent;
+    --md-radio-bg-active: var(--md-color-primary);
+    --md-radio-border-color: var(--md-color-border);
+    --md-radio-border-hover-color: var(--md-color-text-secondary);
+    --md-radio-border-active-color: var(--md-color-primary);
+    --md-radio-border-active-hover-color: var(--md-color-primary-hover);
+    --md-radio-dot-color: #fff;
+    --md-radio-label-color: var(--md-color-text);
+    --md-radio-label-hover-color: var(--md-color-text);
+    --md-radio-group-gap: var(--md-spacing-md);
+
+    /* ═══════════════════════════════════════════════════
        Select 选择器  --{size}-select-{part}-{state}
        ═══════════════════════════════════════════════════ */
     /* sm */
@@ -641,6 +674,102 @@ export const themeTokens: CSSResult = css`
     --md-infinite-scroll-font-size: var(--md-font-size-sm);
     --md-infinite-scroll-gap: var(--md-spacing-sm);
     --md-infinite-scroll-spinner-size: 16px;
+
+    /* ═══════════════════════════════════════════════════
+       Carousel 轮播图  --md-carousel-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-carousel-arrow-size: 36px;
+    --md-carousel-arrow-bg: rgba(255, 255, 255, 0.72);
+    --md-carousel-arrow-color: var(--md-mac-text-primary);
+    --md-carousel-arrow-hover-bg: rgba(255, 255, 255, 0.92);
+    --md-carousel-arrow-offset: 12px;
+    --md-carousel-dot-size: 8px;
+    --md-carousel-dot-active-width: 20px;
+    --md-carousel-dot-active-radius: 4px;
+    --md-carousel-dot-bg: rgba(255, 255, 255, 0.5);
+    --md-carousel-dot-hover-bg: rgba(255, 255, 255, 0.75);
+    --md-carousel-dot-active-bg: rgba(255, 255, 255, 0.92);
+    --md-carousel-dot-gap: 8px;
+    --md-carousel-dots-offset: 16px;
+    --md-carousel-line-width: 16px;
+    --md-carousel-line-height: 3px;
+    --md-carousel-line-radius: 2px;
+    --md-carousel-line-active-width: 24px;
+
+    /* ═══════════════════════════════════════════════════
+       Tag 标签  --{size}-tag-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    /* sm */
+    --sm-tag-padding-vertical: 1px;
+    --sm-tag-padding-horizontal: 6px;
+    --sm-tag-font-size: var(--md-font-size-xs);
+    --sm-tag-gap: 2px;
+    --sm-tag-radius: var(--md-radius-sm);
+    --sm-tag-round-radius: 10px;
+    --sm-tag-closable-padding-right: 4px;
+    --sm-tag-close-size: 12px;
+
+    /* md (default) */
+    --md-tag-padding-vertical: 2px;
+    --md-tag-padding-horizontal: 8px;
+    --md-tag-font-size: var(--md-font-size-sm);
+    --md-tag-gap: 4px;
+    --md-tag-radius: var(--md-radius-sm);
+    --md-tag-round-radius: 12px;
+    --md-tag-closable-padding-right: 6px;
+    --md-tag-close-size: 14px;
+
+    /* lg */
+    --lg-tag-padding-vertical: 4px;
+    --lg-tag-padding-horizontal: 12px;
+    --lg-tag-font-size: var(--md-font-size-base);
+    --lg-tag-gap: 6px;
+    --lg-tag-radius: var(--md-radius-md);
+    --lg-tag-round-radius: 16px;
+    --lg-tag-closable-padding-right: 8px;
+    --lg-tag-close-size: 16px;
+
+    /* tag default */
+    --md-tag-default-bg: var(--md-color-bg-secondary);
+    --md-tag-default-text: var(--md-color-text);
+    --md-tag-default-border: var(--md-color-border);
+    --md-tag-default-close-hover-bg: rgba(0, 0, 0, 0.06);
+    --md-tag-default-close-hover-color: var(--md-color-text);
+
+    /* tag primary */
+    --md-tag-primary-bg: rgba(0, 122, 255, 0.1);
+    --md-tag-primary-text: #007aff;
+    --md-tag-primary-border: rgba(0, 122, 255, 0.2);
+    --md-tag-primary-close-hover-bg: rgba(0, 122, 255, 0.15);
+    --md-tag-primary-close-hover-color: #0058d0;
+
+    /* tag success */
+    --md-tag-success-bg: rgba(34, 197, 94, 0.1);
+    --md-tag-success-text: #16a34a;
+    --md-tag-success-border: rgba(34, 197, 94, 0.2);
+    --md-tag-success-close-hover-bg: rgba(34, 197, 94, 0.15);
+    --md-tag-success-close-hover-color: #15803d;
+
+    /* tag warning */
+    --md-tag-warning-bg: rgba(245, 158, 11, 0.1);
+    --md-tag-warning-text: #d97706;
+    --md-tag-warning-border: rgba(245, 158, 11, 0.2);
+    --md-tag-warning-close-hover-bg: rgba(245, 158, 11, 0.15);
+    --md-tag-warning-close-hover-color: #b45309;
+
+    /* tag danger */
+    --md-tag-danger-bg: rgba(239, 68, 68, 0.1);
+    --md-tag-danger-text: #dc2626;
+    --md-tag-danger-border: rgba(239, 68, 68, 0.2);
+    --md-tag-danger-close-hover-bg: rgba(239, 68, 68, 0.15);
+    --md-tag-danger-close-hover-color: #b91c1c;
+
+    /* tag info */
+    --md-tag-info-bg: rgba(107, 114, 128, 0.1);
+    --md-tag-info-text: #4b5563;
+    --md-tag-info-border: rgba(107, 114, 128, 0.2);
+    --md-tag-info-close-hover-bg: rgba(107, 114, 128, 0.15);
+    --md-tag-info-close-hover-color: #374151;
   }
 
   :host([data-theme='dark']) {
