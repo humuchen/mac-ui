@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components'
 import { html } from 'lit'
 import './mac-text-ellipsis'
 
-const longText = `Apple 在 WWDC25 上发布了全新的 Liquid Glass 设计语言，这是一种灵感源自玻璃材质的视觉系统，为 iOS、macOS、iPadOS 等所有平台带来了统一而富有深度的界面风格。Liquid Glass 通过半透明、折射和动态模糊效果，让界面元素呈现出如同真实玻璃般的层次感与光影变化。开发者现在可以利用 SwiftUI 和新的 API 轻松地将 Liquid Glass 风格集成到自己的应用中。Apple 在 WWDC25 上发布了全新的 Liquid Glass 设计语言，这是一种灵感源自玻璃材质的视觉系统，为 iOS、macOS、iPadOS 等所有平台带来了统一而富有深度的界面风格。Liquid Glass 通过半透明、折射和动态模糊效果，让界面元素呈现出如同真实玻璃般的层次感与光影变化。开发者现在可以利用 SwiftUI 和新的 API 轻松地将 Liquid Glass 风格集成到自己的应用中。Apple 在 WWDC25 上发布了全新的 Liquid Glass 设计语言，这是一种灵感源自玻璃材质的视觉系统，为 iOS、macOS、iPadOS 等所有平台带来了统一而富有深度的界面风格。Liquid Glass 通过半透明、折射和动态模糊效果，让界面元素呈现出如同真实玻璃般的层次感与光影变化。开发者现在可以利用 SwiftUI 和新的 API 轻松地将 Liquid Glass 风格集成到自己的应用中。Apple 在 WWDC25 上发布了全新的 Liquid Glass 设计语言，这是一种灵感源自玻璃材质的视觉系统，为 iOS、macOS、iPadOS 等所有平台带来了统一而富有深度的界面风格。Liquid Glass 通过半透明、折射和动态模糊效果，让界面元素呈现出如同真实玻璃般的层次感与光影变化。开发者现在可以利用 SwiftUI 和新的 API 轻松地将 Liquid Glass 风格集成到自己的应用中。`
+const longText = `Apple 在 WWDC25 上发布了全新的 Liquid Glass 设计语言，这是一种灵感源自玻璃材质的视觉系统，为 iOS、macOS、iPadOS 等所有平台带来了统一而富有深度的界面风格。Liquid Glass 通过半透明、折射和动态模糊效果，让界面元素呈现出如同真实玻璃般的层次感与光影变化。开发者现在可以利用 SwiftUI 和新的 API 轻松地将 Liquid Glass 风格集成到自己的应用中。`
 
 const mediumText = `SwiftUI 是 Apple 推出的现代声明式 UI 框架，让开发者能够以更少的代码构建更出色的应用。从 iOS 14 的 Widget 到 iOS 18 的新 API，SwiftUI 不断扩展其能力边界。`
 

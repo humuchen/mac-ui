@@ -616,6 +616,31 @@ export const themeTokens: CSSResult = css`
     --md-split-resizer-hover-color: var(--md-color-primary);
     --md-split-resizer-handle-bg: var(--md-color-bg-secondary);
     --md-split-resizer-handle-dot-color: var(--md-color-text-secondary);
+
+    /* ═══════════════════════════════════════════════════
+       LazyImage 图片懒加载  --md-lazy-image-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-lazy-image-object-fit: cover;
+    --md-lazy-image-placeholder-bg: var(--md-color-bg-secondary);
+    --md-lazy-image-placeholder-color: var(--md-color-text-secondary);
+    --md-lazy-image-placeholder-icon-size: 32px;
+    --md-lazy-image-error-icon-size: 32px;
+    --md-lazy-image-shimmer-bg: rgba(255, 255, 255, 0.5);
+    --md-lazy-image-hover-scale: 1.05;
+    --md-lazy-image-hover-duration: 300ms;
+    --md-lazy-image-hover-easing: ease-out;
+    --md-lazy-image-hover-filter: none;
+    --md-lazy-image-preview-bg: rgba(0, 0, 0, 0.85);
+    --md-lazy-image-preview-duration: 250ms;
+
+    /* ═══════════════════════════════════════════════════
+       InfiniteScroll 无限滚动  --md-infinite-scroll-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-infinite-scroll-padding: var(--md-spacing-md);
+    --md-infinite-scroll-color: var(--md-color-text-secondary);
+    --md-infinite-scroll-font-size: var(--md-font-size-sm);
+    --md-infinite-scroll-gap: var(--md-spacing-sm);
+    --md-infinite-scroll-spinner-size: 16px;
   }
 
   :host([data-theme='dark']) {
