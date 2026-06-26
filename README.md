@@ -200,34 +200,76 @@ A lazy-loading image component with placeholder, error states, hover animation, 
 ></mac-lazy-image>
 ```
 
-### MacDialog
+### MacAlert
 
-A macOS-style dialog/window with title bar, drag, and resize support.
+A contextual alert message component with multiple status types.
 
-| Property      | Type      | Default | Description                   |
-| ------------- | --------- | ------- | ----------------------------- |
-| `title`       | `string`  | `''`    | Dialog title                  |
-| `x`           | `number`  | `100`   | Left position (px)            |
-| `y`           | `number`  | `100`   | Top position (px)             |
-| `width`       | `number`  | `480`   | Dialog width (px)             |
-| `height`      | `number`  | `360`   | Dialog height (px)            |
-| `active`      | `boolean` | `true`  | Whether the dialog is focused |
-| `draggable`   | `boolean` | `true`  | Enable dragging               |
-| `resizable`   | `boolean` | `true`  | Enable resizing               |
-| `showButtons` | `boolean` | `true`  | Show traffic light buttons    |
-| `minWidth`    | `number`  | `280`   | Minimum width for resize      |
-| `minHeight`   | `number`  | `160`   | Minimum height for resize     |
+| Property    | Type                                                                    | Default     | Description       |
+| ----------- | ----------------------------------------------------------------------- | ----------- | ----------------- |
+| `type`      | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'default'` | Alert status type |
+| `title`     | `string`                                                                | `''`        | Alert title       |
+| `closable`  | `boolean`                                                               | `false`     | Show close button |
+| `show-icon` | `boolean`                                                               | `true`      | Show status icon  |
 
-**Slots:** default (body), `titlebar`
+**Slots:** default (content)
 
-**Events:** `mac-dialog-close`, `mac-dialog-minimize`, `mac-dialog-maximize`, `mac-dialog-move`, `mac-dialog-resize`
-
-**CSS Parts:** `base`, `titlebar`, `title`, `body`, `resize-handle`
+**Events:** `mac-close`
 
 ```html
-<mac-dialog title="Settings" x="200" y="150" width="500" height="400">
-  <p>Dialog content here.</p>
-</mac-dialog>
+<mac-alert type="success" title="Success">Your changes have been saved.</mac-alert>
+<mac-alert type="warning" closable>This action cannot be undone.</mac-alert>
+```
+
+### MacConfirm
+
+A confirm dialog component for user confirmation actions.
+
+| Property       | Type      | Default  | Description          |
+| -------------- | --------- | -------- | -------------------- |
+| `title`        | `string`  | `''`     | Confirm title        |
+| `content`      | `string`  | `''`     | Confirm content      |
+| `confirm-text` | `string`  | `'确认'` | Confirm button text  |
+| `cancel-text`  | `string`  | `'取消'` | Cancel button text   |
+| `danger`       | `boolean` | `false`  | Danger style confirm |
+| `icon`         | `boolean` | `true`   | Show warning icon    |
+
+**Events:** `mac-confirm`, `mac-cancel`
+
+```html
+<mac-confirm title="Delete?" content="This cannot be undone." danger>
+  <mac-button variant="text" danger>Delete</mac-button>
+</mac-confirm>
+```
+
+### MacModal
+
+A macOS-style modal/dialog with title bar and customizable footer.
+
+| Property        | Type      | Default   | Description               |
+| --------------- | --------- | --------- | ------------------------- |
+| `title`         | `string`  | `''`      | Modal title               |
+| `open`          | `boolean` | `false`   | Whether the modal is open |
+| `closable`      | `boolean` | `true`    | Show close button         |
+| `mask-closable` | `boolean` | `true`    | Click mask to close       |
+| `show-mask`     | `boolean` | `true`    | Show overlay mask         |
+| `width`         | `string`  | `'520px'` | Modal width               |
+| `footer`        | `boolean` | `true`    | Show footer with buttons  |
+| `centered`      | `boolean` | `false`   | Center modal vertically   |
+
+**Slots:** default (body), `header`, `footer`
+
+**Events:** `mac-modal-open`, `mac-modal-close`, `mac-modal-confirm`, `mac-modal-cancel`
+
+**CSS Parts:** `base`, `mask`, `container`, `header`, `body`, `footer`
+
+```html
+<mac-modal title="Settings" open>
+  <p>Modal content here.</p>
+  <div slot="footer">
+    <mac-button variant="text">Cancel</mac-button>
+    <mac-button variant="primary">Save</mac-button>
+  </div>
+</mac-modal>
 ```
 
 ### MacDrawer
@@ -470,6 +512,91 @@ A macOS-style tabs component with animated indicator.
 </mac-tabs>
 ```
 
+### MacTree / MacTreeSelect
+
+**MacTree** — A tree component for displaying hierarchical data with expand/collapse, selection, and checkbox support.
+
+| Property             | Type             | Default | Description              |
+| -------------------- | ---------------- | ------- | ------------------------ |
+| `data`               | `TreeNodeData[]` | `[]`    | Tree data array          |
+| `checkable`          | `boolean`        | `false` | Show checkboxes          |
+| `multiple`           | `boolean`        | `false` | Allow multiple selection |
+| `selectable`         | `boolean`        | `true`  | Nodes are selectable     |
+| `show-line`          | `boolean`        | `false` | Show connecting lines    |
+| `block-node`         | `boolean`        | `true`  | Whole row clickable      |
+| `default-expand-all` | `boolean`        | `false` | Expand all by default    |
+| `expandedKeys`       | `string[]`       | `[]`    | Controlled expanded keys |
+| `selectedKeys`       | `string[]`       | `[]`    | Controlled selected keys |
+| `checkedKeys`        | `string[]`       | `[]`    | Controlled checked keys  |
+
+**Events:** `mac-expand`, `mac-select`, `mac-check`
+
+```html
+<mac-tree
+  .data=${[
+    {
+      key: '1',
+      label: 'Documents',
+      children: [
+        { key: '1-1', label: 'Work' },
+        { key: '1-2', label: 'Personal' },
+      ],
+    },
+    { key: '2', label: 'Downloads' },
+  ]}
+  checkable
+  default-expand-all
+></mac-tree>
+```
+
+**MacTreeSelect** — A select component with tree dropdown for single or multiple selection.
+
+| Property             | Type                 | Default | Description           |
+| -------------------- | -------------------- | ------- | --------------------- |
+| `options`            | `TreeOption[]`       | `[]`    | Tree options          |
+| `value`              | `string \| string[]` | `''`    | Selected value(s)     |
+| `multiple`           | `boolean`            | `false` | Multiple selection    |
+| `checkable`          | `boolean`            | `false` | Show checkboxes       |
+| `searchable`         | `boolean`            | `false` | Enable search         |
+| `clearable`          | `boolean`            | `false` | Show clear button     |
+| `default-expand-all` | `boolean`            | `false` | Expand all by default |
+
+**Events:** `mac-change`
+
+```html
+<mac-tree-select
+  placeholder="Select folder"
+  .options=${[
+    { value: '1', label: 'Documents', children: [{ value: '1-1', label: 'Work' }] },
+  ]}
+></mac-tree-select>
+```
+
+### MacCarousel / MacCarouselItem
+
+A carousel/slider component with dot/line indicators and arrow navigation.
+
+| Property    | Type                            | Default   | Description             |
+| ----------- | ------------------------------- | --------- | ----------------------- |
+| `autoplay`  | `boolean`                       | `false`   | Auto-play slides        |
+| `interval`  | `number`                        | `3000`    | Auto-play interval (ms) |
+| `indicator` | `'dot' \| 'line' \| 'none'`     | `'dot'`   | Indicator type          |
+| `arrow`     | `'always' \| 'hover' \| 'none'` | `'hover'` | Arrow display mode      |
+| `loop`      | `boolean`                       | `true`    | Infinite loop           |
+
+**Events:** `mac-change`
+
+```html
+<mac-carousel autoplay indicator="line">
+  <mac-carousel-item>
+    <img src="slide1.jpg" />
+  </mac-carousel-item>
+  <mac-carousel-item>
+    <img src="slide2.jpg" />
+  </mac-carousel-item>
+</mac-carousel>
+```
+
 ### MacRating
 
 A rating component with customizable icons.
@@ -549,6 +676,90 @@ A number animation component that smoothly transitions between numeric values.
   separator=","
   prefix="$"
 ></mac-number-animation>
+```
+
+### MacProgress
+
+A progress component supporting line, circle, multi-circle, and gradient fill.
+
+| Property      | Type                                       | Default     | Description                 |
+| ------------- | ------------------------------------------ | ----------- | --------------------------- |
+| `percentage`  | `number`                                   | `0`         | Progress percentage (0-100) |
+| `type`        | `'line' \| 'circle'`                       | `'line'`    | Progress type               |
+| `status`      | `'default'\|'success'\|'warning'\|'error'` | `'default'` | Progress status             |
+| `size`        | `'sm' \| 'md' \| 'lg'`                     | `'md'`      | Line progress size          |
+| `showText`    | `boolean`                                  | `true`      | Show percentage text        |
+| `processing`  | `boolean`                                  | `false`     | Show processing animation   |
+| `color`       | `string`                                   | —           | Custom fill color           |
+| `strokeWidth` | `number`                                   | `6`         | Circle stroke width (px)    |
+| `width`       | `number`                                   | `120`       | Circle width/height (px)    |
+| `circles`     | `CircleConfig[]`                           | —           | Multi-circle configuration  |
+| `gradient`    | `GradientConfig`                           | —           | Gradient fill configuration |
+
+**GradientConfig:**
+
+- Two-color mode: `{ from: '#3b82f6', to: '#22c55e', angle?: 90 }`
+- Custom stops mode: `{ angle?: 45, stops: [{ color, offset? }, ...] }`
+
+**CSS Parts:** `track`, `fill`, `text`
+
+```html
+<mac-progress percentage="60" status="success"></mac-progress>
+
+<mac-progress type="circle" percentage="75" .gradient=${{ from: '#ec4899', to: '#f59e0b' }}></mac-progress>
+
+<!-- Custom multi-stop gradient -->
+<mac-progress
+  percentage="60"
+  .gradient=${{
+    angle: 90,
+    stops: [
+      { color: '#3b82f6', offset: 0 },
+      { color: '#22c55e', offset: 50 },
+      { color: '#f59e0b', offset: 100 },
+    ],
+  }}
+></mac-progress>
+
+<mac-progress
+  type="circle"
+  .circles=${[
+    { percentage: 80, color: '#3b82f6', strokeWidth: 8 },
+    { percentage: 60, color: '#22c55e', strokeWidth: 6 },
+  ]}
+></mac-progress>
+```
+
+### MacTag / MacDynamicTags
+
+A tag component for marking and categorization.
+
+| Property   | Type                                                                    | Default     | Description        |
+| ---------- | ----------------------------------------------------------------------- | ----------- | ------------------ |
+| `type`     | `'default' \| 'primary' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'default'` | Tag type           |
+| `size`     | `'sm' \| 'md' \| 'lg'`                                                  | `'md'`      | Tag size           |
+| `round`    | `boolean`                                                               | `false`     | Rounded pill style |
+| `closable` | `boolean`                                                               | `false`     | Show close button  |
+| `bordered` | `boolean`                                                               | `true`      | Show border        |
+
+**Events:** `mac-close`
+
+```html
+<mac-tag type="primary">Primary</mac-tag> <mac-tag type="success" round closable>Success</mac-tag>
+```
+
+**MacDynamicTags** — editable tag list with input to add new tags.
+
+| Property   | Type       | Default | Description       |
+| ---------- | ---------- | ------- | ----------------- |
+| `value`    | `string[]` | `[]`    | Tag list          |
+| `max`      | `number`   | —       | Maximum tag count |
+| `readonly` | `boolean`  | `false` | Disable editing   |
+
+**Events:** `mac-change`
+
+```html
+<mac-dynamic-tags .value=${['Tag1', 'Tag2']}></mac-dynamic-tags>
 ```
 
 ### MacPopconfirm
