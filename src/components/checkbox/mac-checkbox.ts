@@ -1,0 +1,461 @@
+import { html, css, nothing } from 'lit'
+import { property, customElement, state } from 'lit/decorators.js'
+import { BaseElement } from '../../internal/base-element'
+import { sharedStyles } from '../../styles/shared-styles'
+import { themeTokens } from '../../styles/theme'
+
+/**
+ * @tag mac-checkbox
+ * @summary A checkbox component with macOS-style design.
+ *
+ * @slot - The checkbox's label.
+ *
+ * @csspart base - The checkbox's base container.
+ * @csspart control - The checkbox control box.
+ * @csspart label - The label element.
+ */
+@customElement('mac-checkbox')
+export class MacCheckbox extends BaseElement {
+  static override styles = [
+    themeTokens,
+    sharedStyles,
+    css`
+      :host {
+        display: inline-flex;
+      }
+
+      .checkbox {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--md-checkbox-gap);
+        cursor: pointer;
+        user-select: none;
+        transition: opacity 150ms;
+      }
+
+      .checkbox--disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+      }
+
+      /* Control */
+      .control {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: var(--md-checkbox-size);
+        height: var(--md-checkbox-size);
+        border-radius: var(--md-checkbox-radius);
+        border: 2px solid var(--md-checkbox-border-color);
+        background: var(--md-checkbox-bg);
+        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .checkbox:hover:not(.checkbox--disabled) .control {
+        border-color: var(--md-checkbox-border-hover-color);
+      }
+
+      .checkbox--checked .control,
+      .checkbox--indeterminate .control {
+        border-color: var(--md-checkbox-border-active-color);
+        background: var(--md-checkbox-bg-active);
+      }
+
+      .checkbox--checked:hover:not(.checkbox--disabled) .control,
+      .checkbox--indeterminate:hover:not(.checkbox--disabled) .control {
+        border-color: var(--md-checkbox-border-active-hover-color);
+      }
+
+      /* Check mark */
+      .control::after {
+        content: '';
+        position: absolute;
+        width: 55%;
+        height: 30%;
+        border-left: 2px solid var(--md-checkbox-check-color);
+        border-bottom: 2px solid var(--md-checkbox-check-color);
+        transform: rotate(-45deg) scale(0);
+        margin-top: -1px;
+        transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .checkbox--checked .control::after {
+        transform: rotate(-45deg) scale(1);
+      }
+
+      /* Indeterminate dash */
+      .control::before {
+        content: '';
+        position: absolute;
+        width: 60%;
+        height: 2px;
+        background: var(--md-checkbox-check-color);
+        transform: scaleX(0);
+        transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .checkbox--indeterminate .control::before {
+        transform: scaleX(1);
+      }
+
+      .checkbox--indeterminate .control::after {
+        transform: rotate(-45deg) scale(0);
+      }
+
+      /* Focus */
+      .checkbox:focus-visible .control {
+        outline: 2px solid var(--md-color-primary);
+        outline-offset: 2px;
+      }
+
+      /* Label */
+      .label {
+        font-size: var(--md-checkbox-font-size);
+        color: var(--md-checkbox-label-color);
+        transition: color 150ms;
+      }
+
+      .checkbox:hover:not(.checkbox--disabled) .label {
+        color: var(--md-checkbox-label-hover-color);
+      }
+
+      /* Sizes — md is the default on :host, only override sm/lg */
+      :host {
+        --md-checkbox-size: 18px;
+        --md-checkbox-gap: 8px;
+        --md-checkbox-font-size: var(--md-font-size-base);
+        --md-checkbox-radius: 4px;
+      }
+
+      :host([size='sm']) {
+        --md-checkbox-size: 14px;
+        --md-checkbox-gap: 6px;
+        --md-checkbox-font-size: var(--md-font-size-sm);
+        --md-checkbox-radius: 3px;
+      }
+
+      :host([size='lg']) {
+        --md-checkbox-size: 22px;
+        --md-checkbox-gap: 10px;
+        --md-checkbox-font-size: var(--md-font-size-lg);
+        --md-checkbox-radius: 5px;
+      }
+    `,
+  ]
+
+  /** The checkbox's value. */
+  @property() value = ''
+
+  /** Whether the checkbox is checked (controlled). */
+  @property({ type: Boolean, reflect: true }) checked = false
+
+  /** Whether the checkbox is checked by default (uncontrolled). */
+  @property({ type: Boolean, attribute: 'default-checked' }) defaultChecked = false
+
+  /** Whether the checkbox is in indeterminate state. */
+  @property({ type: Boolean, reflect: true }) indeterminate = false
+
+  /** Disables the checkbox. */
+  @property({ type: Boolean, reflect: true }) disabled = false
+
+  /** The checkbox's label text. */
+  @property() label = ''
+
+  /** The checkbox's size. */
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
+
+  @state() private _groupValue?: string[]
+
+  private get _isControlled(): boolean {
+    return this.hasAttribute('checked')
+  }
+
+  private get _isChecked(): boolean {
+    if (this._groupValue !== undefined) {
+      return this._groupValue.includes(this.value)
+    }
+    return this._isControlled ? this.checked : this.defaultChecked
+  }
+
+  override connectedCallback() {
+    super.connectedCallback()
+    const resolvedSize = this._resolvedSize
+    if (!this.hasAttribute('size') && resolvedSize !== 'md') {
+      this.setAttribute('size', resolvedSize)
+    }
+    this._registerToGroup()
+  }
+
+  override disconnectedCallback() {
+    super.disconnectedCallback()
+    this._unregisterFromGroup()
+  }
+
+  private _registerToGroup() {
+    const group = this._findGroup()
+    if (group) {
+      group._registerCheckbox(this)
+    }
+  }
+
+  private _unregisterFromGroup() {
+    const group = this._findGroup()
+    if (group) {
+      group._unregisterCheckbox(this)
+    }
+  }
+
+  private _findGroup(): MacCheckboxGroup | null {
+    let el: Element | null = this
+    while (el) {
+      if (el.tagName.toLowerCase() === 'mac-checkbox-group') {
+        return el as MacCheckboxGroup
+      }
+      el = el.parentElement
+    }
+    return null
+  }
+
+  /** Called by the parent group to sync value. */
+  _setGroupValue(value: string[] | undefined) {
+    this._groupValue = value
+  }
+
+  private _handleClick() {
+    if (this.disabled) return
+    const group = this._findGroup()
+    const newChecked = !this._isChecked
+
+    if (group) {
+      group._toggleValue(this.value, newChecked)
+    } else {
+      if (!this._isControlled) {
+        this.defaultChecked = newChecked
+      }
+      this.indeterminate = false
+      this.emit('mac-change', { detail: { value: this.value, checked: newChecked } })
+    }
+  }
+
+  private _handleKeydown(e: KeyboardEvent) {
+    if (e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault()
+      this._handleClick()
+    }
+  }
+
+  override render() {
+    const isChecked = this._isChecked
+    const isIndeterminate = this.indeterminate && !isChecked
+
+    return html`
+      <div
+        part="base"
+        class="checkbox
+          ${isChecked ? 'checkbox--checked' : ''}
+          ${isIndeterminate ? 'checkbox--indeterminate' : ''}
+          ${this.disabled ? 'checkbox--disabled' : ''}"
+        tabindex=${this.disabled ? '-1' : '0'}
+        role="checkbox"
+        aria-checked=${isIndeterminate ? 'mixed' : isChecked}
+        @click=${this._handleClick}
+        @keydown=${this._handleKeydown}
+      >
+        <span part="control" class="control"></span>
+        ${this.label
+          ? html`<span part="label" class="label">${this.label}</span>`
+          : html`<span part="label" class="label"><slot></slot></span>`}
+      </div>
+    `
+  }
+}
+
+export interface CheckboxOption {
+  value: string
+  label: string
+  disabled?: boolean
+}
+
+/**
+ * @tag mac-checkbox-group
+ * @summary A checkbox group component with macOS-style design.
+ *
+ * @slot - Default slot for mac-checkbox elements.
+ *
+ * @csspart base - The group's base container.
+ *
+ * @event mac-change - Emitted when the selected values change.
+ */
+@customElement('mac-checkbox-group')
+export class MacCheckboxGroup extends BaseElement {
+  static override styles = [
+    themeTokens,
+    sharedStyles,
+    css`
+      :host {
+        display: block;
+      }
+
+      .group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--md-checkbox-group-gap);
+      }
+
+      .group--vertical {
+        flex-direction: column;
+      }
+
+      .group--horizontal {
+        flex-direction: row;
+        align-items: center;
+      }
+    `,
+  ]
+
+  /** The group's value (controlled). */
+  @property({ type: Array }) value: string[] = []
+
+  /** The default value (uncontrolled). */
+  @property({ type: Array, attribute: 'default-value' }) defaultValue: string[] = []
+
+  /** The checkbox name attribute. */
+  @property() name = ''
+
+  /** The group's size. */
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
+
+  /** Disables all checkboxes in the group. */
+  @property({ type: Boolean, reflect: true }) disabled = false
+
+  /** The layout direction. */
+  @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
+
+  /** Options array for simplified usage. */
+  @property({ type: Array }) options?: CheckboxOption[]
+
+  /** Maximum number of selections. */
+  @property({ type: Number }) max?: number
+
+  private _checkboxes: MacCheckbox[] = []
+
+  private get _isControlled(): boolean {
+    return this.hasAttribute('value')
+  }
+
+  private get _resolvedValue(): string[] {
+    return this._isControlled ? this.value : this.defaultValue
+  }
+
+  override connectedCallback() {
+    super.connectedCallback()
+    if (!this.hasAttribute('direction')) {
+      this.setAttribute('direction', 'horizontal')
+    }
+  }
+
+  override updated() {
+    this._syncCheckboxes()
+    this._applyGroupProps()
+  }
+
+  _registerCheckbox(checkbox: MacCheckbox) {
+    if (!this._checkboxes.includes(checkbox)) {
+      this._checkboxes.push(checkbox)
+      checkbox._setGroupValue(this._resolvedValue)
+    }
+    this._applyPropsToCheckbox(checkbox)
+  }
+
+  private _applyGroupProps() {
+    this._checkboxes.forEach((cb) => this._applyPropsToCheckbox(cb))
+  }
+
+  private _applyPropsToCheckbox(checkbox: MacCheckbox) {
+    if (this.size) {
+      checkbox.setAttribute('size', this.size)
+    }
+    if (this.disabled) {
+      checkbox.disabled = true
+    } else if (!checkbox.hasAttribute('disabled')) {
+      checkbox.disabled = false
+    }
+  }
+
+  _unregisterCheckbox(checkbox: MacCheckbox) {
+    const index = this._checkboxes.indexOf(checkbox)
+    if (index !== -1) {
+      this._checkboxes.splice(index, 1)
+    }
+  }
+
+  _toggleValue(value: string, checked: boolean) {
+    let newValue: string[]
+    if (checked) {
+      if (this.max && this._resolvedValue.length >= this.max) {
+        return
+      }
+      newValue = [...this._resolvedValue, value]
+    } else {
+      newValue = this._resolvedValue.filter((v) => v !== value)
+    }
+
+    if (this._isControlled) {
+      this.emit('mac-change', { detail: { value: newValue } })
+    } else {
+      this.defaultValue = newValue
+      this._syncCheckboxes()
+      this.emit('mac-change', { detail: { value: newValue } })
+    }
+  }
+
+  private _syncCheckboxes() {
+    const val = this._resolvedValue
+    this._checkboxes.forEach((cb) => {
+      cb._setGroupValue(val)
+    })
+  }
+
+  private _handleSlotChange() {
+    this._checkboxes = []
+    const checkboxes = this.querySelectorAll('mac-checkbox')
+    checkboxes.forEach((cb) => this._registerCheckbox(cb as MacCheckbox))
+    this._syncCheckboxes()
+  }
+
+  override render() {
+    const hasSlotContent = !this.options || this.options.length === 0
+
+    return html`
+      <div
+        part="base"
+        class="group group--${this.direction}"
+        role="group"
+        aria-disabled=${this.disabled}
+      >
+        ${this.options?.map(
+          (option) => html`
+            <mac-checkbox
+              .value=${option.value}
+              .label=${option.label}
+              .disabled=${option.disabled || this.disabled}
+              .size=${this.size}
+            ></mac-checkbox>
+          `,
+        )}
+        ${hasSlotContent
+          ? html`<slot @slotchange=${this._handleSlotChange}></slot>`
+          : nothing}
+      </div>
+    `
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'mac-checkbox': MacCheckbox
+    'mac-checkbox-group': MacCheckboxGroup
+  }
+}

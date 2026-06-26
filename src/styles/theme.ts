@@ -157,6 +157,20 @@ export const themeTokens: CSSResult = css`
     --md-radio-group-gap: var(--md-spacing-md);
 
     /* ═══════════════════════════════════════════════════
+       Checkbox 复选框  --{size}-checkbox-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-checkbox-bg: transparent;
+    --md-checkbox-bg-active: var(--md-color-primary);
+    --md-checkbox-border-color: var(--md-color-border);
+    --md-checkbox-border-hover-color: var(--md-color-text-secondary);
+    --md-checkbox-border-active-color: var(--md-color-primary);
+    --md-checkbox-border-active-hover-color: var(--md-color-primary-hover);
+    --md-checkbox-check-color: #fff;
+    --md-checkbox-label-color: var(--md-color-text);
+    --md-checkbox-label-hover-color: var(--md-color-text);
+    --md-checkbox-group-gap: var(--md-spacing-md);
+
+    /* ═══════════════════════════════════════════════════
        Select 选择器  --{size}-select-{part}-{state}
        ═══════════════════════════════════════════════════ */
     /* sm */
