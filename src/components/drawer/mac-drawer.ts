@@ -115,7 +115,9 @@ export class MacDrawer extends BaseElement {
         bottom: 0;
         height: 100%;
         border-radius: 0 var(--md-drawer-radius) var(--md-drawer-radius) 0;
-        box-shadow: 8px 0 40px rgba(0, 0, 0, 0.1), 2px 0 12px rgba(0, 0, 0, 0.06);
+        box-shadow:
+          8px 0 40px rgba(0, 0, 0, 0.1),
+          2px 0 12px rgba(0, 0, 0, 0.06);
         transform: translateX(-100%);
       }
 
@@ -129,7 +131,9 @@ export class MacDrawer extends BaseElement {
         right: 0;
         width: 100%;
         border-radius: 0 0 var(--md-drawer-radius) var(--md-drawer-radius);
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1), 0 2px 12px rgba(0, 0, 0, 0.06);
+        box-shadow:
+          0 8px 40px rgba(0, 0, 0, 0.1),
+          0 2px 12px rgba(0, 0, 0, 0.06);
         transform: translateY(-100%);
       }
 
@@ -143,7 +147,9 @@ export class MacDrawer extends BaseElement {
         right: 0;
         width: 100%;
         border-radius: var(--md-drawer-radius) var(--md-drawer-radius) 0 0;
-        box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.1), 0 -2px 12px rgba(0, 0, 0, 0.06);
+        box-shadow:
+          0 -8px 40px rgba(0, 0, 0, 0.1),
+          0 -2px 12px rgba(0, 0, 0, 0.06);
         transform: translateY(100%);
       }
 
@@ -182,7 +188,8 @@ export class MacDrawer extends BaseElement {
         border-radius: var(--md-radius-sm);
         color: var(--md-drawer-close-color);
         cursor: pointer;
-        transition: background var(--md-transition-fast),
+        transition:
+          background var(--md-transition-fast),
           color var(--md-transition-fast);
         flex-shrink: 0;
         margin-left: var(--md-spacing-sm);
@@ -261,23 +268,7 @@ export class MacDrawer extends BaseElement {
         cursor: ns-resize;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
-          --md-drawer-bg: rgba(40, 40, 40, 0.92);
-          --md-drawer-border: rgba(255, 255, 255, 0.08);
-          --md-drawer-shadow: -8px 0 40px rgba(0, 0, 0, 0.3), -2px 0 12px rgba(0, 0, 0, 0.2);
-          --md-drawer-header-border: rgba(255, 255, 255, 0.06);
-          --md-drawer-title-color: rgba(255, 255, 255, 0.92);
-          --md-drawer-footer-border: rgba(255, 255, 255, 0.06);
-          --md-drawer-close-color: rgba(255, 255, 255, 0.55);
-          --md-drawer-close-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-drawer-mask-bg: rgba(0, 0, 0, 0.5);
-        }
-      }
-
-      :host([theme='dark']) {
+      :host([data-theme='dark']) {
         --md-drawer-bg: rgba(40, 40, 40, 0.92);
         --md-drawer-border: rgba(255, 255, 255, 0.08);
         --md-drawer-shadow: -8px 0 40px rgba(0, 0, 0, 0.3), -2px 0 12px rgba(0, 0, 0, 0.2);
@@ -289,7 +280,7 @@ export class MacDrawer extends BaseElement {
         --md-drawer-mask-bg: rgba(0, 0, 0, 0.5);
       }
 
-      :host([theme='light']) {
+      :host([data-theme='light']) {
         --md-drawer-bg: rgba(246, 246, 246, 0.88);
         --md-drawer-border: rgba(0, 0, 0, 0.06);
         --md-drawer-shadow: -8px 0 40px rgba(0, 0, 0, 0.1), -2px 0 12px rgba(0, 0, 0, 0.06);
@@ -345,9 +336,6 @@ export class MacDrawer extends BaseElement {
   /** Maximum height for resize (top/bottom) */
   @property({ type: String, attribute: 'max-height' }) maxHeight = '80vh'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   @state() private _isOpen = false
 
   // Portal elements
@@ -363,10 +351,16 @@ export class MacDrawer extends BaseElement {
   // Style injection
   private static _stylesInjected = false
 
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
+  override willUpdate(): void {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
     }
+  }
+
+  override updated(changed: Map<string, unknown>): void {
     if (changed.has('open')) {
       if (this.open && !this._isOpen) {
         this._show()
@@ -529,18 +523,31 @@ export class MacDrawer extends BaseElement {
   }
 
   private _applyThemeVars(): void {
-    const isDark =
-      this.theme === 'dark' ||
-      (this.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const isDark = this._resolvedTheme === 'dark'
 
     if (isDark) {
       document.documentElement.style.setProperty('--md-drawer-bg', 'rgba(40, 40, 40, 0.92)')
       document.documentElement.style.setProperty('--md-drawer-border', 'rgba(255, 255, 255, 0.08)')
-      document.documentElement.style.setProperty('--md-drawer-header-border', 'rgba(255, 255, 255, 0.06)')
-      document.documentElement.style.setProperty('--md-drawer-title-color', 'rgba(255, 255, 255, 0.92)')
-      document.documentElement.style.setProperty('--md-drawer-footer-border', 'rgba(255, 255, 255, 0.06)')
-      document.documentElement.style.setProperty('--md-drawer-close-color', 'rgba(255, 255, 255, 0.55)')
-      document.documentElement.style.setProperty('--md-drawer-close-hover-bg', 'rgba(255, 255, 255, 0.08)')
+      document.documentElement.style.setProperty(
+        '--md-drawer-header-border',
+        'rgba(255, 255, 255, 0.06)',
+      )
+      document.documentElement.style.setProperty(
+        '--md-drawer-title-color',
+        'rgba(255, 255, 255, 0.92)',
+      )
+      document.documentElement.style.setProperty(
+        '--md-drawer-footer-border',
+        'rgba(255, 255, 255, 0.06)',
+      )
+      document.documentElement.style.setProperty(
+        '--md-drawer-close-color',
+        'rgba(255, 255, 255, 0.55)',
+      )
+      document.documentElement.style.setProperty(
+        '--md-drawer-close-hover-bg',
+        'rgba(255, 255, 255, 0.08)',
+      )
       document.documentElement.style.setProperty('--md-drawer-mask-bg', 'rgba(0, 0, 0, 0.5)')
     } else {
       document.documentElement.style.setProperty('--md-drawer-bg', 'rgba(246, 246, 246, 0.88)')
@@ -549,7 +556,10 @@ export class MacDrawer extends BaseElement {
       document.documentElement.style.setProperty('--md-drawer-title-color', 'rgba(0, 0, 0, 0.88)')
       document.documentElement.style.setProperty('--md-drawer-footer-border', 'rgba(0, 0, 0, 0.06)')
       document.documentElement.style.setProperty('--md-drawer-close-color', 'rgba(0, 0, 0, 0.45)')
-      document.documentElement.style.setProperty('--md-drawer-close-hover-bg', 'rgba(0, 0, 0, 0.06)')
+      document.documentElement.style.setProperty(
+        '--md-drawer-close-hover-bg',
+        'rgba(0, 0, 0, 0.06)',
+      )
       document.documentElement.style.setProperty('--md-drawer-mask-bg', 'rgba(0, 0, 0, 0.3)')
     }
   }

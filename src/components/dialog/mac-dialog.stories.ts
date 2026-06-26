@@ -57,7 +57,6 @@ export const Default: Story = {
     <div style="${containerStyle}">
       <mac-dialog
         title=${args.title}
-        theme="auto"
         ?draggable=${args.draggable}
         ?resizable=${args.resizable}
         ?show-buttons=${args.showButtons}

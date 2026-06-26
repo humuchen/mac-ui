@@ -299,23 +299,7 @@ export class MacDescriptions extends BaseElement {
         --md-descriptions-label-width: 140px;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
-          --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
-          --md-descriptions-container-border: rgba(255, 255, 255, 0.08);
-          --md-descriptions-header-border: rgba(255, 255, 255, 0.08);
-          --md-descriptions-title-color: rgba(255, 255, 255, 0.92);
-          --md-descriptions-label-color: rgba(255, 255, 255, 0.55);
-          --md-descriptions-label-bg: rgba(255, 255, 255, 0.04);
-          --md-descriptions-value-color: rgba(255, 255, 255, 0.88);
-          --md-descriptions-row-border: rgba(255, 255, 255, 0.06);
-          --md-descriptions-separator-color: rgba(255, 255, 255, 0.55);
-        }
-      }
-
-      :host([theme='dark']) {
+      :host([data-theme='dark']) {
         --md-descriptions-container-bg: rgba(40, 40, 40, 0.85);
         --md-descriptions-container-border: rgba(255, 255, 255, 0.08);
         --md-descriptions-header-border: rgba(255, 255, 255, 0.08);
@@ -327,7 +311,7 @@ export class MacDescriptions extends BaseElement {
         --md-descriptions-separator-color: rgba(255, 255, 255, 0.55);
       }
 
-      :host([theme='light']) {
+      :host([data-theme='light']) {
         --md-descriptions-container-bg: var(--md-glass-menu-bg);
         --md-descriptions-container-border: var(--md-glass-separator);
         --md-descriptions-header-border: var(--md-glass-separator);
@@ -352,7 +336,7 @@ export class MacDescriptions extends BaseElement {
   @property({ type: Number }) column = 3
 
   /** Component size */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** Whether to show bordered style */
   @property({ type: Boolean, reflect: true }) bordered = false
@@ -363,15 +347,19 @@ export class MacDescriptions extends BaseElement {
   /** Separator between label and value (only for label-placement='left' and not bordered) */
   @property() separator = ':'
 
-  /** Theme override: auto follows OS, light/dark forces mode */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   /** Data items (alternative to slot) */
   @property({ type: Array }) items: DescriptionItem[] = []
 
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
     }
   }
 
@@ -451,11 +439,11 @@ export class MacDescriptions extends BaseElement {
             <tr>
               ${row.map(
                 ({ item, effectiveSpan }) => html`
-                  <td class="label-cell" style=${item.labelStyle || nothing}>${item.label}</td>
+                  <td class="label-cell" style=${item.labelStyle || ''}>${item.label}</td>
                   <td
                     class="value-cell"
                     colspan=${effectiveSpan * 2 - 1}
-                    style=${item.contentStyle || nothing}
+                    style=${item.contentStyle || ''}
                   >
                     ${item.value}
                   </td>
@@ -477,9 +465,9 @@ export class MacDescriptions extends BaseElement {
         ${items.map(
           (item) => html`
             <div class="left-item">
-              <div class="left-label" style=${item.labelStyle || nothing}>${item.label}</div>
+              <div class="left-label" style=${item.labelStyle || ''}>${item.label}</div>
               <span class="left-separator">${this.separator}</span>
-              <div class="left-value" style=${item.contentStyle || nothing}>${item.value}</div>
+              <div class="left-value" style=${item.contentStyle || ''}>${item.value}</div>
             </div>
           `,
         )}
@@ -502,7 +490,7 @@ export class MacDescriptions extends BaseElement {
                   <td
                     class="top-table-label"
                     colspan=${effectiveSpan}
-                    style=${item.labelStyle || nothing}
+                    style=${item.labelStyle || ''}
                   >
                     ${item.label}
                   </td>
@@ -518,7 +506,7 @@ export class MacDescriptions extends BaseElement {
                   <td
                     class="top-table-value"
                     colspan=${effectiveSpan}
-                    style=${item.contentStyle || nothing}
+                    style=${item.contentStyle || ''}
                   >
                     ${item.value}
                   </td>
@@ -545,8 +533,8 @@ export class MacDescriptions extends BaseElement {
           row.map(
             ({ item, effectiveSpan }) => html`
               <div class="top-item" style="grid-column: span ${effectiveSpan}">
-                <div class="top-label" style=${item.labelStyle || nothing}>${item.label}</div>
-                <div class="top-value" style=${item.contentStyle || nothing}>${item.value}</div>
+                <div class="top-label" style=${item.labelStyle || ''}>${item.label}</div>
+                <div class="top-value" style=${item.contentStyle || ''}>${item.value}</div>
               </div>
             `,
           ),

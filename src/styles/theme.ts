@@ -607,5 +607,55 @@ export const themeTokens: CSSResult = css`
     --md-popconfirm-dark-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
     --md-popconfirm-title-dark-color: rgba(255, 255, 255, 0.92);
     --md-popconfirm-desc-dark-color: rgba(255, 255, 255, 0.45);
+
+    /* ═══════════════════════════════════════════════════
+       Split 面板分割  --md-split-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-split-resizer-size: 1px;
+    --md-split-resizer-color: var(--md-color-border);
+    --md-split-resizer-hover-color: var(--md-color-primary);
+    --md-split-resizer-handle-bg: var(--md-color-bg-secondary);
+    --md-split-resizer-handle-dot-color: var(--md-color-text-secondary);
+
+    /* ═══════════════════════════════════════════════════
+       LazyImage 图片懒加载  --md-lazy-image-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-lazy-image-object-fit: cover;
+    --md-lazy-image-placeholder-bg: var(--md-color-bg-secondary);
+    --md-lazy-image-placeholder-color: var(--md-color-text-secondary);
+    --md-lazy-image-placeholder-icon-size: 32px;
+    --md-lazy-image-error-icon-size: 32px;
+    --md-lazy-image-shimmer-bg: rgba(255, 255, 255, 0.5);
+    --md-lazy-image-hover-scale: 1.05;
+    --md-lazy-image-hover-duration: 300ms;
+    --md-lazy-image-hover-easing: ease-out;
+    --md-lazy-image-hover-filter: none;
+    --md-lazy-image-preview-bg: rgba(0, 0, 0, 0.85);
+    --md-lazy-image-preview-duration: 250ms;
+
+    /* ═══════════════════════════════════════════════════
+       InfiniteScroll 无限滚动  --md-infinite-scroll-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-infinite-scroll-padding: var(--md-spacing-md);
+    --md-infinite-scroll-color: var(--md-color-text-secondary);
+    --md-infinite-scroll-font-size: var(--md-font-size-sm);
+    --md-infinite-scroll-gap: var(--md-spacing-sm);
+    --md-infinite-scroll-spinner-size: 16px;
+  }
+
+  :host([data-theme='dark']) {
+    /* 基础颜色 */
+    --md-color-text: rgba(255, 255, 255, 0.92);
+    --md-color-text-secondary: rgba(255, 255, 255, 0.55);
+    --md-color-border: rgba(255, 255, 255, 0.1);
+    --md-color-bg: rgba(30, 30, 30, 0.95);
+    --md-color-bg-secondary: rgba(255, 255, 255, 0.05);
+
+    /* Glass 毛玻璃 */
+    --md-glass-menu-bg: rgba(40, 40, 40, 0.85);
+    --md-glass-separator: rgba(255, 255, 255, 0.08);
+
+    /* macOS 风格 */
+    --md-mac-text-primary: rgba(255, 255, 255, 0.92);
   }
 `

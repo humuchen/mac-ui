@@ -98,9 +98,6 @@ export class MacPopconfirm extends BaseElement {
   /** Width of the popover */
   @property({ type: String }) width = '240px'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   @state() private _visible = false
 
   private _popoverEl: HTMLElement | null = null
@@ -124,9 +121,12 @@ export class MacPopconfirm extends BaseElement {
     if (this._hoverTimeout) clearTimeout(this._hoverTimeout)
   }
 
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
+  override willUpdate(): void {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
     }
   }
 
@@ -296,40 +296,35 @@ export class MacPopconfirm extends BaseElement {
         background: rgba(180, 30, 25, 0.95);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .mac-popconfirm-portal {
-          --md-popconfirm-bg: rgba(40, 40, 40, 0.92);
-          --md-popconfirm-border: rgba(255, 255, 255, 0.08);
-          --md-popconfirm-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
-          --md-popconfirm-title-color: rgba(255, 255, 255, 0.92);
-          --md-popconfirm-desc-color: rgba(255, 255, 255, 0.45);
-          --md-popconfirm-icon-color: #f5a623;
-        }
+      .mac-popconfirm-portal[data-theme='dark'] {
+        --md-popconfirm-bg: rgba(40, 40, 40, 0.92);
+        --md-popconfirm-border: rgba(255, 255, 255, 0.08);
+        --md-popconfirm-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 2px 12px rgba(0, 0, 0, 0.2);
+        --md-popconfirm-title-color: rgba(255, 255, 255, 0.92);
+        --md-popconfirm-desc-color: rgba(255, 255, 255, 0.45);
+        --md-popconfirm-icon-color: #f5a623;
+      }
 
-        .mac-popconfirm-portal .popconfirm-arrow {
-          background: rgba(40, 40, 40, 0.92);
-          border-color: rgba(255, 255, 255, 0.08);
-        }
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-arrow {
+        background: rgba(40, 40, 40, 0.92);
+        border-color: rgba(255, 255, 255, 0.08);
+      }
 
-        .mac-popconfirm-portal .popconfirm-btn {
-          background: rgba(255, 255, 255, 0.08);
-          color: rgba(255, 255, 255, 0.88);
-          border-color: rgba(255, 255, 255, 0.12);
-        }
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-btn {
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.88);
+        border-color: rgba(255, 255, 255, 0.12);
+      }
 
-        .mac-popconfirm-portal .popconfirm-btn:hover {
-          background: rgba(255, 255, 255, 0.12);
-        }
+      .mac-popconfirm-portal[data-theme='dark'] .popconfirm-btn:hover {
+        background: rgba(255, 255, 255, 0.12);
       }
     `
     document.head.appendChild(style)
   }
 
   private _applyThemeVars(): void {
-    const isDark =
-      this.theme === 'dark' ||
-      (this.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const isDark = this._resolvedTheme === 'dark'
 
     const root = this._popoverEl || document.documentElement
     if (isDark) {
@@ -580,6 +575,10 @@ export class MacPopconfirm extends BaseElement {
     popover.id = this._popoverId
     popover.className = 'mac-popconfirm-portal'
     popover.setAttribute('data-placement', this.placement)
+    const resolvedTheme = this._resolvedTheme
+    if (resolvedTheme) {
+      popover.setAttribute('data-theme', resolvedTheme)
+    }
     popover.style.width = this.width
 
     // Arrow

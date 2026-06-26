@@ -2,6 +2,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { fixture } from '@open-wc/testing-helpers'
 import { MacInput } from './mac-input'
 
+// Prevent Vite from tree-shaking the component import
+void MacInput
+
 describe('MacInput', () => {
   it('is defined', () => {
     expect(customElements.get('mac-input')).to.be.instanceOf(Function)

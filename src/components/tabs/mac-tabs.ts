@@ -309,31 +309,7 @@ export class MacTabs extends BaseElement {
         --md-tabs-pane-padding: var(--md-spacing-xl) 0;
       }
 
-      /* ─── Dark Mode ─── */
-
-      @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
-          --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
-          --md-tabs-item-color: rgba(255, 255, 255, 0.55);
-          --md-tabs-item-hover-color: rgba(255, 255, 255, 0.88);
-          --md-tabs-item-active-color: rgba(0, 122, 255, 0.9);
-          --md-tabs-item-disabled-color: rgba(255, 255, 255, 0.3);
-          --md-tabs-indicator-color: rgba(0, 122, 255, 0.9);
-          --md-tabs-close-color: rgba(255, 255, 255, 0.4);
-          --md-tabs-close-hover-color: rgba(255, 255, 255, 0.8);
-          --md-tabs-close-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-tabs-add-color: rgba(255, 255, 255, 0.4);
-          --md-tabs-add-hover-color: rgba(255, 255, 255, 0.8);
-          --md-tabs-add-hover-bg: rgba(255, 255, 255, 0.08);
-          --md-tabs-segment-bg: rgba(255, 255, 255, 0.06);
-          --md-tabs-segment-item-color: rgba(255, 255, 255, 0.55);
-          --md-tabs-segment-item-active-bg: rgba(255, 255, 255, 0.12);
-          --md-tabs-segment-item-active-color: rgba(255, 255, 255, 0.92);
-          --md-tabs-segment-item-hover-bg: rgba(255, 255, 255, 0.08);
-        }
-      }
-
-      :host([theme='dark']) {
+      :host([data-theme='dark']) {
         --md-tabs-nav-border: rgba(255, 255, 255, 0.08);
         --md-tabs-item-color: rgba(255, 255, 255, 0.55);
         --md-tabs-item-hover-color: rgba(255, 255, 255, 0.88);
@@ -353,7 +329,7 @@ export class MacTabs extends BaseElement {
         --md-tabs-segment-item-hover-bg: rgba(255, 255, 255, 0.08);
       }
 
-      :host([theme='light']) {
+      :host([data-theme='light']) {
         --md-tabs-nav-border: var(--md-glass-separator);
         --md-tabs-item-color: var(--md-color-text-secondary);
         --md-tabs-item-hover-color: var(--md-color-text);
@@ -379,7 +355,7 @@ export class MacTabs extends BaseElement {
   @property({ reflect: true }) type: 'line' | 'card' | 'segment' = 'line'
 
   /** Component size */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** Active tab key (controlled mode) */
   @property() value = ''
@@ -399,9 +375,6 @@ export class MacTabs extends BaseElement {
   /** Trigger mode: click or hover */
   @property() trigger: 'click' | 'hover' = 'click'
 
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
-
   /** Tab items data (alternative to slot) */
   @property({ type: Array }) items: TabItem[] = []
 
@@ -409,14 +382,24 @@ export class MacTabs extends BaseElement {
 
   @query('.nav-content') private _navContent!: HTMLElement
 
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
   override connectedCallback(): void {
     super.connectedCallback()
   }
 
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
-    }
     if (changed.has('value')) {
       this._activeKey = this.value
     }
@@ -544,7 +527,13 @@ export class MacTabs extends BaseElement {
 
     return html`
       <span class="close-btn" @click=${(e: Event) => this._closeTab(item.key, e)}>
-        <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <svg
+          viewBox="0 0 12 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
           <path d="M3 3l6 6M9 3l-6 6" />
         </svg>
       </span>
@@ -556,7 +545,13 @@ export class MacTabs extends BaseElement {
 
     return html`
       <span class="add-btn" @click=${() => this._handleAdd()}>
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
           <path d="M8 3v10M3 8h10" />
         </svg>
       </span>
@@ -574,7 +569,9 @@ export class MacTabs extends BaseElement {
           ${items.map(
             (item) => html`
               <div
-                class="tab-item ${item.key === activeKey ? 'active' : ''} ${item.disabled ? 'disabled' : ''}"
+                class="tab-item ${item.key === activeKey ? 'active' : ''} ${item.disabled
+                  ? 'disabled'
+                  : ''}"
                 data-key=${item.key}
                 @click=${() => this._selectTab(item.key)}
                 @mouseenter=${() => this._handleTabHover(item.key)}
@@ -584,9 +581,7 @@ export class MacTabs extends BaseElement {
               </div>
             `,
           )}
-          ${this.type === 'line' && this.animated
-            ? html`<div class="indicator"></div>`
-            : nothing}
+          ${this.type === 'line' && this.animated ? html`<div class="indicator"></div>` : nothing}
         </div>
         ${this._renderAddBtn()}
         <slot name="suffix"></slot>

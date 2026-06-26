@@ -1,4 +1,5 @@
 // Components
+export { MacConfigProvider } from './components/config-provider/mac-config-provider'
 export { MacButton } from './components/button/mac-button'
 export { MacCard } from './components/card/mac-card'
 export { MacInput } from './components/input/mac-input'
@@ -23,6 +24,9 @@ export { MacTabs, MacTabPane } from './components/tabs/mac-tabs'
 export type { TabItem } from './components/tabs/mac-tabs'
 export { MacDrawer } from './components/drawer/mac-drawer'
 export { MacPopconfirm } from './components/popconfirm/mac-popconfirm'
+export { MacSplit, MacSplitPane } from './components/split/mac-split'
+export { MacLazyImage } from './components/lazy-image/mac-lazy-image'
+export { MacInfiniteScroll } from './components/infinite-scroll/mac-infinite-scroll'
 
 // Base class (for extension)
 export { BaseElement } from './internal/base-element'

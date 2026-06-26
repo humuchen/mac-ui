@@ -286,37 +286,34 @@ export class MacDropdown extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .mac-dropdown-portal,
-        .mac-dropdown-portal .dropdown-submenu > .mac-dropdown-submenu-portal {
-          background: var(--md-dropdown-container-dark-bg);
-        }
+      .mac-dropdown-portal[data-theme='dark'],
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-submenu > .mac-dropdown-submenu-portal {
+        background: var(--md-dropdown-container-dark-bg);
+      }
 
-        .mac-dropdown-portal .dropdown-item:hover:not(.disabled) {
-          background: var(--md-dropdown-item-dark-hover-bg);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item:hover:not(.disabled) {
+        background: var(--md-dropdown-item-dark-hover-bg);
+      }
 
-        .mac-dropdown-portal .dropdown-item.active {
-          background: var(--md-dropdown-item-dark-active-bg);
-          color: var(--md-dropdown-item-active-color);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item.active {
+        background: var(--md-dropdown-item-dark-active-bg);
+        color: var(--md-dropdown-item-active-color);
+      }
 
-        .mac-dropdown-portal .dropdown-item.danger:hover:not(.disabled) {
-          background: var(--md-dropdown-item-danger-hover-bg);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item.danger:hover:not(.disabled) {
+        background: var(--md-dropdown-item-danger-hover-bg);
+      }
 
-        .mac-dropdown-portal .dropdown-divider {
-          background: var(--md-dropdown-divider-dark-color);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-divider {
+        background: var(--md-dropdown-divider-dark-color);
+      }
 
-        .mac-dropdown-portal .dropdown-item {
-          color: var(--md-dropdown-item-dark-color);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item {
+        color: var(--md-dropdown-item-dark-color);
+      }
 
-        .mac-dropdown-portal .dropdown-item-shortcut {
-          color: var(--md-dropdown-shortcut-dark-color);
-        }
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item-shortcut {
+        color: var(--md-dropdown-shortcut-dark-color);
       }
     `
     document.head.appendChild(style)
@@ -503,6 +500,10 @@ export class MacDropdown extends BaseElement {
     menu.className = 'mac-dropdown-portal'
     menu.setAttribute('role', 'menu')
     menu.setAttribute('part', 'menu')
+    const theme = this._resolvedTheme
+    if (theme) {
+      menu.setAttribute('data-theme', theme)
+    }
     if (placement.startsWith('top')) {
       menu.classList.add('animating-up')
     }

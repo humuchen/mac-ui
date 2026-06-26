@@ -135,7 +135,7 @@ export class MacButton extends BaseElement {
   @property({ reflect: true }) variant: 'primary' | 'secondary' | 'text' = 'primary'
 
   /** The button's size. */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** Disables the button. */
   @property({ type: Boolean, reflect: true }) disabled = false
@@ -146,13 +146,27 @@ export class MacButton extends BaseElement {
   /** The button's type (form behavior). */
   @property() type: 'button' | 'submit' | 'reset' = 'button'
 
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
   override render() {
     const isDisabled = this.disabled || this.loading
+    const size = this._resolvedSize
 
     return html`
       <button
         part="base"
-        class="button button--${this.variant} button--${this.size} ${this.loading
+        class="button button--${this.variant} button--${size} ${this.loading
           ? 'button--loading'
           : ''}"
         ?disabled=${isDisabled}

@@ -2,6 +2,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { fixture } from '@open-wc/testing-helpers'
 import { MacButton } from './mac-button'
 
+// Ensure component registration is not tree-shaken
+void MacButton
+
 describe('MacButton', () => {
   it('is defined', () => {
     expect(customElements.get('mac-button')).to.be.instanceOf(Function)

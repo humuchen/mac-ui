@@ -75,39 +75,31 @@ export class MacNumberAnimation extends BaseElement {
 
       /* ─── Size: sm ─── */
 
-      :host([size="sm"]) {
+      :host([size='sm']) {
         --md-number-animation-font-size: var(--md-font-size-xl, 24px);
       }
 
       /* ─── Size: md ─── */
 
-      :host([size="md"]) {
+      :host([size='md']) {
         --md-number-animation-font-size: var(--md-font-size-display, 48px);
       }
 
       /* ─── Size: lg ─── */
 
-      :host([size="lg"]) {
+      :host([size='lg']) {
         --md-number-animation-font-size: var(--md-font-size-hero, 72px);
       }
 
       /* ─── Dark Mode ─── */
 
-      @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
-          --md-number-animation-color: rgba(255, 255, 255, 0.92);
-          --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);
-          --md-number-animation-suffix-color: rgba(255, 255, 255, 0.55);
-        }
-      }
-
-      :host([theme="dark"]) {
+      :host([data-theme='dark']) {
         --md-number-animation-color: rgba(255, 255, 255, 0.92);
         --md-number-animation-prefix-color: rgba(255, 255, 255, 0.55);
         --md-number-animation-suffix-color: rgba(255, 255, 255, 0.55);
       }
 
-      :host([theme="light"]) {
+      :host([data-theme='light']) {
         --md-number-animation-color: var(--md-color-text);
         --md-number-animation-prefix-color: var(--md-color-text-secondary);
         --md-number-animation-suffix-color: var(--md-color-text-secondary);
@@ -143,10 +135,7 @@ export class MacNumberAnimation extends BaseElement {
   @property() suffix = ''
 
   /** Component size */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
-
-  /** Theme override */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** Callback when animation finishes (can be set as property) */
   @property({ attribute: false }) onFinish?: (value: number) => void
@@ -157,10 +146,20 @@ export class MacNumberAnimation extends BaseElement {
   private _startTime: number | null = null
   private _isAnimating = false
 
-  override updated(changed: Map<string, unknown>): void {
-    if (changed.has('theme') && this.theme === 'auto') {
-      this.removeAttribute('theme')
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
     }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
+  override updated(changed: Map<string, unknown>): void {
     // Re-animate when `to` or `from` changes
     if (changed.has('to') || changed.has('from')) {
       if (this.autoplay && this._isAnimating === false) {

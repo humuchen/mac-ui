@@ -329,36 +329,33 @@ export class MacInput extends BaseElement {
         font-size: var(--lg-input-font-size);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .input-container--filled {
-          background: rgba(255, 255, 255, 0.05);
-        }
+      :host([data-theme='dark']) .input-container--filled {
+        background: rgba(255, 255, 255, 0.05);
+      }
 
-        .input-container--filled:focus-within {
-          background: rgba(255, 255, 255, 0.08);
-        }
+      :host([data-theme='dark']) .input-container--filled:focus-within {
+        background: rgba(255, 255, 255, 0.08);
+      }
 
-        .input-container--glass {
-          background: rgba(255, 255, 255, 0.05);
-        }
+      :host([data-theme='dark']) .input-container--glass {
+        background: rgba(255, 255, 255, 0.05);
+      }
 
-        .input-container--glass:focus-within {
-          background: rgba(255, 255, 255, 0.08);
-        }
+      :host([data-theme='dark']) .input-container--glass:focus-within {
+        background: rgba(255, 255, 255, 0.08);
+      }
 
-        .clear-button {
-          background: rgba(255, 255, 255, 0.1);
-        }
+      :host([data-theme='dark']) .clear-button {
+        background: rgba(255, 255, 255, 0.1);
+      }
 
-        .clear-button:hover {
-          background: rgba(255, 255, 255, 0.15);
-        }
+      :host([data-theme='dark']) .clear-button:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
 
-        .loading-spinner {
-          border-color: rgba(255, 255, 255, 0.2);
-          border-top-color: var(--md-color-primary);
-        }
+      :host([data-theme='dark']) .loading-spinner {
+        border-color: rgba(255, 255, 255, 0.2);
+        border-top-color: var(--md-color-primary);
       }
     `,
   ]
@@ -373,7 +370,7 @@ export class MacInput extends BaseElement {
   @property() type: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' = 'text'
 
   /** The input's size. */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** The visual variant. */
   @property({ reflect: true }) variant: 'default' | 'filled' | 'glass' | 'underline' = 'default'
@@ -426,6 +423,19 @@ export class MacInput extends BaseElement {
 
   @query('#input') private _input!: HTMLInputElement
 
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
   override render() {
     const showClearButton = this.clearable && this.value && !this.disabled && !this.readonly
     const showPasswordToggle = this.showPasswordToggle && this.type === 'password' && !this.disabled
@@ -435,6 +445,7 @@ export class MacInput extends BaseElement {
     const isOverLimit = this.maxLength && charCount > this.maxLength
 
     const inputType = this.type === 'password' && this._showPassword ? 'text' : this.type
+    const size = this._resolvedSize
 
     return html`
       <div class="input-wrapper ${this.floating ? 'input-wrapper--floating' : ''}" part="base">
@@ -452,7 +463,7 @@ export class MacInput extends BaseElement {
         <div
           class="input-container
             input-container--${this.variant}
-            input-container--${this.size}
+            input-container--${size}
             ${this.error ? 'input-container--error' : ''}
             ${this.success ? 'input-container--success' : ''}
             ${this.disabled ? 'input-container--disabled' : ''}

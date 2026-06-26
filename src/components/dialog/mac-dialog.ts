@@ -256,104 +256,66 @@ export class MacDialog extends BaseElement {
         color: var(--md-dialog-title-inactive-color);
       }
 
-      /* ─── Dark Mode (auto via OS) ─── */
+      /* ─── Dark Mode ─── */
 
-      @media (prefers-color-scheme: dark) {
-        :host(:not([theme])) {
-          box-shadow: var(--md-dialog-container-dark-shadow);
-        }
-
-        :host(:not([theme])) .dialog {
-          background: var(--md-dialog-container-dark-bg);
-        }
-
-        :host(:not([theme])) .titlebar {
-          background: var(--md-dialog-header-dark-bg);
-          border-bottom-color: var(--md-dialog-header-dark-border);
-        }
-
-        :host(:not([theme])) .title {
-          color: var(--md-dialog-title-dark-color);
-        }
-
-        :host(:not([theme])) .body {
-          color: var(--md-dialog-body-dark-color);
-        }
-
-        :host(:not([theme]):not([active])) .titlebar {
-          background: rgba(255, 255, 255, 0.02);
-        }
-
-        :host(:not([theme]):not([active])) .title {
-          color: var(--md-dialog-title-dark-inactive-color);
-        }
-
-        :host(:not([theme])) .resize-handle::after {
-          border-right-color: var(--md-dialog-resize-dark-border);
-          border-bottom-color: var(--md-dialog-resize-dark-border);
-        }
-      }
-
-      /* ─── Dark Mode (manual via theme="dark") ─── */
-
-      :host([theme='dark']) {
+      :host([data-theme='dark']) {
         box-shadow: var(--md-dialog-container-dark-shadow);
       }
 
-      :host([theme='dark']) .dialog {
+      :host([data-theme='dark']) .dialog {
         background: var(--md-dialog-container-dark-bg);
       }
 
-      :host([theme='dark']) .titlebar {
+      :host([data-theme='dark']) .titlebar {
         background: var(--md-dialog-header-dark-bg);
         border-bottom-color: var(--md-dialog-header-dark-border);
       }
 
-      :host([theme='dark']) .title {
+      :host([data-theme='dark']) .title {
         color: var(--md-dialog-title-dark-color);
       }
 
-      :host([theme='dark']) .body {
+      :host([data-theme='dark']) .body {
         color: var(--md-dialog-body-dark-color);
       }
 
-      :host([theme='dark']:not([active])) .titlebar {
+      :host([data-theme='dark']:not([active])) .titlebar {
         background: rgba(255, 255, 255, 0.02);
       }
 
-      :host([theme='dark']:not([active])) .title {
+      :host([data-theme='dark']:not([active])) .title {
         color: var(--md-dialog-title-dark-inactive-color);
       }
 
-      :host([theme='dark']) .resize-handle::after {
+      :host([data-theme='dark']) .resize-handle::after {
         border-right-color: var(--md-dialog-resize-dark-border);
         border-bottom-color: var(--md-dialog-resize-dark-border);
       }
 
-      /* ─── Light Mode (manual via theme="light", overrides OS dark) ─── */
+      /* ─── Light Mode (manual via data-theme="light", overrides OS dark) ─── */
 
-      :host([theme='light']) .titlebar {
+      :host([data-theme='light']) .titlebar {
         background: var(--md-dialog-header-bg);
         border-bottom-color: var(--md-dialog-header-border);
       }
 
-      :host([theme='light']) .title {
+      :host([data-theme='light']) .title {
         color: var(--md-dialog-title-color);
       }
 
-      :host([theme='light']) .body {
+      :host([data-theme='light']) .body {
         color: var(--md-dialog-title-color);
       }
 
-      :host([theme='light']:not([active])) .titlebar {
+      :host([data-theme='light']:not([active])) .titlebar {
         background: rgba(255, 255, 255, 0.03);
       }
 
-      :host([theme='light']:not([active])) .title {
+      :host([data-theme='light']:not([active])) .title {
         color: var(--md-dialog-title-inactive-color);
       }
 
-      :host([theme='light']) .resize-handle::after {
+      :host([data-theme='light']) .resize-handle::after {
         border-right-color: var(--md-dialog-resize-border);
         border-bottom-color: var(--md-dialog-resize-border);
       }
@@ -363,8 +325,14 @@ export class MacDialog extends BaseElement {
   /** Dialog title */
   @property({ reflect: true }) title = ''
 
-  /** Theme mode: 'auto' follows OS, 'light' forces light, 'dark' forces dark */
-  @property({ reflect: true }) theme: 'auto' | 'light' | 'dark' = 'auto'
+  override willUpdate(): void {
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
 
   override updated(changed: Map<string, unknown>): void {
     if (changed.has('x') || changed.has('y')) {
@@ -372,12 +340,6 @@ export class MacDialog extends BaseElement {
     }
     if (changed.has('width') || changed.has('height')) {
       this._updateSize()
-    }
-    // 'auto' 不设置 attribute，让 CSS :not([theme]) 匹配 OS 媒体查询
-    if (changed.has('theme')) {
-      if (this.theme === 'auto') {
-        this.removeAttribute('theme')
-      }
     }
   }
 

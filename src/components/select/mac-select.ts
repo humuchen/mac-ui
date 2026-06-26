@@ -410,44 +410,41 @@ export class MacSelect extends BaseElement {
         min-height: var(--lg-select-trigger-min-height);
       }
 
-      /* Dark Mode */
-      @media (prefers-color-scheme: dark) {
-        .select-trigger--filled {
-          background: var(--md-select-container-dark-filled-bg);
-        }
+      :host([data-theme='dark']) .select-trigger--filled {
+        background: var(--md-select-container-dark-filled-bg);
+      }
 
-        .select-trigger--glass {
-          background: var(--md-select-container-dark-glass-bg);
-        }
+      :host([data-theme='dark']) .select-trigger--glass {
+        background: var(--md-select-container-dark-glass-bg);
+      }
 
-        .select-dropdown {
-          background: var(--md-select-container-dark-bg);
-          border-color: var(--md-select-container-dark-border);
-        }
+      :host([data-theme='dark']) .select-dropdown {
+        background: var(--md-select-container-dark-bg);
+        border-color: var(--md-select-container-dark-border);
+      }
 
-        .select-option:hover {
-          background: var(--md-select-item-dark-hover-bg);
-        }
+      :host([data-theme='dark']) .select-option:hover {
+        background: var(--md-select-item-dark-hover-bg);
+      }
 
-        .select-option.selected {
-          background: var(--md-select-item-dark-selected-bg);
-        }
+      :host([data-theme='dark']) .select-option.selected {
+        background: var(--md-select-item-dark-selected-bg);
+      }
 
-        .select-option.focused {
-          background: var(--md-select-item-dark-focused-bg);
-        }
+      :host([data-theme='dark']) .select-option.focused {
+        background: var(--md-select-item-dark-focused-bg);
+      }
 
-        .select-tag {
-          background: var(--md-select-tag-dark-bg);
-        }
+      :host([data-theme='dark']) .select-tag {
+        background: var(--md-select-tag-dark-bg);
+      }
 
-        .select-clear {
-          background: var(--md-select-clear-dark-bg);
-        }
+      :host([data-theme='dark']) .select-clear {
+        background: var(--md-select-clear-dark-bg);
+      }
 
-        .select-clear:hover {
-          background: var(--md-select-clear-dark-hover-bg);
-        }
+      :host([data-theme='dark']) .select-clear:hover {
+        background: var(--md-select-clear-dark-hover-bg);
       }
     `,
   ]
@@ -465,7 +462,7 @@ export class MacSelect extends BaseElement {
   @property({ type: Array }) groups: OptionGroup[] = []
 
   /** The select's size. */
-  @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
+  @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** The visual variant. */
   @property({ reflect: true }) variant: 'default' | 'filled' | 'glass' = 'default'
@@ -687,12 +684,26 @@ export class MacSelect extends BaseElement {
     return option?.label || ''
   }
 
+  override willUpdate() {
+    const size = this._resolvedSize
+    if (this.getAttribute('size') !== size) {
+      this.setAttribute('size', size)
+    }
+    const theme = this._resolvedTheme
+    if (theme) {
+      this.setAttribute('data-theme', theme)
+    } else {
+      this.removeAttribute('data-theme')
+    }
+  }
+
   override render() {
     const displayValue = this._getDisplayValue()
     const hasValue = this.multiple
       ? Array.isArray(this.value) && this.value.length > 0
       : this.value !== ''
     const filteredOptions = this._getFilteredOptions()
+    const size = this._resolvedSize
 
     return html`
       <div class="select-wrapper" part="base">
@@ -707,7 +718,7 @@ export class MacSelect extends BaseElement {
         <div
           class="select-trigger
             select-trigger--${this.variant}
-            select-trigger--${this.size}
+            select-trigger--${size}
             ${this._open ? 'open' : ''}
             ${this.error ? 'select-trigger--error' : ''}
             ${this.success ? 'select-trigger--success' : ''}
