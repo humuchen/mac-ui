@@ -12,6 +12,10 @@ const config: StorybookConfig = {
   },
   viteFinal: async (config) => {
     config.base = process.env.CI ? '/mac-ui/' : '/'
+    if (process.env.CI) {
+      config.build ??= {}
+      config.build.assetsDir = ''
+    }
     return config
   },
 }
