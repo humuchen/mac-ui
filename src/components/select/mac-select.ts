@@ -446,6 +446,44 @@ export class MacSelect extends BaseElement {
       :host([data-theme='dark']) .select-clear:hover {
         background: var(--md-select-clear-dark-hover-bg);
       }
+
+      /* ─── 响应式：移动端适配 ─── */
+      @media (max-width: 768px) {
+        /* 下拉面板增大最大高度，方便触控滚动选择 */
+        .select-dropdown {
+          max-height: 50vh;
+        }
+        /* 搜索框字号 16px 防止 iOS 聚焦缩放 */
+        .select-search-input {
+          font-size: 16px;
+          padding: 10px 12px;
+        }
+        /* 选项触控目标 ≥ 44px */
+        .select-option {
+          padding: 12px var(--md-spacing-md);
+          font-size: 16px;
+        }
+        .select-option-label {
+          font-size: 16px;
+        }
+        .select-option-description {
+          font-size: 13px;
+        }
+        .select-option-icon {
+          width: 24px;
+          height: 24px;
+          font-size: 20px;
+        }
+        .select-option-check {
+          width: 22px;
+          height: 22px;
+          font-size: 18px;
+        }
+        .select-group-label {
+          font-size: 13px;
+          padding: 10px var(--md-spacing-md);
+        }
+      }
     `,
   ]
 

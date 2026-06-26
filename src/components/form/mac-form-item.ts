@@ -111,6 +111,22 @@ export class MacFormItem extends BaseElement {
       :host([data-theme='dark']) .form-item__label {
         color: rgba(255, 255, 255, 0.92);
       }
+
+      /* ─── 响应式：移动端标签堆叠为顶部对齐 ─── */
+      @media (max-width: 768px) {
+        .form-item {
+          /* 强制纵向排列，标签在控件上方 */
+          flex-direction: column;
+          gap: var(--md-spacing-xs);
+        }
+        .form-item__label {
+          width: auto !important;
+          text-align: left !important;
+          padding-top: 0 !important;
+          line-height: 1.4;
+          font-size: 16px;
+        }
+      }
     `,
   ]
 

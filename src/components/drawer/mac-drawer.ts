@@ -518,6 +518,50 @@ export class MacDrawer extends BaseElement {
         height: 4px;
         cursor: ns-resize;
       }
+
+      /* ─── 响应式：移动端窄屏全宽 + 安全区适配 ─── */
+      @media (max-width: 768px) {
+        .mac-drawer-panel.right,
+        .mac-drawer-panel.left {
+          /* 覆盖 JS 内联 width，移动端占满大部分屏宽 */
+          width: 100% !important;
+          max-width: 100% !important;
+          border-radius: 0;
+        }
+        .mac-drawer-panel.right {
+          padding-left: max(env(safe-area-inset-left, 0px), 0px);
+        }
+        .mac-drawer-panel.left {
+          padding-right: max(env(safe-area-inset-right, 0px), 0px);
+        }
+        .mac-drawer-panel.top {
+          padding-bottom: env(safe-area-inset-top, 0px);
+        }
+        .mac-drawer-panel.bottom {
+          /* 底部抽屉预留 Home 指示条安全区 */
+          padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .mac-drawer-header {
+          padding: 14px 16px;
+        }
+        .mac-drawer-title {
+          font-size: 17px;
+        }
+        .mac-drawer-close {
+          width: 36px;
+          height: 36px;
+        }
+        .mac-drawer-body {
+          padding: 16px;
+        }
+        .mac-drawer-footer {
+          padding: 14px 16px;
+        }
+        .mac-drawer-resize {
+          /* 触屏无需手动 resize */
+          display: none;
+        }
+      }
     `
     document.head.appendChild(style)
   }

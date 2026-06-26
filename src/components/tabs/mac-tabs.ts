@@ -348,6 +348,26 @@ export class MacTabs extends BaseElement {
         --md-tabs-segment-item-active-color: var(--md-color-text);
         --md-tabs-segment-item-hover-bg: rgba(0, 0, 0, 0.04);
       }
+
+      /* ─── 响应式：移动端适配 ─── */
+      @media (max-width: 768px) {
+        .nav-content {
+          /* 触屏惯性滚动 */
+          -webkit-overflow-scrolling: touch;
+          /* 允许触控横向滚动但禁用纵向 */
+          touch-action: pan-x;
+          scroll-snap-type: x proximity;
+        }
+        .tab-item {
+          /* 接近 44px 触控目标，由 theme.ts 的 padding 变量已放大 */
+          scroll-snap-align: start;
+        }
+        /* segment 类型：移动端允许换行，避免长文本被截断 */
+        :host([type='segment']) .nav-content {
+          flex-wrap: wrap;
+          overflow-x: visible;
+        }
+      }
     `,
   ]
 

@@ -954,6 +954,180 @@ export const themeTokens: CSSResult = css`
     --md-tag-info-close-hover-color: #374151;
   }
 
+  /* ═══════════════════════════════════════════════════════════════════
+     响应式适配 —— 移动端 (≤ 768px)
+     ──────────────────────────────────────────────────────────────────
+     策略：通过 :host 内的 @media 覆盖尺寸类 CSS 变量。由于每个组件
+     都引入 themeTokens，此块会自动作用于所有组件，PC 端 (＞768px)
+     完全不受影响。
+     触控目标遵循 Apple HIG / Material 规范：最小 44px。
+     输入框字体 16px 以防止 iOS 聚焦缩放。
+     ═══════════════════════════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    :host {
+      /* 基础间距：移动端略微放大，便于手指操作 */
+      --md-spacing-xs: 6px;
+      --md-spacing-sm: 10px;
+      --md-spacing-md: 14px;
+      --md-spacing-lg: 18px;
+      --md-spacing-xl: 26px;
+
+      /* 基础字号：保证可读性 */
+      --md-font-size-xs: 12px;
+      --md-font-size-sm: 13px;
+      --md-font-size-menu: 14px;
+      --md-font-size-base: 16px; /* 16px 防止 iOS 输入聚焦缩放 */
+      --md-font-size-lg: 17px;
+
+      /* Button —— 统一放大触控目标至 ≥ 44px */
+      --sm-button-padding-vertical: 10px;
+      --sm-button-padding-horizontal: 14px;
+      --sm-button-font-size: var(--md-font-size-sm);
+      --md-button-padding-vertical: 12px;
+      --md-button-padding-horizontal: 18px;
+      --md-button-font-size: var(--md-font-size-base);
+      --lg-button-padding-vertical: 14px;
+      --lg-button-padding-horizontal: 22px;
+      --lg-button-font-size: var(--md-font-size-lg);
+
+      /* Input —— 16px 字号 + ≥ 44px 高度 */
+      --sm-input-padding-vertical: 10px;
+      --sm-input-padding-horizontal: 12px;
+      --sm-input-font-size: 16px;
+      --md-input-padding-vertical: 12px;
+      --md-input-padding-horizontal: 14px;
+      --md-input-font-size: 16px;
+      --lg-input-padding-vertical: 14px;
+      --lg-input-padding-horizontal: 16px;
+      --lg-input-font-size: 17px;
+
+      /* Select 触发器 —— ≥ 44px */
+      --sm-select-trigger-padding-vertical: 10px;
+      --sm-select-trigger-padding-horizontal: 12px;
+      --sm-select-trigger-font-size: 16px;
+      --sm-select-trigger-min-height: 44px;
+      --md-select-trigger-padding-vertical: 12px;
+      --md-select-trigger-padding-horizontal: 14px;
+      --md-select-trigger-font-size: 16px;
+      --md-select-trigger-min-height: 44px;
+      --lg-select-trigger-padding-vertical: 14px;
+      --lg-select-trigger-padding-horizontal: 16px;
+      --lg-select-trigger-font-size: 17px;
+      --lg-select-trigger-min-height: 48px;
+
+      /* Dropdown 菜单项 —— 增大触控区域 */
+      --sm-dropdown-item-padding-vertical: 12px;
+      --sm-dropdown-item-padding-horizontal: 16px;
+      --sm-dropdown-item-font-size: var(--md-font-size-base);
+      --md-dropdown-item-padding-vertical: 13px;
+      --md-dropdown-item-padding-horizontal: 16px;
+      --md-dropdown-item-font-size: var(--md-font-size-base);
+      --lg-dropdown-item-padding-vertical: 14px;
+      --lg-dropdown-item-padding-horizontal: 18px;
+      --lg-dropdown-item-font-size: var(--md-font-size-lg);
+
+      /* Radio / Checkbox —— 增大点击区域 */
+      --sm-radio-size: 18px;
+      --sm-radio-dot-size: 8px;
+      --sm-radio-gap: 10px;
+      --md-radio-size: 22px;
+      --md-radio-dot-size: 10px;
+      --md-radio-gap: 12px;
+      --lg-radio-size: 26px;
+      --lg-radio-dot-size: 12px;
+      --lg-radio-gap: 14px;
+
+      /* Tabs —— 增大触控目标 */
+      --sm-tabs-item-padding-vertical: 10px;
+      --sm-tabs-item-padding-horizontal: 14px;
+      --sm-tabs-item-font-size: var(--md-font-size-base);
+      --md-tabs-item-padding-vertical: 12px;
+      --md-tabs-item-padding-horizontal: 16px;
+      --md-tabs-item-font-size: var(--md-font-size-base);
+      --lg-tabs-item-padding-vertical: 14px;
+      --lg-tabs-item-padding-horizontal: 18px;
+      --lg-tabs-item-font-size: var(--md-font-size-lg);
+
+      /* GroupButton —— 增大触控目标 */
+      --sm-group-button-item-padding-vertical: 10px;
+      --sm-group-button-item-padding-horizontal: 16px;
+      --md-group-button-item-padding-vertical: 12px;
+      --md-group-button-item-padding-horizontal: 18px;
+      --lg-group-button-item-padding-vertical: 14px;
+      --lg-group-button-item-padding-horizontal: 22px;
+
+      /* Tag —— 略微放大便于点击关闭按钮 */
+      --sm-tag-padding-vertical: 3px;
+      --sm-tag-padding-horizontal: 8px;
+      --sm-tag-close-size: 16px;
+      --md-tag-padding-vertical: 4px;
+      --md-tag-padding-horizontal: 10px;
+      --md-tag-close-size: 18px;
+      --lg-tag-padding-vertical: 6px;
+      --lg-tag-padding-horizontal: 14px;
+      --lg-tag-close-size: 20px;
+
+      /* Modal —— 移动端占满视口，圆角缩小 */
+      --md-modal-min-width: 0;
+      --md-modal-min-height: 0;
+      --md-modal-container-radius: var(--md-radius-md);
+      --md-modal-header-height: 44px;
+      --md-modal-body-padding: var(--md-spacing-md);
+      --md-modal-footer-btn-padding: 8px 18px;
+      --md-modal-footer-btn-font-size: var(--md-font-size-base);
+
+      /* Drawer —— 移动端窄屏更宽 */
+      --md-drawer-header-padding: var(--md-spacing-md) var(--md-spacing-md);
+      --md-drawer-body-padding: var(--md-spacing-md);
+      --md-drawer-footer-padding: var(--md-spacing-md) var(--md-spacing-md);
+      --md-drawer-title-font-size: var(--md-font-size-lg);
+
+      /* Confirm —— 移动端更宽 */
+      --md-confirm-title-padding: var(--md-spacing-md) var(--md-spacing-md);
+      --md-confirm-body-padding: var(--md-spacing-md);
+      --md-confirm-footer-padding: var(--md-spacing-sm) var(--md-spacing-md);
+      --md-confirm-btn-padding: 8px 18px;
+      --md-confirm-btn-font-size: var(--md-font-size-base);
+
+      /* Tree 节点 —— 增大触控 */
+      --md-tree-node-padding: 12px 12px;
+      --md-tree-indent: 24px;
+
+      /* Carousel 箭头 —— 增大触控 */
+      --md-carousel-arrow-size: 44px;
+      --md-carousel-arrow-offset: 8px;
+      --md-carousel-dot-size: 10px;
+      --md-carousel-dots-offset: 14px;
+
+      /* Alert —— 增大内边距 */
+      --md-alert-padding: var(--md-spacing-md) var(--md-spacing-md);
+      --md-alert-close-size: 28px;
+      --md-alert-close-icon-size: 16px;
+      --md-alert-icon-size: 22px;
+
+      /* Popconfirm —— 增大触控 */
+      --md-popconfirm-btn-padding: 8px 16px;
+      --md-popconfirm-btn-font-size: var(--md-font-size-base);
+
+      /* InputNumber —— 与 input 一致 */
+      --md-input-number-btn-size: 36px;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     超小屏手机 (≤ 480px) —— 进一步紧凑化
+     ═══════════════════════════════════════════════════════════════════ */
+  @media (max-width: 480px) {
+    :host {
+      --md-spacing-lg: 16px;
+      --md-spacing-xl: 22px;
+      /* 超小屏下水平内边距收紧，避免内容溢出 */
+      --md-button-padding-horizontal: 16px;
+      --md-input-padding-horizontal: 12px;
+      --md-select-trigger-padding-horizontal: 12px;
+    }
+  }
+
   :host([data-theme='dark']) {
     /* 基础颜色 */
     --md-color-text: rgba(255, 255, 255, 0.92);

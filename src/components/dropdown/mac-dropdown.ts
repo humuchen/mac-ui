@@ -315,6 +315,34 @@ export class MacDropdown extends BaseElement {
       .mac-dropdown-portal[data-theme='dark'] .dropdown-item-shortcut {
         color: var(--md-dropdown-shortcut-dark-color);
       }
+
+      /* ─── 响应式：移动端浮层更宽 + 触控目标更大 ─── */
+      @media (max-width: 768px) {
+        .mac-dropdown-portal {
+          /* 接近全屏宽度，留出两侧边距 */
+          min-width: calc(100vw - 32px) !important;
+          max-width: calc(100vw - 32px) !important;
+          border-radius: 12px;
+        }
+        .mac-dropdown-portal .dropdown-item {
+          /* 触控目标 ≥ 44px */
+          padding-top: 13px !important;
+          padding-bottom: 13px !important;
+          font-size: 16px !important;
+        }
+        .mac-dropdown-portal .dropdown-item-icon {
+          width: 22px;
+          height: 22px;
+          font-size: 18px;
+        }
+        .mac-dropdown-portal .dropdown-item-shortcut {
+          font-size: 13px;
+        }
+        .mac-dropdown-portal .dropdown-submenu > .mac-dropdown-submenu-portal {
+          min-width: calc(100vw - 32px) !important;
+          max-width: calc(100vw - 32px) !important;
+        }
+      }
     `
     document.head.appendChild(style)
   }
@@ -419,12 +447,14 @@ export class MacDropdown extends BaseElement {
   } {
     const vw = window.innerWidth
     const vh = window.innerHeight
-    const menuWidth = 220 // estimated min-width
+    // 移动端：浮层宽度为视口宽 - 32px（与 CSS media query 一致），水平居中
+    const isMobile = vw <= 768
+    const menuWidth = isMobile ? vw - 32 : 220 // estimated min-width
     const menuHeight = this.items.length * 32 + 8 // estimated height
 
     if (explicitPos) {
       // Context menu: position at click point, adjust to viewport
-      let left = explicitPos.x
+      let left = isMobile ? 16 : explicitPos.x
       let top = explicitPos.y
 
       if (left + menuWidth > vw - 8) left = vw - menuWidth - 8
@@ -437,31 +467,36 @@ export class MacDropdown extends BaseElement {
 
     if (!anchorRect) return { left: 0, top: 0, placement: this.placement }
 
-    let left: number
+    let left = 0
     let top: number
     let placement = this.placement
 
     const gap = 4
 
+    // 移动端：忽略 placement 的水平对齐，统一水平居中
+    if (isMobile) {
+      left = Math.max(8, (vw - menuWidth) / 2)
+    }
+
     switch (placement) {
       case 'bottom-start':
-        left = anchorRect.left
+        if (!isMobile) left = anchorRect.left
         top = anchorRect.bottom + gap
         break
       case 'bottom-end':
-        left = anchorRect.right - menuWidth
+        if (!isMobile) left = anchorRect.right - menuWidth
         top = anchorRect.bottom + gap
         break
       case 'top-start':
-        left = anchorRect.left
+        if (!isMobile) left = anchorRect.left
         top = anchorRect.top - menuHeight - gap
         break
       case 'top-end':
-        left = anchorRect.right - menuWidth
+        if (!isMobile) left = anchorRect.right - menuWidth
         top = anchorRect.top - menuHeight - gap
         break
       default:
-        left = anchorRect.left
+        if (!isMobile) left = anchorRect.left
         top = anchorRect.bottom + gap
     }
 
