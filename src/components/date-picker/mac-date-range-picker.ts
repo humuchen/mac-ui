@@ -53,7 +53,7 @@ export class MacDateRangePicker extends BaseElement {
         background: var(--md-color-bg); border: 1px solid var(--md-color-border);
         border-radius: 12px;
         box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.08);
-        z-index: 1000; opacity: 0; transform: translateY(-8px) scale(0.96); pointer-events: none;
+        z-index: 99999; opacity: 0; transform: translateY(-8px) scale(0.96); pointer-events: none;
         transition: all 200ms cubic-bezier(0.4,0,0.2,1); padding: 16px;
       }
       .picker-panel.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
