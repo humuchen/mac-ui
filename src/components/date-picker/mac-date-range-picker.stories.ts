@@ -41,29 +41,47 @@ export const WithValue: Story = {
 
 export const Disabled: Story = {
   render: () => html`
-    <mac-date-range-picker .defaultValue=${['2024-06-01', '2024-06-15']} disabled></mac-date-range-picker>
+    <mac-date-range-picker
+      .defaultValue=${['2024-06-01', '2024-06-15']}
+      disabled
+    ></mac-date-range-picker>
   `,
 }
 
 export const Clearable: Story = {
   render: () => html`
-    <mac-date-range-picker .defaultValue=${['2024-06-01', '2024-06-15']} clearable></mac-date-range-picker>
+    <mac-date-range-picker
+      .defaultValue=${['2024-06-01', '2024-06-15']}
+      clearable
+    ></mac-date-range-picker>
   `,
 }
 
 export const Sizes: Story = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 12px;">
-      <mac-date-range-picker size="sm" .defaultValue=${['2024-06-01', '2024-06-15']}></mac-date-range-picker>
-      <mac-date-range-picker size="md" .defaultValue=${['2024-06-01', '2024-06-15']}></mac-date-range-picker>
-      <mac-date-range-picker size="lg" .defaultValue=${['2024-06-01', '2024-06-15']}></mac-date-range-picker>
+      <mac-date-range-picker
+        size="sm"
+        .defaultValue=${['2024-06-01', '2024-06-15']}
+      ></mac-date-range-picker>
+      <mac-date-range-picker
+        size="md"
+        .defaultValue=${['2024-06-01', '2024-06-15']}
+      ></mac-date-range-picker>
+      <mac-date-range-picker
+        size="lg"
+        .defaultValue=${['2024-06-01', '2024-06-15']}
+      ></mac-date-range-picker>
     </div>
   `,
 }
 
 export const ErrorState: Story = {
   render: () => html`
-    <mac-date-range-picker .defaultValue=${['2024-06-01', '2024-06-15']} error></mac-date-range-picker>
+    <mac-date-range-picker
+      .defaultValue=${['2024-06-01', '2024-06-15']}
+      error
+    ></mac-date-range-picker>
   `,
 }
 
@@ -75,7 +93,10 @@ export const DisabledDate: Story = {
       return date < now
     }
     return html`
-      <mac-date-range-picker placeholder="不能选择今天之前的日期" .disabledDate=${disabledDate}></mac-date-range-picker>
+      <mac-date-range-picker
+        placeholder="不能选择今天之前的日期"
+        .disabledDate=${disabledDate}
+      ></mac-date-range-picker>
     `
   },
 }
@@ -87,7 +108,11 @@ export const Controlled: Story = {
       if (el) el.value = e.detail.value
     }
     return html`
-      <mac-date-range-picker id="controlled-range" .value=${['2024-06-01', '2024-06-15']} @mac-change=${handleChange}></mac-date-range-picker>
+      <mac-date-range-picker
+        id="controlled-range"
+        .value=${['2024-06-01', '2024-06-15']}
+        @mac-change=${handleChange}
+      ></mac-date-range-picker>
     `
   },
 }

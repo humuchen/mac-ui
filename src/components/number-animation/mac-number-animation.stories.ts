@@ -97,7 +97,11 @@ export const WithSeparator: Story = {
   args: { separator: ',', duration: 2500, to: 1234567 },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px;">
-      <mac-number-animation .to=${args.to} separator=${args.separator} .duration=${args.duration}></mac-number-animation>
+      <mac-number-animation
+        .to=${args.to}
+        separator=${args.separator}
+        .duration=${args.duration}
+      ></mac-number-animation>
       <mac-number-animation
         to="9876543.21"
         separator=" "
@@ -114,11 +118,19 @@ export const WithPrecision: Story = {
     <div style="display: flex; flex-direction: column; gap: 24px;">
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">2 decimal places</div>
-        <mac-number-animation .to=${args.to} .precision=${args.precision} .duration=${args.duration}></mac-number-animation>
+        <mac-number-animation
+          .to=${args.to}
+          .precision=${args.precision}
+          .duration=${args.duration}
+        ></mac-number-animation>
       </div>
       <div>
         <div style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">4 decimal places</div>
-        <mac-number-animation to="3.1416" precision="4" .duration=${args.duration}></mac-number-animation>
+        <mac-number-animation
+          to="3.1416"
+          precision="4"
+          .duration=${args.duration}
+        ></mac-number-animation>
       </div>
     </div>
   `,
@@ -312,7 +324,12 @@ export const FinishCallback: Story = {
 export const SlotPrefixSuffix: Story = {
   args: { to: 8848, suffix: 'm', separator: ',', duration: 2000 },
   render: (args) => html`
-    <mac-number-animation .to=${args.to} suffix=${args.suffix} separator=${args.separator} .duration=${args.duration}>
+    <mac-number-animation
+      .to=${args.to}
+      suffix=${args.suffix}
+      separator=${args.separator}
+      .duration=${args.duration}
+    >
       <span slot="prefix" style="font-size: 14px; color: #3b82f6; margin-right: 4px;">🏔️</span>
     </mac-number-animation>
   `,

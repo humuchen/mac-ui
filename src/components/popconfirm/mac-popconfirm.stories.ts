@@ -167,22 +167,52 @@ export const Placements: Story = {
   },
   render: (args) => html`
     <div style="padding:120px 0;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <mac-popconfirm title="顶部弹出" placement="top" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="顶部弹出"
+        placement="top"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Top</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="顶部左对齐" placement="top-start" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="顶部左对齐"
+        placement="top-start"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Top Start</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="顶部右对齐" placement="top-end" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="顶部右对齐"
+        placement="top-end"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Top End</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="底部弹出" placement="bottom" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="底部弹出"
+        placement="bottom"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Bottom</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="左侧弹出" placement="left" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="左侧弹出"
+        placement="left"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Left</mac-button>
       </mac-popconfirm>
-      <mac-popconfirm title="右侧弹出" placement="right" .confirmText=${args.confirmText} .cancelText=${args.cancelText}>
+      <mac-popconfirm
+        title="右侧弹出"
+        placement="right"
+        .confirmText=${args.confirmText}
+        .cancelText=${args.cancelText}
+      >
         <mac-button size="sm">Right</mac-button>
       </mac-popconfirm>
     </div>

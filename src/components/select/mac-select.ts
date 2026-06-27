@@ -556,7 +556,207 @@ export class MacSelect extends BaseElement {
 
   @query('.select-trigger') private _trigger!: HTMLElement
 
-  @query('.select-dropdown') private _dropdown!: HTMLElement
+  private _portalEl: HTMLElement | null = null
+  private _portalId = `mac-select-portal-${Math.random().toString(36).substr(2, 9)}`
+  private _scrollHandler: (() => void) | null = null
+
+  private static _stylesInjected = false
+  private static _injectPortalStyles() {
+    if (MacSelect._stylesInjected) return
+    MacSelect._stylesInjected = true
+
+    // Inject global CSS variables to :root so portal can access them
+    const vars = document.createElement('style')
+    vars.id = 'mac-select-theme-vars'
+    vars.textContent = `
+      :root {
+        /* Font family */
+        --md-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+
+        /* Spacing */
+        --md-spacing-xs: 4px;
+        --md-spacing-sm: 8px;
+        --md-spacing-md: 12px;
+
+        /* Border radius */
+        --md-radius-sm: 4px;
+        --md-radius-md: 6px;
+
+        /* Font size */
+        --md-font-size-xs: 11px;
+        --md-font-size-sm: 12px;
+        --md-font-size-menu: 13px;
+
+        /* Transition */
+        --md-transition-fast: 150ms ease;
+
+        /* Colors */
+        --md-color-bg: #ffffff;
+        --md-color-border: #d1d5db;
+        --md-color-text: #1f2937;
+        --md-color-text-secondary: #6b7280;
+        --md-color-primary: #3b82f6;
+
+        /* Select specific */
+        --md-select-item-hover-bg: rgba(0, 122, 255, 0.05);
+        --md-select-item-selected-bg: rgba(0, 122, 255, 0.08);
+        --md-select-item-focused-bg: rgba(0, 122, 255, 0.1);
+
+        /* Dark theme colors */
+        --md-color-dark-bg: rgba(30, 30, 30, 0.95);
+        --md-color-dark-border: rgba(255, 255, 255, 0.1);
+        --md-color-dark-text: #f5f5f7;
+        --md-color-dark-text-secondary: #98989d;
+        --md-select-item-dark-hover-bg: rgba(255, 255, 255, 0.08);
+        --md-select-item-dark-selected-bg: rgba(0, 122, 255, 0.15);
+      }
+    `
+    document.head.appendChild(vars)
+
+    const style = document.createElement('style')
+    style.id = 'mac-select-portal-styles'
+    style.textContent = `
+      .mac-select-portal {
+        position: fixed;
+        min-width: 100px;
+        max-height: 300px;
+        overflow-y: auto;
+        background: var(--md-color-bg);
+        border: 1px solid var(--md-color-border);
+        border-radius: var(--md-radius-md);
+        box-shadow:
+          0 4px 16px rgba(0, 0, 0, 0.12),
+          0 2px 8px rgba(0, 0, 0, 0.08);
+        z-index: 99999;
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition:
+          opacity var(--md-transition-fast),
+          transform var(--md-transition-fast);
+        font-family: var(--md-font-family);
+      }
+      .mac-select-portal.open {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      /* Search */
+      .mac-select-portal .select-search {
+        padding: var(--md-spacing-sm);
+        border-bottom: 1px solid var(--md-color-border);
+      }
+      .mac-select-portal .select-search-input {
+        width: 100%;
+        padding: var(--md-spacing-xs) var(--md-spacing-sm);
+        border: 1px solid var(--md-color-border);
+        border-radius: var(--md-radius-sm);
+        font-size: var(--md-font-size-menu);
+        background: var(--md-color-bg);
+        color: var(--md-color-text);
+        outline: none;
+      }
+      .mac-select-portal .select-search-input:focus {
+        border-color: var(--md-color-primary);
+      }
+
+      /* Options */
+      .mac-select-portal .select-options {
+        padding: var(--md-spacing-xs) 0;
+      }
+      .mac-select-portal .select-group-label {
+        padding: var(--md-spacing-xs) var(--md-spacing-md);
+        font-size: var(--md-font-size-xs);
+        font-weight: 600;
+        color: var(--md-color-text-secondary);
+        user-select: none;
+      }
+      .mac-select-portal .select-option {
+        display: flex;
+        align-items: center;
+        gap: var(--md-spacing-sm);
+        padding: var(--md-spacing-sm) var(--md-spacing-md);
+        cursor: pointer;
+        transition: background var(--md-transition-fast);
+        user-select: none;
+      }
+      .mac-select-portal .select-option:hover:not(.disabled) {
+        background: var(--md-select-item-hover-bg);
+      }
+      .mac-select-portal .select-option.focused {
+        background: var(--md-select-item-focused-bg);
+      }
+      .mac-select-portal .select-option.selected {
+        background: var(--md-select-item-selected-bg);
+      }
+      .mac-select-portal .select-option.disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .mac-select-portal .select-option-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        font-size: 16px;
+      }
+      .mac-select-portal .select-option-content {
+        flex: 1;
+      }
+      .mac-select-portal .select-option-label {
+        font-size: var(--md-font-size-menu);
+        color: var(--md-color-text);
+      }
+      .mac-select-portal .select-option-description {
+        font-size: var(--md-font-size-xs);
+        color: var(--md-color-text-secondary);
+        margin-top: 2px;
+      }
+
+      /* Empty state */
+      .mac-select-portal .select-empty {
+        padding: var(--md-spacing-lg) var(--md-spacing-md);
+        text-align: center;
+        color: var(--md-color-text-secondary);
+        font-size: var(--md-font-size-sm);
+      }
+
+      /* Dark theme */
+      .mac-select-portal[data-theme='dark'] {
+        background: var(--md-color-dark-bg);
+        border-color: var(--md-color-dark-border);
+      }
+      .mac-select-portal[data-theme='dark'] .select-search {
+        border-bottom-color: var(--md-color-dark-border);
+      }
+      .mac-select-portal[data-theme='dark'] .select-search-input {
+        background: rgba(30, 30, 30, 0.9);
+        border-color: rgba(255, 255, 255, 0.15);
+        color: var(--md-color-dark-text);
+      }
+      .mac-select-portal[data-theme='dark'] .select-group-label {
+        color: var(--md-color-dark-text-secondary);
+      }
+      .mac-select-portal[data-theme='dark'] .select-option:hover:not(.disabled) {
+        background: var(--md-select-item-dark-hover-bg);
+      }
+      .mac-select-portal[data-theme='dark'] .select-option.selected {
+        background: var(--md-select-item-dark-selected-bg);
+      }
+      .mac-select-portal[data-theme='dark'] .select-option-label {
+        color: var(--md-color-dark-text);
+      }
+      .mac-select-portal[data-theme='dark'] .select-option-description {
+        color: var(--md-color-dark-text-secondary);
+      }
+      .mac-select-portal[data-theme='dark'] .select-empty {
+        color: var(--md-color-dark-text-secondary);
+      }
+    `
+    document.head.appendChild(style)
+  }
 
   private _handleDocumentClick = (e: Event) => {
     const path = e.composedPath()
@@ -567,12 +767,36 @@ export class MacSelect extends BaseElement {
 
   override connectedCallback() {
     super.connectedCallback()
+    MacSelect._injectPortalStyles()
     document.addEventListener('click', this._handleDocumentClick)
   }
 
   override disconnectedCallback() {
     super.disconnectedCallback()
     document.removeEventListener('click', this._handleDocumentClick)
+    this._removeScrollListener()
+    this._removePortal()
+  }
+
+  private _addScrollListener() {
+    if (this._scrollHandler) return
+    this._scrollHandler = () => {
+      if (this._open && this._portalEl && this._trigger) {
+        const rect = this._trigger.getBoundingClientRect()
+        this._portalEl.style.left = `${rect.left}px`
+        this._portalEl.style.top = `${rect.bottom + 4}px`
+      }
+    }
+    window.addEventListener('scroll', this._scrollHandler, true)
+    window.addEventListener('resize', this._scrollHandler)
+  }
+
+  private _removeScrollListener() {
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler, true)
+      window.removeEventListener('resize', this._scrollHandler)
+      this._scrollHandler = null
+    }
   }
 
   private _toggle() {
@@ -583,12 +807,181 @@ export class MacSelect extends BaseElement {
   private _openDropdown() {
     this._open = true
     this._focusedIndex = -1
+    this._createPortal()
   }
 
   private _close() {
     this._open = false
     this._searchQuery = ''
     this._focusedIndex = -1
+    this._removePortal()
+  }
+
+  private _createPortal() {
+    this._removePortal()
+
+    if (!this._trigger) return
+
+    const rect = this._trigger.getBoundingClientRect()
+    const portal = document.createElement('div')
+    portal.id = this._portalId
+    portal.className = 'mac-select-portal'
+    portal.setAttribute('role', 'listbox')
+    portal.setAttribute('part', 'dropdown')
+    portal.setAttribute('aria-multiselectable', String(this.multiple))
+
+    const theme = this._resolvedTheme
+    if (theme) {
+      portal.setAttribute('data-theme', theme)
+    }
+
+    // Position
+    const left = rect.left
+    const top = rect.bottom + 4
+    const width = rect.width
+
+    portal.style.left = `${left}px`
+    portal.style.top = `${top}px`
+    portal.style.width = `${width}px`
+
+    // Render dropdown content
+    portal.innerHTML = this._renderDropdownHTML()
+
+    document.body.appendChild(portal)
+    this._portalEl = portal
+
+    // Bind events
+    this._bindPortalEvents(portal)
+
+    // Add scroll listener for position updates
+    this._addScrollListener()
+
+    // Animate in
+    requestAnimationFrame(() => {
+      portal.classList.add('open')
+    })
+  }
+
+  private _removePortal() {
+    this._removeScrollListener()
+    if (this._portalEl) {
+      this._portalEl.classList.remove('open')
+      const el = this._portalEl
+      setTimeout(() => {
+        if (el.parentNode) {
+          el.parentNode.removeChild(el)
+        }
+      }, 200)
+      this._portalEl = null
+    }
+  }
+
+  private _renderDropdownHTML(): string {
+    const filteredOptions = this._getFilteredOptions()
+
+    let html = ''
+
+    // Search box
+    if (this.searchable) {
+      html += `
+        <div class="select-search">
+          <input
+            class="select-search-input"
+            type="text"
+            placeholder="${this.searchPlaceholder}"
+            data-search-input
+          />
+        </div>
+      `
+    }
+
+    // Empty state
+    if (filteredOptions.length === 0) {
+      html += `<div class="select-empty">${this.emptyText}</div>`
+    } else {
+      // Options list
+      html += '<div class="select-options">'
+      filteredOptions.forEach((item, index) => {
+        if ('type' in item && item.type === 'group') {
+          html += `<div class="select-group-label">${item.label}</div>`
+        } else {
+          const option = item as SelectOption
+          const isSelected = this._isSelected(option.value)
+          const classes = [
+            'select-option',
+            isSelected ? 'select-option--selected' : '',
+            option.disabled ? 'select-option--disabled' : '',
+            index === this._focusedIndex ? 'focused' : '',
+          ]
+            .filter(Boolean)
+            .join(' ')
+
+          html += `
+            <div
+              class="${classes}"
+              data-value="${option.value}"
+              data-index="${index}"
+              data-disabled="${!!option.disabled}"
+              role="option"
+              aria-selected="${isSelected}"
+              aria-disabled="${!!option.disabled}"
+            >
+              ${option.icon ? `<span class="select-option-icon">${option.icon}</span>` : ''}
+              <span class="select-option-label">${option.label}</span>
+              ${option.description ? `<span class="select-option-description">${option.description}</span>` : ''}
+            </div>
+          `
+        }
+      })
+      html += '</div>'
+    }
+
+    return html
+  }
+
+  private _bindPortalEvents(portal: HTMLElement) {
+    // Search input events
+    const searchInput = portal.querySelector('[data-search-input]') as HTMLInputElement | null
+    if (searchInput) {
+      searchInput.value = this._searchQuery
+      searchInput.addEventListener('input', (e) => {
+        this._searchQuery = searchInput.value
+        this._focusedIndex = -1
+        // Re-render dropdown content
+        portal.innerHTML = this._renderDropdownHTML()
+        this._bindPortalEvents(portal)
+      })
+      searchInput.addEventListener('keydown', (e) => {
+        e.stopPropagation()
+        this._handleKeyDown(e)
+      })
+      // Focus search input
+      requestAnimationFrame(() => {
+        searchInput.focus()
+      })
+    }
+
+    // Option click events
+    portal.addEventListener('click', (e) => {
+      const target = (e.target as HTMLElement).closest('.select-option') as HTMLElement | null
+      if (!target) return
+
+      const isDisabled = target.dataset.disabled === 'true'
+      if (isDisabled) return
+
+      const value = target.dataset.value
+      if (value) {
+        const option = this._getAllOptions().find((o) => o.value === value)
+        if (option) {
+          this._selectOption(option)
+          // Re-render if multiple (to update selection state)
+          if (this.multiple) {
+            portal.innerHTML = this._renderDropdownHTML()
+            this._bindPortalEvents(portal)
+          }
+        }
+      }
+    })
   }
 
   private _getAllOptions(): SelectOption[] {
@@ -712,7 +1105,7 @@ export class MacSelect extends BaseElement {
   }
 
   private _scrollToOption() {
-    const option = this._dropdown?.querySelector('.select-option.focused') as HTMLElement
+    const option = this._portalEl?.querySelector('.select-option.focused') as HTMLElement
     if (option) {
       option.scrollIntoView({ block: 'nearest' })
     }
@@ -821,93 +1214,6 @@ export class MacSelect extends BaseElement {
               </svg>
             </span>
           </div>
-        </div>
-
-        <div
-          class="select-dropdown ${this._open ? 'open' : ''}"
-          part="dropdown"
-          role="listbox"
-          aria-multiselectable=${this.multiple}
-        >
-          ${this.searchable
-            ? html`
-                <div class="select-search">
-                  <input
-                    class="select-search-input"
-                    type="text"
-                    placeholder=${this.searchPlaceholder}
-                    .value=${this._searchQuery}
-                    @input=${(e: Event) => {
-                      this._searchQuery = (e.target as HTMLInputElement).value
-                      this._focusedIndex = -1
-                    }}
-                    @keydown=${(e: KeyboardEvent) => {
-                      e.stopPropagation()
-                    }}
-                  />
-                </div>
-              `
-            : nothing}
-          ${this.loading
-            ? html`
-                <div class="select-loading">
-                  <div class="loading-spinner"></div>
-                </div>
-              `
-            : filteredOptions.length === 0
-              ? html`<div class="select-empty">${this.emptyText}</div>`
-              : html`
-                  ${filteredOptions.map((item, index) => {
-                    if ('type' in item && item.type === 'group') {
-                      return html` <div class="select-group-label">${item.label}</div> `
-                    }
-
-                    const option = item as SelectOption
-                    const isSelected = this._isSelected(option.value)
-                    const isFocused = index === this._focusedIndex
-
-                    return html`
-                      <div
-                        class="select-option
-                          ${isSelected ? 'selected' : ''}
-                          ${isFocused ? 'focused' : ''}
-                          ${option.disabled ? 'disabled' : ''}"
-                        part="option"
-                        @click=${() => this._selectOption(option)}
-                        @mouseenter=${() => (this._focusedIndex = index)}
-                        role="option"
-                        aria-selected=${isSelected}
-                        aria-disabled=${option.disabled}
-                      >
-                        ${option.icon
-                          ? html`<span class="select-option-icon">${option.icon}</span>`
-                          : nothing}
-                        <div class="select-option-content">
-                          <div class="select-option-label">${option.label}</div>
-                          ${option.description
-                            ? html`<div class="select-option-description">
-                                ${option.description}
-                              </div>`
-                            : nothing}
-                        </div>
-                        ${isSelected
-                          ? html`
-                              <span class="select-option-check">
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                                  <path
-                                    d="M13.5 4.5L6 12l-3.5-3.5"
-                                    stroke="currentColor"
-                                    stroke-width="2"
-                                    fill="none"
-                                  />
-                                </svg>
-                              </span>
-                            `
-                          : nothing}
-                      </div>
-                    `
-                  })}
-                `}
         </div>
 
         ${this.helperText

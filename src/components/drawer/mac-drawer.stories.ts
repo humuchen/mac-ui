@@ -78,10 +78,13 @@ type Story = StoryObj
 
 export const Basic: Story = {
   render: (args) => html`
-    <mac-button @click=${() => {
-      const drawer = document.querySelector('#basic-drawer') as HTMLElement & { open: boolean }
-      if (drawer) drawer.open = true
-    }}>打开抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const drawer = document.querySelector('#basic-drawer') as HTMLElement & { open: boolean }
+        if (drawer) drawer.open = true
+      }}
+      >打开抽屉</mac-button
+    >
 
     <mac-drawer
       id="basic-drawer"
@@ -108,10 +111,13 @@ export const Basic: Story = {
 export const RightPlacement: Story = {
   args: { placement: 'right', title: '右侧抽屉', width: '400px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#right-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>从右侧打开</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#right-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >从右侧打开</mac-button
+    >
 
     <mac-drawer
       id="right-drawer"
@@ -137,10 +143,13 @@ export const RightPlacement: Story = {
 export const LeftPlacement: Story = {
   args: { placement: 'left', title: '左侧抽屉', width: '320px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#left-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>从左侧打开</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#left-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >从左侧打开</mac-button
+    >
 
     <mac-drawer
       id="left-drawer"
@@ -166,10 +175,13 @@ export const LeftPlacement: Story = {
 export const TopPlacement: Story = {
   args: { placement: 'top', title: '顶部抽屉', height: '280px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#top-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>从顶部打开</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#top-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >从顶部打开</mac-button
+    >
 
     <mac-drawer
       id="top-drawer"
@@ -195,10 +207,13 @@ export const TopPlacement: Story = {
 export const BottomPlacement: Story = {
   args: { placement: 'bottom', title: '底部抽屉', height: '320px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#bottom-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>从底部打开</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#bottom-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >从底部打开</mac-button
+    >
 
     <mac-drawer
       id="bottom-drawer"
@@ -224,10 +239,13 @@ export const BottomPlacement: Story = {
 export const Resizable: Story = {
   args: { resizable: true, width: '400px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#resizable-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>打开可调整大小的抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#resizable-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >打开可调整大小的抽屉</mac-button
+    >
 
     <mac-drawer
       id="resizable-drawer"
@@ -253,10 +271,13 @@ export const Resizable: Story = {
 export const NoMask: Story = {
   args: { showMask: false, width: '320px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#nomask-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>打开无遮罩抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#nomask-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >打开无遮罩抽屉</mac-button
+    >
 
     <mac-drawer
       id="nomask-drawer"
@@ -282,10 +303,13 @@ export const NoMask: Story = {
 export const TransparentMask: Story = {
   args: { showMask: 'transparent', width: '320px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#transparent-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>打开透明遮罩抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#transparent-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >打开透明遮罩抽屉</mac-button
+    >
 
     <mac-drawer
       id="transparent-drawer"
@@ -310,10 +334,13 @@ export const TransparentMask: Story = {
 export const WithFooter: Story = {
   args: { width: '400px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>打开带底部按钮的抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >打开带底部按钮的抽屉</mac-button
+    >
 
     <mac-drawer
       id="footer-drawer"
@@ -333,14 +360,23 @@ export const WithFooter: Story = {
       <p>这是一个带底部操作按钮的抽屉。</p>
       <p>请在下方确认你的操作。</p>
       <div slot="footer" style="display:flex;gap:8px;justify-content:flex-end;width:100%;">
-        <mac-button size="sm" @click=${() => {
-          const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
-          if (d) d.open = false
-        }}>取消</mac-button>
-        <mac-button size="sm" variant="primary" @click=${() => {
-          const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
-          if (d) d.open = false
-        }}>确认</mac-button>
+        <mac-button
+          size="sm"
+          @click=${() => {
+            const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
+            if (d) d.open = false
+          }}
+          >取消</mac-button
+        >
+        <mac-button
+          size="sm"
+          variant="primary"
+          @click=${() => {
+            const d = document.querySelector('#footer-drawer') as HTMLElement & { open: boolean }
+            if (d) d.open = false
+          }}
+          >确认</mac-button
+        >
       </div>
     </mac-drawer>
   `,
@@ -349,10 +385,13 @@ export const WithFooter: Story = {
 export const NoClosable: Story = {
   args: { closable: false, width: '320px' },
   render: (args) => html`
-    <mac-button @click=${() => {
-      const d = document.querySelector('#noclose-drawer') as HTMLElement & { open: boolean }
-      if (d) d.open = true
-    }}>打开无关闭按钮的抽屉</mac-button>
+    <mac-button
+      @click=${() => {
+        const d = document.querySelector('#noclose-drawer') as HTMLElement & { open: boolean }
+        if (d) d.open = true
+      }}
+      >打开无关闭按钮的抽屉</mac-button
+    >
 
     <mac-drawer
       id="noclose-drawer"

@@ -73,6 +73,8 @@ export class MacDropdown extends BaseElement {
   private _hoverTimeout: ReturnType<typeof setTimeout> | null = null
   private _menuEl: HTMLElement | null = null
   private _menuId = `dropdown-menu-${Math.random().toString(36).slice(2, 9)}`
+  private _scrollHandler: (() => void) | null = null
+  private _triggerEl: HTMLElement | null = null
 
   /** Injected styles for the portal menu (appended to body). */
   private static _portalStylesInjected = false
@@ -458,8 +460,31 @@ export class MacDropdown extends BaseElement {
     super.disconnectedCallback()
     document.removeEventListener('mousedown', this._handleDocumentClick)
     document.removeEventListener('keydown', this._handleKeyDown)
+    this._removeScrollListener()
     this._removeMenu()
     if (this._hoverTimeout) clearTimeout(this._hoverTimeout)
+  }
+
+  private _addScrollListener() {
+    if (this._scrollHandler) return
+    this._scrollHandler = () => {
+      if (this._open && this._menuEl && this._triggerEl) {
+        const anchorRect = this._triggerEl.getBoundingClientRect()
+        const { left, top } = this._calcPosition(anchorRect)
+        this._menuEl.style.left = `${left}px`
+        this._menuEl.style.top = `${top}px`
+      }
+    }
+    window.addEventListener('scroll', this._scrollHandler, true)
+    window.addEventListener('resize', this._scrollHandler)
+  }
+
+  private _removeScrollListener() {
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler, true)
+      window.removeEventListener('resize', this._scrollHandler)
+      this._scrollHandler = null
+    }
   }
 
   private _handleDocumentClick = (e: Event) => {
@@ -626,6 +651,7 @@ export class MacDropdown extends BaseElement {
     this._removeMenu()
 
     const triggerEl = this.shadowRoot?.querySelector('.dropdown-trigger')
+    this._triggerEl = triggerEl as HTMLElement
     const anchorRect = triggerEl?.getBoundingClientRect()
 
     const { left, top, placement } = this._calcPosition(anchorRect, explicitPos)
@@ -657,6 +683,11 @@ export class MacDropdown extends BaseElement {
 
     // Bind events on menu items
     this._bindMenuEvents(menu)
+
+    // Add scroll listener for position updates
+    if (!explicitPos) {
+      this._addScrollListener()
+    }
 
     // Animate in on next frame
     requestAnimationFrame(() => {
@@ -696,6 +727,8 @@ export class MacDropdown extends BaseElement {
   }
 
   private _removeMenu() {
+    this._removeScrollListener()
+    this._triggerEl = null
     if (this._menuEl) {
       this._menuEl.classList.remove('open')
       const el = this._menuEl

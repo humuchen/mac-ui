@@ -45,12 +45,7 @@ export const Default: Story = {
 export const MinMax: Story = {
   render: () => html`
     <div style="display:flex;flex-direction:column;gap:16px;">
-      <mac-input-number
-        .value=${10}
-        min=${0}
-        max=${100}
-        placeholder="0 ~ 100"
-      ></mac-input-number>
+      <mac-input-number .value=${10} min=${0} max=${100} placeholder="0 ~ 100"></mac-input-number>
       <mac-input-number
         .value=${50}
         min=${0}
@@ -122,9 +117,7 @@ export const ButtonPlacement: Story = {
 }
 
 export const HideButton: Story = {
-  render: () => html`
-    <mac-input-number ?show-button=${false} .value=${10}></mac-input-number>
-  `,
+  render: () => html` <mac-input-number ?show-button=${false} .value=${10}></mac-input-number> `,
 }
 
 export const Disabled: Story = {
@@ -137,9 +130,7 @@ export const Disabled: Story = {
 }
 
 export const Clearable: Story = {
-  render: () => html`
-    <mac-input-number clearable .value=${10}></mac-input-number>
-  `,
+  render: () => html` <mac-input-number clearable .value=${10}></mac-input-number> `,
 }
 
 export const PrefixSuffix: Story = {

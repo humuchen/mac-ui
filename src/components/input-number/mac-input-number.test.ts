@@ -48,7 +48,9 @@ describe('MacInputNumber', () => {
   })
 
   it('hides step buttons when show-button is false', async () => {
-    const el = await fixture<MacInputNumber>('<mac-input-number show-button="false"></mac-input-number>')
+    const el = await fixture<MacInputNumber>(
+      '<mac-input-number show-button="false"></mac-input-number>',
+    )
     const buttons = el.shadowRoot!.querySelector('.buttons')
     expect(buttons).to.be.null
   })
@@ -66,7 +68,9 @@ describe('MacInputNumber', () => {
   })
 
   it('shows success status', async () => {
-    const el = await fixture<MacInputNumber>('<mac-input-number status="success"></mac-input-number>')
+    const el = await fixture<MacInputNumber>(
+      '<mac-input-number status="success"></mac-input-number>',
+    )
     const container = el.shadowRoot!.querySelector('.input-container')!
     expect(container.classList.contains('input-container--success')).to.be.true
   })
@@ -82,15 +86,21 @@ describe('MacInputNumber', () => {
   })
 
   it('handles keyboard arrow up', async () => {
-    const el = await fixture<MacInputNumber>('<mac-input-number value="10" step="5"></mac-input-number>')
+    const el = await fixture<MacInputNumber>(
+      '<mac-input-number value="10" step="5"></mac-input-number>',
+    )
     const input = el.shadowRoot!.querySelector('input')!
-    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, composed: true }))
+    input.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, composed: true }),
+    )
     const changeSpy = vi.fn()
     el.addEventListener('mac-input-number', changeSpy)
   })
 
   it('clears value when clear button is clicked', async () => {
-    const el = await fixture<MacInputNumber>('<mac-input-number clearable value="10"></mac-input-number>')
+    const el = await fixture<MacInputNumber>(
+      '<mac-input-number clearable value="10"></mac-input-number>',
+    )
     const clearBtn = el.shadowRoot!.querySelector('.clear-button')! as HTMLButtonElement
     expect(clearBtn).to.not.be.null
     clearBtn.click()

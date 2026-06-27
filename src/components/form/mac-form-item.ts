@@ -211,7 +211,16 @@ export class MacFormItem extends BaseElement {
   private _findFirstControl(el: HTMLElement): HTMLElement | undefined {
     const tag = el.tagName.toLowerCase()
     if (tag === 'mac-form-item') return undefined
-    if (['mac-input', 'mac-input-number', 'mac-select', 'mac-radio-group', 'mac-radio', 'mac-dynamic-tags'].includes(tag)) {
+    if (
+      [
+        'mac-input',
+        'mac-input-number',
+        'mac-select',
+        'mac-radio-group',
+        'mac-radio',
+        'mac-dynamic-tags',
+      ].includes(tag)
+    ) {
       return el
     }
     const children = Array.from(el.children) as HTMLElement[]
@@ -485,16 +494,10 @@ export class MacFormItem extends BaseElement {
     const isTop = labelAlign === 'top'
 
     return html`
-      <div
-        part="base"
-        class="form-item ${isTop ? 'form-item--top' : ''}"
-      >
+      <div part="base" class="form-item ${isTop ? 'form-item--top' : ''}">
         ${this._showLabel && this.label
           ? html`
-              <label
-                part="label"
-                class="form-item__label form-item__label--${labelAlign}"
-              >
+              <label part="label" class="form-item__label form-item__label--${labelAlign}">
                 ${this.required || this._resolvedRules.some((r) => r.required)
                   ? html`<span class="required">*</span>`
                   : nothing}

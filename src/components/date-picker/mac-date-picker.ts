@@ -1,5 +1,5 @@
-import { html, css, nothing } from 'lit'
-import { property, customElement, state } from 'lit/decorators.js'
+import { html, css, nothing, render } from 'lit'
+import { property, customElement, state, query } from 'lit/decorators.js'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
@@ -119,40 +119,18 @@ export class MacDatePicker extends BaseElement {
         color: var(--md-color-text);
       }
 
-      .picker-panel {
-        position: absolute;
-        top: calc(100% + 6px);
-        left: 0;
-        width: 288px;
-        background: var(--md-color-bg);
-        border: 1px solid var(--md-color-border);
-        border-radius: 12px;
-        box-shadow:
-          0 12px 40px rgba(0, 0, 0, 0.12),
-          0 4px 12px rgba(0, 0, 0, 0.08);
-        z-index: 99999;
-        opacity: 0;
-        transform: translateY(-8px) scale(0.96);
-        pointer-events: none;
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 16px;
-      }
-      .picker-panel.open {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-      }
-      .picker-panel--range {
-        width: 580px;
-        display: flex;
-        gap: var(--md-spacing-md);
-      }
+      /* Inline panel mode (when panel=true) */
       .picker-panel--inline {
         position: static;
         opacity: 1;
         transform: none;
         pointer-events: auto;
         box-shadow: none;
+        width: 288px;
+        background: var(--md-color-bg);
+        border: 1px solid var(--md-color-border);
+        border-radius: 12px;
+        padding: 16px;
       }
 
       .panel-header {
@@ -452,6 +430,12 @@ export class MacDatePicker extends BaseElement {
   @state() private _mm = 0
   @state() private _ss = 0
 
+  @query('.picker-trigger') private _trigger!: HTMLElement
+
+  private _portalEl: HTMLElement | null = null
+  private _portalId = `mac-date-picker-portal-${Math.random().toString(36).substr(2, 9)}`
+  private _scrollHandler: (() => void) | null = null
+
   private get _ctrl() {
     return this.hasAttribute('value')
   }
@@ -460,6 +444,331 @@ export class MacDatePicker extends BaseElement {
   }
   private get _selDate() {
     return prsDate(this._resVal, this.format)
+  }
+
+  private static _stylesInjected = false
+  private static _injectPortalStyles() {
+    if (MacDatePicker._stylesInjected) return
+    MacDatePicker._stylesInjected = true
+
+    const style = document.createElement('style')
+    style.id = 'mac-date-picker-portal-styles'
+    style.textContent = `
+      /* Define CSS variables for portal (in case they're not inherited) */
+      .mac-date-picker-portal {
+        --md-color-primary: #3b82f6;
+        --md-color-primary-hover: #2563eb;
+        --md-color-primary-active: #1d4ed8;
+        --md-color-success: #22c55e;
+        --md-color-warning: #f59e0b;
+        --md-color-danger: #ef4444;
+        --md-color-text: #1f2937;
+        --md-color-text-secondary: #6b7280;
+        --md-color-border: #d1d5db;
+        --md-color-bg: #ffffff;
+        --md-color-bg-secondary: #f9fafb;
+
+        --md-spacing-xs: 4px;
+        --md-spacing-sm: 8px;
+        --md-spacing-md: 12px;
+        --md-spacing-lg: 16px;
+
+        --md-radius-sm: 4px;
+        --md-radius-md: 6px;
+        --md-radius-lg: 8px;
+
+        --md-font-size-xs: 11px;
+        --md-font-size-sm: 12px;
+        --md-font-size-base: 14px;
+        --md-font-size-lg: 16px;
+
+        position: fixed;
+        width: 288px;
+        background: var(--md-color-bg);
+        border: 1px solid var(--md-color-border);
+        border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
+        z-index: 99999;
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+        pointer-events: none;
+        transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 16px;
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      }
+      .mac-date-picker-portal.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      /* Panel content styles */
+      .mac-date-picker-portal .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .mac-date-picker-portal .panel-header-title {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--md-color-text);
+        cursor: pointer;
+        padding: 2px 8px;
+        border-radius: var(--md-radius-md);
+        transition: background 150ms;
+      }
+      .mac-date-picker-portal .panel-header-title:hover {
+        background: rgba(0, 0, 0, 0.04);
+      }
+      .mac-date-picker-portal .panel-nav {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .mac-date-picker-portal .panel-nav-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border: none;
+        background: transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--md-color-text-secondary);
+        transition: all 150ms;
+        padding: 0;
+      }
+      .mac-date-picker-portal .panel-nav-btn:hover {
+        background: rgba(0, 0, 0, 0.06);
+        color: var(--md-color-text);
+      }
+
+      .mac-date-picker-portal .panel-weekdays {
+        display: grid;
+        grid-template-columns: 32px repeat(7, 1fr);
+        gap: 2px;
+        margin-bottom: 4px;
+      }
+      .mac-date-picker-portal .panel-weekdays--no-week {
+        grid-template-columns: repeat(7, 1fr);
+      }
+      .mac-date-picker-portal .weekday {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 500;
+        color: #9ca3af;
+        padding: 4px 0;
+      }
+
+      .mac-date-picker-portal .panel-days {
+        display: grid;
+        grid-template-columns: 32px repeat(7, 1fr);
+        gap: 2px;
+      }
+      .mac-date-picker-portal .panel-days--no-week {
+        grid-template-columns: repeat(7, 1fr);
+      }
+      .mac-date-picker-portal .week-num {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        font-size: 10px;
+        color: var(--md-color-text-secondary);
+        opacity: 0.5;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        padding: 0;
+        border-radius: var(--md-radius-sm);
+      }
+      .mac-date-picker-portal .week-num:hover {
+        color: var(--md-color-primary);
+        opacity: 1;
+        background: rgba(0, 122, 255, 0.06);
+      }
+      .mac-date-picker-portal .day {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 32px;
+        border: none;
+        background: transparent;
+        border-radius: var(--md-radius-sm);
+        cursor: pointer;
+        font-size: var(--md-font-size-sm);
+        color: var(--md-color-text);
+        transition: all 150ms;
+        padding: 0;
+      }
+      .mac-date-picker-portal .day:hover:not(.day--disabled):not(.day--selected):not(.day--in-range) {
+        background: rgba(0, 122, 255, 0.1);
+        border-radius: 50%;
+      }
+      .mac-date-picker-portal .day--other {
+        color: var(--md-color-text-secondary);
+        opacity: 0.35;
+      }
+      .mac-date-picker-portal .day--today {
+        color: var(--md-color-primary);
+        font-weight: 600;
+        border: 1px solid var(--md-color-primary);
+        border-radius: 50%;
+      }
+      .mac-date-picker-portal .day--selected {
+        background: var(--md-color-primary);
+        color: #fff;
+        border-radius: 50%;
+      }
+      .mac-date-picker-portal .day--selected:hover {
+        background: var(--md-color-primary-hover);
+      }
+      .mac-date-picker-portal .day--disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        text-decoration: line-through;
+      }
+      .mac-date-picker-portal .day--in-range {
+        background: rgba(0, 122, 255, 0.08);
+        border-radius: 0;
+      }
+      .mac-date-picker-portal .day--range-start {
+        background: var(--md-color-primary);
+        color: #fff;
+        border-radius: 50% 0 0 50%;
+      }
+      .mac-date-picker-portal .day--range-end {
+        background: var(--md-color-primary);
+        color: #fff;
+        border-radius: 0 50% 50% 0;
+      }
+
+      .mac-date-picker-portal .panel-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+      .mac-date-picker-portal .grid-cell {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        border: none;
+        background: transparent;
+        border-radius: var(--md-radius-lg);
+        cursor: pointer;
+        font-size: var(--md-font-size-sm);
+        color: var(--md-color-text);
+        transition: all 150ms;
+        padding: 0;
+      }
+      .mac-date-picker-portal .grid-cell:hover:not(.grid-cell--disabled):not(.grid-cell--selected) {
+        background: rgba(0, 122, 255, 0.1);
+      }
+      .mac-date-picker-portal .grid-cell--selected {
+        background: var(--md-color-primary);
+        color: #fff;
+      }
+      .mac-date-picker-portal .grid-cell--selected:hover {
+        background: var(--md-color-primary-hover);
+      }
+      .mac-date-picker-portal .grid-cell--disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      .mac-date-picker-portal .panel-year-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+      }
+      .mac-date-picker-portal .year-cell {
+        height: 40px;
+        font-size: var(--md-font-size-sm);
+      }
+
+      .mac-date-picker-portal .time-row {
+        display: flex;
+        align-items: center;
+        gap: var(--md-spacing-xs);
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--md-color-border);
+        justify-content: center;
+      }
+      .mac-date-picker-portal .time-input {
+        width: 48px;
+        padding: 6px 4px;
+        border: 1px solid var(--md-color-border);
+        border-radius: var(--md-radius-md);
+        font-size: var(--md-font-size-sm);
+        text-align: center;
+        color: var(--md-color-text);
+        background: var(--md-color-bg);
+        outline: none;
+        transition: border-color 200ms;
+      }
+      .mac-date-picker-portal .time-input:focus {
+        border-color: var(--md-color-primary);
+      }
+      .mac-date-picker-portal .time-sep {
+        color: var(--md-color-text-secondary);
+        font-size: var(--md-font-size-sm);
+      }
+
+      .mac-date-picker-portal .panel-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid var(--md-color-border);
+      }
+      .mac-date-picker-portal .panel-footer-btn {
+        font-size: var(--md-font-size-sm);
+        color: var(--md-color-primary);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px 12px;
+        border-radius: var(--md-radius-md);
+        transition: background 150ms;
+      }
+      .mac-date-picker-portal .panel-footer-btn:hover {
+        background: rgba(0, 122, 255, 0.08);
+      }
+
+      /* Dark theme */
+      .mac-date-picker-portal[data-theme='dark'] {
+        --md-color-text: #ffffff;
+        --md-color-text-secondary: rgba(255, 255, 255, 0.6);
+        --md-color-border: rgba(255, 255, 255, 0.1);
+        --md-color-bg: rgba(30, 30, 30, 0.95);
+        --md-color-bg-secondary: rgba(255, 255, 255, 0.05);
+        background: var(--md-color-bg);
+        border-color: var(--md-color-border);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .panel-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .day--selected {
+        background: var(--md-color-primary);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .grid-cell--selected {
+        background: var(--md-color-primary);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .panel-footer-btn:hover {
+        background: rgba(0, 122, 255, 0.15);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .time-input {
+        background: var(--md-color-bg);
+        border-color: var(--md-color-border);
+        color: var(--md-color-text);
+      }
+    `
+    document.head.appendChild(style)
   }
 
   override willUpdate() {
@@ -471,6 +780,7 @@ export class MacDatePicker extends BaseElement {
 
   override connectedCallback() {
     super.connectedCallback()
+    MacDatePicker._injectPortalStyles()
     const d = this._selDate
     if (d) {
       this._view = new Date(d.getFullYear(), d.getMonth(), 1)
@@ -481,10 +791,42 @@ export class MacDatePicker extends BaseElement {
   override disconnectedCallback() {
     super.disconnectedCallback()
     document.removeEventListener('click', this._onDocClick)
+    this._removeScrollListener()
+    this._removePortal()
+  }
+
+  private _addScrollListener() {
+    if (this._scrollHandler) return
+    this._scrollHandler = () => {
+      if (this._open && this._portalEl && this._trigger) {
+        const rect = this._trigger.getBoundingClientRect()
+        this._portalEl.style.left = `${rect.left}px`
+        this._portalEl.style.top = `${rect.bottom + 6}px`
+      }
+    }
+    window.addEventListener('scroll', this._scrollHandler, true)
+    window.addEventListener('resize', this._scrollHandler)
+  }
+
+  private _removeScrollListener() {
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler, true)
+      window.removeEventListener('resize', this._scrollHandler)
+      this._scrollHandler = null
+    }
   }
 
   private _onDocClick = (e: Event) => {
-    if (!e.composedPath().includes(this)) this._close()
+    if (!this._open) return
+
+    const path = e.composedPath()
+    // Close if click is outside both the trigger and the portal
+    const isInsideTrigger = path.includes(this)
+    const isInsidePortal = this._portalEl && path.includes(this._portalEl)
+
+    if (!isInsideTrigger && !isInsidePortal) {
+      this._close()
+    }
   }
   private _toggle() {
     if (this.disabled || this.panel) return
@@ -498,11 +840,68 @@ export class MacDatePicker extends BaseElement {
       this._syncTime(d)
     }
     this._panelView = this.type === 'year' || this.type === 'quarter' ? 'year' : 'day'
+    this._createPortal()
   }
   private _close() {
     if (this.panel) return
     this._open = false
     this._panelView = 'day'
+    this._removePortal()
+  }
+
+  private _createPortal() {
+    this._removePortal()
+
+    if (!this._trigger) return
+
+    const rect = this._trigger.getBoundingClientRect()
+    const portal = document.createElement('div')
+    portal.id = this._portalId
+    portal.className = 'mac-date-picker-portal'
+    portal.setAttribute('role', 'dialog')
+    portal.setAttribute('aria-label', 'Date picker')
+
+    const theme = this._resolvedTheme
+    if (theme) {
+      portal.setAttribute('data-theme', theme)
+    }
+
+    // Position
+    const left = rect.left
+    const top = rect.bottom + 6
+    const width = 288
+
+    portal.style.left = `${left}px`
+    portal.style.top = `${top}px`
+    portal.style.width = `${width}px`
+
+    document.body.appendChild(portal)
+    this._portalEl = portal
+
+    // Render initial content
+    this._updatePortalContent()
+
+    // Add scroll listener for position updates
+    this._addScrollListener()
+
+    // Animate in
+    requestAnimationFrame(() => {
+      portal.classList.add('open')
+    })
+  }
+
+  private _removePortal() {
+    this._removeScrollListener()
+    if (this._portalEl) {
+      this._portalEl.classList.remove('open')
+      const el = this._portalEl
+      setTimeout(() => {
+        if (el.parentNode) {
+          el.parentNode.removeChild(el)
+        }
+      }, 200)
+      this._portalEl = null
+    }
   }
   private _syncTime(d: Date) {
     this._hh = d.getHours()
@@ -797,10 +1196,17 @@ export class MacDatePicker extends BaseElement {
     `
   }
 
-  override render() {
-    const val = this._resVal,
-      has = !!val,
-      size = this._resolvedSize
+  override updated(changedProperties: Map<string, unknown>) {
+    super.updated(changedProperties)
+    // Update portal content when state changes
+    if (this._open && this._portalEl && !this.panel) {
+      this._updatePortalContent()
+    }
+  }
+
+  private _updatePortalContent() {
+    if (!this._portalEl) return
+
     const title =
       this._panelView === 'year'
         ? '选择年份'
@@ -821,7 +1227,36 @@ export class MacDatePicker extends BaseElement {
                 true,
               )}${this._renderDays()}${this._renderTime()}${footer}`
 
+    // Render to portal using Lit's render function (synchronous)
+    render(panelContent, this._portalEl)
+  }
+
+  override render() {
+    const val = this._resVal,
+      has = !!val,
+      size = this._resolvedSize
+
     if (this.panel) {
+      const title =
+        this._panelView === 'year'
+          ? '选择年份'
+          : this._panelView === 'month'
+            ? `${this._view.getFullYear()}年`
+            : `${this._view.getFullYear()}年${this._view.getMonth() + 1}月`
+
+      const footer = this.showFooter ? this._renderFooter() : nothing
+      const panelContent =
+        this.type === 'quarter'
+          ? html`${this._renderQuarters()}${footer}`
+          : this._panelView === 'year'
+            ? html`${this._renderYears()}${footer}`
+            : this._panelView === 'month'
+              ? html`${this._renderMonths()}${footer}`
+              : html`${this._renderHeader(
+                  title,
+                  true,
+                )}${this._renderDays()}${this._renderTime()}${footer}`
+
       return html`
         <div class="picker" part="base">
           <div class="picker-panel picker-panel--inline" part="panel">${panelContent}</div>
@@ -870,15 +1305,6 @@ export class MacDatePicker extends BaseElement {
               </slot>
             </span>
           </div>
-        </div>
-
-        <div
-          class="picker-panel ${this._open ? 'open' : ''}"
-          part="panel"
-          role="dialog"
-          aria-label="Date picker"
-        >
-          ${panelContent}
         </div>
       </div>
     `

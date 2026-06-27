@@ -577,7 +577,10 @@ export class MacInputNumber extends BaseElement {
       this.disabled || (this.min !== undefined && (this._resolvedValue ?? 0) <= this.min)
 
     const buttons = html`
-      <div part="buttons" class="buttons ${this.buttonPlacement === 'outside' ? 'buttons--outside' : ''}">
+      <div
+        part="buttons"
+        class="buttons ${this.buttonPlacement === 'outside' ? 'buttons--outside' : ''}"
+      >
         <button
           part="button-plus"
           class="button-step button-step--plus"
@@ -586,7 +589,14 @@ export class MacInputNumber extends BaseElement {
           tabindex="-1"
           @click=${() => this._stepValue(1)}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M12 5v14M5 12h14" />
           </svg>
         </button>
@@ -598,7 +608,14 @@ export class MacInputNumber extends BaseElement {
           tabindex="-1"
           @click=${() => this._stepValue(-1)}
         >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
             <path d="M5 12h14" />
           </svg>
         </button>

@@ -133,7 +133,8 @@ export class MacForm extends BaseElement {
         part="base"
         class="form"
         @submit=${this._handleSubmit}
-        style="--md-form-label-width: ${this.labelWidth}; --md-form-label-align: ${this.labelAlign};"
+        style="--md-form-label-width: ${this.labelWidth}; --md-form-label-align: ${this
+          .labelAlign};"
       >
         <slot></slot>
       </form>

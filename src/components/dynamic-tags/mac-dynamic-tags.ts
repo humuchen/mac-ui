@@ -47,7 +47,8 @@ export class MacDynamicTags extends BaseElement {
         border: 1px solid var(--md-color-border);
         border-radius: var(--md-radius-md);
         background-color: var(--md-color-bg);
-        padding: var(--md-dynamic-tags-input-padding-vertical, 2px) var(--md-dynamic-tags-input-padding-horizontal, 8px);
+        padding: var(--md-dynamic-tags-input-padding-vertical, 2px)
+          var(--md-dynamic-tags-input-padding-horizontal, 8px);
         font-size: var(--md-dynamic-tags-input-font-size, var(--md-font-size-sm));
         font-family: inherit;
         color: var(--md-color-text);
@@ -155,7 +156,13 @@ export class MacDynamicTags extends BaseElement {
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   /** The tags' type. */
-  @property({ reflect: true }) type: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'default'
+  @property({ reflect: true }) type:
+    | 'default'
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'info' = 'default'
 
   /** Whether the tags have rounded corners. */
   @property({ type: Boolean, reflect: true }) round = false
@@ -187,7 +194,10 @@ export class MacDynamicTags extends BaseElement {
   }
 
   private get _hasSlot(): boolean {
-    return this.querySelector(':scope > [slot]') !== null || this.querySelector(':scope > :not([slot])') !== null
+    return (
+      this.querySelector(':scope > [slot]') !== null ||
+      this.querySelector(':scope > :not([slot])') !== null
+    )
   }
 
   override connectedCallback() {
@@ -223,10 +233,7 @@ export class MacDynamicTags extends BaseElement {
     const showAddButton = !showInput && (!this.max || tags.length < this.max)
 
     return html`
-      <div
-        part="container"
-        class="container ${this.disabled ? 'container--disabled' : ''}"
-      >
+      <div part="container" class="container ${this.disabled ? 'container--disabled' : ''}">
         ${tags.map(
           (tag, index) => html`
             <div class="tag-wrapper" part="tag" data-value="${tag}" data-index="${index}">
@@ -242,7 +249,7 @@ export class MacDynamicTags extends BaseElement {
                 ${tag}
               </mac-tag>
             </div>
-          `
+          `,
         )}
         ${showInput
           ? html`
@@ -269,8 +276,19 @@ export class MacDynamicTags extends BaseElement {
                 ?disabled=${this.disabled}
                 @click=${this._showInput}
               >
-                <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8 2v12M2 8h12"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
                 </svg>
                 添加
               </button>
