@@ -86,42 +86,82 @@ export class MacDropdown extends BaseElement {
     vars.id = 'mac-dropdown-theme-vars'
     vars.textContent = `
       :root {
+        /* 间距系统 - 更精细的间距层次 */
         --md-spacing-xs: 4px;
         --md-spacing-sm: 8px;
         --md-spacing-md: 12px;
         --md-spacing-lg: 16px;
+        --md-spacing-xl: 20px;
+        --md-spacing-container: 5px;
+
+        /* 圆角系统 - 更柔和的圆角 */
         --md-radius-sm: 4px;
-        --md-radius-menu: 10px;
-        --md-glass-blur: 40px;
-        --md-glass-saturate: 200%;
-        --md-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        --md-radius-md: 6px;
+        --md-radius-lg: 8px;
+        --md-radius-xl: 12px;
+        --md-radius-menu: 8px;
+
+        /* 毛玻璃效果 - 更精致的模糊 */
+        --md-glass-blur: 50px;
+        --md-glass-saturate: 180%;
+        --md-glass-brightness: 1.05;
+
+        /* 字体系统 */
+        --md-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
         --md-font-size-xs: 11px;
+        --md-font-size-sm: 12px;
         --md-font-size-menu: 13px;
-        --md-transition-menu: 80ms ease;
+        --md-font-size-lg: 15px;
+        --md-font-weight-regular: 400;
+        --md-font-weight-medium: 500;
 
-        --md-dropdown-container-bg: rgba(246, 246, 246, 0.72);
-        --md-dropdown-container-border: rgba(255, 255, 255, 0.25);
-        --md-dropdown-container-shadow: 0 8px 40px rgba(0, 0, 0, 0.14), 0 2px 12px rgba(0, 0, 0, 0.08);
-        --md-dropdown-item-hover-bg: rgba(0, 122, 255, 0.18);
-        --md-dropdown-item-active-bg: rgba(0, 122, 255, 0.82);
-        --md-dropdown-item-active-hover-bg: rgba(0, 88, 208, 0.88);
-        --md-dropdown-item-active-color: #fff;
+        /* 动画系统 - 更流畅的动画曲线 */
+        --md-transition-fast: 60ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        --md-transition-menu: 120ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        --md-transition-slow: 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+
+        /* Light Mode - 更精致的配色 */
+        --md-dropdown-container-bg: rgba(255, 255, 255, 0.78);
+        --md-dropdown-container-border: rgba(0, 0, 0, 0.04);
+        --md-dropdown-container-shadow: 
+          0 0 0 1px rgba(0, 0, 0, 0.05),
+          0 2px 4px rgba(0, 0, 0, 0.04),
+          0 8px 16px rgba(0, 0, 0, 0.08),
+          0 24px 48px rgba(0, 0, 0, 0.12);
+        --md-dropdown-container-padding: 5px;
+
+        --md-dropdown-item-padding: 6px 12px;
+        --md-dropdown-item-gap: 10px;
+        --md-dropdown-item-hover-bg: rgba(0, 122, 255, 0.12);
+        --md-dropdown-item-active-bg: rgba(0, 122, 255, 0.9);
+        --md-dropdown-item-active-hover-bg: rgba(0, 100, 200, 0.95);
+        --md-dropdown-item-active-color: #ffffff;
         --md-dropdown-item-color: #1d1d1f;
-        --md-dropdown-item-danger-color: rgba(220, 53, 46, 0.8);
-        --md-dropdown-item-danger-hover-bg: rgba(220, 53, 46, 0.15);
-        --md-dropdown-item-disabled-opacity: 0.4;
-        --md-dropdown-shortcut-color: #6b7280;
-        --md-dropdown-arrow-color: #6b7280;
-        --md-dropdown-divider-color: rgba(0, 0, 0, 0.08);
+        --md-dropdown-item-danger-color: #ff3b30;
+        --md-dropdown-item-danger-hover-bg: rgba(255, 59, 48, 0.1);
+        --md-dropdown-item-disabled-opacity: 0.35;
 
-        --md-dropdown-container-dark-bg: rgba(40, 40, 40, 0.85);
-        --md-dropdown-item-dark-hover-bg: rgba(255, 255, 255, 0.08);
-        --md-dropdown-item-dark-active-bg: rgba(0, 122, 255, 0.82);
-        --md-dropdown-item-dark-color: #e0e0e0;
-        --md-dropdown-shortcut-dark-color: #8e8ea0;
-        --md-dropdown-divider-dark-color: rgba(255, 255, 255, 0.08);
+        --md-dropdown-shortcut-color: #86868b;
+        --md-dropdown-arrow-color: #86868b;
+        --md-dropdown-divider-color: rgba(0, 0, 0, 0.06);
+        --md-dropdown-divider-margin: 5px 10px;
 
-        --md-mac-text-white-soft: rgba(255, 255, 255, 0.92);
+        /* Dark Mode - 更深邃的暗色模式 */
+        --md-dropdown-container-dark-bg: rgba(30, 30, 30, 0.92);
+        --md-dropdown-container-dark-border: rgba(255, 255, 255, 0.08);
+        --md-dropdown-container-dark-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.05),
+          0 2px 4px rgba(0, 0, 0, 0.3),
+          0 8px 16px rgba(0, 0, 0, 0.4),
+          0 24px 48px rgba(0, 0, 0, 0.5);
+
+        --md-dropdown-item-dark-hover-bg: rgba(255, 255, 255, 0.1);
+        --md-dropdown-item-dark-active-bg: rgba(10, 132, 255, 0.95);
+        --md-dropdown-item-dark-color: #f5f5f7;
+        --md-dropdown-shortcut-dark-color: #98989d;
+        --md-dropdown-divider-dark-color: rgba(255, 255, 255, 0.06);
+
+        --md-mac-text-white-soft: rgba(255, 255, 255, 0.95);
       }
     `
     document.head.appendChild(vars)
@@ -131,28 +171,37 @@ export class MacDropdown extends BaseElement {
     style.textContent = `
       .mac-dropdown-portal {
         position: fixed;
-        min-width: 200px;
-        max-width: 320px;
+        min-width: 180px;
+        max-width: 280px;
         padding: var(--md-dropdown-container-padding);
         background: var(--md-dropdown-container-bg);
-        backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
-        -webkit-backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
-        border: 1px solid var(--md-dropdown-container-border);
-        border-radius: var(--md-dropdown-container-radius);
+        backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate)) brightness(var(--md-glass-brightness));
+        -webkit-backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate)) brightness(var(--md-glass-brightness));
+        border: 0.5px solid var(--md-dropdown-container-border);
+        border-radius: var(--md-radius-menu);
         box-shadow: var(--md-dropdown-container-shadow);
         z-index: 99999;
         opacity: 0;
-        transform: scale(0.96) translateY(-4px);
+        transform: scale(0.95) translateY(-8px);
         pointer-events: none;
-        transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
-                    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          opacity var(--md-transition-menu),
+          transform var(--md-transition-menu),
+          box-shadow var(--md-transition-slow);
         font-family: var(--md-font-family);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       .mac-dropdown-portal.open {
         opacity: 1;
         transform: scale(1) translateY(0);
         pointer-events: auto;
+        box-shadow:
+          0 0 0 1px rgba(0, 0, 0, 0.06),
+          0 4px 8px rgba(0, 0, 0, 0.06),
+          0 12px 24px rgba(0, 0, 0, 0.1),
+          0 32px 64px rgba(0, 0, 0, 0.15);
       }
 
       .mac-dropdown-portal.animating-up {
@@ -166,35 +215,49 @@ export class MacDropdown extends BaseElement {
       .mac-dropdown-portal .dropdown-item {
         display: flex;
         align-items: center;
-        gap: var(--md-spacing-sm);
-        padding: var(--md-dropdown-item-padding-vertical) var(--md-dropdown-item-padding-horizontal);
+        gap: var(--md-dropdown-item-gap);
+        padding: var(--md-dropdown-item-padding);
         border-radius: var(--md-radius-sm);
         cursor: pointer;
-        transition: background var(--md-transition-menu);
+        transition: background var(--md-transition-fast);
         user-select: none;
         white-space: nowrap;
         position: relative;
-        font-size: var(--md-dropdown-item-font-size);
-        line-height: 1.4;
+        font-size: var(--md-font-size-menu);
+        font-weight: var(--md-font-weight-regular);
+        line-height: 1.5;
         color: var(--md-dropdown-item-color);
+        outline: none;
       }
 
       .mac-dropdown-portal .dropdown-item:hover:not(.disabled) {
         background: var(--md-dropdown-item-hover-bg);
       }
 
+      .mac-dropdown-portal .dropdown-item:focus-visible:not(.disabled) {
+        background: var(--md-dropdown-item-hover-bg);
+        box-shadow: inset 0 0 0 1px rgba(0, 122, 255, 0.3);
+      }
+
       .mac-dropdown-portal .dropdown-item.active {
         background: var(--md-dropdown-item-active-bg);
         color: var(--md-dropdown-item-active-color);
+        font-weight: var(--md-font-weight-medium);
       }
 
       .mac-dropdown-portal .dropdown-item.active:hover {
         background: var(--md-dropdown-item-active-hover-bg);
       }
 
+      .mac-dropdown-portal .dropdown-item.active:focus-visible {
+        background: var(--md-dropdown-item-active-hover-bg);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+      }
+
       .mac-dropdown-portal .dropdown-item.disabled {
         opacity: var(--md-dropdown-item-disabled-opacity);
         cursor: not-allowed;
+        color: var(--md-dropdown-item-color);
       }
 
       .mac-dropdown-portal .dropdown-item.danger {
@@ -203,16 +266,22 @@ export class MacDropdown extends BaseElement {
 
       .mac-dropdown-portal .dropdown-item.danger:hover:not(.disabled) {
         background: var(--md-dropdown-item-danger-hover-bg);
+        color: var(--md-dropdown-item-danger-color);
       }
 
       .mac-dropdown-portal .dropdown-item-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         font-size: 14px;
         flex-shrink: 0;
+        opacity: 0.9;
+      }
+
+      .mac-dropdown-portal .dropdown-item.active .dropdown-item-icon {
+        opacity: 1;
       }
 
       .mac-dropdown-portal .dropdown-item-label {
@@ -227,12 +296,13 @@ export class MacDropdown extends BaseElement {
         color: var(--md-dropdown-shortcut-color);
         margin-left: auto;
         padding-left: var(--md-spacing-lg);
-        opacity: 0.6;
+        opacity: 0.7;
+        font-weight: var(--md-font-weight-medium);
       }
 
       .mac-dropdown-portal .dropdown-item.active .dropdown-item-shortcut {
         color: var(--md-mac-text-white-soft);
-        opacity: 0.8;
+        opacity: 0.9;
       }
 
       .mac-dropdown-portal .dropdown-item-arrow {
@@ -241,18 +311,19 @@ export class MacDropdown extends BaseElement {
         margin-left: auto;
         padding-left: var(--md-spacing-sm);
         color: var(--md-dropdown-arrow-color);
-        opacity: 0.5;
+        opacity: 0.6;
+        font-size: 12px;
       }
 
       .mac-dropdown-portal .dropdown-item.active .dropdown-item-arrow {
         color: var(--md-mac-text-white-soft);
-        opacity: 0.8;
+        opacity: 0.9;
       }
 
       .mac-dropdown-portal .dropdown-divider {
         height: 1px;
         background: var(--md-dropdown-divider-color);
-        margin: var(--md-spacing-xs) var(--md-spacing-sm);
+        margin: var(--md-dropdown-divider-margin);
       }
 
       /* Submenu */
@@ -262,22 +333,25 @@ export class MacDropdown extends BaseElement {
 
       .mac-dropdown-portal .dropdown-submenu > .mac-dropdown-submenu-portal {
         position: fixed;
-        min-width: 200px;
-        max-width: 320px;
+        min-width: 180px;
+        max-width: 280px;
         padding: var(--md-dropdown-container-padding);
         background: var(--md-dropdown-container-bg);
-        backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
-        -webkit-backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate));
-        border: 1px solid var(--md-dropdown-container-border);
-        border-radius: var(--md-dropdown-container-radius);
+        backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate)) brightness(var(--md-glass-brightness));
+        -webkit-backdrop-filter: blur(var(--md-glass-blur)) saturate(var(--md-glass-saturate)) brightness(var(--md-glass-brightness));
+        border: 0.5px solid var(--md-dropdown-container-border);
+        border-radius: var(--md-radius-menu);
         box-shadow: var(--md-dropdown-container-shadow);
         z-index: 100000;
         opacity: 0;
-        transform: scale(0.96) translateX(-4px);
+        transform: scale(0.95) translateX(-6px);
         transform-origin: top left;
         pointer-events: none;
-        transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
-                    transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          opacity var(--md-transition-menu),
+          transform var(--md-transition-menu);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
       .mac-dropdown-portal .dropdown-submenu:hover > .mac-dropdown-submenu-portal {
@@ -286,13 +360,29 @@ export class MacDropdown extends BaseElement {
         pointer-events: auto;
       }
 
+      /* Dark Mode */
       .mac-dropdown-portal[data-theme='dark'],
       .mac-dropdown-portal[data-theme='dark'] .dropdown-submenu > .mac-dropdown-submenu-portal {
         background: var(--md-dropdown-container-dark-bg);
+        border-color: var(--md-dropdown-container-dark-border);
+        box-shadow: var(--md-dropdown-container-dark-shadow);
+      }
+
+      .mac-dropdown-portal[data-theme='dark'].open {
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.08),
+          0 4px 8px rgba(0, 0, 0, 0.4),
+          0 12px 24px rgba(0, 0, 0, 0.5),
+          0 32px 64px rgba(0, 0, 0, 0.6);
       }
 
       .mac-dropdown-portal[data-theme='dark'] .dropdown-item:hover:not(.disabled) {
         background: var(--md-dropdown-item-dark-hover-bg);
+      }
+
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item:focus-visible:not(.disabled) {
+        background: var(--md-dropdown-item-dark-hover-bg);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
       }
 
       .mac-dropdown-portal[data-theme='dark'] .dropdown-item.active {
@@ -300,8 +390,12 @@ export class MacDropdown extends BaseElement {
         color: var(--md-dropdown-item-active-color);
       }
 
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item.active:hover {
+        background: var(--md-dropdown-item-dark-active-bg);
+      }
+
       .mac-dropdown-portal[data-theme='dark'] .dropdown-item.danger:hover:not(.disabled) {
-        background: var(--md-dropdown-item-danger-hover-bg);
+        background: rgba(255, 59, 48, 0.15);
       }
 
       .mac-dropdown-portal[data-theme='dark'] .dropdown-divider {
@@ -316,28 +410,34 @@ export class MacDropdown extends BaseElement {
         color: var(--md-dropdown-shortcut-dark-color);
       }
 
+      .mac-dropdown-portal[data-theme='dark'] .dropdown-item-arrow {
+        color: var(--md-dropdown-shortcut-dark-color);
+      }
+
       /* ─── 响应式：移动端浮层更宽 + 触控目标更大 ─── */
       @media (max-width: 768px) {
         .mac-dropdown-portal {
-          /* 接近全屏宽度，留出两侧边距 */
           min-width: calc(100vw - 32px) !important;
           max-width: calc(100vw - 32px) !important;
-          border-radius: 12px;
+          border-radius: var(--md-radius-xl);
         }
+
         .mac-dropdown-portal .dropdown-item {
-          /* 触控目标 ≥ 44px */
-          padding-top: 13px !important;
-          padding-bottom: 13px !important;
-          font-size: 16px !important;
+          padding: 12px 16px !important;
+          font-size: var(--md-font-size-lg) !important;
+          gap: var(--md-spacing-md);
         }
+
         .mac-dropdown-portal .dropdown-item-icon {
-          width: 22px;
-          height: 22px;
-          font-size: 18px;
+          width: 20px;
+          height: 20px;
+          font-size: 16px;
         }
+
         .mac-dropdown-portal .dropdown-item-shortcut {
-          font-size: 13px;
+          font-size: var(--md-font-size-sm);
         }
+
         .mac-dropdown-portal .dropdown-submenu > .mac-dropdown-submenu-portal {
           min-width: calc(100vw - 32px) !important;
           max-width: calc(100vw - 32px) !important;
