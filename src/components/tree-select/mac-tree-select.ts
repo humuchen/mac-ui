@@ -169,7 +169,7 @@ export class MacTreeSelect extends BaseElement {
         box-shadow:
           0 12px 40px rgba(0, 0, 0, 0.12),
           0 4px 12px rgba(0, 0, 0, 0.08);
-        z-index: 1000;
+        z-index: 99999;
         opacity: 0;
         transform: translateY(-8px) scale(0.96);
         pointer-events: none;
