@@ -103,42 +103,15 @@ export class MacMenu extends BaseElement {
     if (MacMenu._stylesInjected) return
     MacMenu._stylesInjected = true
 
-    // Use the same portal styles as dropdown
+    // Menu-specific theme variables
     const vars = document.createElement('style')
     vars.id = 'mac-menu-theme-vars'
     vars.textContent = `
       :root {
-        /* 间距系统 */
-        --md-spacing-xs: 4px;
-        --md-spacing-sm: 8px;
-        --md-spacing-md: 12px;
-        --md-spacing-lg: 16px;
+        /* Menu-specific variables (only define variables not in theme.ts) */
         --md-spacing-container: 5px;
-
-        /* 圆角系统 */
-        --md-radius-sm: 4px;
-        --md-radius-menu: 8px;
-
-        /* 毛玻璃效果 */
-        --md-glass-blur: 50px;
-        --md-glass-saturate: 180%;
         --md-glass-brightness: 1.05;
 
-        /* 字体系统 */
-        --md-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-        --md-font-size-xs: 11px;
-        --md-font-size-sm: 12px;
-        --md-font-size-menu: 13px;
-        --md-font-size-lg: 15px;
-        --md-font-weight-regular: 400;
-        --md-font-weight-medium: 500;
-
-        /* 动画系统 - macOS27 标准 */
-        --md-transition-fast: 150ms ease;
-        --md-transition-menu: 250ms ease;
-        --md-transition-slow: 250ms ease;
-
-        /* Light Mode */
         --md-menu-container-bg: rgba(255, 255, 255, 0.78);
         --md-menu-container-border: rgba(0, 0, 0, 0.04);
         --md-menu-container-shadow:
@@ -416,7 +389,10 @@ export class MacMenu extends BaseElement {
 
     const menu = document.createElement('div')
     menu.className = 'mac-menu-portal open'
-    menu.setAttribute('data-theme', this._isDark() ? 'dark' : 'light')
+    const theme = this._resolvedTheme
+    if (theme) {
+      menu.setAttribute('data-theme', theme)
+    }
 
     menu.innerHTML = this._renderItems()
 
@@ -494,13 +470,6 @@ export class MacMenu extends BaseElement {
         }
       })
     })
-  }
-
-  private _isDark(): boolean {
-    const theme = document.documentElement.getAttribute('data-theme')
-    if (theme === 'dark') return true
-    // Check system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
   }
 
   override render() {
