@@ -52,8 +52,6 @@ describe('MacDateRangePicker', () => {
       (d) => !d.classList.contains('day--other') && !d.classList.contains('day--disabled'),
     )
     expect(currentDays.length).toBeGreaterThan(2)
-
-    const listener = oneEvent(el, 'mac-change')
     ;(currentDays[0] as HTMLElement).click()
     await elementUpdated(el)
 

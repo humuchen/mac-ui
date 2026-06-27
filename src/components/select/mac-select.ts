@@ -714,7 +714,6 @@ export class MacSelect extends BaseElement {
   private _getDisplayValue(): string {
     if (this.multiple && Array.isArray(this.value)) {
       if (this.value.length === 0) return ''
-      const selectedOptions = this._getAllOptions().filter((opt) => this.value.includes(opt.value))
       return `${this.value.length} selected`
     }
 
