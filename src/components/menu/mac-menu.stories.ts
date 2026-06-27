@@ -260,3 +260,65 @@ export const ProgrammaticControl: Story = {
     `
   },
 }
+
+export const ThemeAdaptation: Story = {
+  render: () => {
+    const themeItems: DropdownItem[] = [
+      { value: 'light', label: 'Light Theme', icon: '☀️' },
+      { value: 'dark', label: 'Dark Theme', icon: '🌙' },
+      { value: 'auto', label: 'Auto (System)', icon: '🔄' },
+      { divider: true, value: '', label: '' },
+      { value: 'info', label: 'Menu adapts to theme', icon: 'ℹ️' },
+    ]
+
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault()
+      const menu = document.querySelector('#theme-menu') as any
+      if (menu) {
+        menu.show(e.clientX, e.clientY, themeItems)
+      }
+    }
+
+    const toggleTheme = (theme: 'light' | 'dark') => {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    return html`
+      <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+        <button
+          @click=${() => toggleTheme('light')}
+          style="padding: 8px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: white; cursor: pointer;"
+        >
+          Set Light Theme
+        </button>
+        <button
+          @click=${() => toggleTheme('dark')}
+          style="padding: 8px 16px; border-radius: 6px; border: 1px solid #d1d5db; background: #1d1d1f; color: white; cursor: pointer;"
+        >
+          Set Dark Theme
+        </button>
+      </div>
+      <div
+        style="
+          width: 400px;
+          height: 200px;
+          border: 2px dashed #d1d5db;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #6b7280;
+          font-size: 14px;
+        "
+        @contextmenu=${handleContextMenu}
+      >
+        Right-click to show themed menu
+      </div>
+      <p style="color: #6b7280; font-size: 12px; margin-top: 16px;">
+        The menu automatically adapts to the current theme. Try switching between light and dark
+        themes, then right-click to see the difference.
+      </p>
+      <mac-menu id="theme-menu" theme="light"></mac-menu>
+    `
+  },
+}
