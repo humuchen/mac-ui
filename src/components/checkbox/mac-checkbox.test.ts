@@ -79,9 +79,13 @@ describe('MacCheckboxGroup', () => {
       </mac-checkbox-group>
     `)
     const checkboxes = el.querySelectorAll('mac-checkbox')
-    expect((checkboxes[0] as MacCheckbox).checked || checkboxes[0].getAttribute('checked')).toBeTruthy()
+    expect(
+      (checkboxes[0] as MacCheckbox).checked || checkboxes[0].getAttribute('checked'),
+    ).toBeTruthy()
     expect(checkboxes[1].getAttribute('checked')).toBeFalsy()
-    expect((checkboxes[2] as MacCheckbox).checked || checkboxes[2].getAttribute('checked')).toBeTruthy()
+    expect(
+      (checkboxes[2] as MacCheckbox).checked || checkboxes[2].getAttribute('checked'),
+    ).toBeTruthy()
   })
 
   it('toggles values on click', async () => {

@@ -13,7 +13,10 @@ const meta: Meta = {
     disabled: { control: 'boolean' },
     max: { control: 'number' },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    type: { control: 'select', options: ['default', 'primary', 'success', 'warning', 'danger', 'info'] },
+    type: {
+      control: 'select',
+      options: ['default', 'primary', 'success', 'warning', 'danger', 'info'],
+    },
     round: { control: 'boolean' },
     bordered: { control: 'boolean' },
     closable: { control: 'boolean' },

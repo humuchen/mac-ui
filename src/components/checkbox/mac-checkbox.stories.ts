@@ -35,15 +35,11 @@ export const Default: Story = {
 }
 
 export const Checked: Story = {
-  render: () => html`
-    <mac-checkbox .defaultChecked=${true}>默认选中</mac-checkbox>
-  `,
+  render: () => html` <mac-checkbox .defaultChecked=${true}>默认选中</mac-checkbox> `,
 }
 
 export const Indeterminate: Story = {
-  render: () => html`
-    <mac-checkbox .indeterminate=${true}>半选状态</mac-checkbox>
-  `,
+  render: () => html` <mac-checkbox .indeterminate=${true}>半选状态</mac-checkbox> `,
 }
 
 export const Disabled: Story = {
@@ -65,9 +61,7 @@ export const Sizes: Story = {
 }
 
 export const LabelProp: Story = {
-  render: () => html`
-    <mac-checkbox label="使用 label 属性"></mac-checkbox>
-  `,
+  render: () => html` <mac-checkbox label="使用 label 属性"></mac-checkbox> `,
 }
 
 export const GroupDefault: Story = {
@@ -144,11 +138,7 @@ export const Controlled: Story = {
       }
     }
     return html`
-      <mac-checkbox-group
-        id="controlled-group"
-        .value=${['a', 'b']}
-        @mac-change=${handleChange}
-      >
+      <mac-checkbox-group id="controlled-group" .value=${['a', 'b']} @mac-change=${handleChange}>
         <mac-checkbox value="a">选项 A</mac-checkbox>
         <mac-checkbox value="b">选项 B</mac-checkbox>
         <mac-checkbox value="c">选项 C</mac-checkbox>

@@ -145,10 +145,70 @@ export const Variants: Story = {
   args: { variant: 'default' },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 24px; max-width: 400px;">
-      <mac-input variant="default" label="Default" placeholder="Default variant" .value=${args.value} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input variant="filled" label="Filled" placeholder="Filled variant" .value=${args.value} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input variant="glass" label="Glass" placeholder="Glass variant" .value=${args.value} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input variant="underline" label="Underline" placeholder="Underline variant" .value=${args.value} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        variant="default"
+        label="Default"
+        placeholder="Default variant"
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        variant="filled"
+        label="Filled"
+        placeholder="Filled variant"
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        variant="glass"
+        label="Glass"
+        placeholder="Glass variant"
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        variant="underline"
+        label="Underline"
+        placeholder="Underline variant"
+        .value=${args.value}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -157,9 +217,60 @@ export const Sizes: Story = {
   args: { size: 'md' },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input size="sm" label="Small" placeholder="Small input" .value=${args.value} type=${args.type} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input size="md" label="Medium" placeholder="Medium input" .value=${args.value} type=${args.type} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input size="lg" label="Large" placeholder="Large input" .value=${args.value} type=${args.type} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        size="sm"
+        label="Small"
+        placeholder="Small input"
+        .value=${args.value}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        size="md"
+        label="Medium"
+        placeholder="Medium input"
+        .value=${args.value}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        size="lg"
+        label="Large"
+        placeholder="Large input"
+        .value=${args.value}
+        type=${args.type}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -168,11 +279,100 @@ export const States: Story = {
   args: { error: false, success: false, disabled: false, readonly: false },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Normal" placeholder="Normal state" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Error" error placeholder="Error state" helper-text="This field has an error" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Success" success placeholder="Success state" helper-text="Looks good!" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Disabled" disabled placeholder="Disabled state" value="Cannot edit" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Read Only" readonly placeholder="Read only state" value="Read only content" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Normal"
+        placeholder="Normal state"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Error"
+        error
+        placeholder="Error state"
+        helper-text="This field has an error"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Success"
+        success
+        placeholder="Success state"
+        helper-text="Looks good!"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Disabled"
+        disabled
+        placeholder="Disabled state"
+        value="Cannot edit"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Read Only"
+        readonly
+        placeholder="Read only state"
+        value="Read only content"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -181,9 +381,60 @@ export const WithLabel: Story = {
   args: { label: 'Username' },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Username" placeholder="Enter username" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Email" required placeholder="you@example.com" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Password" type="password" helper-text="Must be at least 8 characters" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Username"
+        placeholder="Enter username"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Email"
+        required
+        placeholder="you@example.com"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Password"
+        type="password"
+        helper-text="Must be at least 8 characters"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -192,9 +443,60 @@ export const FloatingLabel: Story = {
   args: { floating: true },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input floating label="Username" placeholder=" " .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading}></mac-input>
-      <mac-input floating label="Email" required placeholder=" " .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading}></mac-input>
-      <mac-input floating label="Password" type="password" placeholder=" " .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading}></mac-input>
+      <mac-input
+        floating
+        label="Username"
+        placeholder=" "
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+      ></mac-input>
+      <mac-input
+        floating
+        label="Email"
+        required
+        placeholder=" "
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+      ></mac-input>
+      <mac-input
+        floating
+        label="Password"
+        type="password"
+        placeholder=" "
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+      ></mac-input>
     </div>
   `,
 }
@@ -203,8 +505,44 @@ export const Clearable: Story = {
   args: { clearable: true, value: 'Type something...' },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Clearable Input" clearable value="Type something..." placeholder="Enter text" .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input variant="filled" label="Filled Clearable" clearable value="Clearable content" placeholder="Enter text" .value=${args.value} type=${args.type} size=${args.size} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Clearable Input"
+        clearable
+        value="Type something..."
+        placeholder="Enter text"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        variant="filled"
+        label="Filled Clearable"
+        clearable
+        value="Clearable content"
+        placeholder="Enter text"
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -213,8 +551,43 @@ export const PasswordToggle: Story = {
   args: { showPasswordToggle: true },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Password" type="password" show-password-toggle placeholder="Enter password" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Confirm Password" type="password" show-password-toggle show-char-counter max-length="20" placeholder="Confirm password" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Password"
+        type="password"
+        show-password-toggle
+        placeholder="Enter password"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Confirm Password"
+        type="password"
+        show-password-toggle
+        show-char-counter
+        max-length="20"
+        placeholder="Confirm password"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -271,8 +644,43 @@ export const Loading: Story = {
   args: { loading: true },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Loading" loading placeholder="Validating..." .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?floating=${args.floating}></mac-input>
-      <mac-input label="Checking Username" loading value="john_doe" helper-text="Checking availability..." .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Loading"
+        loading
+        placeholder="Validating..."
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Checking Username"
+        loading
+        value="john_doe"
+        helper-text="Checking availability..."
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -280,13 +688,64 @@ export const Loading: Story = {
 export const WithIcons: Story = {
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Search" placeholder="Search..." .value=${args.value} type=${args.type} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}>
+      <mac-input
+        label="Search"
+        placeholder="Search..."
+        .value=${args.value}
+        type=${args.type}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      >
         <span slot="prefix">🔍</span>
       </mac-input>
-      <mac-input label="Email" type="email" placeholder="you@example.com" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}>
+      <mac-input
+        label="Email"
+        type="email"
+        placeholder="you@example.com"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      >
         <span slot="prefix">📧</span>
       </mac-input>
-      <mac-input label="Website" type="url" placeholder="https://example.com" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}>
+      <mac-input
+        label="Website"
+        type="url"
+        placeholder="https://example.com"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      >
         <span slot="prefix">🌐</span>
         <span slot="suffix">🔗</span>
       </mac-input>
@@ -298,11 +757,96 @@ export const InputTypes: Story = {
   args: { type: 'text' },
   render: (args) => html`
     <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-      <mac-input label="Text" type="text" placeholder="Text input" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Email" type="email" placeholder="email@example.com" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Number" type="number" placeholder="123" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="Tel" type="tel" placeholder="+1 (555) 123-4567" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-      <mac-input label="URL" type="url" placeholder="https://example.com" .value=${args.value} size=${args.size} variant=${args.variant} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+      <mac-input
+        label="Text"
+        type="text"
+        placeholder="Text input"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Email"
+        type="email"
+        placeholder="email@example.com"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Number"
+        type="number"
+        placeholder="123"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="Tel"
+        type="tel"
+        placeholder="+1 (555) 123-4567"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
+      <mac-input
+        label="URL"
+        type="url"
+        placeholder="https://example.com"
+        .value=${args.value}
+        size=${args.size}
+        variant=${args.variant}
+        ?disabled=${args.disabled}
+        ?readonly=${args.readonly}
+        ?error=${args.error}
+        ?success=${args.success}
+        ?required=${args.required}
+        ?clearable=${args.clearable}
+        ?show-password-toggle=${args.showPasswordToggle}
+        ?show-char-counter=${args.showCharCounter}
+        ?loading=${args.loading}
+        ?floating=${args.floating}
+      ></mac-input>
     </div>
   `,
 }
@@ -399,11 +943,64 @@ export const CompleteExample: Story = {
 export const GlassInputs: Story = {
   args: { variant: 'glass' },
   render: (args) => html`
-    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px; border-radius: 16px;">
+    <div
+      style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px; border-radius: 16px;"
+    >
       <div style="display: flex; flex-direction: column; gap: 16px; max-width: 400px;">
-        <mac-input variant="glass" label="Username" placeholder="Enter username" .value=${args.value} type=${args.type} size=${args.size} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-        <mac-input variant="glass" label="Password" type="password" placeholder="Enter password" .value=${args.value} size=${args.size} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
-        <mac-input variant="glass" label="Email" type="email" placeholder="you@example.com" .value=${args.value} size=${args.size} ?disabled=${args.disabled} ?readonly=${args.readonly} ?error=${args.error} ?success=${args.success} ?required=${args.required} ?clearable=${args.clearable} ?show-password-toggle=${args.showPasswordToggle} ?show-char-counter=${args.showCharCounter} ?loading=${args.loading} ?floating=${args.floating}></mac-input>
+        <mac-input
+          variant="glass"
+          label="Username"
+          placeholder="Enter username"
+          .value=${args.value}
+          type=${args.type}
+          size=${args.size}
+          ?disabled=${args.disabled}
+          ?readonly=${args.readonly}
+          ?error=${args.error}
+          ?success=${args.success}
+          ?required=${args.required}
+          ?clearable=${args.clearable}
+          ?show-password-toggle=${args.showPasswordToggle}
+          ?show-char-counter=${args.showCharCounter}
+          ?loading=${args.loading}
+          ?floating=${args.floating}
+        ></mac-input>
+        <mac-input
+          variant="glass"
+          label="Password"
+          type="password"
+          placeholder="Enter password"
+          .value=${args.value}
+          size=${args.size}
+          ?disabled=${args.disabled}
+          ?readonly=${args.readonly}
+          ?error=${args.error}
+          ?success=${args.success}
+          ?required=${args.required}
+          ?clearable=${args.clearable}
+          ?show-password-toggle=${args.showPasswordToggle}
+          ?show-char-counter=${args.showCharCounter}
+          ?loading=${args.loading}
+          ?floating=${args.floating}
+        ></mac-input>
+        <mac-input
+          variant="glass"
+          label="Email"
+          type="email"
+          placeholder="you@example.com"
+          .value=${args.value}
+          size=${args.size}
+          ?disabled=${args.disabled}
+          ?readonly=${args.readonly}
+          ?error=${args.error}
+          ?success=${args.success}
+          ?required=${args.required}
+          ?clearable=${args.clearable}
+          ?show-password-toggle=${args.showPasswordToggle}
+          ?show-char-counter=${args.showCharCounter}
+          ?loading=${args.loading}
+          ?floating=${args.floating}
+        ></mac-input>
       </div>
     </div>
   `,

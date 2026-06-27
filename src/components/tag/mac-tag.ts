@@ -207,7 +207,13 @@ export class MacTag extends BaseElement {
   ]
 
   /** The tag's type style. */
-  @property({ reflect: true }) type: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'default'
+  @property({ reflect: true }) type:
+    | 'default'
+    | 'primary'
+    | 'success'
+    | 'warning'
+    | 'danger'
+    | 'info' = 'default'
 
   /** The tag's size. */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
@@ -243,7 +249,9 @@ export class MacTag extends BaseElement {
     return html`
       <span
         part="base"
-        class="tag tag--${this.type} tag--${size} ${this.round ? 'tag--round' : ''} ${this.closable ? 'tag--closable' : ''} ${this.disabled ? 'tag--disabled' : ''} ${this.bordered ? '' : 'tag--borderless'}"
+        class="tag tag--${this.type} tag--${size} ${this.round ? 'tag--round' : ''} ${this.closable
+          ? 'tag--closable'
+          : ''} ${this.disabled ? 'tag--disabled' : ''} ${this.bordered ? '' : 'tag--borderless'}"
       >
         <slot name="prefix" part="prefix"></slot>
         <slot part="label"></slot>
@@ -257,8 +265,19 @@ export class MacTag extends BaseElement {
                 aria-label="Close"
                 @click=${this._handleClose}
               >
-                <svg width="1em" height="1em" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4 4L12 12M12 4L4 12"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                  />
                 </svg>
               </button>
             `

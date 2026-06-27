@@ -35,9 +35,7 @@ export const Default: Story = {
 }
 
 export const Checked: Story = {
-  render: () => html`
-    <mac-radio value="a" label="Checked" checked></mac-radio>
-  `,
+  render: () => html` <mac-radio value="a" label="Checked" checked></mac-radio> `,
 }
 
 export const Disabled: Story = {
@@ -71,7 +69,10 @@ export const SlotLabel: Story = {
 
 export const GroupDefault: Story = {
   render: () => html`
-    <mac-radio-group value="b" @mac-change=${(e: CustomEvent) => console.log('change:', e.detail.value)}>
+    <mac-radio-group
+      value="b"
+      @mac-change=${(e: CustomEvent) => console.log('change:', e.detail.value)}
+    >
       <mac-radio value="a" label="Option A"></mac-radio>
       <mac-radio value="b" label="Option B"></mac-radio>
       <mac-radio value="c" label="Option C"></mac-radio>
