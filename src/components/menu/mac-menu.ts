@@ -133,10 +133,10 @@ export class MacMenu extends BaseElement {
         --md-font-weight-regular: 400;
         --md-font-weight-medium: 500;
 
-        /* 动画系统 */
-        --md-transition-fast: 60ms cubic-bezier(0.25, 0.1, 0.25, 1);
-        --md-transition-menu: 120ms cubic-bezier(0.25, 0.1, 0.25, 1);
-        --md-transition-slow: 200ms cubic-bezier(0.25, 0.1, 0.25, 1);
+        /* 动画系统 - macOS27 标准 */
+        --md-transition-fast: 150ms ease;
+        --md-transition-menu: 250ms ease;
+        --md-transition-slow: 250ms ease;
 
         /* Light Mode */
         --md-menu-container-bg: rgba(255, 255, 255, 0.78);

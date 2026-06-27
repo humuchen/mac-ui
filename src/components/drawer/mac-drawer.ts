@@ -64,7 +64,7 @@ export class MacDrawer extends BaseElement {
         z-index: 99998;
         background: var(--md-drawer-mask-bg);
         opacity: 0;
-        transition: opacity var(--md-transition-normal);
+        transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
       }
 
@@ -90,7 +90,7 @@ export class MacDrawer extends BaseElement {
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        transition: transform var(--md-transition-slow);
+        transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       /* ─── Placement ─── */

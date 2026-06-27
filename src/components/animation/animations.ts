@@ -281,7 +281,7 @@ export function buildAnimationShorthand(name: string, options: AnimationOptions 
   }
   const parts = [
     `mac-${def.name}`,
-    options.duration ?? '1s',
+    options.duration ?? '250ms',
     options.timingFunction ?? 'ease',
     options.delay ?? '0s',
     String(options.iterationCount ?? 1),
@@ -310,7 +310,7 @@ export function getAnimationStyleObject(
   }
   return {
     animationName: `mac-${def.name}`,
-    animationDuration: options.duration ?? '1s',
+    animationDuration: options.duration ?? '250ms',
     animationTimingFunction: options.timingFunction ?? 'ease',
     animationDelay: options.delay ?? '0s',
     animationIterationCount: String(options.iterationCount ?? 1),

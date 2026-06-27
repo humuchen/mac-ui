@@ -34,7 +34,7 @@ export class MacCard extends BaseElement {
         background-color: var(--md-color-bg);
         border-radius: var(--md-radius-lg);
         overflow: hidden;
-        transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition: box-shadow var(--md-transition-normal), border-color var(--md-transition-normal);
       }
 
       /* Variants */

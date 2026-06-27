@@ -54,7 +54,10 @@ export class MacSelect extends BaseElement {
         border-radius: var(--md-select-trigger-radius);
         background-color: var(--md-color-bg);
         cursor: pointer;
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          border-color var(--md-transition-normal),
+          background var(--md-transition-normal),
+          box-shadow var(--md-transition-normal);
         user-select: none;
         min-height: var(--md-select-trigger-min-height);
       }
@@ -162,7 +165,7 @@ export class MacSelect extends BaseElement {
         font-size: 10px;
         color: inherit;
         padding: 0;
-        transition: background 200ms;
+        transition: background var(--md-transition-fast);
       }
 
       .select-tag-remove:hover {
@@ -176,7 +179,7 @@ export class MacSelect extends BaseElement {
         justify-content: center;
         width: 20px;
         height: 20px;
-        transition: transform 200ms;
+        transition: transform var(--md-transition-normal);
         color: var(--md-color-text-secondary);
       }
 
@@ -197,7 +200,9 @@ export class MacSelect extends BaseElement {
         cursor: pointer;
         color: var(--md-color-text-secondary);
         font-size: 12px;
-        transition: all 200ms;
+        transition:
+          background var(--md-transition-fast),
+          color var(--md-transition-fast);
         padding: 0;
       }
 
@@ -225,7 +230,9 @@ export class MacSelect extends BaseElement {
         opacity: 0;
         transform: translateY(-8px);
         pointer-events: none;
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          opacity var(--md-transition-normal),
+          transform var(--md-transition-normal);
       }
 
       .select-dropdown.open {
@@ -251,7 +258,7 @@ export class MacSelect extends BaseElement {
         border-radius: var(--md-radius-sm);
         font-size: 14px;
         outline: none;
-        transition: border-color 200ms;
+        transition: border-color var(--md-transition-normal);
       }
 
       .select-search-input:focus {
@@ -282,7 +289,7 @@ export class MacSelect extends BaseElement {
         gap: var(--md-spacing-sm);
         padding: var(--md-spacing-sm) var(--md-spacing-md);
         cursor: pointer;
-        transition: background 150ms;
+        transition: background var(--md-transition-fast);
         position: relative;
       }
 
