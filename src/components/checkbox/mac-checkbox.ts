@@ -30,7 +30,7 @@ export class MacCheckbox extends BaseElement {
         gap: var(--md-checkbox-gap);
         cursor: pointer;
         user-select: none;
-        transition: opacity 150ms;
+        transition: opacity var(--md-transition-fast);
       }
 
       .checkbox--disabled {
@@ -50,7 +50,9 @@ export class MacCheckbox extends BaseElement {
         border-radius: var(--md-checkbox-radius);
         border: 2px solid var(--md-checkbox-border-color);
         background: var(--md-checkbox-bg);
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          border-color var(--md-transition-fast),
+          background var(--md-transition-fast);
       }
 
       .checkbox:hover:not(.checkbox--disabled) .control {
@@ -78,7 +80,7 @@ export class MacCheckbox extends BaseElement {
         border-bottom: 2px solid var(--md-checkbox-check-color);
         transform: rotate(-45deg) scale(0);
         margin-top: -1px;
-        transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform var(--md-transition-fast);
       }
 
       .checkbox--checked .control::after {
@@ -93,7 +95,7 @@ export class MacCheckbox extends BaseElement {
         height: 2px;
         background: var(--md-checkbox-check-color);
         transform: scaleX(0);
-        transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform var(--md-transition-fast);
       }
 
       .checkbox--indeterminate .control::before {
@@ -114,7 +116,7 @@ export class MacCheckbox extends BaseElement {
       .label {
         font-size: var(--md-checkbox-font-size);
         color: var(--md-checkbox-label-color);
-        transition: color 150ms;
+        transition: color var(--md-transition-fast);
       }
 
       .checkbox:hover:not(.checkbox--disabled) .label {
@@ -445,9 +447,7 @@ export class MacCheckboxGroup extends BaseElement {
             ></mac-checkbox>
           `,
         )}
-        ${hasSlotContent
-          ? html`<slot @slotchange=${this._handleSlotChange}></slot>`
-          : nothing}
+        ${hasSlotContent ? html`<slot @slotchange=${this._handleSlotChange}></slot>` : nothing}
       </div>
     `
   }

@@ -472,7 +472,7 @@ export class MacTreeSelect extends BaseElement {
   }
 
   /* ── Selection ── */
-  private _select(value: string, label: string) {
+  private _select(value: string, _label: string) {
     if (this.multiple) {
       const set = this._getSelectedSet()
       if (set.has(value)) {

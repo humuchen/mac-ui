@@ -189,7 +189,7 @@ export class MacRating extends BaseElement {
     return MacRating._icons[this.icon] ?? MacRating._icons.star
   }
 
-  private _renderIconLayer(className: string): SVGTemplateResult {
+  private _renderIconLayer(_className: string): SVGTemplateResult {
     return svg`
       <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
         ${this._getIconSvg()}

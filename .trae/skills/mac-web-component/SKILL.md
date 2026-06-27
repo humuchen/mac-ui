@@ -18,8 +18,24 @@ description: 'Builds macOS-style Web Components with Lit. Invoke when creating m
 3. **导出注册** 在 `src/mac-ui.ts` 中添加 export
 4. **添加主题变量** 在 `src/styles/theme.ts` 中添加组件专用变量
 5. **组件中使用主题变量** 在组件的 CSS 中使用主题变量，引用默认值，不要直接设置颜色。不要写死对应css样式，而要引用主题变量作为默认值
-
 6. 组件功能参考naive-ui https://www.naiveui.com/zh-CN/dark/components/
+7. **新增组件适配** 新增组件时，需要考虑适配 macOS27 主题，以及是否需要添加新的属性或事件。如果需要，需要在组件的 Storybook 中添加对应的示例。
+   移动设备上的布局应根据屏幕尺寸自动调整，确保内容完整展示且易于操作；触控交互体验优化，包括按钮大小、间距调整以适应手指操作；保证在主流移动浏览器（如Chrome、Safari、微信内置浏览器等）中的兼容性；保证PC端现有功能和样式不变，不改变其默认行为和外观；实现响应式布局时优先考虑使用CSS媒体查询、弹性布局(Flexbox)或网格布局(CSS Grid)等标准技术方案
+8. **组件动画** 组件动画需要符合 macOS27 主题的动画规范，包括但不限于：
+   - 点击事件触发的动画效果
+   - 悬停事件触发的动画效果
+   - 点击事件触发的动画效果
+   - 滚动事件触发的动画效果
+   - 动画时长和曲线
+   - 动画延迟
+   - 动画循环
+   - 动画填充模式
+   - 动画优先从组件库中获取
+9. **性能** 组件性能优化需要考虑以下方面：
+   - 避免使用 `setTimeout` 等异步操作，因为它们会导致 UI 延迟
+   - 减少不必要的样式重计算，避免频繁的 DOM 操作和样式更新
+   - 合理使用缓存，避免重复计算
+10. **视觉一致性** 组件的视觉风格、动画、交互等元素需要与 macOS27 主题保持一致，避免与系统主题冲突。
 
 ---
 
@@ -33,15 +49,17 @@ import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
 
 /**
- * @tag mac-xxx
- * @summary Short description.
+ * macOS 风格 Web Component 模板
+ * @tag 组件名称 mac-xxx
+ * @summary 组件描述
  *
- * @slot - Default slot description.
- * @slot tooltip - Tooltip slot description.
+ * @slot - 默认插槽描述
+ * @slot tooltip - Tooltip 插槽描述
  *
- * @cssproperty --md-xxx-color - Description.
+ * @cssproperty --md-xxx-color - 组件颜色描述
  *
- * @event mac-xxx-change - Emitted when... `detail: { value: string }`
+ * @event mac-xxx-change - 当组件值改变时触发
+ * @eventdetail value - 新值
  */
 @customElement('mac-xxx')
 export class MacXxx extends BaseElement {
@@ -76,14 +94,14 @@ declare global {
 
 ### 关键原则
 
-| 原则             | 说明                                                       |
-| ---------------- | ---------------------------------------------------------- |
-| 继承 BaseElement | 提供 `emit()` 方法，自动 `bubbles + composed`              |
-| styles 数组      | `[themeTokens, sharedStyles, css\`...\`]` 确保主题变量可用 |
-| reflect: true    | 需要外部 CSS 选择的属性必须 reflect                        |
-| declare global   | 注册 HTMLElementTagNameMap 获得类型提示                    |
-| JSDoc 注释       | 属性和组件的 JSDoc 会自动出现在 Storybook                  |
-| CSS 变量默认值   | 组件级变量用 `var(--md-xxx, fallback)` 引用主题变量        |
+| 原则                 | 说明                                                       |
+| -------------------- | ---------------------------------------------------------- |
+| 继承 BaseElement     | 提供 `emit()` 方法，自动 `bubbles + composed`              |
+| styles 数组          | `[themeTokens, sharedStyles, css\`...\`]` 确保主题变量可用 |
+| reflect: true        | 需要外部 CSS 选择的属性必须 reflect                        |
+| declare global       | 注册 HTMLElementTagNameMap 获得类型提示                    |
+| JSDoc 注释(使用中文) | 属性和组件的 JSDoc 会自动出现在 Storybook                  |
+| CSS 变量默认值       | 组件级变量用 `var(--md-xxx, fallback)` 引用主题变量        |
 
 ---
 
@@ -93,152 +111,13 @@ declare global {
 
 **适用场景**：下拉菜单、Tooltip、Popover 等需要脱离父容器的浮层。
 
-**问题**：`position: absolute` 会被父级 `overflow: hidden` 裁剪，z-index 受限于堆叠上下文。
-
 **方案**：将浮层 DOM 挂载到 `document.body`，使用 `position: fixed` + 高 z-index。
 
-```typescript
-// 1. 样式注入到 <head>（非 Shadow DOM 内），因为 portal 在 body 上
-private static _portalStylesInjected = false
-
-private static _injectPortalStyles() {
-  if (MacXxx._portalStylesInjected) return
-  MacXxx._portalStylesInjected = true
-
-  // 将变量注入到 :root（portal 在 body 上，无法继承 :host 变量）
-  const vars = document.createElement('style')
-  vars.id = 'mac-xxx-portal-vars'
-  vars.textContent = `:root { --md-xxx-portal-bg: rgba(246,246,246,0.72); }`
-  document.head.appendChild(vars)
-
-  // Portal 样式
-  const style = document.createElement('style')
-  style.id = 'mac-xxx-portal-styles'
-  style.textContent = `
-    .mac-xxx-portal {
-      position: fixed;
-      z-index: 99999;
-      background: var(--md-xxx-portal-bg);
-      backdrop-filter: blur(40px) saturate(200%);
-      -webkit-backdrop-filter: blur(40px) saturate(200%);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 10px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.14), 0 2px 12px rgba(0,0,0,0.08);
-      opacity: 0;
-      transform: scale(0.96) translateY(-4px);
-      pointer-events: none;
-      transition: opacity 150ms cubic-bezier(0.4,0,0.2,1),
-                  transform 150ms cubic-bezier(0.4,0,0.2,1);
-    }
-    .mac-xxx-portal.open {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-      pointer-events: auto;
-    }
-  `
-  document.head.appendChild(style)
-}
-
-// 2. 创建/移除 portal
-private _portalEl: HTMLElement | null = null
-
-private _createPortal() {
-  this._removePortal()
-  const el = document.createElement('div')
-  el.className = 'mac-xxx-portal'
-  el.innerHTML = '...'
-  document.body.appendChild(el)
-  this._portalEl = el
-  this._bindPortalEvents(el)
-  requestAnimationFrame(() => el.classList.add('open'))
-}
-
-private _removePortal() {
-  if (!this._portalEl) return
-  this._portalEl.classList.remove('open')
-  const el = this._portalEl
-  setTimeout(() => el.remove(), 150) // 等动画结束
-  this._portalEl = null
-}
-
-// 3. 生命周期中清理
-override disconnectedCallback() {
-  super.disconnectedCallback()
-  this._removePortal()
-}
-```
-
-### 3.2 Hover Keep-Alive（Portal 悬停保持）
-
-**问题**：Portal 在 body 上，鼠标从 trigger 滑向浮层时短暂离开宿主，触发 `mouseleave` 关闭。
-
-**方案**：浮层上也绑定 `mouseenter/mouseleave`，配合延迟关闭。
-
-```typescript
-// 宿主元素：延迟关闭
-private _handleMouseLeave() {
-  if (!this.openOnHover) return
-  if (this._hoverTimeout) clearTimeout(this._hoverTimeout)
-  this._hoverTimeout = setTimeout(() => this._close(), 200)
-}
-
-// Portal 浮层：取消关闭
-private _bindPortalEvents(el: HTMLElement) {
-  el.addEventListener('mouseenter', () => {
-    if (this.openOnHover && this._hoverTimeout) {
-      clearTimeout(this._hoverTimeout)
-      this._hoverTimeout = null
-    }
-  })
-  el.addEventListener('mouseleave', () => {
-    if (this.openOnHover) {
-      if (this._hoverTimeout) clearTimeout(this._hoverTimeout)
-      this._hoverTimeout = setTimeout(() => this._close(), 200)
-    }
-  })
-}
-```
-
-### 3.3 视口边界自适应
+### 3.2 视口边界自适应
 
 浮层显示时需检测视口边界，自动调整位置防止被截断。
 
-```typescript
-private _calcPosition(anchorRect?: DOMRect, explicitPos?: { x: number; y: number }) {
-  const vw = window.innerWidth
-  const vh = window.innerHeight
-  const menuWidth = 220
-  const menuHeight = this.items.length * 32 + 8
-
-  if (explicitPos) {
-    // 右键菜单：在点击位置显示
-    let left = explicitPos.x, top = explicitPos.y
-    if (left + menuWidth > vw - 8) left = vw - menuWidth - 8
-    if (top + menuHeight > vh - 8) top = vh - menuHeight - 8
-    if (left < 8) left = 8
-    if (top < 8) top = 8
-    return { left, top }
-  }
-
-  // 基于 trigger 位置，自动翻转方向
-  // ...
-}
-
-// 二次校准：渲染后用实际尺寸修正
-requestAnimationFrame(() => {
-  const rect = el.getBoundingClientRect()
-  let newLeft = left, newTop = top
-  if (newLeft + rect.width > vw - 8) newLeft = vw - rect.width - 8
-  if (newTop + rect.height > vh - 8) newTop = anchorRect.top - rect.height - 4
-  if (newLeft < 8) newLeft = 8
-  if (newTop < 8) newTop = 8
-  el.style.left = `${newLeft}px`
-  el.style.top = `${newTop}px`
-  el.classList.add('open')
-})
-```
-
-### 3.4 关闭机制（三种方式）
+### 3.3 关闭机制（三种方式）
 
 ```typescript
 // 1. 点击选项关闭
@@ -273,57 +152,6 @@ override disconnectedCallback() {
   document.removeEventListener('keydown', this._handleKeyDown)
   this._removePortal()
 }
-```
-
-### 3.5 右键菜单
-
-```typescript
-@property() trigger: 'click' | 'contextmenu' | 'both' = 'click'
-
-private _handleTriggerClick(e: Event) {
-  if (this.trigger === 'contextmenu') return
-  e.preventDefault(); this._toggle()
-}
-
-private _handleContextMenu(e: Event) {
-  if (this.trigger === 'click') return
-  e.preventDefault(); e.stopPropagation()
-  const ce = e as MouseEvent
-  this._open = true
-  this._createPortal({ x: ce.clientX, y: ce.clientY })
-  this.emit('mac-xxx-open')
-}
-```
-
-### 3.6 文本省略 + 展开 + Tooltip
-
-```typescript
-@property({ type: Number, attribute: 'line-clamp' }) lineClamp = 3
-@property({ attribute: 'expand-trigger' }) expandTrigger: 'click' | 'none' = 'none'
-@property({ type: Boolean, reflect: true }) expanded = false
-
-// 检测是否真的被截断
-private _checkTruncation() {
-  const el = this._contentEl
-  // 临时移除 clamp 测量完整高度
-  el.classList.remove('clamped'); el.classList.add('expanded')
-  const fullHeight = el.scrollHeight
-  el.classList.remove('expanded'); el.classList.add('clamped')
-  const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 21
-  this._isTruncated = fullHeight > lineHeight * this.lineClamp + 2
-}
-
-// CSS: -webkit-line-clamp 实现
-.ellipsis-content.clamped {
-  -webkit-line-clamp: var(--_line-clamp);
-}
-.ellipsis-content.expanded {
-  display: block;
-  -webkit-line-clamp: unset;
-}
-
-// Tooltip: 使用 Portal 模式，读取 slot="tooltip" 内容
-// 仅在 _isTruncated && !expanded 时显示
 ```
 
 ---

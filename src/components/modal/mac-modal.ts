@@ -1,5 +1,5 @@
 import { html, css } from 'lit'
-import { property, customElement, query } from 'lit/decorators.js'
+import { property, customElement } from 'lit/decorators.js'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
@@ -554,9 +554,6 @@ export class MacModal extends BaseElement {
 
   /** Whether the modal is maximized */
   @property({ type: Boolean, reflect: true }) maximized = false
-
-  @query('.modal')
-  private _modal!: HTMLDivElement
 
   // Drag state
   private _isDragging = false

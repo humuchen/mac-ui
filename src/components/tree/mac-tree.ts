@@ -357,16 +357,6 @@ export class MacTree extends BaseElement {
     return undefined
   }
 
-  private _getChildrenKeys(node: TreeNodeData): string[] {
-    const keys: string[] = [node.key]
-    if (node.children) {
-      for (const child of node.children) {
-        keys.push(...this._getChildrenKeys(child))
-      }
-    }
-    return keys
-  }
-
   /* ── Check state ── */
   private _getCheckState(node: TreeNodeData): CheckState {
     const checked = this._checked

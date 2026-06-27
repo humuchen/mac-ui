@@ -85,7 +85,9 @@ export const Basic: Story = {
 
 export const WithTitle: Story = {
   args: { title: '用户信息' },
-  render: (args) => html` <mac-descriptions title=${args.title} .items=${userInfo}></mac-descriptions> `,
+  render: (args) => html`
+    <mac-descriptions title=${args.title} .items=${userInfo}></mac-descriptions>
+  `,
 }
 
 export const WithExtra: Story = {
@@ -173,7 +175,7 @@ export const Bordered: Story = {
 
 export const LabelAlign: Story = {
   args: { labelAlign: 'left' },
-  render: (args) => html`
+  render: (_args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions
         title="左对齐 (默认)"
@@ -196,7 +198,7 @@ export const LabelAlign: Story = {
 
 export const Separator: Story = {
   args: { separator: ':' },
-  render: (args) => html`
+  render: (_args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions title="默认分隔符 (:)" .items=${userInfo.slice(0, 3)}></mac-descriptions>
       <mac-descriptions
@@ -301,7 +303,15 @@ export const Span: Story = {
 export const SlotMode: Story = {
   args: { column: 2, title: '设备信息' },
   render: (args) => html`
-    <mac-descriptions title=${args.title} column=${args.column} label-placement=${args.labelPlacement} label-align=${args.labelAlign} .size=${args.size} ?bordered=${args.bordered} .separator=${args.separator}>
+    <mac-descriptions
+      title=${args.title}
+      column=${args.column}
+      label-placement=${args.labelPlacement}
+      label-align=${args.labelAlign}
+      .size=${args.size}
+      ?bordered=${args.bordered}
+      .separator=${args.separator}
+    >
       <mac-description-item label="设备" value="iPhone 15 Pro Max"></mac-description-item>
       <mac-description-item label="系统" value="iOS 18.0"></mac-description-item>
       <mac-description-item label="芯片" value="A17 Pro"></mac-description-item>
@@ -335,7 +345,7 @@ export const ItemStyle: Story = {
 
 export const AllSizesBordered: Story = {
   args: { bordered: true },
-  render: (args) => html`
+  render: (_args) => html`
     <div style="display:flex;flex-direction:column;gap:16px">
       <mac-descriptions
         title="Small"

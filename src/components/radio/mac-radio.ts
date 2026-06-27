@@ -30,7 +30,7 @@ export class MacRadio extends BaseElement {
         gap: var(--md-radio-gap);
         cursor: pointer;
         user-select: none;
-        transition: opacity 150ms;
+        transition: opacity var(--md-transition-fast);
       }
 
       .radio--disabled {
@@ -50,7 +50,9 @@ export class MacRadio extends BaseElement {
         border-radius: 50%;
         border: 2px solid var(--md-radio-border-color);
         background: var(--md-radio-bg);
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition:
+          border-color var(--md-transition-fast),
+          background var(--md-transition-fast);
       }
 
       .radio:hover:not(.radio--disabled) .control {
@@ -74,7 +76,7 @@ export class MacRadio extends BaseElement {
         border-radius: 50%;
         background: var(--md-radio-dot-color);
         transform: scale(0);
-        transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform var(--md-transition-fast);
       }
 
       .radio--checked .control::after {
@@ -91,7 +93,7 @@ export class MacRadio extends BaseElement {
       .label {
         font-size: var(--md-radio-font-size);
         color: var(--md-radio-label-color);
-        transition: color 150ms;
+        transition: color var(--md-transition-fast);
       }
 
       .radio:hover:not(.radio--disabled) .label {
@@ -405,9 +407,7 @@ export class MacRadioGroup extends BaseElement {
             ></mac-radio>
           `,
         )}
-        ${hasSlotContent
-          ? html`<slot @slotchange=${this._handleSlotChange}></slot>`
-          : nothing}
+        ${hasSlotContent ? html`<slot @slotchange=${this._handleSlotChange}></slot>` : nothing}
       </div>
     `
   }

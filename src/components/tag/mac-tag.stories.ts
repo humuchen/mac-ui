@@ -260,7 +260,7 @@ export const AllTypes: Story = {
 }
 
 export const AllSizes: Story = {
-  render: (args) => html`
+  render: (_args) => html`
     <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
       <mac-tag type="primary" size="sm">Small</mac-tag>
       <mac-tag type="primary" size="md">Medium</mac-tag>
@@ -284,7 +284,7 @@ export const NoBorder: Story = {
 }
 
 export const WithPrefix: Story = {
-  render: (args) => html`
+  render: (_args) => html`
     <mac-tag type="primary">
       <span slot="prefix">🏷️</span>
       With Prefix

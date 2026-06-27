@@ -1,11 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { fixture, html, oneEvent, elementUpdated } from '@open-wc/testing-helpers'
 import './mac-form'
 import './mac-form-item'
 import '../input/mac-input'
 import '../input-number/mac-input-number'
 import type { MacForm } from './mac-form'
-import type { MacFormItem } from './mac-form-item'
 
 describe('MacForm', () => {
   it('renders form with model', async () => {
@@ -124,11 +123,7 @@ describe('MacForm', () => {
   it('validates with item-level rule', async () => {
     const el = await fixture<MacForm>(html`
       <mac-form .model=${{ name: 'ab' }}>
-        <mac-form-item
-          label="Name"
-          path="name"
-          .rule=${{ min: 3, message: '至少3个字符' }}
-        >
+        <mac-form-item label="Name" path="name" .rule=${{ min: 3, message: '至少3个字符' }}>
           <mac-input></mac-input>
         </mac-form-item>
       </mac-form>
@@ -186,7 +181,6 @@ describe('MacForm', () => {
     await el.validate()
     el.reset()
     await elementUpdated(el)
-    const formItem = el.querySelector('mac-form-item') as MacFormItem
     // After reset, validate should pass if no value but we check the internal state
     const valid = await el.validate()
     expect(valid).toBe(false)
@@ -233,11 +227,7 @@ describe('MacForm', () => {
   it('validates with len rule', async () => {
     const el = await fixture<MacForm>(html`
       <mac-form .model=${{ code: '1234' }}>
-        <mac-form-item
-          label="Code"
-          path="code"
-          .rule=${{ len: 6, message: '必须为6位' }}
-        >
+        <mac-form-item label="Code" path="code" .rule=${{ len: 6, message: '必须为6位' }}>
           <mac-input></mac-input>
         </mac-form-item>
       </mac-form>
@@ -249,11 +239,7 @@ describe('MacForm', () => {
   it('validates with max rule', async () => {
     const el = await fixture<MacForm>(html`
       <mac-form .model=${{ name: 'abcdefghij' }}>
-        <mac-form-item
-          label="Name"
-          path="name"
-          .rule=${{ max: 5, message: '最多5个字符' }}
-        >
+        <mac-form-item label="Name" path="name" .rule=${{ max: 5, message: '最多5个字符' }}>
           <mac-input></mac-input>
         </mac-form-item>
       </mac-form>

@@ -734,7 +734,6 @@ export class MacDatePicker extends BaseElement {
 
   private _renderQuarters() {
     const y = this._view.getFullYear()
-    const sel = this._selDate
     const qv = this._resVal
     return html`
       ${this._renderHeader(`${y}年`)}

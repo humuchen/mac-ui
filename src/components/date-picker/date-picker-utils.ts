@@ -15,14 +15,14 @@ export function prsDate(s: string, f: string): Date | null {
   if (f.startsWith('YYYY-MM-DD HH')) {
     const m = s.match(/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/)
     if (m) {
-      const [_, y, M, d, h, mi, se] = m.map(Number)
+      const [, y, M, d, h, mi, se] = m.map(Number)
       const date = new Date(y, M - 1, d, h, mi, se)
       if (date.getFullYear() === y && date.getMonth() === M - 1 && date.getDate() === d) return date
     }
   }
   const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/)
   if (m) {
-    const [_, y, M, d] = m.map(Number)
+    const [, y, M, d] = m.map(Number)
     const date = new Date(y, M - 1, d)
     if (date.getFullYear() === y && date.getMonth() === M - 1 && date.getDate() === d) return date
   }
@@ -31,7 +31,11 @@ export function prsDate(s: string, f: string): Date | null {
 }
 
 export function sameDay(a: Date, b: Date) {
-  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  )
 }
 
 export function weekStart(d: Date) {
@@ -59,5 +63,18 @@ export function calDays(y: number, m: number) {
 }
 
 export const WDS = ['日', '一', '二', '三', '四', '五', '六']
-export const MNS = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+export const MNS = [
+  '1月',
+  '2月',
+  '3月',
+  '4月',
+  '5月',
+  '6月',
+  '7月',
+  '8月',
+  '9月',
+  '10月',
+  '11月',
+  '12月',
+]
 export const QNS = ['第一季度', '第二季度', '第三季度', '第四季度']

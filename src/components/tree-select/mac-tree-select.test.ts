@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { html, fixture, elementUpdated, oneEvent } from '@open-wc/testing-helpers'
 import './mac-tree-select'
 import type { MacTreeSelect, TreeOption } from './mac-tree-select'

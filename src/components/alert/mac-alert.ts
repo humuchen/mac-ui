@@ -285,7 +285,6 @@ export class MacAlert extends BaseElement {
   override render() {
     const hasIcon = this.showIcon
     const hasTitle = this.title.length > 0
-    const hasDefaultSlot = true
 
     return html`
       <div
