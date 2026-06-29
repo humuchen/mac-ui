@@ -6,19 +6,19 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-alert
- * @summary An alert component for displaying warning messages.
+ * @summary 用于显示警告消息的提示组件。
  *
- * @slot - The alert's description content.
- * @slot icon - Custom icon content.
- * @slot action - Action content displayed on the right side.
+ * @slot - 提示的描述内容。
+ * @slot icon - 自定义图标内容。
+ * @slot action - 显示在右侧的操作内容。
  *
- * @csspart base - The alert's base container.
- * @csspart icon - The icon container.
- * @csspart title - The title text.
- * @csspart content - The description content.
- * @csspart close - The close button.
+ * @csspart base - 提示的基础容器。
+ * @csspart icon - 图标容器。
+ * @csspart title - 标题文本。
+ * @csspart content - 描述内容。
+ * @csspart close - 关闭按钮。
  *
- * @event mac-close - Emitted when the close button is clicked.
+ * @event mac-close - 点击关闭按钮时触发。
  */
 @customElement('mac-alert')
 export class MacAlert extends BaseElement {
@@ -50,7 +50,7 @@ export class MacAlert extends BaseElement {
         border-color: transparent;
       }
 
-      /* Types */
+      /* 类型 */
       .alert--default {
         background-color: var(--md-alert-default-bg);
         --md-alert-border-color: var(--md-alert-default-border);
@@ -99,7 +99,7 @@ export class MacAlert extends BaseElement {
         --md-alert-content-color: var(--md-alert-info-content);
       }
 
-      /* Icon */
+      /* 图标 */
       .alert__icon {
         flex-shrink: 0;
         display: flex;
@@ -117,7 +117,7 @@ export class MacAlert extends BaseElement {
         height: var(--md-alert-icon-size);
       }
 
-      /* Content area */
+      /* 内容区域 */
       .alert__content {
         flex: 1;
         min-width: 0;
@@ -138,7 +138,7 @@ export class MacAlert extends BaseElement {
         line-height: 1.6;
       }
 
-      /* Action */
+      /* 操作 */
       .alert__action {
         flex-shrink: 0;
         display: flex;
@@ -147,7 +147,7 @@ export class MacAlert extends BaseElement {
         padding-left: var(--md-alert-gap);
       }
 
-      /* Close button */
+      /* 关闭按钮 */
       .alert__close {
         flex-shrink: 0;
         display: inline-flex;
@@ -184,25 +184,20 @@ export class MacAlert extends BaseElement {
     `,
   ]
 
-  /** The alert's type style. */
+  /** 提示的类型样式。 */
   @property({ reflect: true }) type:
-    | 'default'
-    | 'primary'
-    | 'success'
-    | 'warning'
-    | 'error'
-    | 'info' = 'default'
+    'default' | 'primary' | 'success' | 'warning' | 'error' | 'info' = 'default'
 
-  /** The alert's title. */
+  /** 提示的标题。 */
   @property({ reflect: true }) title = ''
 
-  /** Whether the alert has a border. */
+  /** 提示是否有边框。 */
   @property({ type: Boolean, reflect: true }) bordered = true
 
-  /** Whether to show the icon. */
+  /** 是否显示图标。 */
   @property({ type: Boolean, attribute: 'show-icon', reflect: true }) showIcon = true
 
-  /** Whether the alert can be closed. */
+  /** 提示是否可以关闭。 */
   @property({ type: Boolean, reflect: true }) closable = false
 
   private get _defaultIcon() {
@@ -292,13 +287,15 @@ export class MacAlert extends BaseElement {
         class="alert alert--${this.type} ${this.bordered ? 'alert--bordered' : 'alert--borderless'}"
         role="alert"
       >
-        ${hasIcon
-          ? html`
-              <div class="alert__icon" part="icon">
-                <slot name="icon">${this._defaultIcon}</slot>
-              </div>
-            `
-          : nothing}
+        ${
+          hasIcon
+            ? html`
+                <div class="alert__icon" part="icon">
+                  <slot name="icon">${this._defaultIcon}</slot>
+                </div>
+              `
+            : nothing
+        }
         <div class="alert__content" part="content">
           ${hasTitle ? html`<div class="alert__title" part="title">${this.title}</div>` : nothing}
           <div class="alert__description">
@@ -306,26 +303,28 @@ export class MacAlert extends BaseElement {
           </div>
         </div>
         <slot name="action" part="action"></slot>
-        ${this.closable
-          ? html`
-              <button
-                part="close"
-                class="alert__close"
-                type="button"
-                aria-label="Close"
-                @click=${this._handleClose}
-              >
-                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M4 4L12 12M12 4L4 12"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </button>
-            `
-          : nothing}
+        ${
+          this.closable
+            ? html`
+                <button
+                  part="close"
+                  class="alert__close"
+                  type="button"
+                  aria-label="Close"
+                  @click=${this._handleClose}
+                >
+                  <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M4 4L12 12M12 4L4 12"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </button>
+              `
+            : nothing
+        }
       </div>
     `
   }

@@ -6,13 +6,13 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-radio
- * @summary A radio button component with macOS-style design.
+ * @summary macOS 风格的单选按钮组件。
  *
- * @slot - The radio's label.
+ * @slot - 单选按钮的标签。
  *
- * @csspart base - The radio's base container.
- * @csspart control - The radio control circle.
- * @csspart label - The label element.
+ * @csspart base - 单选按钮的基础容器。
+ * @csspart control - 单选按钮控制圆圈。
+ * @csspart label - 标签元素。
  */
 @customElement('mac-radio')
 export class MacRadio extends BaseElement {
@@ -38,7 +38,7 @@ export class MacRadio extends BaseElement {
         opacity: 0.5;
       }
 
-      /* Control */
+      /* 控制 */
       .control {
         position: relative;
         display: inline-flex;
@@ -68,7 +68,7 @@ export class MacRadio extends BaseElement {
         border-color: var(--md-radio-border-active-hover-color);
       }
 
-      /* Inner dot */
+      /* 内部圆点 */
       .control::after {
         content: '';
         width: var(--md-radio-dot-size);
@@ -83,13 +83,13 @@ export class MacRadio extends BaseElement {
         transform: scale(1);
       }
 
-      /* Focus */
+      /* 聚焦 */
       .radio:focus-visible .control {
         outline: 2px solid var(--md-color-primary);
         outline-offset: 2px;
       }
 
-      /* Label */
+      /* 标签 */
       .label {
         font-size: var(--md-radio-font-size);
         color: var(--md-radio-label-color);
@@ -100,7 +100,7 @@ export class MacRadio extends BaseElement {
         color: var(--md-radio-label-hover-color);
       }
 
-      /* Sizes — md is the default on :host, only override sm/lg */
+      /* 尺寸 — md 是 :host 默认值，仅覆盖 sm/lg */
       :host {
         --md-radio-size: 18px;
         --md-radio-dot-size: 8px;
@@ -124,22 +124,22 @@ export class MacRadio extends BaseElement {
     `,
   ]
 
-  /** The radio's value. */
+  /** 单选按钮的值。 */
   @property() value = ''
 
-  /** Whether the radio is checked (controlled). */
+  /** 单选按钮是否选中（受控）。 */
   @property({ type: Boolean, reflect: true }) checked = false
 
-  /** Whether the radio is checked by default (uncontrolled). */
+  /** 单选按钮默认是否选中（非受控）。 */
   @property({ type: Boolean, attribute: 'default-checked' }) defaultChecked = false
 
-  /** Disables the radio. */
+  /** 禁用单选按钮。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** The radio's label text. */
+  /** 单选按钮的标签文本。 */
   @property() label = ''
 
-  /** The radio's size. */
+  /** 单选按钮的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   @state() private _groupValue?: string
@@ -157,7 +157,7 @@ export class MacRadio extends BaseElement {
 
   override connectedCallback() {
     super.connectedCallback()
-    // Sync default size to DOM so CSS :host([size]) selectors work
+    // 同步默认尺寸到 DOM，以便 CSS :host([size]) 选择器生效
     const resolvedSize = this._resolvedSize
     if (!this.hasAttribute('size') && resolvedSize !== 'md') {
       this.setAttribute('size', resolvedSize)
@@ -195,14 +195,14 @@ export class MacRadio extends BaseElement {
     return null
   }
 
-  /** Called by the parent group to sync value. */
+  /** 由父级组调用以同步值。 */
   _setGroupValue(value: string | undefined) {
     this._groupValue = value
   }
 
   private _handleClick() {
     if (this.disabled) return
-    if (this._isChecked) return // radio cannot be unchecked by clicking
+    if (this._isChecked) return // 单选按钮无法通过点击取消选中
 
     const group = this._findGroup()
     if (group) {
@@ -236,9 +236,11 @@ export class MacRadio extends BaseElement {
         @keydown=${this._handleKeydown}
       >
         <span part="control" class="control"></span>
-        ${this.label
-          ? html`<span part="label" class="label">${this.label}</span>`
-          : html`<span part="label" class="label"><slot></slot></span>`}
+        ${
+          this.label
+            ? html`<span part="label" class="label">${this.label}</span>`
+            : html`<span part="label" class="label"><slot></slot></span>`
+        }
       </div>
     `
   }
@@ -252,13 +254,13 @@ export interface RadioOption {
 
 /**
  * @tag mac-radio-group
- * @summary A radio group component with macOS-style design.
+ * @summary macOS 风格的单选按钮组组件。
  *
- * @slot - Default slot for mac-radio elements.
+ * @slot - 默认插槽，用于 mac-radio 元素。
  *
- * @csspart base - The group's base container.
+ * @csspart base - 组的基础容器。
  *
- * @event mac-change - Emitted when the selected value changes.
+ * @event mac-change - 选中值变化时触发。
  */
 @customElement('mac-radio-group')
 export class MacRadioGroup extends BaseElement {
@@ -287,25 +289,25 @@ export class MacRadioGroup extends BaseElement {
     `,
   ]
 
-  /** The group's value (controlled). */
+  /** 组的值（受控）。 */
   @property() value?: string
 
-  /** The default value (uncontrolled). */
+  /** 默认值（非受控）。 */
   @property({ attribute: 'default-value' }) defaultValue?: string
 
-  /** The radio name attribute. */
+  /** 单选按钮 name 属性。 */
   @property() name = ''
 
-  /** The group's size. */
+  /** 组的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Disables all radios in the group. */
+  /** 禁用组内所有单选按钮。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** The layout direction. */
+  /** 布局方向。 */
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
 
-  /** Options array for simplified usage. */
+  /** 简化使用的选项数组。 */
   @property({ type: Array }) options?: RadioOption[]
 
   private _radios: MacRadio[] = []
@@ -343,11 +345,11 @@ export class MacRadioGroup extends BaseElement {
   }
 
   private _applyPropsToRadio(radio: MacRadio) {
-    // Apply group-level size
+    // 应用组级尺寸
     if (this.size) {
       radio.setAttribute('size', this.size)
     }
-    // Apply group-level disabled
+    // 应用组级禁用状态
     if (this.disabled) {
       radio.disabled = true
     } else if (!radio.hasAttribute('disabled')) {
@@ -380,7 +382,7 @@ export class MacRadioGroup extends BaseElement {
   }
 
   private _handleSlotChange() {
-    // Re-register radios when slot content changes
+    // 插槽内容变化时重新注册单选按钮
     this._radios = []
     const radios = this.querySelectorAll('mac-radio')
     radios.forEach((radio) => this._registerRadio(radio as MacRadio))

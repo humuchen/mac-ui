@@ -119,28 +119,28 @@ export class MacDatePicker extends BaseElement {
         color: var(--md-color-text);
       }
 
-      /* Inline panel mode (when panel=true) */
+      /* 内联面板模式（当 panel=true 时） */
       .picker-panel--inline {
         position: static;
         opacity: 1;
         transform: none;
         pointer-events: auto;
         box-shadow: none;
-        width: 288px;
+        width: var(--md-date-picker-panel-width);
         background: var(--md-color-bg);
         border: 1px solid var(--md-color-border);
-        border-radius: 12px;
-        padding: 16px;
+        border-radius: var(--md-date-picker-panel-border-radius);
+        padding: var(--md-date-picker-panel-padding);
       }
 
       .panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: var(--md-date-picker-header-margin-bottom);
       }
       .panel-header-title {
-        font-size: 15px;
+        font-size: var(--md-date-picker-header-font-size);
         font-weight: 600;
         color: var(--md-color-text);
         cursor: pointer;
@@ -160,8 +160,8 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: var(--md-date-picker-nav-btn-size);
+        height: var(--md-date-picker-nav-btn-size);
         border: none;
         background: transparent;
         border-radius: 50%;
@@ -177,8 +177,8 @@ export class MacDatePicker extends BaseElement {
 
       .panel-weekdays {
         display: grid;
-        grid-template-columns: 32px repeat(7, 1fr);
-        gap: 2px;
+        grid-template-columns: var(--md-date-picker-week-num-width) repeat(7, 1fr);
+        gap: var(--md-date-picker-day-gap);
         margin-bottom: 4px;
       }
       .panel-weekdays--no-week {
@@ -186,7 +186,7 @@ export class MacDatePicker extends BaseElement {
       }
       .weekday {
         text-align: center;
-        font-size: 11px;
+        font-size: var(--md-date-picker-weekday-font-size);
         font-weight: 500;
         color: #9ca3af;
         padding: 4px 0;
@@ -194,8 +194,8 @@ export class MacDatePicker extends BaseElement {
 
       .panel-days {
         display: grid;
-        grid-template-columns: 32px repeat(7, 1fr);
-        gap: 2px;
+        grid-template-columns: var(--md-date-picker-week-num-width) repeat(7, 1fr);
+        gap: var(--md-date-picker-day-gap);
       }
       .panel-days--no-week {
         grid-template-columns: repeat(7, 1fr);
@@ -204,7 +204,7 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 32px;
+        height: var(--md-date-picker-week-num-height);
         font-size: 10px;
         color: var(--md-color-text-secondary);
         opacity: 0.5;
@@ -223,7 +223,7 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 32px;
+        height: var(--md-date-picker-day-height);
         border: none;
         background: transparent;
         border-radius: var(--md-radius-sm);
@@ -233,7 +233,7 @@ export class MacDatePicker extends BaseElement {
         transition: all 150ms;
         padding: 0;
       }
-      .day:hover:not(.day--disabled):not(.day--selected):not(.day--in-range) {
+      .day:hover:not(.day--disabled):not(.day--today):not(.day--in-range) {
         background: rgba(0, 122, 255, 0.1);
         border-radius: 50%;
       }
@@ -242,18 +242,18 @@ export class MacDatePicker extends BaseElement {
         opacity: 0.35;
       }
       .day--today {
-        color: var(--md-color-primary);
-        font-weight: 600;
-        border: 1px solid var(--md-color-primary);
-        border-radius: 50%;
-      }
-      .day--selected {
         background: var(--md-color-primary);
         color: #fff;
         border-radius: 50%;
       }
-      .day--selected:hover {
+      .day--today:hover {
         background: var(--md-color-primary-hover);
+      }
+      .day--selected {
+        color: var(--md-color-primary);
+        font-weight: 600;
+        border: 1px solid var(--md-color-primary);
+        border-radius: 50%;
       }
       .day--disabled {
         opacity: 0.3;
@@ -278,13 +278,13 @@ export class MacDatePicker extends BaseElement {
       .panel-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: var(--md-date-picker-grid-gap);
       }
       .grid-cell {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 48px;
+        height: var(--md-date-picker-grid-cell-height);
         border: none;
         background: transparent;
         border-radius: var(--md-radius-lg);
@@ -312,10 +312,10 @@ export class MacDatePicker extends BaseElement {
       .panel-year-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        gap: var(--md-date-picker-grid-gap);
       }
       .year-cell {
-        height: 40px;
+        height: var(--md-date-picker-year-cell-height);
         font-size: var(--md-font-size-sm);
       }
 
@@ -323,13 +323,13 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         gap: var(--md-spacing-xs);
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: var(--md-date-picker-footer-margin-top);
+        padding-top: var(--md-date-picker-footer-margin-top);
         border-top: 1px solid var(--md-color-border);
         justify-content: center;
       }
       .time-input {
-        width: 48px;
+        width: var(--md-date-picker-time-input-width);
         padding: 6px 4px;
         border: 1px solid var(--md-color-border);
         border-radius: var(--md-radius-md);
@@ -352,8 +352,8 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: var(--md-date-picker-footer-margin-top);
+        padding-top: var(--md-date-picker-footer-margin-top);
         border-top: 1px solid var(--md-color-border);
       }
       .panel-footer-btn {
@@ -383,6 +383,43 @@ export class MacDatePicker extends BaseElement {
         min-height: var(--lg-select-trigger-min-height);
       }
 
+      :host([size='sm']) {
+        --md-date-picker-panel-width: var(--sm-date-picker-panel-width);
+        --md-date-picker-panel-padding: var(--sm-date-picker-panel-padding);
+        --md-date-picker-panel-border-radius: var(--sm-date-picker-panel-border-radius);
+        --md-date-picker-day-height: var(--sm-date-picker-day-height);
+        --md-date-picker-nav-btn-size: var(--sm-date-picker-nav-btn-size);
+        --md-date-picker-header-font-size: var(--sm-date-picker-header-font-size);
+        --md-date-picker-header-margin-bottom: var(--sm-date-picker-header-margin-bottom);
+        --md-date-picker-week-num-width: var(--sm-date-picker-week-num-width);
+        --md-date-picker-week-num-height: var(--sm-date-picker-week-num-height);
+        --md-date-picker-weekday-font-size: var(--sm-date-picker-weekday-font-size);
+        --md-date-picker-grid-gap: var(--sm-date-picker-grid-gap);
+        --md-date-picker-grid-cell-height: var(--sm-date-picker-grid-cell-height);
+        --md-date-picker-year-cell-height: var(--sm-date-picker-year-cell-height);
+        --md-date-picker-time-input-width: var(--sm-date-picker-time-input-width);
+        --md-date-picker-footer-margin-top: var(--sm-date-picker-footer-margin-top);
+        --md-date-picker-day-gap: var(--sm-date-picker-day-gap);
+      }
+      :host([size='lg']) {
+        --md-date-picker-panel-width: var(--lg-date-picker-panel-width);
+        --md-date-picker-panel-padding: var(--lg-date-picker-panel-padding);
+        --md-date-picker-panel-border-radius: var(--lg-date-picker-panel-border-radius);
+        --md-date-picker-day-height: var(--lg-date-picker-day-height);
+        --md-date-picker-nav-btn-size: var(--lg-date-picker-nav-btn-size);
+        --md-date-picker-header-font-size: var(--lg-date-picker-header-font-size);
+        --md-date-picker-header-margin-bottom: var(--lg-date-picker-header-margin-bottom);
+        --md-date-picker-week-num-width: var(--lg-date-picker-week-num-width);
+        --md-date-picker-week-num-height: var(--lg-date-picker-week-num-height);
+        --md-date-picker-weekday-font-size: var(--lg-date-picker-weekday-font-size);
+        --md-date-picker-grid-gap: var(--lg-date-picker-grid-gap);
+        --md-date-picker-grid-cell-height: var(--lg-date-picker-grid-cell-height);
+        --md-date-picker-year-cell-height: var(--lg-date-picker-year-cell-height);
+        --md-date-picker-time-input-width: var(--lg-date-picker-time-input-width);
+        --md-date-picker-footer-margin-top: var(--lg-date-picker-footer-margin-top);
+        --md-date-picker-day-gap: var(--lg-date-picker-day-gap);
+      }
+
       :host([data-theme='dark']) .picker-clear {
         background: rgba(255, 255, 255, 0.1);
       }
@@ -392,7 +429,7 @@ export class MacDatePicker extends BaseElement {
       :host([data-theme='dark']) .panel-nav-btn:hover {
         background: rgba(255, 255, 255, 0.08);
       }
-      :host([data-theme='dark']) .day--selected {
+      :host([data-theme='dark']) .day--today {
         background: var(--md-color-primary);
       }
       :host([data-theme='dark']) .grid-cell--selected {
@@ -412,7 +449,7 @@ export class MacDatePicker extends BaseElement {
   @property() value = ''
   @property({ attribute: 'default-value' }) defaultValue = ''
   @property() format = 'YYYY-MM-DD'
-  @property() placeholder = 'Select date'
+  @property() placeholder = '选择日期'
   @property({ type: Boolean, reflect: true }) disabled = false
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
   @property({ type: Boolean }) clearable = false
@@ -421,7 +458,17 @@ export class MacDatePicker extends BaseElement {
   @property({ attribute: false }) disabledDate?: (date: Date) => boolean
   @property({ reflect: true }) type: PickerType = 'date'
   @property({ type: Boolean, reflect: true }) panel = false
-  @property({ type: Boolean, attribute: 'show-footer' }) showFooter = true
+  @property({
+    attribute: 'show-footer',
+    converter: {
+      fromAttribute: (value: string | null) => {
+        if (value === null) return true
+        return value !== 'false'
+      },
+      toAttribute: (value: boolean) => (value ? null : 'false'),
+    },
+  })
+  showFooter = true
 
   @state() private _open = false
   @state() private _view = new Date()
@@ -454,7 +501,7 @@ export class MacDatePicker extends BaseElement {
     const style = document.createElement('style')
     style.id = 'mac-date-picker-portal-styles'
     style.textContent = `
-      /* Define CSS variables for portal (in case they're not inherited) */
+      /* 为 portal 定义 CSS 变量（以防未被继承） */
       .mac-date-picker-portal {
         --md-color-primary: #3b82f6;
         --md-color-primary-hover: #2563eb;
@@ -482,19 +529,71 @@ export class MacDatePicker extends BaseElement {
         --md-font-size-base: 14px;
         --md-font-size-lg: 16px;
 
+        /* DatePicker 尺寸变量（默认 md） */
+        --dp-panel-width: 288px;
+        --dp-panel-padding: 16px;
+        --dp-panel-border-radius: 12px;
+        --dp-day-height: 32px;
+        --dp-nav-btn-size: 28px;
+        --dp-header-font-size: 15px;
+        --dp-header-margin-bottom: 12px;
+        --dp-week-num-width: 32px;
+        --dp-week-num-height: 32px;
+        --dp-weekday-font-size: 11px;
+        --dp-grid-gap: 8px;
+        --dp-grid-cell-height: 48px;
+        --dp-year-cell-height: 40px;
+        --dp-time-input-width: 48px;
+        --dp-footer-margin-top: 12px;
+        --dp-day-gap: 2px;
+
         position: fixed;
-        width: 288px;
+        width: var(--dp-panel-width);
         background: var(--md-color-bg);
         border: 1px solid var(--md-color-border);
-        border-radius: 12px;
+        border-radius: var(--dp-panel-border-radius);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
         z-index: 99999;
         opacity: 0;
         transform: translateY(-8px) scale(0.96);
         pointer-events: none;
         transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 16px;
+        padding: var(--dp-panel-padding);
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      }
+      .mac-date-picker-portal[data-size='sm'] {
+        --dp-panel-width: 264px;
+        --dp-panel-padding: 12px;
+        --dp-panel-border-radius: 10px;
+        --dp-day-height: 28px;
+        --dp-nav-btn-size: 24px;
+        --dp-header-font-size: 14px;
+        --dp-header-margin-bottom: 10px;
+        --dp-week-num-width: 28px;
+        --dp-week-num-height: 28px;
+        --dp-weekday-font-size: 10px;
+        --dp-grid-gap: 6px;
+        --dp-grid-cell-height: 40px;
+        --dp-year-cell-height: 34px;
+        --dp-time-input-width: 42px;
+        --dp-footer-margin-top: 10px;
+      }
+      .mac-date-picker-portal[data-size='lg'] {
+        --dp-panel-width: 320px;
+        --dp-panel-padding: 20px;
+        --dp-panel-border-radius: 14px;
+        --dp-day-height: 38px;
+        --dp-nav-btn-size: 32px;
+        --dp-header-font-size: 16px;
+        --dp-header-margin-bottom: 14px;
+        --dp-week-num-width: 38px;
+        --dp-week-num-height: 38px;
+        --dp-weekday-font-size: 12px;
+        --dp-grid-gap: 10px;
+        --dp-grid-cell-height: 56px;
+        --dp-year-cell-height: 46px;
+        --dp-time-input-width: 54px;
+        --dp-footer-margin-top: 14px;
       }
       .mac-date-picker-portal.open {
         opacity: 1;
@@ -502,15 +601,15 @@ export class MacDatePicker extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Panel content styles */
+      /* 面板内容样式 */
       .mac-date-picker-portal .panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: var(--dp-header-margin-bottom);
       }
       .mac-date-picker-portal .panel-header-title {
-        font-size: 15px;
+        font-size: var(--dp-header-font-size);
         font-weight: 600;
         color: var(--md-color-text);
         cursor: pointer;
@@ -530,8 +629,8 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: var(--dp-nav-btn-size);
+        height: var(--dp-nav-btn-size);
         border: none;
         background: transparent;
         border-radius: 50%;
@@ -547,8 +646,8 @@ export class MacDatePicker extends BaseElement {
 
       .mac-date-picker-portal .panel-weekdays {
         display: grid;
-        grid-template-columns: 32px repeat(7, 1fr);
-        gap: 2px;
+        grid-template-columns: var(--dp-week-num-width) repeat(7, 1fr);
+        gap: var(--dp-day-gap);
         margin-bottom: 4px;
       }
       .mac-date-picker-portal .panel-weekdays--no-week {
@@ -556,7 +655,7 @@ export class MacDatePicker extends BaseElement {
       }
       .mac-date-picker-portal .weekday {
         text-align: center;
-        font-size: 11px;
+        font-size: var(--dp-weekday-font-size);
         font-weight: 500;
         color: #9ca3af;
         padding: 4px 0;
@@ -564,8 +663,8 @@ export class MacDatePicker extends BaseElement {
 
       .mac-date-picker-portal .panel-days {
         display: grid;
-        grid-template-columns: 32px repeat(7, 1fr);
-        gap: 2px;
+        grid-template-columns: var(--dp-week-num-width) repeat(7, 1fr);
+        gap: var(--dp-day-gap);
       }
       .mac-date-picker-portal .panel-days--no-week {
         grid-template-columns: repeat(7, 1fr);
@@ -574,7 +673,7 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 32px;
+        height: var(--dp-week-num-height);
         font-size: 10px;
         color: var(--md-color-text-secondary);
         opacity: 0.5;
@@ -593,7 +692,7 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 32px;
+        height: var(--dp-day-height);
         border: none;
         background: transparent;
         border-radius: var(--md-radius-sm);
@@ -603,7 +702,7 @@ export class MacDatePicker extends BaseElement {
         transition: all 150ms;
         padding: 0;
       }
-      .mac-date-picker-portal .day:hover:not(.day--disabled):not(.day--selected):not(.day--in-range) {
+      .mac-date-picker-portal .day:hover:not(.day--disabled):not(.day--today):not(.day--in-range) {
         background: rgba(0, 122, 255, 0.1);
         border-radius: 50%;
       }
@@ -612,18 +711,18 @@ export class MacDatePicker extends BaseElement {
         opacity: 0.35;
       }
       .mac-date-picker-portal .day--today {
-        color: var(--md-color-primary);
-        font-weight: 600;
-        border: 1px solid var(--md-color-primary);
-        border-radius: 50%;
-      }
-      .mac-date-picker-portal .day--selected {
         background: var(--md-color-primary);
         color: #fff;
         border-radius: 50%;
       }
-      .mac-date-picker-portal .day--selected:hover {
+      .mac-date-picker-portal .day--today:hover {
         background: var(--md-color-primary-hover);
+      }
+      .mac-date-picker-portal .day--selected {
+        color: var(--md-color-primary);
+        font-weight: 600;
+        border: 1px solid var(--md-color-primary);
+        border-radius: 50%;
       }
       .mac-date-picker-portal .day--disabled {
         opacity: 0.3;
@@ -648,13 +747,13 @@ export class MacDatePicker extends BaseElement {
       .mac-date-picker-portal .panel-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
+        gap: var(--dp-grid-gap);
       }
       .mac-date-picker-portal .grid-cell {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 48px;
+        height: var(--dp-grid-cell-height);
         border: none;
         background: transparent;
         border-radius: var(--md-radius-lg);
@@ -682,10 +781,10 @@ export class MacDatePicker extends BaseElement {
       .mac-date-picker-portal .panel-year-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 8px;
+        gap: var(--dp-grid-gap);
       }
       .mac-date-picker-portal .year-cell {
-        height: 40px;
+        height: var(--dp-year-cell-height);
         font-size: var(--md-font-size-sm);
       }
 
@@ -693,13 +792,13 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         gap: var(--md-spacing-xs);
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: var(--dp-footer-margin-top);
+        padding-top: var(--dp-footer-margin-top);
         border-top: 1px solid var(--md-color-border);
         justify-content: center;
       }
       .mac-date-picker-portal .time-input {
-        width: 48px;
+        width: var(--dp-time-input-width);
         padding: 6px 4px;
         border: 1px solid var(--md-color-border);
         border-radius: var(--md-radius-md);
@@ -722,8 +821,8 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: var(--dp-footer-margin-top);
+        padding-top: var(--dp-footer-margin-top);
         border-top: 1px solid var(--md-color-border);
       }
       .mac-date-picker-portal .panel-footer-btn {
@@ -740,7 +839,7 @@ export class MacDatePicker extends BaseElement {
         background: rgba(0, 122, 255, 0.08);
       }
 
-      /* Dark theme */
+      /* 深色主题 */
       .mac-date-picker-portal[data-theme='dark'] {
         --md-color-text: #ffffff;
         --md-color-text-secondary: rgba(255, 255, 255, 0.6);
@@ -753,7 +852,7 @@ export class MacDatePicker extends BaseElement {
       .mac-date-picker-portal[data-theme='dark'] .panel-nav-btn:hover {
         background: rgba(255, 255, 255, 0.08);
       }
-      .mac-date-picker-portal[data-theme='dark'] .day--selected {
+      .mac-date-picker-portal[data-theme='dark'] .day--today {
         background: var(--md-color-primary);
       }
       .mac-date-picker-portal[data-theme='dark'] .grid-cell--selected {
@@ -776,6 +875,11 @@ export class MacDatePicker extends BaseElement {
     if (this.getAttribute('size') !== s) this.setAttribute('size', s)
     const t = this._resolvedTheme
     t ? this.setAttribute('data-theme', t) : this.removeAttribute('data-theme')
+    if (this._portalEl) {
+      this._portalEl.setAttribute('data-size', s)
+      const width = s === 'sm' ? 264 : s === 'lg' ? 320 : 288
+      this._portalEl.style.width = `${width}px`
+    }
   }
 
   override connectedCallback() {
@@ -820,7 +924,7 @@ export class MacDatePicker extends BaseElement {
     if (!this._open) return
 
     const path = e.composedPath()
-    // Close if click is outside both the trigger and the portal
+    // 如果点击位置同时在触发器和 portal 之外，则关闭
     const isInsideTrigger = path.includes(this)
     const isInsidePortal = this._portalEl && path.includes(this._portalEl)
 
@@ -859,17 +963,20 @@ export class MacDatePicker extends BaseElement {
     portal.id = this._portalId
     portal.className = 'mac-date-picker-portal'
     portal.setAttribute('role', 'dialog')
-    portal.setAttribute('aria-label', 'Date picker')
+    portal.setAttribute('aria-label', '日期选择器')
 
     const theme = this._resolvedTheme
     if (theme) {
       portal.setAttribute('data-theme', theme)
     }
 
-    // Position
+    const size = this._resolvedSize
+    portal.setAttribute('data-size', size)
+
+    // 位置
     const left = rect.left
     const top = rect.bottom + 6
-    const width = 288
+    const width = size === 'sm' ? 264 : size === 'lg' ? 320 : 288
 
     portal.style.left = `${left}px`
     portal.style.top = `${top}px`
@@ -878,13 +985,13 @@ export class MacDatePicker extends BaseElement {
     document.body.appendChild(portal)
     this._portalEl = portal
 
-    // Render initial content
+    // 渲染初始内容
     this._updatePortalContent()
 
-    // Add scroll listener for position updates
+    // 添加滚动监听器以更新位置
     this._addScrollListener()
 
-    // Animate in
+    // 进入动画
     requestAnimationFrame(() => {
       portal.classList.add('open')
     })
@@ -1011,7 +1118,7 @@ export class MacDatePicker extends BaseElement {
     if (e.key === 'Escape') this._close()
   }
 
-  /* ── render helpers ── */
+  /* ── 渲染辅助函数 ── */
   private _renderHeader(title: string, clickable = false) {
     return html`
       <div class="panel-header">
@@ -1059,23 +1166,25 @@ export class MacDatePicker extends BaseElement {
       ${rows.map(
         (r) => html`
           <div class="panel-days ${isWeek ? '' : 'panel-days--no-week'}">
-            ${isWeek
-              ? html`<button
-                  class="week-num"
-                  @click=${() => this._pick(r.days[0].date)}
-                  type="button"
-                >
-                  W${r.wn}
-                </button>`
-              : nothing}
+            ${
+              isWeek
+                ? html`<button
+                    class="week-num"
+                    @click=${() => this._pick(r.days[0].date)}
+                    type="button"
+                  >
+                    W${r.wn}
+                  </button>`
+                : nothing
+            }
             ${r.days.map((d) => {
               const isSel = sel && (isWeek ? sameDay(d.date, selWeek!) : sameDay(d.date, sel))
               const isTod = sameDay(d.date, today)
               const dis = this.disabledDate ? this.disabledDate(d.date) : false
               return html`<button
-                class="day ${d.cur ? '' : 'day--other'} ${isTod ? 'day--today' : ''} ${isSel
-                  ? 'day--selected'
-                  : ''} ${dis ? 'day--disabled' : ''}"
+                class="day ${d.cur ? '' : 'day--other'} ${isTod ? 'day--today' : ''} ${
+                  isSel ? 'day--selected' : ''
+                } ${dis ? 'day--disabled' : ''}"
                 @click=${() => !dis && this._pick(d.date)}
                 type="button"
                 tabindex="-1"
@@ -1189,16 +1298,20 @@ export class MacDatePicker extends BaseElement {
     return html`
       <div class="panel-footer">
         <button class="panel-footer-btn" @click=${this._today} type="button">今天</button>
-        ${this.clearable
-          ? html`<button class="panel-footer-btn" @click=${this._clear} type="button">清空</button>`
-          : nothing}
+        ${
+          this.clearable
+            ? html`<button class="panel-footer-btn" @click=${this._clear} type="button">
+                清空
+              </button>`
+            : nothing
+        }
       </div>
     `
   }
 
   override updated(changedProperties: Map<string, unknown>) {
     super.updated(changedProperties)
-    // Update portal content when state changes
+    // 状态变化时更新 portal 内容
     if (this._open && this._portalEl && !this.panel) {
       this._updatePortalContent()
     }
@@ -1227,7 +1340,7 @@ export class MacDatePicker extends BaseElement {
                 true,
               )}${this._renderDays()}${this._renderTime()}${footer}`
 
-    // Render to portal using Lit's render function (synchronous)
+    // 使用 Lit 的 render 函数渲染到 portal（同步）
     render(panelContent, this._portalEl)
   }
 
@@ -1267,11 +1380,11 @@ export class MacDatePicker extends BaseElement {
     return html`
       <div class="picker" part="base">
         <div
-          class="picker-trigger picker-trigger--${size} ${this._open ? 'open' : ''} ${this.error
-            ? 'picker-trigger--error'
-            : ''} ${this.success ? 'picker-trigger--success' : ''} ${this.disabled
-            ? 'picker-trigger--disabled'
-            : ''}"
+          class="picker-trigger picker-trigger--${size} ${this._open ? 'open' : ''} ${
+            this.error ? 'picker-trigger--error' : ''
+          } ${this.success ? 'picker-trigger--success' : ''} ${
+            this.disabled ? 'picker-trigger--disabled' : ''
+          }"
           part="trigger"
           @click=${this._toggle}
           @keydown=${this._onKey}
@@ -1283,11 +1396,18 @@ export class MacDatePicker extends BaseElement {
             >${has ? val : this.placeholder}</span
           >
           <div style="display:flex;align-items:center;gap:6px;">
-            ${this.clearable && has && !this.disabled
-              ? html`<button class="picker-clear" @click=${this._clear} tabindex="-1" type="button">
-                  ✕
-                </button>`
-              : nothing}
+            ${
+              this.clearable && has && !this.disabled
+                ? html`<button
+                    class="picker-clear"
+                    @click=${this._clear}
+                    tabindex="-1"
+                    type="button"
+                  >
+                    ✕
+                  </button>`
+                : nothing
+            }
             <span class="picker-icon">
               <slot name="icon">
                 <svg

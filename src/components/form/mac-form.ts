@@ -19,14 +19,14 @@ export interface FormRule {
 
 /**
  * @tag mac-form
- * @summary A form component for collecting and validating user input.
+ * @summary 一个表单组件，用于收集和验证用户输入。
  *
- * @slot - The form items and controls.
+ * @slot - 表单项和控件。
  *
- * @csspart base - The form's base container.
+ * @csspart base - 表单的基础容器。
  *
- * @event mac-change - Emitted when a field value changes. Detail: { model, path, value }
- * @event mac-submit - Emitted when the form is submitted. Detail: { model }
+ * @event mac-change - 字段值变化时触发。Detail: { model, path, value }
+ * @event mac-submit - 表单提交时触发。Detail: { model }
  */
 @customElement('mac-form')
 export class MacForm extends BaseElement {
@@ -46,28 +46,28 @@ export class MacForm extends BaseElement {
     `,
   ]
 
-  /** The form data model. */
+  /** 表单数据模型。 */
   @property({ type: Object }) model: Record<string, unknown> = {}
 
-  /** Validation rules. */
+  /** 验证规则。 */
   @property({ type: Object }) rules: Record<string, FormRule | FormRule[]> = {}
 
-  /** The width of labels. */
+  /** 标签宽度。 */
   @property({ attribute: 'label-width' }) labelWidth = '80px'
 
-  /** The alignment of labels. */
+  /** 标签对齐方式。 */
   @property({ attribute: 'label-align' }) labelAlign: 'left' | 'right' | 'top' = 'right'
 
-  /** Whether to show labels. */
+  /** 是否显示标签。 */
   @property({ type: Boolean, attribute: 'show-label' }) showLabel = true
 
-  /** Whether to show feedback (error messages). */
+  /** 是否显示反馈（错误信息）。 */
   @property({ type: Boolean, attribute: 'show-feedback' }) showFeedback = true
 
-  /** The form's size. */
+  /** 表单尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Disables all form items. */
+  /** 禁用所有表单项。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
   private _items: MacFormItem[] = []
@@ -98,29 +98,29 @@ export class MacForm extends BaseElement {
     }
   }
 
-  /** Gets a field value by path. */
+  /** 根据路径获取字段值。 */
   getValue(path: string): unknown {
     return this.model[path]
   }
 
-  /** Sets a field value by path. */
+  /** 根据路径设置字段值。 */
   setValue(path: string, value: unknown) {
     this.model = { ...this.model, [path]: value }
     this.emit('mac-change', { detail: { model: this.model, path, value } })
   }
 
-  /** Validates all form items. */
+  /** 验证所有表单项。 */
   async validate(): Promise<boolean> {
     const results = await Promise.all(this._items.map((item) => item.validate()))
     return results.every((r) => r)
   }
 
-  /** Resets all form items' validation state. */
+  /** 重置所有表单项的验证状态。 */
   reset() {
     this._items.forEach((item) => item.reset())
   }
 
-  /** Clears the form model. */
+  /** 清空表单模型。 */
   clear() {
     this.model = {}
     this.reset()
@@ -133,8 +133,9 @@ export class MacForm extends BaseElement {
         part="base"
         class="form"
         @submit=${this._handleSubmit}
-        style="--md-form-label-width: ${this.labelWidth}; --md-form-label-align: ${this
-          .labelAlign};"
+        style="--md-form-label-width: ${this.labelWidth}; --md-form-label-align: ${
+          this.labelAlign
+        };"
       >
         <slot></slot>
       </form>

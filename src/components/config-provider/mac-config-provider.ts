@@ -4,9 +4,9 @@ import { BaseElement } from '../../internal/base-element'
 
 /**
  * @tag mac-config-provider
- * @summary A configuration provider that passes theme and size settings to child components.
+ * @summary 将主题和尺寸设置传递给子组件的配置提供者。
  *
- * @slot - Child components that will inherit the configuration.
+ * @slot - 将继承配置的子组件。
  */
 @customElement('mac-config-provider')
 export class MacConfigProvider extends BaseElement {
@@ -18,10 +18,10 @@ export class MacConfigProvider extends BaseElement {
     `,
   ]
 
-  /** Global theme: 'light', 'dark', or 'auto' (follows system preference). */
+  /** 全局主题：'light'、'dark' 或 'auto'（跟随系统偏好）。 */
   @property({ reflect: true }) theme: 'light' | 'dark' = 'light'
 
-  /** Global size: 'sm', 'md', or 'lg'. */
+  /** 全局尺寸：'sm'、'md' 或 'lg'。 */
   @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
 
   override connectedCallback() {

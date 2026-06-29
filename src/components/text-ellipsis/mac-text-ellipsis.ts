@@ -6,18 +6,18 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-text-ellipsis
- * @summary A text ellipsis component that supports line clamping, click-to-expand, and tooltip.
+ * @summary 支持行数限制、点击展开和提示框的文本省略组件。
  *
- * @slot - Default slot for the text content.
- * @slot tooltip - Custom tooltip content shown on hover when text is truncated.
- *   If not provided and `tooltip` is `true`, the full text will be used as tooltip content.
+ * @slot - 文本内容的默认插槽。
+ * @slot tooltip - 文本被截断时悬停显示的自定义提示框内容。
+ *   如果未提供且 `tooltip` 为 `true`，则将使用完整文本作为提示框内容。
  *
- * @cssproperty --md-ellipsis-color - Text color.
- * @cssproperty --md-ellipsis-expand-color - Expand trigger link color.
- * @cssproperty --md-ellipsis-tooltip-bg - Tooltip background color.
- * @cssproperty --md-ellipsis-tooltip-color - Tooltip text color.
+ * @cssproperty --md-ellipsis-color - 文本颜色。
+ * @cssproperty --md-ellipsis-expand-color - 展开触发链接的颜色。
+ * @cssproperty --md-ellipsis-tooltip-bg - 提示框背景色。
+ * @cssproperty --md-ellipsis-tooltip-color - 提示框文本颜色。
  *
- * @event mac-ellipsis-expand - Emitted when the text is expanded or collapsed. `detail: { expanded: boolean }`
+ * @event mac-ellipsis-expand - 文本展开或收起时触发。`detail: { expanded: boolean }`
  */
 @customElement('mac-text-ellipsis')
 export class MacTextEllipsis extends BaseElement {
@@ -61,7 +61,7 @@ export class MacTextEllipsis extends BaseElement {
         cursor: pointer;
       }
 
-      /* Tooltip */
+      /* 提示框 */
       .tooltip-wrapper {
         position: relative;
         display: inline;
@@ -98,16 +98,16 @@ export class MacTextEllipsis extends BaseElement {
     `,
   ]
 
-  /** Maximum number of lines to show before truncating. */
+  /** 截断前显示的最大行数。 */
   @property({ type: Number, attribute: 'line-clamp' }) lineClamp = 3
 
-  /** How to trigger expand. 'click' shows an expand link; 'none' disables expand. */
+  /** 如何触发展开。'click' 显示展开链接；'none' 禁用展开。 */
   @property({ attribute: 'expand-trigger' }) expandTrigger: 'click' | 'none' = 'none'
 
-  /** Whether the text is currently expanded. */
+  /** 文本当前是否已展开。 */
   @property({ type: Boolean, reflect: true }) expanded = false
 
-  /** Whether to show a tooltip on hover when text is truncated. */
+  /** 文本被截断时悬停是否显示提示框。 */
   @property({ type: Boolean }) tooltip = false
 
   @state() private _isTruncated = false
@@ -132,7 +132,7 @@ export class MacTextEllipsis extends BaseElement {
 
   private _checkTruncation() {
     if (!this._contentEl) return
-    // Temporarily remove clamp to measure full height
+    // 临时移除限制以测量完整高度
     const hadClamp = this._contentEl.classList.contains('clamped')
     this._contentEl.classList.remove('clamped')
     this._contentEl.classList.add('expanded')
@@ -151,10 +151,10 @@ export class MacTextEllipsis extends BaseElement {
     this.emit('mac-ellipsis-expand', { detail: { expanded: this.expanded } })
   }
 
-  // --- Tooltip ---
+  // --- 提示框 ---
   private _handleMouseEnter() {
     if (!this._isTruncated || this.expanded) return
-    // Show tooltip if custom slot content exists or tooltip property is enabled
+    // 如果存在自定义插槽内容或启用了 tooltip 属性，则显示提示框
     const hasCustomTooltip = (this._tooltipSlot?.assignedNodes() ?? []).length > 0
     if (!hasCustomTooltip && !this.tooltip) return
     this._showTooltip()
@@ -168,7 +168,7 @@ export class MacTextEllipsis extends BaseElement {
     if (this._tooltipVisible) return
     this._tooltipVisible = true
 
-    // Create tooltip portal
+    // 创建提示框 portal
     if (!this._tooltipEl) {
       this._tooltipEl = document.createElement('div')
       this._tooltipEl.className = 'mac-ellipsis-tooltip-portal'
@@ -196,7 +196,7 @@ export class MacTextEllipsis extends BaseElement {
       document.body.appendChild(this._tooltipEl)
     }
 
-    // Get tooltip content: prefer custom slot, fallback to full text
+    // 获取提示框内容：优先使用自定义插槽，否则使用完整文本
     const tooltipNodes = this._tooltipSlot?.assignedNodes() ?? []
     const content = tooltipNodes.length
       ? tooltipNodes
@@ -205,14 +205,14 @@ export class MacTextEllipsis extends BaseElement {
       : (this.textContent ?? '')
     this._tooltipEl.innerHTML = content
 
-    // Position
+    // 位置
     const rect = this.getBoundingClientRect()
     this._tooltipEl.style.left = `${rect.left}px`
     this._tooltipEl.style.top = `${rect.bottom + 6}px`
 
     requestAnimationFrame(() => {
       if (!this._tooltipEl) return
-      // Adjust if overflows viewport
+      // 如果溢出视口则调整
       const tipRect = this._tooltipEl.getBoundingClientRect()
       if (tipRect.right > window.innerWidth - 8) {
         this._tooltipEl.style.left = `${window.innerWidth - tipRect.width - 8}px`
@@ -252,9 +252,9 @@ export class MacTextEllipsis extends BaseElement {
         @mouseleave=${this._handleMouseLeave}
       >
         <div
-          class="ellipsis-content ${isClamped ? 'clamped' : ''} ${this.expanded
-            ? 'expanded'
-            : ''} ${isClickable ? 'clickable' : ''}"
+          class="ellipsis-content ${isClamped ? 'clamped' : ''} ${
+            this.expanded ? 'expanded' : ''
+          } ${isClickable ? 'clickable' : ''}"
           style="--_line-clamp: ${this.lineClamp}"
           @click=${this._handleContentClick}
         >

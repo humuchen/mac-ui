@@ -210,20 +210,54 @@ export class MacDateRangePicker extends BaseElement {
         --md-font-size-base: 14px;
         --md-font-size-lg: 16px;
 
+        /* DatePicker 尺寸变量（默认 md） */
+        --dp-panel-padding: 16px;
+        --dp-panel-border-radius: 12px;
+        --dp-panel-col-width: 252px;
+        --dp-day-height: 32px;
+        --dp-nav-btn-size: 28px;
+        --dp-header-font-size: 15px;
+        --dp-header-margin-bottom: 12px;
+        --dp-weekday-font-size: 11px;
+        --dp-day-gap: 2px;
+        --dp-footer-margin-top: 12px;
+
         position: fixed;
         display: flex;
         gap: var(--md-spacing-md);
         background: var(--md-color-bg);
         border: 1px solid var(--md-color-border);
-        border-radius: 12px;
+        border-radius: var(--dp-panel-border-radius);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.08);
         z-index: 99999;
         opacity: 0;
         transform: translateY(-8px) scale(0.96);
         pointer-events: none;
         transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1), transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 16px;
+        padding: var(--dp-panel-padding);
         font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+      }
+      .mac-date-range-picker-portal[data-size='sm'] {
+        --dp-panel-padding: 12px;
+        --dp-panel-border-radius: 10px;
+        --dp-panel-col-width: 228px;
+        --dp-day-height: 28px;
+        --dp-nav-btn-size: 24px;
+        --dp-header-font-size: 14px;
+        --dp-header-margin-bottom: 10px;
+        --dp-weekday-font-size: 10px;
+        --dp-footer-margin-top: 10px;
+      }
+      .mac-date-range-picker-portal[data-size='lg'] {
+        --dp-panel-padding: 20px;
+        --dp-panel-border-radius: 14px;
+        --dp-panel-col-width: 280px;
+        --dp-day-height: 38px;
+        --dp-nav-btn-size: 32px;
+        --dp-header-font-size: 16px;
+        --dp-header-margin-bottom: 14px;
+        --dp-weekday-font-size: 12px;
+        --dp-footer-margin-top: 14px;
       }
       .mac-date-range-picker-portal.open {
         opacity: 1;
@@ -231,17 +265,17 @@ export class MacDateRangePicker extends BaseElement {
         pointer-events: auto;
       }
       .mac-date-range-picker-portal .panel-col {
-        width: 252px;
+        width: var(--dp-panel-col-width);
       }
 
       .mac-date-range-picker-portal .panel-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: var(--dp-header-margin-bottom);
       }
       .mac-date-range-picker-portal .panel-header-title {
-        font-size: 15px;
+        font-size: var(--dp-header-font-size);
         font-weight: 600;
         color: var(--md-color-text);
       }
@@ -254,8 +288,8 @@ export class MacDateRangePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: var(--dp-nav-btn-size);
+        height: var(--dp-nav-btn-size);
         border: none;
         background: transparent;
         border-radius: 50%;
@@ -272,12 +306,12 @@ export class MacDateRangePicker extends BaseElement {
       .mac-date-range-picker-portal .panel-weekdays {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 2px;
+        gap: var(--dp-day-gap);
         margin-bottom: 4px;
       }
       .mac-date-range-picker-portal .weekday {
         text-align: center;
-        font-size: 11px;
+        font-size: var(--dp-weekday-font-size);
         font-weight: 500;
         color: #9ca3af;
         padding: 4px 0;
@@ -285,13 +319,13 @@ export class MacDateRangePicker extends BaseElement {
       .mac-date-range-picker-portal .panel-days {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 2px;
+        gap: var(--dp-day-gap);
       }
       .mac-date-range-picker-portal .day {
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 32px;
+        height: var(--dp-day-height);
         border: none;
         background: transparent;
         border-radius: var(--md-radius-sm);
@@ -347,8 +381,8 @@ export class MacDateRangePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 12px;
-        padding-top: 12px;
+        margin-top: var(--dp-footer-margin-top);
+        padding-top: var(--dp-footer-margin-top);
         border-top: 1px solid var(--md-color-border);
       }
       .mac-date-range-picker-portal .panel-footer-btn {
@@ -397,6 +431,11 @@ export class MacDateRangePicker extends BaseElement {
     if (this.getAttribute('size') !== s) this.setAttribute('size', s)
     const t = this._resolvedTheme
     t ? this.setAttribute('data-theme', t) : this.removeAttribute('data-theme')
+    if (this._portalEl) {
+      this._portalEl.setAttribute('data-size', s)
+      const width = s === 'sm' ? 500 : s === 'lg' ? 600 : 540
+      this._portalEl.style.width = `${width}px`
+    }
   }
 
   override connectedCallback() {
@@ -485,10 +524,13 @@ export class MacDateRangePicker extends BaseElement {
       portal.setAttribute('data-theme', theme)
     }
 
+    const size = this._resolvedSize
+    portal.setAttribute('data-size', size)
+
     // Position - center under trigger
     const left = rect.left
     const top = rect.bottom + 6
-    const width = 540 // Two panels width
+    const width = size === 'sm' ? 500 : size === 'lg' ? 600 : 540 // Two panels width
 
     portal.style.left = `${left}px`
     portal.style.top = `${top}px`
@@ -643,11 +685,11 @@ export class MacDateRangePicker extends BaseElement {
             const end =
               isE || (preview && h && s && h.getTime() >= s.getTime() && sameDay(d.date, h))
             return html`<button
-              class="day ${d.cur ? '' : 'day--other'} ${isT ? 'day--today' : ''} ${start
-                ? 'day--range-start'
-                : ''} ${end ? 'day--range-end' : ''} ${range && !start && !end
-                ? 'day--in-range'
-                : ''} ${dis ? 'day--disabled' : ''}"
+              class="day ${d.cur ? '' : 'day--other'} ${isT ? 'day--today' : ''} ${
+                start ? 'day--range-start' : ''
+              } ${end ? 'day--range-end' : ''} ${
+                range && !start && !end ? 'day--in-range' : ''
+              } ${dis ? 'day--disabled' : ''}"
               @click=${() => !dis && this._pick(d.date)}
               @mouseenter=${() => {
                 this._hoverDate = d.date
@@ -681,11 +723,11 @@ export class MacDateRangePicker extends BaseElement {
     return html`
       <div class="picker" part="base">
         <div
-          class="picker-trigger picker-trigger--${size} ${this._open ? 'open' : ''} ${this.error
-            ? 'picker-trigger--error'
-            : ''} ${this.success ? 'picker-trigger--success' : ''} ${this.disabled
-            ? 'picker-trigger--disabled'
-            : ''}"
+          class="picker-trigger picker-trigger--${size} ${this._open ? 'open' : ''} ${
+            this.error ? 'picker-trigger--error' : ''
+          } ${this.success ? 'picker-trigger--success' : ''} ${
+            this.disabled ? 'picker-trigger--disabled' : ''
+          }"
           part="trigger"
           @click=${this._toggle}
           @keydown=${this._onKey}
@@ -697,11 +739,18 @@ export class MacDateRangePicker extends BaseElement {
             >${txt || this.placeholder}</span
           >
           <div style="display:flex;align-items:center;gap:6px;">
-            ${this.clearable && has && !this.disabled
-              ? html`<button class="picker-clear" @click=${this._clear} tabindex="-1" type="button">
-                  ✕
-                </button>`
-              : nothing}
+            ${
+              this.clearable && has && !this.disabled
+                ? html`<button
+                    class="picker-clear"
+                    @click=${this._clear}
+                    tabindex="-1"
+                    type="button"
+                  >
+                    ✕
+                  </button>`
+                : nothing
+            }
             <span class="picker-icon"
               ><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" /></svg

@@ -6,18 +6,18 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-card
- * @summary A card container component with macOS-style design.
+ * @summary macOS 风格的卡片容器组件。
  *
- * @slot - The card's body content.
- * @slot header - The card's header.
- * @slot footer - The card's footer.
- * @slot media - The card's media area (top).
+ * @slot - 卡片的主体内容。
+ * @slot header - 卡片的头部。
+ * @slot footer - 卡片的底部。
+ * @slot media - 卡片的媒体区域（顶部）。
  *
- * @csspart base - The card's base container.
- * @csspart header - The header container.
- * @csspart body - The body container.
- * @csspart footer - The footer container.
- * @csspart media - The media container.
+ * @csspart base - 卡片的基础容器。
+ * @csspart header - 头部容器。
+ * @csspart body - 主体容器。
+ * @csspart footer - 底部容器。
+ * @csspart media - 媒体容器。
  */
 @customElement('mac-card')
 export class MacCard extends BaseElement {
@@ -30,7 +30,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Base Card Container
+         卡片基础容器
          ════════════════════════════════════════════════════════ */
       .card {
         position: relative;
@@ -45,7 +45,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Variant: Default
+         变体：默认
          ════════════════════════════════════════════════════════ */
       .card--default {
         border: 1px solid rgba(0, 0, 0, 0.06);
@@ -56,7 +56,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Variant: Elevated
+         变体：悬浮
          ════════════════════════════════════════════════════════ */
       .card--elevated {
         border: none;
@@ -70,7 +70,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Variant: Glass
+         变体：毛玻璃
          ════════════════════════════════════════════════════════ */
       .card--glass {
         background: rgba(255, 255, 255, 0.72);
@@ -85,7 +85,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Variant: Outlined
+         变体：描边
          ════════════════════════════════════════════════════════ */
       .card--outlined {
         background: transparent;
@@ -94,7 +94,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Variant: Gradient
+         变体：渐变
          ════════════════════════════════════════════════════════ */
       .card--gradient {
         border: none;
@@ -111,7 +111,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Hover Effects - Contextual by Variant
+         悬停效果 - 按变体区分
          ════════════════════════════════════════════════════════ */
       .card--hoverable:hover {
         transform: translateY(-4px) scale(1.01);
@@ -164,7 +164,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Clickable / Active State
+         可点击 / 激活状态
          ════════════════════════════════════════════════════════ */
       .card--clickable {
         cursor: pointer;
@@ -187,7 +187,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Media Section
+         媒体区域
          ════════════════════════════════════════════════════════ */
       .card__media {
         position: relative;
@@ -251,7 +251,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Header Section
+         头部区域
          ════════════════════════════════════════════════════════ */
       ::slotted([slot='header']) {
         display: block;
@@ -264,7 +264,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Body Section
+         主体区域
          ════════════════════════════════════════════════════════ */
       .card__body {
         padding: 20px;
@@ -290,7 +290,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Footer Section
+         底部区域
          ════════════════════════════════════════════════════════ */
       ::slotted([slot='footer']) {
         display: block;
@@ -302,14 +302,14 @@ export class MacCard extends BaseElement {
         background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.01) 100%);
       }
 
-      /* Glass variant header/footer */
+      /* 毛玻璃变体头部/底部 */
       .card--glass .card__header-wrapper,
       .card--glass .card__footer-wrapper {
         border-color: rgba(255, 255, 255, 0.1);
         background: rgba(255, 255, 255, 0.08);
       }
 
-      /* Gradient variant header/footer */
+      /* 渐变变体头部/底部 */
       .card--gradient .card__header-wrapper {
         border-color: rgba(0, 122, 255, 0.08);
         background: rgba(255, 255, 255, 0.3);
@@ -321,7 +321,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Accent Borders
+         强调边框
          ════════════════════════════════════════════════════════ */
       .card--accent-top::before {
         content: '';
@@ -348,7 +348,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Loading State
+         加载状态
          ════════════════════════════════════════════════════════ */
       .card--loading {
         pointer-events: none;
@@ -390,7 +390,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Responsive Design
+         响应式设计
          ════════════════════════════════════════════════════════ */
       @media (max-width: 768px) {
         .card {
@@ -417,7 +417,7 @@ export class MacCard extends BaseElement {
           width: 2.5px;
         }
 
-        /* Reduce transform intensity on mobile */
+        /* 在移动端减少变换强度 */
         .card--hoverable:hover {
           transform: translateY(-2px) scale(1.005);
         }
@@ -442,7 +442,7 @@ export class MacCard extends BaseElement {
       }
 
       /* ════════════════════════════════════════════════════════
-         Dark Mode
+         暗黑模式
          ════════════════════════════════════════════════════════ */
       :host([data-theme='dark']) .card--default {
         background: rgba(255, 255, 255, 0.04);
@@ -569,23 +569,23 @@ export class MacCard extends BaseElement {
     `,
   ]
 
-  /** The visual variant of the card. */
+  /** 卡片的视觉变体。 */
   @property({ reflect: true }) variant: 'default' | 'elevated' | 'glass' | 'outlined' | 'gradient' =
     'default'
 
-  /** Whether the card has a hover effect. */
+  /** 卡片是否有悬停效果。 */
   @property({ type: Boolean, reflect: true }) hoverable = false
 
-  /** Whether the card is clickable. */
+  /** 卡片是否可点击。 */
   @property({ type: Boolean, reflect: true }) clickable = false
 
-  /** Shows a loading state. */
+  /** 显示加载状态。 */
   @property({ type: Boolean, reflect: true }) loading = false
 
-  /** Adds an accent border. */
+  /** 添加强调边框。 */
   @property({ reflect: true }) accent?: 'top' | 'left'
 
-  /** Media aspect ratio. */
+  /** 媒体宽高比。 */
   @property({ reflect: true }) mediaRatio?: '16-9' | '4-3' | '1-1'
 
   override willUpdate() {

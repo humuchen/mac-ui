@@ -17,13 +17,13 @@ export interface DropdownItem {
 
 /**
  * @tag mac-dropdown
- * @summary A dropdown menu component with macOS-style design.
+ * @summary 一个 macOS 风格的下拉菜单组件。
  *
- * @slot trigger - The trigger element that opens the dropdown.
+ * @slot trigger - 触发下拉菜单打开的元素。
  *
- * @csspart base - The dropdown's base container.
- * @csspart menu - The dropdown menu.
- * @csspart item - A menu item.
+ * @csspart base - 下拉菜单的基础容器。
+ * @csspart menu - 下拉菜单。
+ * @csspart item - 菜单项。
  */
 @customElement('mac-dropdown')
 export class MacDropdown extends BaseElement {
@@ -47,25 +47,25 @@ export class MacDropdown extends BaseElement {
     `,
   ]
 
-  /** Menu items. */
+  /** 菜单项。 */
   @property({ type: Array }) items: DropdownItem[] = []
 
-  /** Placement of the dropdown menu. */
+  /** 下拉菜单的位置。 */
   @property() placement: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' = 'bottom-start'
 
-  /** The currently active/selected value. */
+  /** 当前激活/选中的值。 */
   @property({ type: String }) value = ''
 
-  /** Disables the dropdown. */
+  /** 禁用下拉菜单。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Opens the dropdown on hover. */
+  /** 悬停时打开下拉菜单。 */
   @property({ type: Boolean, attribute: 'open-on-hover' }) openOnHover = false
 
-  /** Hover delay in ms before opening. */
+  /** 悬停延迟（毫秒）。 */
   @property({ type: Number, attribute: 'hover-delay' }) hoverDelay = 150
 
-  /** Trigger mode: click, contextmenu, or both. */
+  /** 触发模式：click、contextmenu 或 both。 */
   @property() trigger: 'click' | 'contextmenu' | 'both' = 'click'
 
   @state() private _open = false
@@ -76,14 +76,14 @@ export class MacDropdown extends BaseElement {
   private _scrollHandler: (() => void) | null = null
   private _triggerEl: HTMLElement | null = null
 
-  /** Injected styles for the portal menu (appended to body). */
+  /** 为 portal 菜单注入的样式（挂载到 body）。 */
   private static _portalStylesInjected = false
 
   private static _injectPortalStyles() {
     if (MacDropdown._portalStylesInjected) return
     MacDropdown._portalStylesInjected = true
 
-    // Inject theme variables to :root so portal menus (appended to body) can access them
+    // 向 :root 注入主题变量，以便 portal 菜单（挂载到 body）可以访问
     const vars = document.createElement('style')
     vars.id = 'mac-dropdown-theme-vars'
     vars.textContent = `
@@ -328,7 +328,7 @@ export class MacDropdown extends BaseElement {
         margin: var(--md-dropdown-divider-margin);
       }
 
-      /* Submenu */
+      /* 子菜单 */
       .mac-dropdown-portal .dropdown-submenu {
         position: relative;
       }
@@ -362,7 +362,7 @@ export class MacDropdown extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Dark Mode */
+      /* 深色模式 */
       .mac-dropdown-portal[data-theme='dark'],
       .mac-dropdown-portal[data-theme='dark'] .dropdown-submenu > .mac-dropdown-submenu-portal {
         background: var(--md-dropdown-container-dark-bg);
@@ -490,7 +490,7 @@ export class MacDropdown extends BaseElement {
   private _handleDocumentClick = (e: Event) => {
     if (!this._open || !this._menuEl) return
     const target = e.target as Node
-    // Check if click is inside the menu or the host element
+    // 检查点击是否在菜单或宿主元素内
     if (this._menuEl.contains(target) || this.contains(target)) return
     this._close()
   }
@@ -559,8 +559,8 @@ export class MacDropdown extends BaseElement {
   }
 
   /**
-   * Calculate the menu position based on trigger element or explicit coordinates.
-   * Auto-adjusts to stay within the viewport.
+   * 根据触发元素或显式坐标计算菜单位置。
+   * 自动调整以保持在视口内。
    */
   private _calcPosition(
     anchorRect?: DOMRect,
@@ -674,22 +674,22 @@ export class MacDropdown extends BaseElement {
 
     menu.innerHTML = this._renderItemsHTML(this.items)
 
-    // Position
+    // 位置
     menu.style.left = `${left}px`
     menu.style.top = `${top}px`
 
     document.body.appendChild(menu)
     this._menuEl = menu
 
-    // Bind events on menu items
+    // 绑定菜单项事件
     this._bindMenuEvents(menu)
 
-    // Add scroll listener for position updates
+    // 添加滚动监听器以更新位置
     if (!explicitPos) {
       this._addScrollListener()
     }
 
-    // Animate in on next frame
+    // 在下一帧执行进入动画
     requestAnimationFrame(() => {
       // Re-calculate position with actual menu dimensions
       if (explicitPos) {
@@ -732,7 +732,7 @@ export class MacDropdown extends BaseElement {
     if (this._menuEl) {
       this._menuEl.classList.remove('open')
       const el = this._menuEl
-      // Wait for animation to finish, then remove
+      // 等待动画完成后移除
       setTimeout(() => {
         if (el.parentNode) el.parentNode.removeChild(el)
       }, 150)
@@ -778,7 +778,7 @@ export class MacDropdown extends BaseElement {
   }
 
   private _bindMenuEvents(menu: HTMLElement) {
-    // Hover keep-alive: when open-on-hover, cancel close timeout when mouse enters the portal menu
+    // 悬停保活：当 open-on-hover 时，鼠标进入 portal 菜单时取消关闭超时
     menu.addEventListener('mouseenter', () => {
       if (this.openOnHover && this._hoverTimeout) {
         clearTimeout(this._hoverTimeout)
@@ -807,7 +807,7 @@ export class MacDropdown extends BaseElement {
       }
     })
 
-    // Submenu positioning on hover
+    // 悬停时子菜单位置
     menu.addEventListener('mouseover', (e: Event) => {
       const target = (e.target as HTMLElement).closest('.dropdown-submenu') as HTMLElement | null
       if (!target) return
@@ -815,7 +815,7 @@ export class MacDropdown extends BaseElement {
       const submenu = target.querySelector('.mac-dropdown-submenu-portal') as HTMLElement | null
       if (!submenu) return
 
-      // Position submenu relative to the parent item
+      // 相对于父项定位子菜单
       const itemRect = target.getBoundingClientRect()
       const vw = window.innerWidth
       const vh = window.innerHeight
@@ -823,11 +823,11 @@ export class MacDropdown extends BaseElement {
       let subLeft = itemRect.right + 2
       let subTop = itemRect.top - 4
 
-      // If overflows right, show on left
+      // 如果右侧溢出，则在左侧显示
       if (subLeft + 220 > vw) {
         subLeft = itemRect.left - 220 - 2
       }
-      // If overflows bottom
+      // 如果底部溢出
       requestAnimationFrame(() => {
         const subRect = submenu.getBoundingClientRect()
         if (subTop + subRect.height > vh - 8) {

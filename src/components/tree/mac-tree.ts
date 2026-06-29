@@ -16,13 +16,13 @@ type CheckState = 'unchecked' | 'half-checked' | 'checked'
 
 /**
  * @tag mac-tree
- * @summary A tree component for displaying hierarchical data.
+ * @summary 用于展示层级数据的树形组件。
  *
- * @csspart node - The tree node row.
- * @csspart node-label - The node label text.
- * @csspart toggle - The expand/collapse toggle button.
- * @csspart checkbox - The checkbox element.
- * @csspart children - The children container.
+ * @csspart node - 树节点行。
+ * @csspart node-label - 节点标签文本。
+ * @csspart toggle - 展开/收起切换按钮。
+ * @csspart checkbox - 复选框元素。
+ * @csspart children - 子节点容器。
  */
 @customElement('mac-tree')
 export class MacTree extends BaseElement {
@@ -71,7 +71,7 @@ export class MacTree extends BaseElement {
         cursor: not-allowed;
       }
 
-      /* Toggle button */
+      /* 切换按钮 */
       .tree-toggle {
         display: flex;
         align-items: center;
@@ -102,7 +102,7 @@ export class MacTree extends BaseElement {
         pointer-events: none;
       }
 
-      /* Checkbox */
+      /* 复选框 */
       .tree-checkbox {
         display: flex;
         align-items: center;
@@ -151,7 +151,7 @@ export class MacTree extends BaseElement {
         margin-bottom: 1px;
       }
 
-      /* Label */
+      /* 标签 */
       .tree-label {
         flex: 1;
         font-size: var(--md-font-size-base);
@@ -166,7 +166,7 @@ export class MacTree extends BaseElement {
         font-weight: 500;
       }
 
-      /* Children */
+      /* 子节点 */
       .tree-children {
         list-style: none;
         margin: 0;
@@ -174,7 +174,7 @@ export class MacTree extends BaseElement {
         padding-left: var(--md-tree-indent);
       }
 
-      /* Line */
+      /* 连接线 */
       .tree-line .tree-children {
         position: relative;
       }
@@ -203,7 +203,7 @@ export class MacTree extends BaseElement {
         background: var(--md-color-border);
       }
 
-      /* Empty */
+      /* 空状态 */
       .tree-empty {
         padding: var(--md-spacing-lg);
         text-align: center;
@@ -211,7 +211,7 @@ export class MacTree extends BaseElement {
         font-size: var(--md-font-size-sm);
       }
 
-      /* Dark mode */
+      /* 深色模式 */
       :host([data-theme='dark']) .tree-toggle:hover {
         color: var(--md-color-text);
       }
@@ -222,46 +222,46 @@ export class MacTree extends BaseElement {
     `,
   ]
 
-  /** Tree data array. */
+  /** 树形数据数组。 */
   @property({ type: Array }) data: TreeNodeData[] = []
 
-  /** Currently expanded node keys (controlled). */
+  /** 当前展开的节点键（受控）。 */
   @property({ type: Array }) expandedKeys: string[] = []
 
-  /** Currently selected node keys (controlled). */
+  /** 当前选中的节点键（受控）。 */
   @property({ type: Array }) selectedKeys: string[] = []
 
-  /** Currently checked node keys (controlled, for checkable mode). */
+  /** 当前勾选的节点键（受控，用于可勾选模式）。 */
   @property({ type: Array }) checkedKeys: string[] = []
 
-  /** Default expanded node keys (uncontrolled). */
+  /** 默认展开的节点键（非受控）。 */
   @property({ type: Array, attribute: 'default-expanded-keys' }) defaultExpandedKeys: string[] = []
 
-  /** Default selected node keys (uncontrolled). */
+  /** 默认选中的节点键（非受控）。 */
   @property({ type: Array, attribute: 'default-selected-keys' }) defaultSelectedKeys: string[] = []
 
-  /** Default checked node keys (uncontrolled). */
+  /** 默认勾选的节点键（非受控）。 */
   @property({ type: Array, attribute: 'default-checked-keys' }) defaultCheckedKeys: string[] = []
 
-  /** Whether to expand all nodes by default. */
+  /** 是否默认展开所有节点。 */
   @property({ type: Boolean, attribute: 'default-expand-all' }) defaultExpandAll = false
 
-  /** Whether to show checkboxes. */
+  /** 是否显示复选框。 */
   @property({ type: Boolean }) checkable = false
 
-  /** Whether multiple selection is allowed. */
+  /** 是否允许多选。 */
   @property({ type: Boolean }) multiple = false
 
-  /** Whether nodes are selectable. */
+  /** 节点是否可选中。 */
   @property({ type: Boolean }) selectable = true
 
-  /** Whether to show connecting lines. */
+  /** 是否显示连接线。 */
   @property({ type: Boolean, attribute: 'show-line' }) showLine = false
 
-  /** Whether the whole node row is clickable for selection. */
+  /** 整行节点是否可点击以进行选择。 */
   @property({ type: Boolean, attribute: 'block-node' }) blockNode = true
 
-  /** Empty text when no data. */
+  /** 无数据时的空文本。 */
   @property({ attribute: 'empty-text' }) emptyText = 'No data'
 
   @state() private _innerExpandedKeys = new Set<string>()
@@ -279,7 +279,7 @@ export class MacTree extends BaseElement {
     this._controlledSelected = this.hasAttribute('selected-keys')
     this._controlledChecked = this.hasAttribute('checked-keys')
 
-    // Initialize from defaults
+    // 从默认值初始化
     if (this.defaultExpandAll) {
       this._expandAll(this.data)
     } else if (this.defaultExpandedKeys.length > 0) {
@@ -308,7 +308,7 @@ export class MacTree extends BaseElement {
     }
   }
 
-  /* ── Key getters ── */
+  /* ── 键获取器 ── */
   private get _expanded(): Set<string> {
     return this._controlledExpanded ? new Set(this.expandedKeys) : this._innerExpandedKeys
   }
@@ -321,7 +321,7 @@ export class MacTree extends BaseElement {
     return this._controlledChecked ? new Set(this.checkedKeys) : this._innerCheckedKeys
   }
 
-  /* ── Tree helpers ── */
+  /* ── 树辅助方法 ── */
   private _expandAll(nodes: TreeNodeData[]) {
     for (const node of nodes) {
       if (node.children && node.children.length > 0) {
@@ -357,7 +357,7 @@ export class MacTree extends BaseElement {
     return undefined
   }
 
-  /* ── Check state ── */
+  /* ── 勾选状态 ── */
   private _getCheckState(node: TreeNodeData): CheckState {
     const checked = this._checked
     if (!node.children || node.children.length === 0) {
@@ -386,7 +386,7 @@ export class MacTree extends BaseElement {
     this._innerHalfCheckedKeys = half
   }
 
-  /* ── Actions ── */
+  /* ── 操作 ── */
   private _toggleExpand(key: string) {
     const node = this._findNode(key, this.data)
     if (!node) return
@@ -477,7 +477,7 @@ export class MacTree extends BaseElement {
       }
       toggleNode(node)
 
-      // Update ancestors
+      // 更新祖先节点
       const updateAncestor = (childKey: string) => {
         const parentKey = this._getParentKey(childKey, this.data)
         if (!parentKey) return
@@ -515,29 +515,33 @@ export class MacTree extends BaseElement {
     })
   }
 
-  /* ── Render ── */
+  /* ── 渲染 ── */
   private _renderToggle(node: TreeNodeData, expanded: boolean) {
     const hasChildren = node.children && node.children.length > 0
     return html`
       <button
-        class="tree-toggle ${hasChildren ? '' : 'tree-toggle--placeholder'} ${expanded
-          ? 'tree-toggle--expanded'
-          : ''}"
+        class="tree-toggle ${hasChildren ? '' : 'tree-toggle--placeholder'} ${
+          expanded ? 'tree-toggle--expanded' : ''
+        }"
         part="toggle"
-        @click=${hasChildren
-          ? (e: Event) => {
-              e.stopPropagation()
-              this._toggleExpand(node.key)
-            }
-          : undefined}
+        @click=${
+          hasChildren
+            ? (e: Event) => {
+                e.stopPropagation()
+                this._toggleExpand(node.key)
+              }
+            : undefined
+        }
         tabindex="-1"
         type="button"
       >
-        ${hasChildren
-          ? html`<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" />
-            </svg>`
-          : nothing}
+        ${
+          hasChildren
+            ? html`<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" />
+              </svg>`
+            : nothing
+        }
       </button>
     `
   }
@@ -580,9 +584,9 @@ export class MacTree extends BaseElement {
     return html`
       <li>
         <div
-          class="tree-node ${selected ? 'tree-node--selected' : ''} ${node.disabled
-            ? 'tree-node--disabled'
-            : ''}"
+          class="tree-node ${selected ? 'tree-node--selected' : ''} ${
+            node.disabled ? 'tree-node--disabled' : ''
+          }"
           part="node"
           @click=${onNodeClick}
         >
@@ -590,13 +594,15 @@ export class MacTree extends BaseElement {
           ${this.checkable ? this._renderCheckbox(node) : nothing}
           <span class="tree-label" part="node-label">${node.label}</span>
         </div>
-        ${hasChildren && expanded
-          ? html`
-              <ul class="tree-children" part="children">
-                ${node.children!.map((child) => this._renderNode(child, depth + 1))}
-              </ul>
-            `
-          : nothing}
+        ${
+          hasChildren && expanded
+            ? html`
+                <ul class="tree-children" part="children">
+                  ${node.children!.map((child) => this._renderNode(child, depth + 1))}
+                </ul>
+              `
+            : nothing
+        }
       </li>
     `
   }

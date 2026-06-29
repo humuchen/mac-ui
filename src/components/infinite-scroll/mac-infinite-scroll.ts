@@ -6,25 +6,25 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-infinite-scroll
- * @summary An infinite scroll component that triggers loading more data when scrolling to the bottom.
+ * @summary 无限滚动组件，滚动到底部时触发加载更多数据。
  *
- * @slot - Default slot for list content.
- * @slot loading - Custom loading indicator content.
- * @slot finished - Custom content shown when there is no more data.
- * @slot error - Custom content shown when loading fails. Add a click listener to emit retry.
+ * @slot - 默认插槽，用于列表内容。
+ * @slot loading - 自定义加载指示器内容。
+ * @slot finished - 没有更多数据时显示的自定义内容。
+ * @slot error - 加载失败时显示的自定义内容。添加点击监听器以触发重试。
  *
- * @csspart loading - The loading status container.
- * @csspart finished - The finished status container.
- * @csspart error - The error status container.
+ * @csspart loading - 加载状态容器。
+ * @csspart finished - 完成状态容器。
+ * @csspart error - 错误状态容器。
  *
- * @cssproperty --md-infinite-scroll-padding - Status area padding.
- * @cssproperty --md-infinite-scroll-color - Status text color.
- * @cssproperty --md-infinite-scroll-font-size - Status font size.
- * @cssproperty --md-infinite-scroll-gap - Gap between spinner and text.
- * @cssproperty --md-infinite-scroll-spinner-size - Spinner size.
+ * @cssproperty --md-infinite-scroll-padding - 状态区域内边距。
+ * @cssproperty --md-infinite-scroll-color - 状态文字颜色。
+ * @cssproperty --md-infinite-scroll-font-size - 状态字体大小。
+ * @cssproperty --md-infinite-scroll-gap - 旋转器与文字之间的间距。
+ * @cssproperty --md-infinite-scroll-spinner-size - 旋转器大小。
  *
- * @event mac-load-more - Emitted when more data should be loaded.
- * @event mac-retry - Emitted when the retry button is clicked.
+ * @event mac-load-more - 应该加载更多数据时触发。
+ * @event mac-retry - 点击重试按钮时触发。
  */
 @customElement('mac-infinite-scroll')
 export class MacInfiniteScroll extends BaseElement {
@@ -79,22 +79,22 @@ export class MacInfiniteScroll extends BaseElement {
     `,
   ]
 
-  /** Whether there is more data to load. */
+  /** 是否还有更多数据可加载。 */
   @property({ type: Boolean }) hasMore = true
 
-  /** Whether data is currently loading. */
+  /** 当前是否正在加载数据。 */
   @property({ type: Boolean }) loading = false
 
-  /** Whether the last load attempt failed. */
+  /** 上次加载尝试是否失败。 */
   @property({ type: Boolean }) error = false
 
-  /** Distance in pixels from the bottom to trigger loading. */
+  /** 距离底部触发加载的像素距离。 */
   @property({ type: Number }) threshold = 100
 
-  /** Whether to check immediately after mount if content does not fill the container. */
+  /** 挂载后是否立即检查，当内容未填满容器时。 */
   @property({ type: Boolean, attribute: 'immediate-check' }) immediateCheck = true
 
-  /** Whether to disable auto-loading. */
+  /** 是否禁用自动加载。 */
   @property({ type: Boolean }) disabled = false
 
   @state() private _internalLoading = false
@@ -149,7 +149,7 @@ export class MacInfiniteScroll extends BaseElement {
       )
       this._observer.observe(this._sentinelEl)
     } else {
-      // Fallback for environments without IntersectionObserver
+      // 对于不支持 IntersectionObserver 的环境的降级处理
       this.addEventListener('scroll', this._handleScroll)
     }
   }
@@ -174,7 +174,7 @@ export class MacInfiniteScroll extends BaseElement {
   private _checkIfNeedLoad() {
     if (!this.hasMore || this.loading || this.error || this.disabled || this._internalLoading)
       return
-    // If content does not fill the container, trigger loading
+    // 如果内容未填满容器，触发加载
     if (this.scrollHeight <= this.clientHeight) {
       this._tryLoadMore()
     }
@@ -185,8 +185,8 @@ export class MacInfiniteScroll extends BaseElement {
       return
     this._internalLoading = true
     this.emit('mac-load-more')
-    // Reset internal loading after a short delay to prevent rapid re-triggering
-    // if the consumer does not set loading=true promptly
+    // 短暂延迟后重置内部加载状态，以防止快速重新触发
+    // 如果使用者未及时设置 loading=true
     setTimeout(() => {
       this._internalLoading = false
     }, 100)
@@ -214,9 +214,11 @@ export class MacInfiniteScroll extends BaseElement {
     if (this.loading) {
       return html`
         <div class="status" part="loading">
-          ${hasLoadingSlot
-            ? html`<slot name="loading"></slot>`
-            : html`<span class="loading-spinner"></span><span>Loading...</span>`}
+          ${
+            hasLoadingSlot
+              ? html`<slot name="loading"></slot>`
+              : html`<span class="loading-spinner"></span><span>加载中...</span>`
+          }
         </div>
       `
     }
@@ -224,10 +226,12 @@ export class MacInfiniteScroll extends BaseElement {
     if (this.error) {
       return html`
         <div class="status" part="error">
-          ${hasErrorSlot
-            ? html`<slot name="error"></slot>`
-            : html`<span>Failed to load</span
-                ><span class="retry-btn" @click=${this._handleRetry}>Retry</span>`}
+          ${
+            hasErrorSlot
+              ? html`<slot name="error"></slot>`
+              : html`<span>加载失败</span
+                  ><span class="retry-btn" @click=${this._handleRetry}>重试</span>`
+          }
         </div>
       `
     }
@@ -235,7 +239,7 @@ export class MacInfiniteScroll extends BaseElement {
     if (!this.hasMore) {
       return html`
         <div class="status" part="finished">
-          ${hasFinishedSlot ? html`<slot name="finished"></slot>` : html`<span>No more data</span>`}
+          ${hasFinishedSlot ? html`<slot name="finished"></slot>` : html`<span>没有更多数据</span>`}
         </div>
       `
     }

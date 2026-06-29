@@ -7,17 +7,17 @@ import type { MacDockItem } from './mac-dock-item'
 
 /**
  * @tag mac-dock
- * @summary A macOS 27 Golden Gate-style dock with Liquid Glass background, magnification effect, right-click menu, and drag-to-remove.
+ * @summary 带有液态玻璃背景、放大效果、右键菜单和拖拽移除功能的 macOS 27 Golden Gate 风格 Dock。
  *
- * @slot - Default slot for mac-dock-item elements.
- * @slot separator - Custom separator content between sections.
+ * @slot - 用于放置 mac-dock-item 元素的默认插槽。
+ * @slot separator - 区域之间的自定义分隔符内容。
  *
- * @csspart base - The dock container.
- * @csspart glass - The Liquid Glass background layer.
- * @csspart items - The items container.
+ * @csspart base - Dock 容器。
+ * @csspart glass - 液态玻璃背景层。
+ * @csspart items - 项目容器。
  *
- * @event mac-dock-item-click - Forwarded from dock items. Detail: { itemId }
- * @event mac-dock-item-remove - Emitted when an item is removed. Detail: { itemId }
+ * @event mac-dock-item-click - 从 dock 项目转发。Detail: { itemId }
+ * @event mac-dock-item-remove - 项目被移除时触发。Detail: { itemId }
  */
 @customElement('mac-dock')
 export class MacDock extends BaseElement {
@@ -40,7 +40,7 @@ export class MacDock extends BaseElement {
         border-radius: var(--md-radius-dock);
       }
 
-      /* ─── Liquid Glass Background ─── */
+      /* ─── 液态玻璃背景 ─── */
 
       .dock-glass {
         position: absolute;
@@ -58,7 +58,7 @@ export class MacDock extends BaseElement {
         z-index: -1;
       }
 
-      /* ─── Items Container ─── */
+      /* ─── 项目容器 ─── */
 
       .dock-items {
         display: flex;
@@ -66,7 +66,7 @@ export class MacDock extends BaseElement {
         gap: var(--md-dock-gap);
       }
 
-      /* ─── Separator ─── */
+      /* ─── 分隔符 ─── */
 
       .dock-separator {
         width: var(--md-separator-width);
@@ -78,7 +78,7 @@ export class MacDock extends BaseElement {
         flex-shrink: 0;
       }
 
-      /* ─── Context Menu (Liquid Glass) ─── */
+      /* ─── 右键菜单（液态玻璃） ─── */
 
       .dock-context-menu {
         position: fixed;
@@ -135,7 +135,7 @@ export class MacDock extends BaseElement {
         margin: var(--md-dock-separator-margin);
       }
 
-      /* ─── Drag Remove Zone ─── */
+      /* ─── 拖拽移除区域 ─── */
       .drag-remove-indicator {
         position: fixed;
         top: 50%;
@@ -156,13 +156,13 @@ export class MacDock extends BaseElement {
           transform var(--md-transition-drag);
         pointer-events: none;
       }
-      /* ─── Dragging item ghost ─── */
+      /* ─── 拖拽中的项目幽灵 ─── */
 
       :host {
         --dock-drag-opacity: 1;
       }
 
-      /* ─── Drop Indicator ─── */
+      /* ─── 放置指示器 ─── */
 
       ::slotted(.drop-indicator) {
         width: 3px;
@@ -176,16 +176,16 @@ export class MacDock extends BaseElement {
     `,
   ]
 
-  /** Magnification scale factor (1.0 = no magnification) */
+  /** 放大比例因子（1.0 = 不放大） */
   @property({ type: Number }) magnification = 1.6
 
-  /** Base icon size in pixels */
+  /** 基础图标大小，单位为像素 */
   @property({ type: Number }) iconSize = 48
 
-  /** Magnification range in pixels (distance from cursor that affects neighbors) */
+  /** 放大范围，单位为像素（影响邻近项目的光标距离） */
   @property({ type: Number }) magnifyRange = 120
 
-  /** Position of the dock */
+  /** Dock 的位置 */
   @property({ reflect: true }) position: 'bottom' | 'left' | 'right' = 'bottom'
 
   @query('.dock-items')
@@ -197,10 +197,10 @@ export class MacDock extends BaseElement {
   private _isHovering = false
   private _rafId: number | null = null
 
-  // Context menu state
+  // 右键菜单状态
   private _contextMenuItem: MacDockItem | null = null
 
-  // Drag-to-remove state
+  // 拖拽移除状态
   private _isDragging = false
   private _dragItem: MacDockItem | null = null
   private _dragStartX = 0
@@ -295,7 +295,7 @@ export class MacDock extends BaseElement {
     })
   }
 
-  // ─── Context Menu (via event delegation) ───
+  // ─── 右键菜单（通过事件委托） ───
 
   private _onDockContextMenu(e: MouseEvent): void {
     e.stopPropagation()
@@ -349,7 +349,7 @@ export class MacDock extends BaseElement {
   }
 
   private _onContextMenuOpen(): void {
-    // macOS "Options" placeholder
+    // macOS "选项" 占位符
   }
 
   private _onContextRemoveFromDock(): void {
@@ -361,7 +361,7 @@ export class MacDock extends BaseElement {
     this._hideContextMenu()
   }
 
-  // ─── Drag to Remove (via mousedown event delegation) ───
+  // ─── 拖拽移除（通过 mousedown 事件委托） ───
 
   private _cleanupDrag(): void {
     if (this._dragCleanup) {
@@ -550,8 +550,7 @@ export class MacDock extends BaseElement {
         const slotted = iconContainer.querySelector('slot')
         if (slotted && slotted.assignedNodes().length > 0) {
           const img = slotted.assignedNodes().find((n) => n instanceof HTMLImageElement) as
-            | HTMLImageElement
-            | undefined
+            HTMLImageElement | undefined
           if (img) {
             const imgClone = document.createElement('img')
             imgClone.src = img.src
@@ -573,7 +572,7 @@ export class MacDock extends BaseElement {
     }
   }
 
-  // ─── Drop Indicator & Reorder ───
+  // ─── 放置指示器与重新排序 ───
 
   private _dropIndicator: HTMLDivElement | null = null
 
@@ -627,7 +626,7 @@ export class MacDock extends BaseElement {
     }
   }
 
-  // ─── Event Handlers ───
+  // ─── 事件处理 ───
 
   private _onMouseMove(e: MouseEvent): void {
     if (!this._isHovering || this._isDragging) return

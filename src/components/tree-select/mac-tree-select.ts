@@ -26,7 +26,7 @@ export class MacTreeSelect extends BaseElement {
         position: relative;
       }
 
-      /* Trigger */
+      /* 触发器 */
       .tree-trigger {
         display: flex;
         align-items: center;
@@ -155,7 +155,7 @@ export class MacTreeSelect extends BaseElement {
         transform: rotate(180deg);
       }
 
-      /* Dropdown Panel */
+      /* 下拉面板 */
       .tree-dropdown {
         position: absolute;
         top: calc(100% + 6px);
@@ -189,7 +189,7 @@ export class MacTreeSelect extends BaseElement {
         box-shadow: none;
       }
 
-      /* Search */
+      /* 搜索 */
       .tree-search {
         padding-bottom: 8px;
         margin-bottom: 8px;
@@ -211,7 +211,7 @@ export class MacTreeSelect extends BaseElement {
         border-color: var(--md-color-primary);
       }
 
-      /* Tree Node */
+      /* 树节点 */
       .tree-node {
         display: flex;
         align-items: center;
@@ -322,7 +322,7 @@ export class MacTreeSelect extends BaseElement {
         padding-left: 0;
       }
 
-      /* Empty */
+      /* 空状态 */
       .tree-empty {
         padding: 24px;
         text-align: center;
@@ -330,7 +330,7 @@ export class MacTreeSelect extends BaseElement {
         font-size: var(--md-font-size-sm);
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .tree-trigger--sm {
         padding: var(--sm-select-trigger-padding-vertical)
           var(--sm-select-trigger-padding-horizontal);
@@ -587,7 +587,7 @@ export class MacTreeSelect extends BaseElement {
       const childMatches = this._filterOptions(opt.children, query)
       if (selfMatch || childMatches.length > 0) {
         result.push({ ...opt, children: childMatches })
-        // Auto-expand when filtering
+        // 筛选时自动展开
         this._expandedKeys.add(opt.value)
       }
     }
@@ -616,9 +616,9 @@ export class MacTreeSelect extends BaseElement {
     return html`
       <div>
         <div
-          class="tree-node ${selected ? 'tree-node--selected' : ''} ${opt.disabled
-            ? 'tree-node--disabled'
-            : ''}"
+          class="tree-node ${selected ? 'tree-node--selected' : ''} ${
+            opt.disabled ? 'tree-node--disabled' : ''
+          }"
           style="padding-left: ${depth * 16}px"
           @click=${() => {
             if (opt.disabled) return
@@ -630,44 +630,52 @@ export class MacTreeSelect extends BaseElement {
           }}
         >
           <button
-            class="tree-toggle ${hasChildren ? '' : 'tree-toggle--placeholder'} ${expanded
-              ? 'tree-toggle--expanded'
-              : ''}"
+            class="tree-toggle ${hasChildren ? '' : 'tree-toggle--placeholder'} ${
+              expanded ? 'tree-toggle--expanded' : ''
+            }"
             @click=${hasChildren ? (e: Event) => this._toggleExpand(opt.value, e) : undefined}
             tabindex="-1"
             type="button"
           >
-            ${hasChildren
-              ? html`<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-                  <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" />
-                </svg>`
-              : nothing}
+            ${
+              hasChildren
+                ? html`<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none" />
+                  </svg>`
+                : nothing
+            }
           </button>
 
-          ${showCheck
-            ? html`
-                <span
-                  class="tree-checkbox ${checkState === 'checked'
-                    ? 'tree-checkbox--checked'
-                    : checkState === 'half-checked'
-                      ? 'tree-checkbox--half'
-                      : ''}"
-                  @click=${(e: Event) => {
-                    e.stopPropagation()
-                    if (!opt.disabled) this._toggleCheck(opt)
-                  }}
-                ></span>
-              `
-            : nothing}
+          ${
+            showCheck
+              ? html`
+                  <span
+                    class="tree-checkbox ${
+                      checkState === 'checked'
+                        ? 'tree-checkbox--checked'
+                        : checkState === 'half-checked'
+                          ? 'tree-checkbox--half'
+                          : ''
+                    }"
+                    @click=${(e: Event) => {
+                      e.stopPropagation()
+                      if (!opt.disabled) this._toggleCheck(opt)
+                    }}
+                  ></span>
+                `
+              : nothing
+          }
 
           <span class="tree-label">${opt.label}</span>
         </div>
 
-        ${hasChildren && expanded
-          ? html`<div class="tree-children">
-              ${opt.children!.map((c) => this._renderNode(c, depth + 1))}
-            </div>`
-          : nothing}
+        ${
+          hasChildren && expanded
+            ? html`<div class="tree-children">
+                ${opt.children!.map((c) => this._renderNode(c, depth + 1))}
+              </div>`
+            : nothing
+        }
       </div>
     `
   }
@@ -705,11 +713,11 @@ export class MacTreeSelect extends BaseElement {
 
     return html`
       <div
-        class="tree-trigger tree-trigger--${size} ${this._open ? 'open' : ''} ${this.error
-          ? 'tree-trigger--error'
-          : ''} ${this.success ? 'tree-trigger--success' : ''} ${this.disabled
-          ? 'tree-trigger--disabled'
-          : ''}"
+        class="tree-trigger tree-trigger--${size} ${this._open ? 'open' : ''} ${
+          this.error ? 'tree-trigger--error' : ''
+        } ${this.success ? 'tree-trigger--success' : ''} ${
+          this.disabled ? 'tree-trigger--disabled' : ''
+        }"
         part="trigger"
         @click=${this._toggle}
         @keydown=${this._onKey}
@@ -719,11 +727,13 @@ export class MacTreeSelect extends BaseElement {
       >
         <div class="tree-value">${display}</div>
         <div class="tree-actions">
-          ${this.clearable && hasValue && !this.disabled
-            ? html`<button class="tree-clear" @click=${this._clear} tabindex="-1" type="button">
-                ✕
-              </button>`
-            : nothing}
+          ${
+            this.clearable && hasValue && !this.disabled
+              ? html`<button class="tree-clear" @click=${this._clear} tabindex="-1" type="button">
+                  ✕
+                </button>`
+              : nothing
+          }
           <span class="tree-arrow">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
               <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" />
@@ -741,30 +751,34 @@ export class MacTreeSelect extends BaseElement {
 
     return html`
       <div
-        class="tree-dropdown ${this._open ? 'open' : ''} ${this.panel
-          ? 'tree-dropdown--inline'
-          : ''}"
+        class="tree-dropdown ${this._open ? 'open' : ''} ${
+          this.panel ? 'tree-dropdown--inline' : ''
+        }"
         part="dropdown"
       >
-        ${this.searchable
-          ? html`
-              <div class="tree-search">
-                <input
-                  class="tree-search-input"
-                  type="text"
-                  placeholder=${this.searchPlaceholder}
-                  .value=${this._searchQuery}
-                  @input=${(e: Event) => {
-                    this._searchQuery = (e.target as HTMLInputElement).value
-                  }}
-                  @keydown=${(e: KeyboardEvent) => e.stopPropagation()}
-                />
-              </div>
-            `
-          : nothing}
-        ${filtered.length === 0
-          ? html`<div class="tree-empty">${this.emptyText}</div>`
-          : filtered.map((opt) => this._renderNode(opt))}
+        ${
+          this.searchable
+            ? html`
+                <div class="tree-search">
+                  <input
+                    class="tree-search-input"
+                    type="text"
+                    placeholder=${this.searchPlaceholder}
+                    .value=${this._searchQuery}
+                    @input=${(e: Event) => {
+                      this._searchQuery = (e.target as HTMLInputElement).value
+                    }}
+                    @keydown=${(e: KeyboardEvent) => e.stopPropagation()}
+                  />
+                </div>
+              `
+            : nothing
+        }
+        ${
+          filtered.length === 0
+            ? html`<div class="tree-empty">${this.emptyText}</div>`
+            : filtered.map((opt) => this._renderNode(opt))
+        }
       </div>
     `
   }
