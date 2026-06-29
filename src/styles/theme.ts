@@ -225,6 +225,7 @@ export const themeTokens: CSSResult = css`
     --sm-date-picker-panel-width: 264px;
     --sm-date-picker-panel-padding: 12px;
     --sm-date-picker-day-height: 28px;
+    --sm-date-picker-day-width: 28px;
     --sm-date-picker-nav-btn-size: 24px;
     --sm-date-picker-header-font-size: 14px;
     --sm-date-picker-header-margin-bottom: 10px;
@@ -243,6 +244,7 @@ export const themeTokens: CSSResult = css`
     --md-date-picker-panel-width: 288px;
     --md-date-picker-panel-padding: 16px;
     --md-date-picker-day-height: 32px;
+    --md-date-picker-day-width: 32px;
     --md-date-picker-nav-btn-size: 28px;
     --md-date-picker-header-font-size: 15px;
     --md-date-picker-header-margin-bottom: 12px;
@@ -261,6 +263,7 @@ export const themeTokens: CSSResult = css`
     --lg-date-picker-panel-width: 320px;
     --lg-date-picker-panel-padding: 20px;
     --lg-date-picker-day-height: 38px;
+    --lg-date-picker-day-width: 32px;
     --lg-date-picker-nav-btn-size: 32px;
     --lg-date-picker-header-font-size: 16px;
     --lg-date-picker-header-margin-bottom: 14px;

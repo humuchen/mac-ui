@@ -223,6 +223,7 @@ export class MacDatePicker extends BaseElement {
         display: flex;
         align-items: center;
         justify-content: center;
+        width: var(--md-date-picker-day-width);
         height: var(--md-date-picker-day-height);
         border: none;
         background: transparent;
@@ -387,6 +388,7 @@ export class MacDatePicker extends BaseElement {
         --md-date-picker-panel-width: var(--sm-date-picker-panel-width);
         --md-date-picker-panel-padding: var(--sm-date-picker-panel-padding);
         --md-date-picker-panel-border-radius: var(--sm-date-picker-panel-border-radius);
+        --md-date-picker-day-width: var(--sm-date-picker-day-width);
         --md-date-picker-day-height: var(--sm-date-picker-day-height);
         --md-date-picker-nav-btn-size: var(--sm-date-picker-nav-btn-size);
         --md-date-picker-header-font-size: var(--sm-date-picker-header-font-size);
@@ -406,6 +408,7 @@ export class MacDatePicker extends BaseElement {
         --md-date-picker-panel-padding: var(--lg-date-picker-panel-padding);
         --md-date-picker-panel-border-radius: var(--lg-date-picker-panel-border-radius);
         --md-date-picker-day-height: var(--lg-date-picker-day-height);
+        --md-date-picker-day-height: var(--lg-date-picker-day-width);
         --md-date-picker-nav-btn-size: var(--lg-date-picker-nav-btn-size);
         --md-date-picker-header-font-size: var(--lg-date-picker-header-font-size);
         --md-date-picker-header-margin-bottom: var(--lg-date-picker-header-margin-bottom);
