@@ -6,13 +6,13 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-checkbox
- * @summary A checkbox component with macOS-style design.
+ * @summary macOS 风格的复选框组件。
  *
- * @slot - The checkbox's label.
+ * @slot - 复选框的标签。
  *
- * @csspart base - The checkbox's base container.
- * @csspart control - The checkbox control box.
- * @csspart label - The label element.
+ * @csspart base - 复选框的基础容器。
+ * @csspart control - 复选框的控制框。
+ * @csspart label - 标签元素。
  */
 @customElement('mac-checkbox')
 export class MacCheckbox extends BaseElement {
@@ -38,7 +38,7 @@ export class MacCheckbox extends BaseElement {
         opacity: 0.5;
       }
 
-      /* Control */
+      /* 控制框 */
       .control {
         position: relative;
         display: inline-flex;
@@ -70,7 +70,7 @@ export class MacCheckbox extends BaseElement {
         border-color: var(--md-checkbox-border-active-hover-color);
       }
 
-      /* Check mark */
+      /* 对勾标记 */
       .control::after {
         content: '';
         position: absolute;
@@ -87,7 +87,7 @@ export class MacCheckbox extends BaseElement {
         transform: rotate(-45deg) scale(1);
       }
 
-      /* Indeterminate dash */
+      /* 半选横线 */
       .control::before {
         content: '';
         position: absolute;
@@ -106,13 +106,13 @@ export class MacCheckbox extends BaseElement {
         transform: rotate(-45deg) scale(0);
       }
 
-      /* Focus */
+      /* 聚焦 */
       .checkbox:focus-visible .control {
         outline: 2px solid var(--md-color-primary);
         outline-offset: 2px;
       }
 
-      /* Label */
+      /* 标签 */
       .label {
         font-size: var(--md-checkbox-font-size);
         color: var(--md-checkbox-label-color);
@@ -123,7 +123,7 @@ export class MacCheckbox extends BaseElement {
         color: var(--md-checkbox-label-hover-color);
       }
 
-      /* Sizes — md is the default on :host, only override sm/lg */
+      /* 尺寸 — md 是 :host 上的默认值，仅覆盖 sm/lg */
       :host {
         --md-checkbox-size: 18px;
         --md-checkbox-gap: 8px;
@@ -147,25 +147,25 @@ export class MacCheckbox extends BaseElement {
     `,
   ]
 
-  /** The checkbox's value. */
+  /** 复选框的值。 */
   @property() value = ''
 
-  /** Whether the checkbox is checked (controlled). */
+  /** 复选框是否被选中（受控模式）。 */
   @property({ type: Boolean, reflect: true }) checked = false
 
-  /** Whether the checkbox is checked by default (uncontrolled). */
+  /** 复选框默认是否被选中（非受控模式）。 */
   @property({ type: Boolean, attribute: 'default-checked' }) defaultChecked = false
 
-  /** Whether the checkbox is in indeterminate state. */
+  /** 复选框是否处于半选状态。 */
   @property({ type: Boolean, reflect: true }) indeterminate = false
 
-  /** Disables the checkbox. */
+  /** 禁用复选框。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** The checkbox's label text. */
+  /** 复选框的标签文本。 */
   @property() label = ''
 
-  /** The checkbox's size. */
+  /** 复选框的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
   @state() private _groupValue?: string[]
@@ -220,7 +220,7 @@ export class MacCheckbox extends BaseElement {
     return null
   }
 
-  /** Called by the parent group to sync value. */
+  /** 由父组调用以同步值。 */
   _setGroupValue(value: string[] | undefined) {
     this._groupValue = value
   }
@@ -266,9 +266,11 @@ export class MacCheckbox extends BaseElement {
         @keydown=${this._handleKeydown}
       >
         <span part="control" class="control"></span>
-        ${this.label
-          ? html`<span part="label" class="label">${this.label}</span>`
-          : html`<span part="label" class="label"><slot></slot></span>`}
+        ${
+          this.label
+            ? html`<span part="label" class="label">${this.label}</span>`
+            : html`<span part="label" class="label"><slot></slot></span>`
+        }
       </div>
     `
   }
@@ -282,13 +284,13 @@ export interface CheckboxOption {
 
 /**
  * @tag mac-checkbox-group
- * @summary A checkbox group component with macOS-style design.
+ * @summary macOS 风格的复选框组组件。
  *
- * @slot - Default slot for mac-checkbox elements.
+ * @slot - 用于放置 mac-checkbox 元素的默认插槽。
  *
- * @csspart base - The group's base container.
+ * @csspart base - 组的基础容器。
  *
- * @event mac-change - Emitted when the selected values change.
+ * @event mac-change - 选中值变化时触发。
  */
 @customElement('mac-checkbox-group')
 export class MacCheckboxGroup extends BaseElement {
@@ -317,28 +319,28 @@ export class MacCheckboxGroup extends BaseElement {
     `,
   ]
 
-  /** The group's value (controlled). */
+  /** 组的值（受控模式）。 */
   @property({ type: Array }) value: string[] = []
 
-  /** The default value (uncontrolled). */
+  /** 默认值（非受控模式）。 */
   @property({ type: Array, attribute: 'default-value' }) defaultValue: string[] = []
 
-  /** The checkbox name attribute. */
+  /** 复选框的 name 属性。 */
   @property() name = ''
 
-  /** The group's size. */
+  /** 组的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Disables all checkboxes in the group. */
+  /** 禁用组内所有复选框。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** The layout direction. */
+  /** 布局方向。 */
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
 
-  /** Options array for simplified usage. */
+  /** 简化用法时的选项数组。 */
   @property({ type: Array }) options?: CheckboxOption[]
 
-  /** Maximum number of selections. */
+  /** 最大可选数量。 */
   @property({ type: Number }) max?: number
 
   private _checkboxes: MacCheckbox[] = []

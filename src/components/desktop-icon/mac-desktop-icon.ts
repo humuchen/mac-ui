@@ -6,15 +6,15 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-desktop-icon
- * @summary A macOS-style desktop icon with selection state.
+ * @summary 带有选中状态的 macOS 风格桌面图标。
  *
- * @slot - The icon's visual content (image, svg, etc.).
+ * @slot - 图标的视觉内容（图片、svg 等）。
  *
- * @csspart base - The icon's base container.
- * @csspart icon - The icon image area.
- * @csspart label - The label text area.
+ * @csspart base - 图标的基础容器。
+ * @csspart icon - 图标图像区域。
+ * @csspart label - 标签文本区域。
  *
- * @event mac-icon-dblclick - Emitted on double-click. Detail: { iconId }
+ * @event mac-icon-dblclick - 双击时触发。Detail: { iconId }
  */
 @customElement('mac-desktop-icon')
 export class MacDesktopIcon extends BaseElement {
@@ -148,25 +148,25 @@ export class MacDesktopIcon extends BaseElement {
     `,
   ]
 
-  /** Icon label text */
+  /** 图标标签文本 */
   @property({ reflect: true }) label = ''
 
-  /** Icon identifier */
+  /** 图标标识符 */
   @property({ reflect: true }) iconId = ''
 
-  /** Whether the icon is selected */
+  /** 图标是否被选中 */
   @property({ type: Boolean, reflect: true }) selected = false
 
-  /** Whether the icon is being dragged */
+  /** 图标是否正在被拖拽 */
   @property({ type: Boolean, reflect: true }) dragging = false
 
-  /** Icon position X */
+  /** 图标 X 坐标 */
   @property({ type: Number }) x = 0
 
-  /** Icon position Y */
+  /** 图标 Y 坐标 */
   @property({ type: Number }) y = 0
 
-  /** Icon color for default placeholder */
+  /** 默认占位符的图标颜色 */
   @property({ reflect: true }) color = '#007AFF'
 
   private _clickTimer: ReturnType<typeof setTimeout> | null = null

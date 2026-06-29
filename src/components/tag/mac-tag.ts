@@ -6,19 +6,19 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-tag
- * @summary A tag component for labeling and categorization.
+ * @summary 用于标签和分类的标记组件。
  *
- * @slot - The tag's label.
- * @slot prefix - Content before the label.
- * @slot suffix - Content after the label.
+ * @slot - 标签的文本内容。
+ * @slot prefix - 标签前的内容。
+ * @slot suffix - 标签后的内容。
  *
- * @csspart base - The tag's base container.
- * @csspart label - The tag's label.
- * @csspart prefix - The prefix container.
- * @csspart suffix - The suffix container.
- * @csspart close - The close button.
+ * @csspart base - 标签的基础容器。
+ * @csspart label - 标签的文本。
+ * @csspart prefix - 前缀容器。
+ * @csspart suffix - 后缀容器。
+ * @csspart close - 关闭按钮。
  *
- * @event mac-close - Emitted when the close button is clicked.
+ * @event mac-close - 点击关闭按钮时触发。
  */
 @customElement('mac-tag')
 export class MacTag extends BaseElement {
@@ -55,7 +55,7 @@ export class MacTag extends BaseElement {
         padding-right: var(--md-tag-closable-padding-right);
       }
 
-      /* Types */
+      /* 类型 */
       .tag--default {
         background-color: var(--md-tag-default-bg);
         color: var(--md-tag-default-text);
@@ -122,12 +122,12 @@ export class MacTag extends BaseElement {
         color: var(--md-tag-info-close-hover-color);
       }
 
-      /* Borderless */
+      /* 无边框 */
       .tag--borderless {
         border-color: transparent;
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .tag--sm {
         padding: var(--sm-tag-padding-vertical) var(--sm-tag-padding-horizontal);
         font-size: var(--sm-tag-font-size);
@@ -158,14 +158,14 @@ export class MacTag extends BaseElement {
         padding-right: var(--lg-tag-closable-padding-right);
       }
 
-      /* Disabled */
+      /* 禁用状态 */
       .tag--disabled {
         opacity: 0.5;
         cursor: not-allowed;
         pointer-events: none;
       }
 
-      /* Close button */
+      /* 关闭按钮 */
       .close {
         display: inline-flex;
         align-items: center;
@@ -206,28 +206,23 @@ export class MacTag extends BaseElement {
     `,
   ]
 
-  /** The tag's type style. */
+  /** 标签的类型样式。 */
   @property({ reflect: true }) type:
-    | 'default'
-    | 'primary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'info' = 'default'
+    'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'default'
 
-  /** The tag's size. */
+  /** 标签的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Whether the tag can be closed. */
+  /** 标签是否可关闭。 */
   @property({ type: Boolean, reflect: true }) closable = false
 
-  /** Whether the tag has rounded corners. */
+  /** 标签是否为圆角。 */
   @property({ type: Boolean, reflect: true }) round = false
 
-  /** Whether the tag has a border. */
+  /** 标签是否有边框。 */
   @property({ type: Boolean, reflect: true }) bordered = true
 
-  /** Disables the tag. */
+  /** 禁用标签。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
   override willUpdate() {
@@ -249,39 +244,41 @@ export class MacTag extends BaseElement {
     return html`
       <span
         part="base"
-        class="tag tag--${this.type} tag--${size} ${this.round ? 'tag--round' : ''} ${this.closable
-          ? 'tag--closable'
-          : ''} ${this.disabled ? 'tag--disabled' : ''} ${this.bordered ? '' : 'tag--borderless'}"
+        class="tag tag--${this.type} tag--${size} ${this.round ? 'tag--round' : ''} ${
+          this.closable ? 'tag--closable' : ''
+        } ${this.disabled ? 'tag--disabled' : ''} ${this.bordered ? '' : 'tag--borderless'}"
       >
         <slot name="prefix" part="prefix"></slot>
         <slot part="label"></slot>
         <slot name="suffix" part="suffix"></slot>
-        ${this.closable
-          ? html`
-              <button
-                part="close"
-                class="close"
-                type="button"
-                aria-label="Close"
-                @click=${this._handleClose}
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+        ${
+          this.closable
+            ? html`
+                <button
+                  part="close"
+                  class="close"
+                  type="button"
+                  aria-label="Close"
+                  @click=${this._handleClose}
                 >
-                  <path
-                    d="M4 4L12 12M12 4L4 12"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </button>
-            `
-          : nothing}
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4 4L12 12M12 4L4 12"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                </button>
+              `
+            : nothing
+        }
       </span>
     `
   }

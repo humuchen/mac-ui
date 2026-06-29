@@ -6,20 +6,20 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-rating
- * @summary A macOS-style rating component with customizable icons.
+ * @summary macOS 风格的评分组件，支持自定义图标。
  *
- * @slot icon-empty - Custom icon for empty state.
- * @slot icon-half - Custom icon for half-filled state.
- * @slot icon-full - Custom icon for full-filled state.
+ * @slot icon-empty - 空状态时的自定义图标。
+ * @slot icon-half - 半填充状态时的自定义图标。
+ * @slot icon-full - 全填充状态时的自定义图标。
  *
- * @cssproperty --md-rating-icon-size - Size of each rating icon.
- * @cssproperty --md-rating-gap - Gap between icons.
- * @cssproperty --md-rating-color-active - Color of active (filled) icons.
- * @cssproperty --md-rating-color-inactive - Color of inactive (empty) icons.
- * @cssproperty --md-rating-color-hover - Color of hovered icons.
- * @cssproperty --md-rating-color-disabled - Color when disabled.
+ * @cssproperty --md-rating-icon-size - 每个评分图标的大小。
+ * @cssproperty --md-rating-gap - 图标之间的间距。
+ * @cssproperty --md-rating-color-active - 激活（已填充）图标的颜色。
+ * @cssproperty --md-rating-color-inactive - 未激活（空）图标的颜色。
+ * @cssproperty --md-rating-color-hover - 悬停时图标的颜色。
+ * @cssproperty --md-rating-color-disabled - 禁用时的颜色。
  *
- * @event mac-rating-change - Emitted when the rating value changes. `detail: { value: number }`
+ * @event mac-rating-change - 评分值变化时触发。`detail: { value: number }`
  */
 @customElement('mac-rating')
 export class MacRating extends BaseElement {
@@ -144,39 +144,39 @@ export class MacRating extends BaseElement {
     `,
   ]
 
-  /** Current rating value (supports half-star like 3.5) */
+  /** 当前评分值（支持半星，如 3.5） */
   @property({ type: Number }) value = 0
 
-  /** Maximum rating count */
+  /** 最大评分数量 */
   @property({ type: Number }) max = 5
 
-  /** Whether to allow half-star selection */
+  /** 是否允许半星选择 */
   @property({ type: Boolean }) allowHalf = false
 
-  /** Whether the rating is read-only */
+  /** 评分是否为只读 */
   @property({ type: Boolean, reflect: true }) readonly = false
 
-  /** Whether the rating is disabled */
+  /** 评分是否禁用 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Whether to show the numeric value label */
+  /** 是否显示数值标签 */
   @property({ type: Boolean }) showValue = false
 
-  /** Icon shape: star, heart, circle, flame, thumb */
+  /** 图标形状：star, heart, circle, flame, thumb */
   @property() icon: 'star' | 'heart' | 'circle' | 'flame' | 'thumb' = 'star'
 
-  /** Custom empty icon slot name (overrides built-in icon) */
+  /** 自定义空图标插槽名（覆盖内置图标） */
   @property() iconEmpty = ''
 
-  /** Custom half icon slot name (overrides built-in icon) */
+  /** 自定义半图标插槽名（覆盖内置图标） */
   @property() iconHalf = ''
 
-  /** Custom full icon slot name (overrides built-in icon) */
+  /** 自定义满图标插槽名（覆盖内置图标） */
   @property() iconFull = ''
 
   @state() private _hoverValue: number | null = null
 
-  // Icon SVG paths
+  // 图标 SVG 路径
   private static readonly _icons: Record<string, SVGTemplateResult> = {
     star: svg`<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>`,
     heart: svg`<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>`,
@@ -232,7 +232,7 @@ export class MacRating extends BaseElement {
     } else {
       newValue = index
     }
-    // Click same value to clear
+    // 点击相同值以清除
     if (newValue === this.value) {
       this.value = 0
     } else {
@@ -260,47 +260,55 @@ export class MacRating extends BaseElement {
 
           return html`
             <div class="icon-wrapper">
-              <!-- Empty layer (always visible) -->
+              <!-- 空图层（始终可见） -->
               <div class="icon-layer icon-layer--empty">${this._renderIconLayer('empty')}</div>
 
-              ${halfFilled || isHalfHovered
-                ? html`
-                    <div
-                      class="icon-layer icon-layer--half ${isHovered ? 'icon-layer--hover' : ''}"
-                    >
-                      ${this._renderIconLayer('half')}
-                    </div>
-                  `
-                : nothing}
-              ${filled
-                ? html`
-                    <div
-                      class="icon-layer icon-layer--full ${isHovered ? 'icon-layer--hover' : ''}"
-                    >
-                      ${this._renderIconLayer('full')}
-                    </div>
-                  `
-                : nothing}
-              ${isInteractive
-                ? html`
-                    <div
-                      class="click-zone click-zone--left"
-                      @mouseenter=${() => this._onMouseEnter(index, 'left')}
-                      @click=${() => this._onClick(index, 'left')}
-                    ></div>
-                    <div
-                      class="click-zone click-zone--right"
-                      @mouseenter=${() => this._onMouseEnter(index, 'right')}
-                      @click=${() => this._onClick(index, 'right')}
-                    ></div>
-                  `
-                : nothing}
+              ${
+                halfFilled || isHalfHovered
+                  ? html`
+                      <div
+                        class="icon-layer icon-layer--half ${isHovered ? 'icon-layer--hover' : ''}"
+                      >
+                        ${this._renderIconLayer('half')}
+                      </div>
+                    `
+                  : nothing
+              }
+              ${
+                filled
+                  ? html`
+                      <div
+                        class="icon-layer icon-layer--full ${isHovered ? 'icon-layer--hover' : ''}"
+                      >
+                        ${this._renderIconLayer('full')}
+                      </div>
+                    `
+                  : nothing
+              }
+              ${
+                isInteractive
+                  ? html`
+                      <div
+                        class="click-zone click-zone--left"
+                        @mouseenter=${() => this._onMouseEnter(index, 'left')}
+                        @click=${() => this._onClick(index, 'left')}
+                      ></div>
+                      <div
+                        class="click-zone click-zone--right"
+                        @mouseenter=${() => this._onMouseEnter(index, 'right')}
+                        @click=${() => this._onClick(index, 'right')}
+                      ></div>
+                    `
+                  : nothing
+              }
             </div>
           `
         })}
-        ${this.showValue
-          ? html`<span class="label">${displayValue.toFixed(this.allowHalf ? 1 : 0)}</span>`
-          : nothing}
+        ${
+          this.showValue
+            ? html`<span class="label">${displayValue.toFixed(this.allowHalf ? 1 : 0)}</span>`
+            : nothing
+        }
       </div>
     `
   }

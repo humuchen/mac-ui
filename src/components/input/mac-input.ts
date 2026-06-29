@@ -6,15 +6,15 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-input
- * @summary A text input component with macOS-style design.
+ * @summary macOS 风格的文本输入组件。
  *
- * @slot prefix - Content before the input.
- * @slot suffix - Content after the input.
+ * @slot prefix - 输入框前的内容。
+ * @slot suffix - 输入框后的内容。
  *
- * @csspart base - The input's base container.
- * @csspart input - The native input element.
- * @csspart label - The label element.
- * @csspart helper-text - The helper text element.
+ * @csspart base - 输入框的基础容器。
+ * @csspart input - 原生输入元素。
+ * @csspart label - 标签元素。
+ * @csspart helper-text - 辅助文本元素。
  */
 @customElement('mac-input')
 export class MacInput extends BaseElement {
@@ -32,7 +32,7 @@ export class MacInput extends BaseElement {
         gap: var(--md-spacing-xs);
       }
 
-      /* Variants */
+      /* 变体 */
       .input-container {
         position: relative;
         display: flex;
@@ -66,7 +66,7 @@ export class MacInput extends BaseElement {
         background: transparent;
       }
 
-      /* Focus States */
+      /* 聚焦状态 */
       .input-container--default:focus-within {
         border-color: var(--md-color-primary);
         box-shadow:
@@ -92,7 +92,7 @@ export class MacInput extends BaseElement {
         box-shadow: none;
       }
 
-      /* Error State */
+      /* 错误状态 */
       .input-container--error.input-container--default {
         border-color: var(--md-color-danger);
       }
@@ -107,7 +107,7 @@ export class MacInput extends BaseElement {
         border-bottom-color: var(--md-color-danger);
       }
 
-      /* Success State */
+      /* 成功状态 */
       .input-container--success.input-container--default {
         border-color: var(--md-color-success);
       }
@@ -122,14 +122,14 @@ export class MacInput extends BaseElement {
         border-bottom-color: var(--md-color-success);
       }
 
-      /* Disabled State */
+      /* 禁用状态 */
       .input-container--disabled {
         opacity: 0.5;
         cursor: not-allowed;
         background-color: var(--md-color-bg-secondary);
       }
 
-      /* Input */
+      /* 输入框 */
       .input {
         flex: 1;
         border: none;
@@ -155,7 +155,7 @@ export class MacInput extends BaseElement {
         cursor: not-allowed;
       }
 
-      /* Slots */
+      /* 插槽 */
       ::slotted([slot='prefix']),
       ::slotted([slot='suffix']) {
         display: flex;
@@ -164,7 +164,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-text-secondary);
       }
 
-      /* Label */
+      /* 标签 */
       .label {
         font-size: var(--md-font-size-base);
         color: var(--md-color-text);
@@ -177,7 +177,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-danger);
       }
 
-      /* Floating Label */
+      /* 浮动标签 */
       .input-wrapper--floating {
         position: relative;
       }
@@ -219,7 +219,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-danger);
       }
 
-      /* Helper Text */
+      /* 辅助文本 */
       .helper-text {
         font-size: var(--md-font-size-sm);
         color: var(--md-color-text-secondary);
@@ -236,7 +236,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-success);
       }
 
-      /* Character Counter */
+      /* 字符计数器 */
       .char-counter {
         font-size: 12px;
         color: var(--md-color-text-secondary);
@@ -252,7 +252,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-danger);
       }
 
-      /* Clear Button */
+      /* 清除按钮 */
       .clear-button {
         display: flex;
         align-items: center;
@@ -275,7 +275,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-text);
       }
 
-      /* Password Toggle */
+      /* 密码切换 */
       .password-toggle {
         display: flex;
         align-items: center;
@@ -296,7 +296,7 @@ export class MacInput extends BaseElement {
         color: var(--md-color-text);
       }
 
-      /* Loading State */
+      /* 加载状态 */
       .input-container--loading {
         pointer-events: none;
       }
@@ -318,7 +318,7 @@ export class MacInput extends BaseElement {
         }
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .input-container--sm .input {
         padding: var(--sm-input-padding-vertical) var(--sm-input-padding-horizontal);
         font-size: var(--sm-input-font-size);
@@ -360,61 +360,61 @@ export class MacInput extends BaseElement {
     `,
   ]
 
-  /** The input's value. */
+  /** 输入框的值。 */
   @property({ type: String }) value = ''
 
-  /** The input's placeholder. */
+  /** 输入框的占位符。 */
   @property() placeholder = ''
 
-  /** The input's type. */
+  /** 输入框的类型。 */
   @property() type: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url' = 'text'
 
-  /** The input's size. */
+  /** 输入框的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** The visual variant. */
+  /** 视觉变体。 */
   @property({ reflect: true }) variant: 'default' | 'filled' | 'glass' | 'underline' = 'default'
 
-  /** The input's label. */
+  /** 输入框的标签。 */
   @property() label = ''
 
-  /** Shows a required indicator. */
+  /** 显示必填指示器。 */
   @property({ type: Boolean }) required = false
 
-  /** Disables the input. */
+  /** 禁用输入框。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Makes the input read-only. */
+  /** 使输入框只读。 */
   @property({ type: Boolean }) readonly = false
 
-  /** The input's error state. */
+  /** 输入框的错误状态。 */
   @property({ type: Boolean, reflect: true }) error = false
 
-  /** The input's success state. */
+  /** 输入框的成功状态。 */
   @property({ type: Boolean, reflect: true }) success = false
 
-  /** The input's helper text. */
+  /** 输入框的辅助文本。 */
   @property({ attribute: 'helper-text' }) helperText = ''
 
-  /** The input's name (for forms). */
+  /** 输入框的名称（用于表单）。 */
   @property() name = ''
 
-  /** Shows a clear button. */
+  /** 显示清除按钮。 */
   @property({ type: Boolean, attribute: 'clearable' }) clearable = false
 
-  /** Shows a password toggle button. */
+  /** 显示密码切换按钮。 */
   @property({ type: Boolean, attribute: 'show-password-toggle' }) showPasswordToggle = false
 
-  /** Shows a character counter. */
+  /** 显示字符计数器。 */
   @property({ type: Boolean, attribute: 'show-char-counter' }) showCharCounter = false
 
-  /** Maximum character length. */
+  /** 最大字符长度。 */
   @property({ type: Number, attribute: 'max-length' }) maxLength?: number
 
-  /** Shows a loading state. */
+  /** 显示加载状态。 */
   @property({ type: Boolean, reflect: true }) loading = false
 
-  /** Enables floating label. */
+  /** 启用浮动标签。 */
   @property({ type: Boolean }) floating = false
 
   @state() private _hasFocus = false
@@ -449,17 +449,19 @@ export class MacInput extends BaseElement {
 
     return html`
       <div class="input-wrapper ${this.floating ? 'input-wrapper--floating' : ''}" part="base">
-        ${this.label && !this.floating
-          ? html`
-              <label
-                class="label ${this.required ? 'label--required' : ''}"
-                part="label"
-                for="input"
-              >
-                ${this.label}
-              </label>
-            `
-          : nothing}
+        ${
+          this.label && !this.floating
+            ? html`
+                <label
+                  class="label ${this.required ? 'label--required' : ''}"
+                  part="label"
+                  for="input"
+                >
+                  ${this.label}
+                </label>
+              `
+            : nothing
+        }
         <div
           class="input-container
             input-container--${this.variant}
@@ -480,65 +482,80 @@ export class MacInput extends BaseElement {
             ?disabled=${this.disabled}
             ?readonly=${this.readonly}
             ?required=${this.required}
-            maxlength=${this.maxLength || nothing}
-            name=${this.name || nothing}
+            maxlength=${this.maxLength || ''}
+            name=${this.name || ''}
             @input=${this._handleInput}
             @focus=${this._handleFocus}
             @blur=${this._handleBlur}
           />
-          ${this.floating && this.label
-            ? html`
-                <label class="floating-label ${this.required ? 'label--required' : ''}">
-                  ${this.label}
-                </label>
-              `
-            : nothing}
+          ${
+            this.floating && this.label
+              ? html`
+                  <label class="floating-label ${this.required ? 'label--required' : ''}">
+                    ${this.label}
+                  </label>
+                `
+              : nothing
+          }
           ${this.loading ? html`<span class="loading-spinner"></span>` : nothing}
-          ${showPasswordToggle
-            ? html`
-                <button
-                  class="password-toggle"
-                  type="button"
-                  @click=${this._togglePassword}
-                  tabindex="-1"
-                >
-                  ${this._showPassword ? '🙈' : '👁️'}
-                </button>
-              `
-            : nothing}
-          ${showClearButton
-            ? html`
-                <button class="clear-button" type="button" @click=${this._clearInput} tabindex="-1">
-                  ✕
-                </button>
-              `
-            : nothing}
+          ${
+            showPasswordToggle
+              ? html`
+                  <button
+                    class="password-toggle"
+                    type="button"
+                    @click=${this._togglePassword}
+                    tabindex="-1"
+                  >
+                    ${this._showPassword ? '🙈' : '👁️'}
+                  </button>
+                `
+              : nothing
+          }
+          ${
+            showClearButton
+              ? html`
+                  <button
+                    class="clear-button"
+                    type="button"
+                    @click=${this._clearInput}
+                    tabindex="-1"
+                  >
+                    ✕
+                  </button>
+                `
+              : nothing
+          }
           <slot name="suffix"></slot>
         </div>
         <div style="display: flex; align-items: center; gap: 8px;">
-          ${this.helperText
-            ? html`
-                <div
-                  class="helper-text
+          ${
+            this.helperText
+              ? html`
+                  <div
+                    class="helper-text
                     ${this.error ? 'helper-text--error' : ''}
                     ${this.success ? 'helper-text--success' : ''}"
-                  part="helper-text"
-                >
-                  ${this.helperText}
-                </div>
-              `
-            : nothing}
-          ${showCharCounter
-            ? html`
-                <div
-                  class="char-counter
+                    part="helper-text"
+                  >
+                    ${this.helperText}
+                  </div>
+                `
+              : nothing
+          }
+          ${
+            showCharCounter
+              ? html`
+                  <div
+                    class="char-counter
                     ${isOverLimit ? 'char-counter--error' : ''}
                     ${isNearLimit && !isOverLimit ? 'char-counter--warning' : ''}"
-                >
-                  ${charCount}/${this.maxLength}
-                </div>
-              `
-            : nothing}
+                  >
+                    ${charCount}/${this.maxLength}
+                  </div>
+                `
+              : nothing
+          }
         </div>
       </div>
     `
@@ -571,12 +588,12 @@ export class MacInput extends BaseElement {
     this._showPassword = !this._showPassword
   }
 
-  /** Sets focus on the input. */
+  /** 设置输入框焦点。 */
   override focus() {
     this._input?.focus()
   }
 
-  /** Removes focus from the input. */
+  /** 移除输入框焦点。 */
   override blur() {
     this._input?.blur()
   }

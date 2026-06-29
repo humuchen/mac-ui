@@ -26,3 +26,5 @@ storybook-static
 *.sln
 *.sw?
 .qoder
+.npmrc
+.package-lock.json

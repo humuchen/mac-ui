@@ -6,16 +6,16 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-input-number
- * @summary A number input component with macOS-style design.
+ * @summary macOS 风格的数字输入组件。
  *
- * @slot prefix - Content before the input.
- * @slot suffix - Content after the input.
+ * @slot prefix - 输入框前的内容。
+ * @slot suffix - 输入框后的内容。
  *
- * @csspart base - The input's base container.
- * @csspart input - The native input element.
- * @csspart buttons - The step buttons container.
- * @csspart button-plus - The plus step button.
- * @csspart button-minus - The minus step button.
+ * @csspart base - 输入框的基础容器。
+ * @csspart input - 原生输入元素。
+ * @csspart buttons - 步进按钮容器。
+ * @csspart button-plus - 加号步进按钮。
+ * @csspart button-minus - 减号步进按钮。
  */
 @customElement('mac-input-number')
 export class MacInputNumber extends BaseElement {
@@ -66,7 +66,7 @@ export class MacInputNumber extends BaseElement {
         background: transparent;
       }
 
-      /* Focus States */
+      /* 聚焦状态 */
       .input-container--default:focus-within {
         border-color: var(--md-color-primary);
         box-shadow:
@@ -92,7 +92,7 @@ export class MacInputNumber extends BaseElement {
         box-shadow: none;
       }
 
-      /* Error State */
+      /* 错误状态 */
       .input-container--error.input-container--default {
         border-color: var(--md-color-danger);
       }
@@ -107,7 +107,7 @@ export class MacInputNumber extends BaseElement {
         border-bottom-color: var(--md-color-danger);
       }
 
-      /* Success State */
+      /* 成功状态 */
       .input-container--success.input-container--default {
         border-color: var(--md-color-success);
       }
@@ -122,7 +122,7 @@ export class MacInputNumber extends BaseElement {
         border-bottom-color: var(--md-color-success);
       }
 
-      /* Warning State */
+      /* 警告状态 */
       .input-container--warning.input-container--default {
         border-color: var(--md-color-warning);
       }
@@ -137,14 +137,14 @@ export class MacInputNumber extends BaseElement {
         border-bottom-color: var(--md-color-warning);
       }
 
-      /* Disabled State */
+      /* 禁用状态 */
       .input-container--disabled {
         opacity: 0.5;
         cursor: not-allowed;
         background-color: var(--md-color-bg-secondary);
       }
 
-      /* Input */
+      /* 输入框 */
       .input {
         flex: 1;
         border: none;
@@ -171,7 +171,7 @@ export class MacInputNumber extends BaseElement {
         cursor: not-allowed;
       }
 
-      /* Slots */
+      /* 插槽 */
       ::slotted([slot='prefix']),
       ::slotted([slot='suffix']) {
         display: flex;
@@ -180,7 +180,7 @@ export class MacInputNumber extends BaseElement {
         color: var(--md-color-text-secondary);
       }
 
-      /* Step Buttons */
+      /* 步进按钮 */
       .buttons {
         display: flex;
         flex-direction: column;
@@ -226,7 +226,7 @@ export class MacInputNumber extends BaseElement {
         border-bottom: 1px solid var(--md-color-border);
       }
 
-      /* Buttons outside */
+      /* 外部按钮 */
       .buttons--outside {
         flex-direction: row;
         border-left: none;
@@ -252,7 +252,7 @@ export class MacInputNumber extends BaseElement {
         border-bottom: 1px solid var(--md-color-border);
       }
 
-      /* Clear Button */
+      /* 清除按钮 */
       .clear-button {
         display: flex;
         align-items: center;
@@ -275,7 +275,7 @@ export class MacInputNumber extends BaseElement {
         color: var(--md-color-text);
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .input-container--sm .input {
         padding: var(--sm-input-padding-vertical) var(--sm-input-padding-horizontal);
         font-size: var(--sm-input-font-size);
@@ -341,55 +341,55 @@ export class MacInputNumber extends BaseElement {
     `,
   ]
 
-  /** The input's value. */
+  /** 输入框的值。 */
   @property({ type: Number }) value?: number
 
-  /** The default value for uncontrolled mode. */
+  /** 非受控模式的默认值。 */
   @property({ type: Number, attribute: 'default-value' }) defaultValue?: number
 
-  /** The minimum value. */
+  /** 最小值。 */
   @property({ type: Number }) min?: number
 
-  /** The maximum value. */
+  /** 最大值。 */
   @property({ type: Number }) max?: number
 
-  /** The step value. */
+  /** 步进值。 */
   @property({ type: Number }) step = 1
 
-  /** The precision (decimal places). */
+  /** 精度（小数位数）。 */
   @property({ type: Number }) precision?: number
 
-  /** The input's placeholder. */
+  /** 输入框的占位符。 */
   @property() placeholder = ''
 
-  /** The input's size. */
+  /** 输入框的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** The visual variant. */
+  /** 视觉变体。 */
   @property({ reflect: true }) variant: 'default' | 'filled' | 'glass' | 'underline' = 'default'
 
-  /** The input's status. */
+  /** 输入框的状态。 */
   @property({ reflect: true }) status?: 'error' | 'warning' | 'success'
 
-  /** Disables the input. */
+  /** 禁用输入框。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Makes the input read-only. */
+  /** 使输入框只读。 */
   @property({ type: Boolean }) readonly = false
 
-  /** Shows step buttons. */
+  /** 显示步进按钮。 */
   @property({ type: Boolean, attribute: 'show-button' }) showButton = true
 
-  /** Button placement. */
+  /** 按钮位置。 */
   @property({ attribute: 'button-placement' }) buttonPlacement: 'inside' | 'outside' = 'inside'
 
-  /** Shows a clear button. */
+  /** 显示清除按钮。 */
   @property({ type: Boolean }) clearable = false
 
-  /** The input's name (for forms). */
+  /** 输入框的名称（用于表单）。 */
   @property() name = ''
 
-  /** Enables keyboard control (arrow keys, page up/down). */
+  /** 启用键盘控制（方向键、Page Up/Down）。 */
   @property({ type: Boolean }) keyboard = true
 
   @state() private _displayValue = ''
@@ -408,7 +408,7 @@ export class MacInputNumber extends BaseElement {
 
   override connectedCallback() {
     super.connectedCallback()
-    // Sync defaults to DOM so CSS :host([attr]) selectors work
+    // 同步默认值到 DOM，以便 CSS :host([attr]) 选择器生效
     if (!this.hasAttribute('variant')) {
       this.setAttribute('variant', 'default')
     }
@@ -482,7 +482,7 @@ export class MacInputNumber extends BaseElement {
     const target = e.target as HTMLInputElement
     const raw = target.value
 
-    // Allow empty, minus sign, and decimal point during typing
+    // 输入时允许空值、减号和小数点
     if (raw === '' || raw === '-' || raw === '-.') {
       this._displayValue = raw
       if (!this._isControlled) {
@@ -654,38 +654,47 @@ export class MacInputNumber extends BaseElement {
             .value=${this._displayValue}
             ?disabled=${this.disabled}
             ?readonly=${this.readonly}
-            name=${this.name || nothing}
+            name=${this.name || ''}
             @input=${this._handleInput}
             @change=${this._handleChange}
             @focus=${this._handleFocus}
             @blur=${this._handleBlur}
             @keydown=${this._handleKeydown}
           />
-          ${showClearButton
-            ? html`
-                <button class="clear-button" type="button" @click=${this._clearInput} tabindex="-1">
-                  ✕
-                </button>
-              `
-            : nothing}
+          ${
+            showClearButton
+              ? html`
+                  <button
+                    class="clear-button"
+                    type="button"
+                    @click=${this._clearInput}
+                    tabindex="-1"
+                  >
+                    ✕
+                  </button>
+                `
+              : nothing
+          }
           ${this.buttonPlacement === 'inside' ? this._renderButtons() : nothing}
           <slot name="suffix"></slot>
         </div>
-        ${this.buttonPlacement === 'outside'
-          ? html`<div style="display:flex;align-items:center;margin-top:var(--md-spacing-xs);">
-              ${this._renderButtons()}
-            </div>`
-          : nothing}
+        ${
+          this.buttonPlacement === 'outside'
+            ? html`<div style="display:flex;align-items:center;margin-top:var(--md-spacing-xs);">
+                ${this._renderButtons()}
+              </div>`
+            : nothing
+        }
       </div>
     `
   }
 
-  /** Sets focus on the input. */
+  /** 设置输入框焦点。 */
   override focus() {
     this._input?.focus()
   }
 
-  /** Removes focus from the input. */
+  /** 移除输入框焦点。 */
   override blur() {
     this._input?.blur()
   }

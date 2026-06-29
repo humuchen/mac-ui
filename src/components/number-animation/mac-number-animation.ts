@@ -15,20 +15,20 @@ const EASING_MAP: Record<string, EasingFn> = {
 
 /**
  * @tag mac-number-animation
- * @summary A number animation component that smoothly transitions between numeric values.
+ * @summary 数字动画组件，在数值之间平滑过渡。
  *
- * @slot prefix - Content before the number (e.g. currency symbol).
- * @slot suffix - Content after the number (e.g. unit text).
+ * @slot prefix - 数字前的内容（例如货币符号）。
+ * @slot suffix - 数字后的内容（例如单位文本）。
  *
- * @cssproperty --md-number-animation-font-size - Number font size.
- * @cssproperty --md-number-animation-color - Number text color.
- * @cssproperty --md-number-animation-font-weight - Number font weight.
- * @cssproperty --md-number-animation-font-family - Number font family.
- * @cssproperty --md-number-animation-prefix-color - Prefix text color.
- * @cssproperty --md-number-animation-suffix-color - Suffix text color.
+ * @cssproperty --md-number-animation-font-size - 数字字体大小。
+ * @cssproperty --md-number-animation-color - 数字文字颜色。
+ * @cssproperty --md-number-animation-font-weight - 数字字重。
+ * @cssproperty --md-number-animation-font-family - 数字字体。
+ * @cssproperty --md-number-animation-prefix-color - 前缀文字颜色。
+ * @cssproperty --md-number-animation-suffix-color - 后缀文字颜色。
  *
- * @event mac-number-animation-start - Emitted when animation starts. `detail: { from, to }`
- * @event mac-number-animation-finish - Emitted when animation finishes. `detail: { value }`
+ * @event mac-number-animation-start - 动画开始时触发。`detail: { from, to }`
+ * @event mac-number-animation-finish - 动画结束时触发。`detail: { value }`
  */
 @customElement('mac-number-animation')
 export class MacNumberAnimation extends BaseElement {
@@ -73,25 +73,25 @@ export class MacNumberAnimation extends BaseElement {
         letter-spacing: -0.02em;
       }
 
-      /* ─── Size: sm ─── */
+      /* ─── 尺寸：sm ─── */
 
       :host([size='sm']) {
         --md-number-animation-font-size: var(--md-font-size-xl, 24px);
       }
 
-      /* ─── Size: md ─── */
+      /* ─── 尺寸：md ─── */
 
       :host([size='md']) {
         --md-number-animation-font-size: var(--md-font-size-display, 48px);
       }
 
-      /* ─── Size: lg ─── */
+      /* ─── 尺寸：lg ─── */
 
       :host([size='lg']) {
         --md-number-animation-font-size: var(--md-font-size-hero, 72px);
       }
 
-      /* ─── Dark Mode ─── */
+      /* ─── 深色模式 ─── */
 
       :host([data-theme='dark']) {
         --md-number-animation-color: rgba(255, 255, 255, 0.92);
@@ -107,37 +107,37 @@ export class MacNumberAnimation extends BaseElement {
     `,
   ]
 
-  /** Target value to animate to */
+  /** 动画目标值 */
   @property({ type: Number }) to = 0
 
-  /** Starting value */
+  /** 起始值 */
   @property({ type: Number }) from = 0
 
-  /** Animation duration in milliseconds */
+  /** 动画时长（毫秒） */
   @property({ type: Number }) duration = 2000
 
-  /** Number of decimal places */
+  /** 小数位数 */
   @property({ type: Number }) precision = 0
 
-  /** Thousands separator character */
+  /** 千位分隔符字符 */
   @property() separator = ''
 
-  /** Easing function name */
+  /** 缓动函数名称 */
   @property() easing: 'linear' | 'easeIn' | 'easeOut' | 'easeInOut' = 'easeOut'
 
-  /** Whether to auto-start animation on connect */
+  /** 连接时是否自动开始动画 */
   @property({ type: Boolean }) autoplay = true
 
-  /** Prefix text (alternative to slot) */
+  /** 前缀文本（替代插槽） */
   @property() prefix = ''
 
-  /** Suffix text (alternative to slot) */
+  /** 后缀文本（替代插槽） */
   @property() suffix = ''
 
-  /** Component size */
+  /** 组件尺寸 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Callback when animation finishes (can be set as property) */
+  /** 动画完成时的回调（可作为属性设置） */
   @property({ attribute: false }) onFinish?: (value: number) => void
 
   @state() private _displayValue = 0
@@ -160,7 +160,7 @@ export class MacNumberAnimation extends BaseElement {
   }
 
   override updated(changed: Map<string, unknown>): void {
-    // Re-animate when `to` or `from` changes
+    // 当 `to` 或 `from` 变化时重新动画
     if (changed.has('to') || changed.has('from')) {
       if (this.autoplay && this._isAnimating === false) {
         this.start()
@@ -183,7 +183,7 @@ export class MacNumberAnimation extends BaseElement {
     this._stopAnimation()
   }
 
-  /** Start the animation */
+  /** 开始动画 */
   start(): void {
     this._stopAnimation()
     this._displayValue = this.from
@@ -193,7 +193,7 @@ export class MacNumberAnimation extends BaseElement {
     this._rafId = requestAnimationFrame((t) => this._animate(t))
   }
 
-  /** Reset to the starting value */
+  /** 重置到起始值 */
   reset(): void {
     this._stopAnimation()
     this._displayValue = this.from
@@ -247,19 +247,23 @@ export class MacNumberAnimation extends BaseElement {
 
     return html`
       <span class="number-animation">
-        ${hasPrefixSlot
-          ? html`<span class="prefix"><slot name="prefix"></slot></span>`
-          : this.prefix
-            ? html`<span class="prefix">${this.prefix}</span>`
-            : ''}
+        ${
+          hasPrefixSlot
+            ? html`<span class="prefix"><slot name="prefix"></slot></span>`
+            : this.prefix
+              ? html`<span class="prefix">${this.prefix}</span>`
+              : ''
+        }
 
         <span class="value">${this._formatNumber(this._displayValue)}</span>
 
-        ${hasSuffixSlot
-          ? html`<span class="suffix"><slot name="suffix"></slot></span>`
-          : this.suffix
-            ? html`<span class="suffix">${this.suffix}</span>`
-            : ''}
+        ${
+          hasSuffixSlot
+            ? html`<span class="suffix"><slot name="suffix"></slot></span>`
+            : this.suffix
+              ? html`<span class="suffix">${this.suffix}</span>`
+              : ''
+        }
       </span>
     `
   }

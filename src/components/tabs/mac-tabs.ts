@@ -5,23 +5,23 @@ import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
 
 export interface TabItem {
-  /** Unique key */
+  /** 唯一键 */
   key: string
-  /** Tab label */
+  /** 标签文本 */
   label: string
-  /** Whether the tab is disabled */
+  /** 标签是否禁用 */
   disabled?: boolean
-  /** Whether the tab is closable */
+  /** 标签是否可关闭 */
   closable?: boolean
 }
 
 /**
  * @tag mac-tabs
- * @summary A macOS-style tabs component with animated indicator.
+ * @summary macOS 风格的标签页组件，带带动画指示器。
  *
- * @slot - Default slot for mac-tab-pane elements.
- * @slot prefix - Content before the tab nav.
- * @slot suffix - Content after the tab nav.
+ * @slot - 用于放置 mac-tab-pane 元素的默认插槽。
+ * @slot prefix - 标签导航前的内容。
+ * @slot suffix - 标签导航后的内容。
  *
  * @cssproperty --md-tabs-nav-bg - Tab navigation bar background.
  * @cssproperty --md-tabs-nav-border - Tab navigation bar bottom border.
@@ -50,9 +50,9 @@ export interface TabItem {
  * @cssproperty --md-tabs-segment-item-hover-bg - Segment item hover background.
  * @cssproperty --md-tabs-segment-radius - Segment container radius.
  *
- * @event mac-tabs-change - Emitted when active tab changes. `detail: { key: string }`
- * @event mac-tabs-close - Emitted when a tab is closed. `detail: { key: string }`
- * @event mac-tabs-add - Emitted when add button is clicked.
+ * @event mac-tabs-change - 激活标签变化时触发。`detail: { key: string }`
+ * @event mac-tabs-close - 标签关闭时触发。`detail: { key: string }`
+ * @event mac-tabs-add - 点击添加按钮时触发。
  */
 @customElement('mac-tabs')
 export class MacTabs extends BaseElement {
@@ -91,7 +91,7 @@ export class MacTabs extends BaseElement {
         --md-tabs-segment-radius: var(--md-radius-md);
       }
 
-      /* ─── Navigation Bar ─── */
+      /* ─── 导航栏 ─── */
 
       .nav {
         display: flex;
@@ -115,7 +115,7 @@ export class MacTabs extends BaseElement {
         display: none;
       }
 
-      /* ─── Tab Item ─── */
+      /* ─── 标签项 ─── */
 
       .tab-item {
         display: flex;
@@ -153,7 +153,7 @@ export class MacTabs extends BaseElement {
         color: var(--md-tabs-item-disabled-color);
       }
 
-      /* ─── Close Button ─── */
+      /* ─── 关闭按钮 ─── */
 
       .close-btn {
         display: inline-flex;
@@ -180,7 +180,7 @@ export class MacTabs extends BaseElement {
         height: 10px;
       }
 
-      /* ─── Add Button ─── */
+      /* ─── 添加按钮 ─── */
 
       .add-btn {
         display: inline-flex;
@@ -207,7 +207,7 @@ export class MacTabs extends BaseElement {
         height: 14px;
       }
 
-      /* ─── Line Indicator ─── */
+      /* ─── 线条指示器 ─── */
 
       .indicator {
         position: absolute;
@@ -221,13 +221,13 @@ export class MacTabs extends BaseElement {
         pointer-events: none;
       }
 
-      /* ─── Line Type: bottom border on nav ─── */
+      /* ─── 线条类型：导航栏底部边框 ─── */
 
       :host([type='line']) .nav {
         border-bottom: 0.5px solid var(--md-tabs-nav-border);
       }
 
-      /* ─── Card Type ─── */
+      /* ─── 卡片类型 ─── */
 
       :host([type='card']) .tab-item {
         background: rgba(0, 0, 0, 0.03);
@@ -250,7 +250,7 @@ export class MacTabs extends BaseElement {
         display: none;
       }
 
-      /* ─── Segment Type ─── */
+      /* ─── 分段类型 ─── */
 
       :host([type='segment']) .nav {
         padding: var(--md-spacing-xs);
@@ -285,13 +285,13 @@ export class MacTabs extends BaseElement {
         display: none;
       }
 
-      /* ─── Tab Pane ─── */
+      /* ─── 标签面板 ─── */
 
       .pane-container {
         padding: var(--md-tabs-pane-padding);
       }
 
-      /* ─── Size: sm ─── */
+      /* ─── 尺寸：小 ─── */
 
       :host([size='sm']) {
         --md-tabs-item-padding: var(--md-spacing-xs) var(--md-spacing-sm);
@@ -300,7 +300,7 @@ export class MacTabs extends BaseElement {
         --md-tabs-pane-padding: var(--md-spacing-md) 0;
       }
 
-      /* ─── Size: lg ─── */
+      /* ─── 尺寸：大 ─── */
 
       :host([size='lg']) {
         --md-tabs-item-padding: var(--md-spacing-md) var(--md-spacing-lg);
@@ -371,31 +371,31 @@ export class MacTabs extends BaseElement {
     `,
   ]
 
-  /** Tab type: line (underline indicator), card (tab cards), segment (segmented control) */
+  /** 标签类型：line（下划线指示器）、card（卡片标签）、segment（分段控制器） */
   @property({ reflect: true }) type: 'line' | 'card' | 'segment' = 'line'
 
-  /** Component size */
+  /** 组件尺寸 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Active tab key (controlled mode) */
+  /** 激活标签的键（受控模式） */
   @property() value = ''
 
-  /** Default active tab key (uncontrolled mode) */
+  /** 默认激活标签的键（非受控模式） */
   @property({ attribute: 'default-value' }) defaultValue = ''
 
-  /** Whether tabs are closable */
+  /** 标签是否可关闭 */
   @property({ type: Boolean }) closable = false
 
-  /** Whether to show add button */
+  /** 是否显示添加按钮 */
   @property({ type: Boolean }) addable = false
 
-  /** Whether to animate tab switching */
+  /** 是否启用标签切换动画 */
   @property({ type: Boolean }) animated = true
 
-  /** Trigger mode: click or hover */
+  /** 触发模式：click 或 hover */
   @property() trigger: 'click' | 'hover' = 'click'
 
-  /** Tab items data (alternative to slot) */
+  /** 标签项数据（替代插槽方式） */
   @property({ type: Array }) items: TabItem[] = []
 
   @state() private _activeKey = ''
@@ -444,7 +444,7 @@ export class MacTabs extends BaseElement {
       this._activeKey = this.value
       return
     }
-    if (this._activeKey) return // already initialized
+    if (this._activeKey) return // 已初始化
 
     if (this.defaultValue) {
       this._activeKey = this.defaultValue
@@ -589,9 +589,9 @@ export class MacTabs extends BaseElement {
           ${items.map(
             (item) => html`
               <div
-                class="tab-item ${item.key === activeKey ? 'active' : ''} ${item.disabled
-                  ? 'disabled'
-                  : ''}"
+                class="tab-item ${item.key === activeKey ? 'active' : ''} ${
+                  item.disabled ? 'disabled' : ''
+                }"
                 data-key=${item.key}
                 @click=${() => this._selectTab(item.key)}
                 @mouseenter=${() => this._handleTabHover(item.key)}
@@ -621,12 +621,12 @@ export class MacTabs extends BaseElement {
 
 /**
  * @tag mac-tab-pane
- * @summary A child pane for mac-tabs (used in slot mode).
+ * @summary mac-tabs 的子面板（用于插槽模式）。
  *
- * @property tab-key - Unique key matching the tab.
- * @property label - Tab label text.
- * @property disabled - Whether the tab is disabled.
- * @property closable - Whether the tab is closable.
+ * @property tab-key - 与标签匹配的唯一键。
+ * @property label - 标签文本。
+ * @property disabled - 标签是否禁用。
+ * @property closable - 标签是否可关闭。
  */
 @customElement('mac-tab-pane')
 export class MacTabPane extends BaseElement {
@@ -642,19 +642,19 @@ export class MacTabPane extends BaseElement {
     `,
   ]
 
-  /** Unique key */
+  /** 唯一键 */
   @property({ attribute: 'tab-key' }) tabKey = ''
 
-  /** Tab label */
+  /** 标签文本 */
   @property() label = ''
 
-  /** Whether the tab is disabled */
+  /** 标签是否禁用 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Whether the tab is closable */
+  /** 标签是否可关闭 */
   @property({ type: Boolean }) closable = false
 
-  /** Whether this pane is currently active (managed by mac-tabs) */
+  /** 此面板当前是否激活（由 mac-tabs 管理） */
   @property({ type: Boolean, reflect: true }) active = false
 
   override render() {

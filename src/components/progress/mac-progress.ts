@@ -24,14 +24,14 @@ export interface GradientConfig {
 
 /**
  * @tag mac-progress
- * @summary A progress component for displaying completion status.
+ * @summary 进度组件，用于显示完成状态。
  *
- * @csspart track - The progress track container.
- * @csspart fill - The progress fill indicator.
- * @csspart text - The progress text label.
+ * @csspart track - 进度轨道容器。
+ * @csspart fill - 进度填充指示器。
+ * @csspart text - 进度文本标签。
  *
- * @cssproperty --mac-progress-track-bg - Background color of the track.
- * @cssproperty --mac-progress-fill-color - Color of the fill indicator.
+ * @cssproperty --mac-progress-track-bg - 轨道背景颜色。
+ * @cssproperty --mac-progress-fill-color - 填充指示器颜色。
  */
 @customElement('mac-progress')
 export class MacProgress extends BaseElement {
@@ -45,7 +45,7 @@ export class MacProgress extends BaseElement {
       }
 
       /* ═══════════════════════════════════════════════════
-         Line Progress
+         线性进度条
          ═══════════════════════════════════════════════════ */
       .progress-line {
         display: flex;
@@ -104,7 +104,7 @@ export class MacProgress extends BaseElement {
         white-space: nowrap;
       }
 
-      /* Processing animation for line */
+      /* 线性进度条的处理动画 */
       .progress-line__fill--processing {
         background-image: linear-gradient(
           90deg,
@@ -130,7 +130,7 @@ export class MacProgress extends BaseElement {
       }
 
       /* ═══════════════════════════════════════════════════
-         Circle Progress
+         环形进度条
          ═══════════════════════════════════════════════════ */
       .progress-circle {
         position: relative;
@@ -174,7 +174,7 @@ export class MacProgress extends BaseElement {
         font-weight: var(--md-progress-circle-text-weight);
       }
 
-      /* Processing animation for circle */
+      /* 环形进度条的处理动画 */
       .progress-circle__fill--processing {
         animation: progress-circle-spin 2s linear infinite;
         transform-origin: center;
@@ -191,45 +191,45 @@ export class MacProgress extends BaseElement {
     `,
   ]
 
-  /** The current progress percentage (0-100). */
+  /** 当前进度百分比（0-100）。 */
   @property({ type: Number }) percentage = 0
 
-  /** The type of progress indicator. */
+  /** 进度指示器类型。 */
   @property({ reflect: true }) type: 'line' | 'circle' = 'line'
 
-  /** The status of the progress. */
+  /** 进度状态。 */
   @property({ reflect: true }) status: 'default' | 'success' | 'warning' | 'error' = 'default'
 
-  /** The size of the progress component. */
+  /** 进度组件尺寸。 */
   @property({ reflect: true }) size: 'sm' | 'md' | 'lg' = 'md'
 
-  /** Whether to show the percentage text. */
+  /** 是否显示百分比文本。 */
   @property({ type: Boolean, reflect: true }) showText = true
 
-  /** Whether the progress is in processing state (shows animation). */
+  /** 进度是否处于处理状态（显示动画）。 */
   @property({ type: Boolean, reflect: true }) processing = false
 
-  /** Custom color for the progress fill. Overrides status color. */
+  /** 进度填充的自定义颜色。覆盖状态颜色。 */
   @property() color?: string
 
-  /** The width of the stroke for circle progress (in pixels). */
+  /** 环形进度条的描边宽度（像素）。 */
   @property({ type: Number }) strokeWidth = 6
 
-  /** The width/height of the circle progress (in pixels). */
+  /** 环形进度条的宽度/高度（像素）。 */
   @property({ type: Number }) width = 120
 
   /**
-   * Multiple circle configurations for nested ring display.
-   * Each item defines one ring with percentage, optional color, and optional strokeWidth.
-   * When set, renders multiple concentric rings instead of a single circle.
+   * 多环配置的嵌套环形显示。
+   * 每项定义一个环，包含百分比、可选颜色和可选描边宽度。
+   * 设置时渲染多个同心环，而非单个圆环。
    */
   @property({ type: Array }) circles?: CircleConfig[]
 
   /**
-   * Gradient configuration for the progress fill.
-   * When set, applies a linear gradient to the fill.
-   * For circle type, uses SVG linearGradient.
-   * For line type, uses CSS linear-gradient.
+   * 进度填充的渐变配置。
+   * 设置时，为填充应用线性渐变。
+   * 环形类型使用 SVG linearGradient。
+   * 线性类型使用 CSS linear-gradient。
    */
   @property({ type: Object }) gradient?: GradientConfig
 
@@ -308,16 +308,18 @@ export class MacProgress extends BaseElement {
       <div class="progress-line progress-line--${size}">
         <div class="progress-line__track" part="track">
           <div
-            class="progress-line__fill progress-line__fill--${this.status} ${this.processing
-              ? 'progress-line__fill--processing'
-              : ''}"
+            class="progress-line__fill progress-line__fill--${this.status} ${
+              this.processing ? 'progress-line__fill--processing' : ''
+            }"
             part="fill"
             style="width: ${this.processing ? '100%' : pct + '%'}; ${fillStyle}"
           ></div>
         </div>
-        ${this.showText && !this.processing
-          ? html`<span class="progress-line__text" part="text">${pct}%</span>`
-          : nothing}
+        ${
+          this.showText && !this.processing
+            ? html`<span class="progress-line__text" part="text">${pct}%</span>`
+            : nothing
+        }
       </div>
     `
   }
@@ -358,9 +360,9 @@ export class MacProgress extends BaseElement {
             stroke-width="${sw}"
           />
           <circle
-            class="progress-circle__fill progress-circle__fill--${this.status} ${this.processing
-              ? 'progress-circle__fill--processing'
-              : ''}"
+            class="progress-circle__fill progress-circle__fill--${this.status} ${
+              this.processing ? 'progress-circle__fill--processing' : ''
+            }"
             part="fill"
             cx="${w / 2}"
             cy="${w / 2}"
@@ -371,11 +373,13 @@ export class MacProgress extends BaseElement {
             stroke="${strokeValue}"
           />
         </svg>
-        ${this.showText
-          ? html`<span class="progress-circle__text" part="text"
-              ><slot name="text">${pct}%</slot></span
-            >`
-          : nothing}
+        ${
+          this.showText
+            ? html`<span class="progress-circle__text" part="text"
+                ><slot name="text">${pct}%</slot></span
+              >`
+            : nothing
+        }
       </div>
     `
   }
@@ -387,7 +391,7 @@ export class MacProgress extends BaseElement {
     const padding = 2
     const strokeWidths = circles.map((c) => c.strokeWidth ?? this.strokeWidth)
 
-    // 计算各圈半径：index=0 是最外层（最大半径），向内逐层递减
+    // 计算各环半径：index=0 是最外层（最大半径），向内逐层递减
     const radii: number[] = []
     radii[0] = (w - strokeWidths[0]) / 2 - padding
     for (let i = 1; i < circles.length; i++) {
@@ -414,7 +418,7 @@ export class MacProgress extends BaseElement {
               strokeValue = `url(#${gradientId})`
             }
 
-            // processing 动画仅作用于最内圈（数组最后一个）
+            // processing 动画仅作用于最内环（数组最后一个）
             const isProcessing = this.processing && index === circles.length - 1
             return svg`
               <circle
@@ -440,11 +444,13 @@ export class MacProgress extends BaseElement {
             `
           })}
         </svg>
-        ${this.showText && !this.processing
-          ? html`<span class="progress-circle__text" part="text"
-              ><slot name="text">${this._normalizedPercentage}%</slot></span
-            >`
-          : nothing}
+        ${
+          this.showText && !this.processing
+            ? html`<span class="progress-circle__text" part="text"
+                ><slot name="text">${this._normalizedPercentage}%</slot></span
+              >`
+            : nothing
+        }
       </div>
     `
   }

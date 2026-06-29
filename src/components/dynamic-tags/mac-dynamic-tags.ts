@@ -6,18 +6,18 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-dynamic-tags
- * @summary A dynamic tags component for adding and removing tags.
+ * @summary 一个动态标签组件，用于添加和删除标签。
  *
- * @slot - Custom tag rendering. Receives tag data via data-value and data-index attributes.
+ * @slot - 自定义标签渲染。通过 data-value 和 data-index 属性接收标签数据。
  *
- * @csspart container - The tags container.
- * @csspart tag - Each tag element.
- * @csspart input - The input element for adding tags.
- * @csspart add-button - The add button shown when input is hidden.
+ * @csspart container - 标签容器。
+ * @csspart tag - 每个标签元素。
+ * @csspart input - 用于添加标签的输入框。
+ * @csspart add-button - 输入框隐藏时显示的添加按钮。
  *
- * @event mac-update - Emitted when the value changes. Detail: { value: string[] }
- * @event mac-add - Emitted when a tag is added. Detail: { value: string, index: number }
- * @event mac-remove - Emitted when a tag is removed. Detail: { value: string, index: number }
+ * @event mac-update - 值变化时触发。Detail: { value: string[] }
+ * @event mac-add - 添加标签时触发。Detail: { value: string, index: number }
+ * @event mac-remove - 删除标签时触发。Detail: { value: string, index: number }
  */
 @customElement('mac-dynamic-tags')
 export class MacDynamicTags extends BaseElement {
@@ -41,7 +41,7 @@ export class MacDynamicTags extends BaseElement {
         align-items: center;
       }
 
-      /* Inline input for adding tags */
+      /* 用于添加标签的内联输入框 */
       .input {
         display: inline-block;
         border: 1px solid var(--md-color-border);
@@ -75,7 +75,7 @@ export class MacDynamicTags extends BaseElement {
         background-color: var(--md-color-bg-secondary);
       }
 
-      /* Add button */
+      /* 添加按钮 */
       .add-button {
         display: inline-flex;
         align-items: center;
@@ -105,7 +105,7 @@ export class MacDynamicTags extends BaseElement {
         cursor: not-allowed;
       }
 
-      /* Size overrides for input and add-button */
+      /* 输入框和添加按钮的尺寸覆盖 */
       :host([size='sm']) .input {
         --md-dynamic-tags-input-padding-vertical: 1px;
         --md-dynamic-tags-input-padding-horizontal: 6px;
@@ -132,7 +132,7 @@ export class MacDynamicTags extends BaseElement {
         border-radius: var(--md-radius-md);
       }
 
-      /* Disabled state */
+      /* 禁用状态 */
       .container--disabled {
         opacity: 0.6;
         pointer-events: none;
@@ -140,43 +140,38 @@ export class MacDynamicTags extends BaseElement {
     `,
   ]
 
-  /** The tags' values (controlled). */
+  /** 标签的值（受控）。 */
   @property({ type: Array }) value: string[] = []
 
-  /** The default tags' values (uncontrolled). */
+  /** 标签的默认值（非受控）。 */
   @property({ type: Array, attribute: 'default-value' }) defaultValue: string[] = []
 
-  /** Disables the component. */
+  /** 禁用组件。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Maximum number of tags. */
+  /** 标签的最大数量。 */
   @property({ type: Number }) max?: number
 
-  /** The tags' size. */
+  /** 标签的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** The tags' type. */
+  /** 标签的类型。 */
   @property({ reflect: true }) type:
-    | 'default'
-    | 'primary'
-    | 'success'
-    | 'warning'
-    | 'danger'
-    | 'info' = 'default'
+    'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info' = 'default'
 
-  /** Whether the tags have rounded corners. */
+  /** 标签是否圆角。 */
   @property({ type: Boolean, reflect: true }) round = false
 
-  /** Whether the tags have a border. */
+  /** 标签是否有边框。 */
   @property({ type: Boolean, reflect: true }) bordered = true
 
-  /** Whether the tags can be closed. */
+  /** 标签是否可关闭。 */
   @property({ type: Boolean, reflect: true }) closable = true
 
-  /** The input's placeholder. */
+  /** 输入框的占位符。 */
   @property({ attribute: 'input-placeholder' }) inputPlaceholder = ''
 
-  /** The input's max length. */
+  /** 输入框的最大长度。 */
   @property({ type: Number, attribute: 'input-max-length' }) inputMaxLength?: number
 
   @state() private _inputVisible = false
@@ -251,49 +246,53 @@ export class MacDynamicTags extends BaseElement {
             </div>
           `,
         )}
-        ${showInput
-          ? html`
-              <input
-                part="input"
-                class="input"
-                type="text"
-                .value=${this._inputValue}
-                placeholder=${this.inputPlaceholder || '请输入'}
-                ?disabled=${this.disabled}
-                maxlength=${this.inputMaxLength || nothing}
-                @input=${this._handleInputChange}
-                @keydown=${this._handleInputKeydown}
-                @blur=${this._handleInputBlur}
-              />
-            `
-          : nothing}
-        ${showAddButton
-          ? html`
-              <button
-                part="add-button"
-                class="add-button"
-                type="button"
-                ?disabled=${this.disabled}
-                @click=${this._showInput}
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+        ${
+          showInput
+            ? html`
+                <input
+                  part="input"
+                  class="input"
+                  type="text"
+                  .value=${this._inputValue}
+                  placeholder=${this.inputPlaceholder || '请输入'}
+                  ?disabled=${this.disabled}
+                  maxlength=${this.inputMaxLength || ''}
+                  @input=${this._handleInputChange}
+                  @keydown=${this._handleInputKeydown}
+                  @blur=${this._handleInputBlur}
+                />
+              `
+            : nothing
+        }
+        ${
+          showAddButton
+            ? html`
+                <button
+                  part="add-button"
+                  class="add-button"
+                  type="button"
+                  ?disabled=${this.disabled}
+                  @click=${this._showInput}
                 >
-                  <path
-                    d="M8 2v12M2 8h12"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                  />
-                </svg>
-                添加
-              </button>
-            `
-          : nothing}
+                  <svg
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8 2v12M2 8h12"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  添加
+                </button>
+              `
+            : nothing
+        }
       </div>
     `
   }
@@ -324,7 +323,7 @@ export class MacDynamicTags extends BaseElement {
   }
 
   private _handleInputBlur() {
-    // Delay to allow click events on other elements to process
+    // 延迟以允许其他元素上的点击事件处理
     setTimeout(() => {
       if (this._inputValue.trim()) {
         this._addTag()
@@ -340,7 +339,7 @@ export class MacDynamicTags extends BaseElement {
       this._hideInput()
       return
     }
-    // Prevent duplicates
+    // 防止重复
     if (this._resolvedValue.includes(raw)) {
       this._hideInput()
       return

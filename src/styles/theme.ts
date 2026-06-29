@@ -219,6 +219,63 @@ export const themeTokens: CSSResult = css`
     --md-select-clear-dark-hover-bg: rgba(255, 255, 255, 0.15);
 
     /* ═══════════════════════════════════════════════════
+       DatePicker 日期选择器  --{size}-date-picker-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    /* sm */
+    --sm-date-picker-panel-width: 264px;
+    --sm-date-picker-panel-padding: 12px;
+    --sm-date-picker-day-height: 28px;
+    --sm-date-picker-nav-btn-size: 24px;
+    --sm-date-picker-header-font-size: 14px;
+    --sm-date-picker-header-margin-bottom: 10px;
+    --sm-date-picker-week-num-width: 28px;
+    --sm-date-picker-week-num-height: 28px;
+    --sm-date-picker-weekday-font-size: 10px;
+    --sm-date-picker-grid-cell-height: 40px;
+    --sm-date-picker-year-cell-height: 34px;
+    --sm-date-picker-time-input-width: 42px;
+    --sm-date-picker-footer-margin-top: 10px;
+    --sm-date-picker-grid-gap: 6px;
+    --sm-date-picker-day-gap: 2px;
+    --sm-date-picker-panel-border-radius: 10px;
+
+    /* md (default) */
+    --md-date-picker-panel-width: 288px;
+    --md-date-picker-panel-padding: 16px;
+    --md-date-picker-day-height: 32px;
+    --md-date-picker-nav-btn-size: 28px;
+    --md-date-picker-header-font-size: 15px;
+    --md-date-picker-header-margin-bottom: 12px;
+    --md-date-picker-week-num-width: 32px;
+    --md-date-picker-week-num-height: 32px;
+    --md-date-picker-weekday-font-size: 11px;
+    --md-date-picker-grid-cell-height: 48px;
+    --md-date-picker-year-cell-height: 40px;
+    --md-date-picker-time-input-width: 48px;
+    --md-date-picker-footer-margin-top: 12px;
+    --md-date-picker-grid-gap: 8px;
+    --md-date-picker-day-gap: 2px;
+    --md-date-picker-panel-border-radius: 12px;
+
+    /* lg */
+    --lg-date-picker-panel-width: 320px;
+    --lg-date-picker-panel-padding: 20px;
+    --lg-date-picker-day-height: 38px;
+    --lg-date-picker-nav-btn-size: 32px;
+    --lg-date-picker-header-font-size: 16px;
+    --lg-date-picker-header-margin-bottom: 14px;
+    --lg-date-picker-week-num-width: 38px;
+    --lg-date-picker-week-num-height: 38px;
+    --lg-date-picker-weekday-font-size: 12px;
+    --lg-date-picker-grid-cell-height: 56px;
+    --lg-date-picker-year-cell-height: 46px;
+    --lg-date-picker-time-input-width: 54px;
+    --lg-date-picker-footer-margin-top: 14px;
+    --lg-date-picker-grid-gap: 10px;
+    --lg-date-picker-day-gap: 2px;
+    --lg-date-picker-panel-border-radius: 14px;
+
+    /* ═══════════════════════════════════════════════════
        Dropdown 下拉菜单  --{size}-dropdown-{part}-{state}
        ═══════════════════════════════════════════════════ */
     /* sm */

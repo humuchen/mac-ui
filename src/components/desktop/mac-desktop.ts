@@ -16,18 +16,18 @@ export interface DesktopIconData {
 
 /**
  * @tag mac-desktop
- * @summary A macOS-style desktop container with icon layout, drag management, and integrated dock.
+ * @summary 带有图标布局、拖拽管理和集成 Dock 的 macOS 风格桌面容器。
  *
- * @slot - Default slot for mac-desktop-icon elements.
- * @slot wallpaper - Custom wallpaper content.
- * @slot dock - Dock bar content (mac-dock-item elements).
+ * @slot - 用于放置 mac-desktop-icon 元素的默认插槽。
+ * @slot wallpaper - 自定义壁纸内容。
+ * @slot dock - Dock 栏内容（mac-dock-item 元素）。
  *
- * @csspart base - The desktop base container.
- * @csspart wallpaper - The wallpaper layer.
- * @csspart dock - The dock container area.
+ * @csspart base - 桌面基础容器。
+ * @csspart wallpaper - 壁纸层。
+ * @csspart dock - Dock 容器区域。
  *
- * @event mac-layout-change - Emitted when layout mode changes.
- * @event mac-icons-reorder - Emitted when icons are reordered.
+ * @event mac-layout-change - 布局模式变化时触发。
+ * @event mac-icons-reorder - 图标重新排序时触发。
  */
 @customElement('mac-desktop')
 export class MacDesktop extends BaseElement {
@@ -74,7 +74,7 @@ export class MacDesktop extends BaseElement {
         width: 100%;
       }
 
-      /* ─── Dock Area ─── */
+      /* ─── Dock 区域 ─── */
 
       .desktop-dock {
         position: relative;
@@ -89,7 +89,7 @@ export class MacDesktop extends BaseElement {
         width: auto;
       }
 
-      /* ─── Selection Rectangle (Liquid Glass) ─── */
+      /* ─── 选择框（液态玻璃） ─── */
 
       .selection-rect {
         position: absolute;
@@ -108,7 +108,7 @@ export class MacDesktop extends BaseElement {
         display: block;
       }
 
-      /* ─── Context Menu (Liquid Glass) ─── */
+      /* ─── 右键菜单（液态玻璃） ─── */
 
       .context-menu {
         position: absolute;
@@ -173,22 +173,22 @@ export class MacDesktop extends BaseElement {
     `,
   ]
 
-  /** Layout mode */
+  /** 布局模式 */
   @property({ reflect: true }) layout: 'vertical' | 'horizontal' = 'vertical'
 
-  /** Grid cell size in pixels */
+  /** 网格单元大小，单位为像素 */
   @property({ type: Number }) cellSize = 90
 
-  /** Grid spacing in pixels */
+  /** 网格间距，单位为像素 */
   @property({ type: Number }) spacing = 8
 
-  /** Padding from desktop edges */
+  /** 桌面边缘内边距 */
   @property({ type: Number }) padding = 16
 
-  /** Wallpaper image URL */
+  /** 壁纸图片 URL */
   @property({ reflect: true }) wallpaper = ''
 
-  /** Whether to show the dock */
+  /** 是否显示 Dock */
   @property({ type: Boolean, reflect: true }) showDock = true
 
   @query('.selection-rect')
@@ -200,15 +200,15 @@ export class MacDesktop extends BaseElement {
   @query('.desktop-icons')
   private _desktopIcons!: HTMLDivElement
 
-  // Selection state
+  // 选择状态
   private _selectedIds: Set<string> = new Set()
 
-  // Selection rectangle state
+  // 选择框状态
   private _isSelecting = false
   private _selStartX = 0
   private _selStartY = 0
 
-  // Drag state
+  // 拖拽状态
   private _isDragging = false
   private _draggingIcons: Map<MacDesktopIcon, { startX: number; startY: number }> = new Map()
   private _dragPointerStartX = 0
@@ -216,7 +216,7 @@ export class MacDesktop extends BaseElement {
   private _hasDragMoved = false
   private _dragCleanup: (() => void) | null = null
 
-  // Selection drag cleanup
+  // 选择拖拽清理
   private _selDragCleanup: (() => void) | null = null
 
   override firstUpdated(): void {
@@ -246,7 +246,7 @@ export class MacDesktop extends BaseElement {
     return null
   }
 
-  /** Arrange icons according to current layout mode */
+  /** 根据当前布局模式排列图标 */
   private _arrangeIcons(): void {
     const icons = this._getIconElements()
     if (icons.length === 0) return
@@ -278,7 +278,7 @@ export class MacDesktop extends BaseElement {
     this.emit('mac-icons-reorder', { detail: { layout: this.layout } })
   }
 
-  // ─── Selection ───
+  // ─── 选择 ───
 
   private _selectIcon(iconId: string, additive: boolean): void {
     if (!additive) {
@@ -299,7 +299,7 @@ export class MacDesktop extends BaseElement {
     })
   }
 
-  // ─── Selection Rectangle ───
+  // ─── 选择框 ───
 
   private _startSelection(clientX: number, clientY: number): void {
     const rect = this._desktopIcons.getBoundingClientRect()
@@ -342,7 +342,7 @@ export class MacDesktop extends BaseElement {
     this._applySelection()
   }
 
-  // ─── Icon Drag ───
+  // ─── 图标拖拽 ───
 
   private _startIconDrag(clickedIcon: MacDesktopIcon, clientX: number, clientY: number): void {
     const iconId = clickedIcon.iconId
@@ -408,7 +408,7 @@ export class MacDesktop extends BaseElement {
     this._dragCleanup = onUp
   }
 
-  // ─── Context Menu ───
+  // ─── 右键菜单 ───
 
   private _showContextMenu(x: number, y: number): void {
     const menu = this._contextMenu
@@ -449,32 +449,36 @@ export class MacDesktop extends BaseElement {
     this._contextMenu.classList.remove('visible')
   }
 
-  // ─── Render ───
+  // ─── 渲染 ───
 
   override render() {
     return html`
       <div class="desktop" part="base" @contextmenu=${this._onContextMenu}>
         <div class="desktop-wallpaper" part="wallpaper">
-          ${this.wallpaper
-            ? html`<img
-                src="${this.wallpaper}"
-                alt=""
-                style="width:100%;height:100%;object-fit:cover;"
-              />`
-            : html`<slot name="wallpaper"></slot>`}
+          ${
+            this.wallpaper
+              ? html`<img
+                  src="${this.wallpaper}"
+                  alt=""
+                  style="width:100%;height:100%;object-fit:cover;"
+                />`
+              : html`<slot name="wallpaper"></slot>`
+          }
         </div>
 
         <div class="desktop-icons" @mousedown=${this._onDesktopMouseDown}>
           <slot></slot>
         </div>
 
-        ${this.showDock
-          ? html`
-              <div class="desktop-dock" part="dock">
-                <slot name="dock"></slot>
-              </div>
-            `
-          : ''}
+        ${
+          this.showDock
+            ? html`
+                <div class="desktop-dock" part="dock">
+                  <slot name="dock"></slot>
+                </div>
+              `
+            : ''
+        }
 
         <div class="selection-rect"></div>
 
@@ -493,7 +497,7 @@ export class MacDesktop extends BaseElement {
     `
   }
 
-  // ─── Event Handlers ───
+  // ─── 事件处理 ───
 
   private _onDesktopMouseDown(e: MouseEvent): void {
     if (e.button !== 0) return
@@ -557,7 +561,7 @@ export class MacDesktop extends BaseElement {
     this._showContextMenu(e.clientX - rect.left, e.clientY - rect.top)
   }
 
-  // Context menu actions
+  // 右键菜单操作
   private _onArrangeVertical(): void {
     this.layout = 'vertical'
     this._arrangeIcons()
@@ -584,7 +588,7 @@ export class MacDesktop extends BaseElement {
     this._hideContextMenu()
   }
 
-  // ─── Lifecycle ───
+  // ─── 生命周期 ───
 
   override connectedCallback(): void {
     super.connectedCallback()

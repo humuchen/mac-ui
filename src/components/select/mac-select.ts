@@ -19,12 +19,12 @@ export interface OptionGroup {
 
 /**
  * @tag mac-select
- * @summary A select dropdown component with macOS-style design.
+ * @summary macOS 风格的下拉选择组件。
  *
- * @csspart base - The select's base container.
- * @csspart trigger - The trigger button.
- * @csspart dropdown - The dropdown menu.
- * @csspart option - An option in the dropdown.
+ * @csspart base - 选择器的基础容器。
+ * @csspart trigger - 触发按钮。
+ * @csspart dropdown - 下拉菜单。
+ * @csspart option - 下拉菜单中的选项。
  */
 @customElement('mac-select')
 export class MacSelect extends BaseElement {
@@ -43,7 +43,7 @@ export class MacSelect extends BaseElement {
         gap: var(--md-spacing-xs);
       }
 
-      /* Trigger Button */
+      /* 触发按钮 */
       .select-trigger {
         display: flex;
         align-items: center;
@@ -78,7 +78,7 @@ export class MacSelect extends BaseElement {
         -webkit-backdrop-filter: blur(10px) saturate(180%);
       }
 
-      /* Focus States */
+      /* 聚焦状态 */
       .select-trigger--default:focus-within,
       .select-trigger--default.open {
         border-color: var(--md-color-primary);
@@ -98,7 +98,7 @@ export class MacSelect extends BaseElement {
         box-shadow: var(--md-select-container-focus-glass-shadow);
       }
 
-      /* Error & Success States */
+      /* 错误和成功状态 */
       .select-trigger--error.select-trigger--default {
         border-color: var(--md-color-danger);
       }
@@ -107,14 +107,14 @@ export class MacSelect extends BaseElement {
         border-color: var(--md-color-success);
       }
 
-      /* Disabled State */
+      /* 禁用状态 */
       .select-trigger--disabled {
         opacity: 0.5;
         cursor: not-allowed;
         pointer-events: none;
       }
 
-      /* Selected Value Display */
+      /* 选中值显示 */
       .select-value {
         flex: 1;
         display: flex;
@@ -133,7 +133,7 @@ export class MacSelect extends BaseElement {
         white-space: nowrap;
       }
 
-      /* Multiple Selected Tags */
+      /* 多选标签 */
       .select-tags {
         display: flex;
         flex-wrap: wrap;
@@ -172,7 +172,7 @@ export class MacSelect extends BaseElement {
         background: rgba(0, 0, 0, 0.15);
       }
 
-      /* Arrow Icon */
+      /* 箭头图标 */
       .select-arrow {
         display: flex;
         align-items: center;
@@ -187,7 +187,7 @@ export class MacSelect extends BaseElement {
         transform: rotate(180deg);
       }
 
-      /* Clear Button */
+      /* 清除按钮 */
       .select-clear {
         display: flex;
         align-items: center;
@@ -211,7 +211,7 @@ export class MacSelect extends BaseElement {
         color: var(--md-color-text);
       }
 
-      /* Dropdown Menu */
+      /* 下拉菜单 */
       .select-dropdown {
         position: absolute;
         top: calc(100% + 4px);
@@ -241,7 +241,7 @@ export class MacSelect extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Search Input */
+      /* 搜索输入框 */
       .select-search {
         padding: var(--md-spacing-sm);
         border-bottom: 1px solid var(--md-color-border);
@@ -265,7 +265,7 @@ export class MacSelect extends BaseElement {
         border-color: var(--md-color-primary);
       }
 
-      /* Option Groups */
+      /* 选项分组 */
       .select-group-label {
         padding: var(--md-spacing-xs) var(--md-spacing-md);
         font-size: 12px;
@@ -282,7 +282,7 @@ export class MacSelect extends BaseElement {
         border-radius: var(--md-radius-md) var(--md-radius-md) 0 0;
       }
 
-      /* Options */
+      /* 选项 */
       .select-option {
         display: flex;
         align-items: center;
@@ -346,14 +346,14 @@ export class MacSelect extends BaseElement {
         font-size: 14px;
       }
 
-      /* Empty State */
+      /* 空状态 */
       .select-empty {
         padding: var(--md-spacing-lg);
         text-align: center;
         color: var(--md-color-text-secondary);
       }
 
-      /* Loading State */
+      /* 加载状态 */
       .select-loading {
         display: flex;
         align-items: center;
@@ -376,7 +376,7 @@ export class MacSelect extends BaseElement {
         }
       }
 
-      /* Label */
+      /* 标签 */
       .select-label {
         font-size: var(--md-font-size-base);
         color: var(--md-color-text);
@@ -388,7 +388,7 @@ export class MacSelect extends BaseElement {
         color: var(--md-color-danger);
       }
 
-      /* Helper Text */
+      /* 辅助文本 */
       .select-helper-text {
         font-size: var(--md-font-size-sm);
         color: var(--md-color-text-secondary);
@@ -402,7 +402,7 @@ export class MacSelect extends BaseElement {
         color: var(--md-color-success);
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .select-trigger--sm {
         padding: var(--sm-select-trigger-padding-vertical)
           var(--sm-select-trigger-padding-horizontal);
@@ -494,58 +494,58 @@ export class MacSelect extends BaseElement {
     `,
   ]
 
-  /** The select's value (single select: string, multiple select: string[]). */
+  /** 选择器的值（单选：string，多选：string[]）。 */
   @property({ type: String }) value: string | string[] = ''
 
-  /** The select's placeholder. */
+  /** 选择器的占位符。 */
   @property() placeholder = 'Select an option'
 
-  /** The select's options. */
+  /** 选择器的选项。 */
   @property({ type: Array }) options: SelectOption[] = []
 
-  /** Option groups. */
+  /** 选项分组。 */
   @property({ type: Array }) groups: OptionGroup[] = []
 
-  /** The select's size. */
+  /** 选择器的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** The visual variant. */
+  /** 视觉变体。 */
   @property({ reflect: true }) variant: 'default' | 'filled' | 'glass' = 'default'
 
-  /** The select's label. */
+  /** 选择器的标签。 */
   @property() label = ''
 
-  /** Shows a required indicator. */
+  /** 显示必填指示器。 */
   @property({ type: Boolean }) required = false
 
-  /** Disables the select. */
+  /** 禁用选择器。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** The select's error state. */
+  /** 选择器的错误状态。 */
   @property({ type: Boolean, reflect: true }) error = false
 
-  /** The select's success state. */
+  /** 选择器的成功状态。 */
   @property({ type: Boolean, reflect: true }) success = false
 
-  /** The select's helper text. */
+  /** 选择器的辅助文本。 */
   @property({ attribute: 'helper-text' }) helperText = ''
 
-  /** Enables multiple selection. */
+  /** 启用多选。 */
   @property({ type: Boolean }) multiple = false
 
-  /** Shows a clear button. */
+  /** 显示清除按钮。 */
   @property({ type: Boolean }) clearable = false
 
-  /** Enables search functionality. */
+  /** 启用搜索功能。 */
   @property({ type: Boolean }) searchable = false
 
-  /** Shows a loading state. */
+  /** 显示加载状态。 */
   @property({ type: Boolean }) loading = false
 
-  /** Placeholder for search input. */
+  /** 搜索输入框的占位符。 */
   @property({ attribute: 'search-placeholder' }) searchPlaceholder = 'Search...'
 
-  /** Empty text when no options. */
+  /** 无选项时的空文本。 */
   @property({ attribute: 'empty-text' }) emptyText = 'No options available'
 
   @state() private _open = false
@@ -565,44 +565,44 @@ export class MacSelect extends BaseElement {
     if (MacSelect._stylesInjected) return
     MacSelect._stylesInjected = true
 
-    // Inject global CSS variables to :root so portal can access them
+    // 向 :root 注入全局 CSS 变量，以便 portal 可以访问
     const vars = document.createElement('style')
     vars.id = 'mac-select-theme-vars'
     vars.textContent = `
       :root {
-        /* Font family */
+        /* 字体 */
         --md-font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
 
-        /* Spacing */
+        /* 间距 */
         --md-spacing-xs: 4px;
         --md-spacing-sm: 8px;
         --md-spacing-md: 12px;
 
-        /* Border radius */
+        /* 圆角 */
         --md-radius-sm: 4px;
         --md-radius-md: 6px;
 
-        /* Font size */
+        /* 字号 */
         --md-font-size-xs: 11px;
         --md-font-size-sm: 12px;
         --md-font-size-menu: 13px;
 
-        /* Transition */
+        /* 过渡 */
         --md-transition-fast: 150ms ease;
 
-        /* Colors */
+        /* 颜色 */
         --md-color-bg: #ffffff;
         --md-color-border: #d1d5db;
         --md-color-text: #1f2937;
         --md-color-text-secondary: #6b7280;
         --md-color-primary: #3b82f6;
 
-        /* Select specific */
+        /* 选择器专属 */
         --md-select-item-hover-bg: rgba(0, 122, 255, 0.05);
         --md-select-item-selected-bg: rgba(0, 122, 255, 0.08);
         --md-select-item-focused-bg: rgba(0, 122, 255, 0.1);
 
-        /* Dark theme colors */
+        /* 深色主题颜色 */
         --md-color-dark-bg: rgba(30, 30, 30, 0.95);
         --md-color-dark-border: rgba(255, 255, 255, 0.1);
         --md-color-dark-text: #f5f5f7;
@@ -642,7 +642,7 @@ export class MacSelect extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Search */
+      /* 搜索 */
       .mac-select-portal .select-search {
         padding: var(--md-spacing-sm);
         border-bottom: 1px solid var(--md-color-border);
@@ -661,7 +661,7 @@ export class MacSelect extends BaseElement {
         border-color: var(--md-color-primary);
       }
 
-      /* Options */
+      /* 选项 */
       .mac-select-portal .select-options {
         padding: var(--md-spacing-xs) 0;
       }
@@ -715,7 +715,7 @@ export class MacSelect extends BaseElement {
         margin-top: 2px;
       }
 
-      /* Empty state */
+      /* 空状态 */
       .mac-select-portal .select-empty {
         padding: var(--md-spacing-lg) var(--md-spacing-md);
         text-align: center;
@@ -723,7 +723,7 @@ export class MacSelect extends BaseElement {
         font-size: var(--md-font-size-sm);
       }
 
-      /* Dark theme */
+      /* 深色主题 */
       .mac-select-portal[data-theme='dark'] {
         background: var(--md-color-dark-bg);
         border-color: var(--md-color-dark-border);
@@ -835,7 +835,7 @@ export class MacSelect extends BaseElement {
       portal.setAttribute('data-theme', theme)
     }
 
-    // Position
+    // 位置
     const left = rect.left
     const top = rect.bottom + 4
     const width = rect.width
@@ -844,19 +844,19 @@ export class MacSelect extends BaseElement {
     portal.style.top = `${top}px`
     portal.style.width = `${width}px`
 
-    // Render dropdown content
+    // 渲染下拉内容
     portal.innerHTML = this._renderDropdownHTML()
 
     document.body.appendChild(portal)
     this._portalEl = portal
 
-    // Bind events
+    // 绑定事件
     this._bindPortalEvents(portal)
 
-    // Add scroll listener for position updates
+    // 添加滚动监听器以更新位置
     this._addScrollListener()
 
-    // Animate in
+    // 进入动画
     requestAnimationFrame(() => {
       portal.classList.add('open')
     })
@@ -881,7 +881,7 @@ export class MacSelect extends BaseElement {
 
     let html = ''
 
-    // Search box
+    // 搜索框
     if (this.searchable) {
       html += `
         <div class="select-search">
@@ -895,11 +895,11 @@ export class MacSelect extends BaseElement {
       `
     }
 
-    // Empty state
+    // 空状态
     if (filteredOptions.length === 0) {
       html += `<div class="select-empty">${this.emptyText}</div>`
     } else {
-      // Options list
+      // 选项列表
       html += '<div class="select-options">'
       filteredOptions.forEach((item, index) => {
         if ('type' in item && item.type === 'group') {
@@ -940,14 +940,14 @@ export class MacSelect extends BaseElement {
   }
 
   private _bindPortalEvents(portal: HTMLElement) {
-    // Search input events
+    // 搜索输入框事件
     const searchInput = portal.querySelector('[data-search-input]') as HTMLInputElement | null
     if (searchInput) {
       searchInput.value = this._searchQuery
       searchInput.addEventListener('input', (e) => {
         this._searchQuery = searchInput.value
         this._focusedIndex = -1
-        // Re-render dropdown content
+        // 重新渲染下拉内容
         portal.innerHTML = this._renderDropdownHTML()
         this._bindPortalEvents(portal)
       })
@@ -955,13 +955,13 @@ export class MacSelect extends BaseElement {
         e.stopPropagation()
         this._handleKeyDown(e)
       })
-      // Focus search input
+      // 聚焦搜索输入框
       requestAnimationFrame(() => {
         searchInput.focus()
       })
     }
 
-    // Option click events
+    // 选项点击事件
     portal.addEventListener('click', (e) => {
       const target = (e.target as HTMLElement).closest('.select-option') as HTMLElement | null
       if (!target) return
@@ -974,7 +974,7 @@ export class MacSelect extends BaseElement {
         const option = this._getAllOptions().find((o) => o.value === value)
         if (option) {
           this._selectOption(option)
-          // Re-render if multiple (to update selection state)
+          // 多选时重新渲染（更新选中状态）
           if (this.multiple) {
             portal.innerHTML = this._renderDropdownHTML()
             this._bindPortalEvents(portal)
@@ -1144,13 +1144,15 @@ export class MacSelect extends BaseElement {
 
     return html`
       <div class="select-wrapper" part="base">
-        ${this.label
-          ? html`
-              <label class="select-label ${this.required ? 'select-label--required' : ''}">
-                ${this.label}
-              </label>
-            `
-          : nothing}
+        ${
+          this.label
+            ? html`
+                <label class="select-label ${this.required ? 'select-label--required' : ''}">
+                  ${this.label}
+                </label>
+              `
+            : nothing
+        }
 
         <div
           class="select-trigger
@@ -1169,44 +1171,53 @@ export class MacSelect extends BaseElement {
           aria-haspopup="listbox"
         >
           <div class="select-value">
-            ${this.multiple && Array.isArray(this.value) && this.value.length > 0
-              ? html`
-                  <div class="select-tags">
-                    ${this.value.map((v) => {
-                      const opt = this._getAllOptions().find((o) => o.value === v)
-                      return html`
-                        <span class="select-tag">
-                          ${opt?.icon ? html`<span>${opt.icon}</span>` : nothing} ${opt?.label || v}
-                          <button
-                            class="select-tag-remove"
-                            @click=${(e: Event) => this._removeTag(v, e)}
-                          >
-                            ✕
-                          </button>
-                        </span>
-                      `
-                    })}
-                  </div>
-                `
-              : hasValue
+            ${
+              this.multiple && Array.isArray(this.value) && this.value.length > 0
                 ? html`
-                    ${(() => {
-                      const opt = this._getAllOptions().find((o) => o.value === this.value)
-                      return html`
-                        ${opt?.icon
-                          ? html`<span class="select-option-icon">${opt.icon}</span>`
-                          : nothing}
-                        <span class="select-value-text">${displayValue}</span>
-                      `
-                    })()}
+                    <div class="select-tags">
+                      ${this.value.map((v) => {
+                        const opt = this._getAllOptions().find((o) => o.value === v)
+                        return html`
+                          <span class="select-tag">
+                            ${opt?.icon ? html`<span>${opt.icon}</span>` : nothing}
+                            ${opt?.label || v}
+                            <button
+                              class="select-tag-remove"
+                              @click=${(e: Event) => this._removeTag(v, e)}
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        `
+                      })}
+                    </div>
                   `
-                : html`<span class="select-placeholder">${this.placeholder}</span>`}
+                : hasValue
+                  ? html`
+                      ${(() => {
+                        const opt = this._getAllOptions().find((o) => o.value === this.value)
+                        return html`
+                          ${
+                          opt?.icon
+                            ? html`<span class="select-option-icon">${opt.icon}</span>`
+                            : nothing
+                        }
+                          <span class="select-value-text">${displayValue}</span>
+                        `
+                      })()}
+                    `
+                  : html`<span class="select-placeholder">${this.placeholder}</span>`
+            }
           </div>
 
           <div style="display: flex; align-items: center; gap: 8px;">
-            ${this.clearable && hasValue && !this.disabled
-              ? html` <button class="select-clear" @click=${this._clear} tabindex="-1">✕</button> `
-              : nothing}
+            ${
+              this.clearable && hasValue && !this.disabled
+                ? html`
+                    <button class="select-clear" @click=${this._clear} tabindex="-1">✕</button>
+                  `
+                : nothing
+            }
 
             <span class="select-arrow">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -1216,17 +1227,19 @@ export class MacSelect extends BaseElement {
           </div>
         </div>
 
-        ${this.helperText
-          ? html`
-              <div
-                class="select-helper-text
+        ${
+          this.helperText
+            ? html`
+                <div
+                  class="select-helper-text
                   ${this.error ? 'select-helper-text--error' : ''}
                   ${this.success ? 'select-helper-text--success' : ''}"
-              >
-                ${this.helperText}
-              </div>
-            `
-          : nothing}
+                >
+                  ${this.helperText}
+                </div>
+              `
+            : nothing
+        }
       </div>
     `
   }

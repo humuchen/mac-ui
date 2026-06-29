@@ -6,9 +6,9 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-carousel-item
- * @summary A slide item for mac-carousel.
+ * @summary mac-carousel 的幻灯片项。
  *
- * @slot - The slide content.
+ * @slot - 幻灯片内容。
  */
 @customElement('mac-carousel-item')
 export class MacCarouselItem extends BaseElement {
@@ -30,17 +30,17 @@ export class MacCarouselItem extends BaseElement {
 
 /**
  * @tag mac-carousel
- * @summary A carousel component for cycling through content.
+ * @summary 用于循环展示内容的轮播组件。
  *
- * @slot - Default slot for mac-carousel-item elements.
+ * @slot - 用于放置 mac-carousel-item 元素的默认插槽。
  *
- * @csspart base - The carousel's base container.
- * @csspart track - The sliding track container.
- * @csspart arrow - The navigation arrows.
- * @csspart dots - The indicator dots container.
- * @csspart dot - Individual indicator dot.
+ * @csspart base - 轮播的基础容器。
+ * @csspart track - 滑动轨道容器。
+ * @csspart arrow - 导航箭头。
+ * @csspart dots - 指示器圆点容器。
+ * @csspart dot - 单个指示器圆点。
  *
- * @event mac-carousel-change - Emitted when active slide changes. `detail: { index: number, fromIndex: number }`
+ * @event mac-carousel-change - 当前幻灯片变化时触发。`detail: { index: number, fromIndex: number }`
  */
 @customElement('mac-carousel')
 export class MacCarousel extends BaseElement {
@@ -62,7 +62,7 @@ export class MacCarousel extends BaseElement {
         overflow: hidden;
       }
 
-      /* ─── Slide Effect ─── */
+      /* ─── 滑动效果 ─── */
       .track--slide {
         display: flex;
         width: 100%;
@@ -85,7 +85,7 @@ export class MacCarousel extends BaseElement {
         height: calc(100% / var(--mac-carousel-slides-per-view));
       }
 
-      /* ─── Fade Effect ─── */
+      /* ─── 淡入淡出效果 ─── */
       .track--fade {
         position: relative;
         width: 100%;
@@ -113,7 +113,7 @@ export class MacCarousel extends BaseElement {
         z-index: 1;
       }
 
-      /* ─── Custom Effect ─── */
+      /* ─── 自定义效果 ─── */
       .track--custom {
         display: flex;
         width: 100%;
@@ -135,7 +135,7 @@ export class MacCarousel extends BaseElement {
         height: calc(100% / var(--mac-carousel-slides-per-view));
       }
 
-      /* ─── Arrows ─── */
+      /* ─── 箭头 ─── */
       .arrow {
         position: absolute;
         display: inline-flex;
@@ -174,7 +174,7 @@ export class MacCarousel extends BaseElement {
         height: 18px;
       }
 
-      /* Horizontal arrows */
+      /* 水平箭头 */
       :host([direction='horizontal']) .arrow--prev {
         top: 50%;
         left: var(--md-carousel-arrow-offset);
@@ -187,7 +187,7 @@ export class MacCarousel extends BaseElement {
         transform: translateY(-50%);
       }
 
-      /* Vertical arrows */
+      /* 垂直箭头 */
       :host([direction='vertical']) .arrow--prev {
         top: var(--md-carousel-arrow-offset);
         left: 50%;
@@ -200,7 +200,7 @@ export class MacCarousel extends BaseElement {
         transform: translateX(-50%);
       }
 
-      /* ─── Dots ─── */
+      /* ─── 圆点 ─── */
       .dots {
         position: absolute;
         display: flex;
@@ -225,7 +225,7 @@ export class MacCarousel extends BaseElement {
         background: var(--md-carousel-dot-active-bg);
       }
 
-      /* dot type: dot */
+      /* 圆点类型：圆点 */
       .dot--dot {
         width: var(--md-carousel-dot-size);
         height: var(--md-carousel-dot-size);
@@ -237,7 +237,7 @@ export class MacCarousel extends BaseElement {
         border-radius: var(--md-carousel-dot-active-radius);
       }
 
-      /* dot type: line */
+      /* 圆点类型：线条 */
       .dot--line {
         width: var(--md-carousel-line-width);
         height: var(--md-carousel-line-height);
@@ -248,7 +248,7 @@ export class MacCarousel extends BaseElement {
         width: var(--md-carousel-line-active-width);
       }
 
-      /* Dot positions for horizontal direction */
+      /* 水平方向的圆点位置 */
       :host([direction='horizontal'][dot-position='top']) .dots {
         top: var(--md-carousel-dots-offset);
         left: 50%;
@@ -275,7 +275,7 @@ export class MacCarousel extends BaseElement {
         flex-direction: column;
       }
 
-      /* Dot positions for vertical direction */
+      /* 垂直方向的圆点位置 */
       :host([direction='vertical'][dot-position='top']) .dots {
         top: var(--md-carousel-dots-offset);
         left: 50%;
@@ -304,56 +304,53 @@ export class MacCarousel extends BaseElement {
     `,
   ]
 
-  /** Current active slide index (controlled mode). */
+  /** 当前激活的幻灯片索引（受控模式）。 */
   @property({ type: Number, attribute: 'current-index' }) currentIndex = 0
 
-  /** Default active slide index (uncontrolled mode). */
+  /** 默认激活的幻灯片索引（非受控模式）。 */
   @property({ type: Number, attribute: 'default-index' }) defaultIndex = 0
 
-  /** Whether to autoplay. */
+  /** 是否自动播放。 */
   @property({ type: Boolean }) autoplay = false
 
-  /** Autoplay interval in milliseconds. */
+  /** 自动播放间隔，单位为毫秒。 */
   @property({ type: Number }) interval = 5000
 
-  /** Whether to loop playback. */
+  /** 是否循环播放。 */
   @property({ type: Boolean }) loop = true
 
-  /** Slide direction. */
+  /** 滑动方向。 */
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
 
-  /** Transition effect. */
+  /** 过渡效果。 */
   @property({ reflect: true }) effect: 'slide' | 'fade' | 'custom' = 'slide'
 
-  /** Number of slides displayed per view. */
+  /** 每次显示的幻灯片数量。 */
   @property({ type: Number, attribute: 'slides-per-view', reflect: true }) slidesPerView = 1
 
-  /** Whether to show navigation arrows. */
+  /** 是否显示导航箭头。 */
   @property({ type: Boolean, attribute: 'show-arrow' }) showArrow = true
 
-  /** Whether to show indicator dots. */
+  /** 是否显示指示器圆点。 */
   @property({ type: Boolean, attribute: 'show-dots' }) showDots = true
 
-  /** Indicator dot style. */
+  /** 指示器圆点样式。 */
   @property({ attribute: 'dot-type' }) dotType: 'dot' | 'line' = 'dot'
 
-  /** Position of indicator dots. */
+  /** 指示器圆点的位置。 */
   @property({ attribute: 'dot-position', reflect: true }) dotPosition:
-    | 'top'
-    | 'bottom'
-    | 'left'
-    | 'right' = 'bottom'
+    'top' | 'bottom' | 'left' | 'right' = 'bottom'
 
-  /** Whether the carousel is draggable. */
+  /** 轮播是否可拖拽。 */
   @property({ type: Boolean }) draggable = false
 
-  /** Whether to support keyboard navigation. */
+  /** 是否支持键盘导航。 */
   @property({ type: Boolean }) keyboard = false
 
-  /** Whether to support mouse wheel navigation. */
+  /** 是否支持鼠标滚轮导航。 */
   @property({ type: Boolean }) wheel = false
 
-  /** Slide transition duration in milliseconds. */
+  /** 幻灯片过渡时长，单位为毫秒。 */
   @property({ type: Number, attribute: 'transition-duration' }) transitionDuration = 300
 
   @state() private _activeIndex = 0
@@ -378,7 +375,7 @@ export class MacCarousel extends BaseElement {
 
   override connectedCallback() {
     super.connectedCallback()
-    // Sync defaults to DOM so CSS :host([attr]) selectors match
+    // 将默认值同步到 DOM，以便 CSS :host([attr]) 选择器匹配
     if (!this.hasAttribute('direction')) {
       this.setAttribute('direction', 'horizontal')
     }
@@ -586,7 +583,7 @@ export class MacCarousel extends BaseElement {
     }
   }
 
-  /* ─── Drag ─── */
+  /* ─── 拖拽 ─── */
 
   private _startDrag(clientPos: number) {
     if (!this.draggable || this._slideCount <= 1 || this.effect === 'fade') return
@@ -640,7 +637,7 @@ export class MacCarousel extends BaseElement {
     this._endDrag()
   }
 
-  /* ─── Keyboard ─── */
+  /* ─── 键盘 ─── */
 
   private _handleKeydown = (e: KeyboardEvent) => {
     const isHorizontal = this.direction === 'horizontal'
@@ -656,7 +653,7 @@ export class MacCarousel extends BaseElement {
     }
   }
 
-  /* ─── Wheel ─── */
+  /* ─── 滚轮 ─── */
 
   private _handleWheel = (e: WheelEvent) => {
     if (!this.wheel || this._isWheeling) return
@@ -678,7 +675,7 @@ export class MacCarousel extends BaseElement {
     }, this.transitionDuration + 100)
   }
 
-  /* ─── Render ─── */
+  /* ─── 渲染 ─── */
 
   private _renderArrow(direction: 'prev' | 'next') {
     const isPrev = direction === 'prev'
@@ -689,7 +686,7 @@ export class MacCarousel extends BaseElement {
         part="arrow"
         class="arrow arrow--${direction}"
         type="button"
-        aria-label=${isPrev ? 'Previous slide' : 'Next slide'}
+        aria-label=${isPrev ? '上一张幻灯片' : '下一张幻灯片'}
         @click=${() => (isPrev ? this._prev() : this._next())}
       >
         <svg
@@ -700,13 +697,15 @@ export class MacCarousel extends BaseElement {
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          ${isVertical
-            ? isPrev
-              ? svg`<path d="M12 19V5M5 12l7-7 7 7" />`
-              : svg`<path d="M12 5v14M5 12l7 7 7-7" />`
-            : isPrev
-              ? svg`<path d="M15 18l-6-6 6-6" />`
-              : svg`<path d="M9 18l6-6-6-6" />`}
+          ${
+            isVertical
+              ? isPrev
+                ? svg`<path d="M12 19V5M5 12l7-7 7 7" />`
+                : svg`<path d="M12 5v14M5 12l7 7 7-7" />`
+              : isPrev
+                ? svg`<path d="M15 18l-6-6 6-6" />`
+                : svg`<path d="M9 18l6-6-6-6" />`
+          }
         </svg>
       </button>
     `
@@ -724,7 +723,7 @@ export class MacCarousel extends BaseElement {
               part="dot"
               class="dot dot--${this.dotType} ${i === this._resolvedIndex ? 'dot--active' : ''}"
               type="button"
-              aria-label="Go to slide ${i + 1}"
+              aria-label="跳转到第 ${i + 1} 张幻灯片"
               aria-current=${i === this._resolvedIndex ? 'true' : 'false'}
               @click=${() => this._goTo(i, true)}
             ></button>

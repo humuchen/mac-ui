@@ -6,34 +6,34 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-lazy-image
- * @summary A lazy-loading image component with placeholder, error states, hover animation, and click-to-preview.
+ * @summary 懒加载图片组件，支持占位图、错误状态、悬停动画和点击预览。
  *
- * @slot placeholder - Custom placeholder content shown while loading.
- * @slot error - Custom error content shown when image fails to load.
+ * @slot placeholder - 加载时显示的自定义占位内容。
+ * @slot error - 图片加载失败时显示的自定义错误内容。
  *
- * @csspart image - The image element.
- * @csspart placeholder - The placeholder container.
- * @csspart error - The error container.
- * @csspart preview-overlay - The preview overlay container.
- * @csspart preview-image - The preview image element.
+ * @csspart image - 图片元素。
+ * @csspart placeholder - 占位容器。
+ * @csspart error - 错误容器。
+ * @csspart preview-overlay - 预览遮罩容器。
+ * @csspart preview-image - 预览图片元素。
  *
- * @cssproperty --md-lazy-image-object-fit - Object fit style.
- * @cssproperty --md-lazy-image-placeholder-bg - Placeholder background color.
- * @cssproperty --md-lazy-image-placeholder-color - Placeholder icon color.
- * @cssproperty --md-lazy-image-placeholder-icon-size - Placeholder icon size.
- * @cssproperty --md-lazy-image-error-icon-size - Error icon size.
- * @cssproperty --md-lazy-image-shimmer-bg - Shimmer animation highlight color.
- * @cssproperty --md-lazy-image-hover-scale - Hover scale transform (default: 1.05).
- * @cssproperty --md-lazy-image-hover-duration - Hover animation duration (default: 300ms).
- * @cssproperty --md-lazy-image-hover-easing - Hover animation easing (default: ease-out).
- * @cssproperty --md-lazy-image-hover-filter - Hover filter effect (default: none).
- * @cssproperty --md-lazy-image-preview-bg - Preview overlay background (default: rgba(0,0,0,0.85)).
- * @cssproperty --md-lazy-image-preview-duration - Preview open/close animation duration (default: 250ms).
+ * @cssproperty --md-lazy-image-object-fit - 对象适配样式。
+ * @cssproperty --md-lazy-image-placeholder-bg - 占位背景颜色。
+ * @cssproperty --md-lazy-image-placeholder-color - 占位图标颜色。
+ * @cssproperty --md-lazy-image-placeholder-icon-size - 占位图标大小。
+ * @cssproperty --md-lazy-image-error-icon-size - 错误图标大小。
+ * @cssproperty --md-lazy-image-shimmer-bg - 微光动画高亮颜色。
+ * @cssproperty --md-lazy-image-hover-scale - 悬停缩放变换（默认：1.05）。
+ * @cssproperty --md-lazy-image-hover-duration - 悬停动画时长（默认：300ms）。
+ * @cssproperty --md-lazy-image-hover-easing - 悬停动画缓动（默认：ease-out）。
+ * @cssproperty --md-lazy-image-hover-filter - 悬停滤镜效果（默认：none）。
+ * @cssproperty --md-lazy-image-preview-bg - 预览遮罩背景（默认：rgba(0,0,0,0.85)）。
+ * @cssproperty --md-lazy-image-preview-duration - 预览打开/关闭动画时长（默认：250ms）。
  *
- * @event mac-load - Emitted when the image loads successfully.
- * @event mac-error - Emitted when the image fails to load.
- * @event mac-preview-open - Emitted when the preview overlay opens.
- * @event mac-preview-close - Emitted when the preview overlay closes.
+ * @event mac-load - 图片成功加载时触发。
+ * @event mac-error - 图片加载失败时触发。
+ * @event mac-preview-open - 预览遮罩打开时触发。
+ * @event mac-preview-close - 预览遮罩关闭时触发。
  */
 @customElement('mac-lazy-image')
 export class MacLazyImage extends BaseElement {
@@ -111,7 +111,7 @@ export class MacLazyImage extends BaseElement {
         opacity: 0.4;
       }
 
-      /* Loading shimmer effect */
+      /* 加载微光效果 */
       .placeholder.shimmer {
         background: linear-gradient(
           90deg,
@@ -132,7 +132,7 @@ export class MacLazyImage extends BaseElement {
         }
       }
 
-      /* ─── Preview Overlay ─── */
+      /* ─── 预览遮罩层 ─── */
 
       .preview-overlay {
         position: fixed;
@@ -208,39 +208,35 @@ export class MacLazyImage extends BaseElement {
     `,
   ]
 
-  /** The image source URL. */
+  /** 图片源地址。 */
   @property() src = ''
 
-  /** The image alt text. */
+  /** 图片替代文本。 */
   @property() alt = ''
 
-  /** The image width. */
+  /** 图片宽度。 */
   @property() width?: string
 
-  /** The image height. */
+  /** 图片高度。 */
   @property() height?: string
 
-  /** The CSS object-fit value. */
+  /** CSS object-fit 值。 */
   @property({ attribute: 'object-fit' }) objectFit:
-    | 'cover'
-    | 'contain'
-    | 'fill'
-    | 'none'
-    | 'scale-down' = 'cover'
+    'cover' | 'contain' | 'fill' | 'none' | 'scale-down' = 'cover'
 
-  /** A placeholder image URL shown while loading. */
+  /** 加载时显示的占位图片地址。 */
   @property() placeholder?: string
 
-  /** IntersectionObserver rootMargin. */
+  /** IntersectionObserver 的 rootMargin。 */
   @property({ attribute: 'root-margin' }) rootMargin = '0px'
 
-  /** IntersectionObserver threshold. */
+  /** IntersectionObserver 的 threshold。 */
   @property({ type: Number }) threshold = 0
 
-  /** Whether to enable click-to-preview. */
+  /** 是否启用点击预览。 */
   @property({ type: Boolean }) preview = false
 
-  /** The image URL for preview mode. Falls back to src if not set. */
+  /** 预览模式的图片地址。未设置时回退到 src。 */
   @property({ attribute: 'preview-src' }) previewSrc = ''
 
   @state() private _loaded = false
@@ -400,9 +396,9 @@ export class MacLazyImage extends BaseElement {
     return html`
       <div
         part="preview-overlay"
-        class="preview-overlay ${this._previewOpen ? 'open' : ''} ${this._previewAnimating
-          ? 'animating'
-          : ''}"
+        class="preview-overlay ${this._previewOpen ? 'open' : ''} ${
+          this._previewAnimating ? 'animating' : ''
+        }"
         @click=${this._onPreviewBgClick}
       >
         <img part="preview-image" class="preview-image" src=${previewUrl} alt=${this.alt} />
@@ -450,29 +446,31 @@ export class MacLazyImage extends BaseElement {
         part="placeholder"
         class="placeholder ${!hasPlaceholderSlot && !hasPlaceholderSrc ? 'shimmer' : ''}"
       >
-        ${hasPlaceholderSlot
-          ? html`<slot name="placeholder"></slot>`
-          : hasPlaceholderSrc
-            ? html`<img
-                src=${this.placeholder!}
-                alt=""
-                style="width: 100%; height: 100%; object-fit: ${this.objectFit}; opacity: 0.6;"
-              />`
-            : html`
-                <svg
-                  class="placeholder-icon"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                  <polyline points="21 15 16 10 5 21"></polyline>
-                </svg>
-              `}
+        ${
+          hasPlaceholderSlot
+            ? html`<slot name="placeholder"></slot>`
+            : hasPlaceholderSrc
+              ? html`<img
+                  src=${this.placeholder!}
+                  alt=""
+                  style="width: 100%; height: 100%; object-fit: ${this.objectFit}; opacity: 0.6;"
+                />`
+              : html`
+                  <svg
+                    class="placeholder-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                `
+        }
       </div>
     `
   }
@@ -484,23 +482,25 @@ export class MacLazyImage extends BaseElement {
 
     return html`
       <div part="error" class="error">
-        ${hasErrorSlot
-          ? html`<slot name="error"></slot>`
-          : html`
-              <svg
-                class="error-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="9" y1="9" x2="15" y2="15"></line>
-                <line x1="15" y1="9" x2="9" y2="15"></line>
-              </svg>
-            `}
+        ${
+          hasErrorSlot
+            ? html`<slot name="error"></slot>`
+            : html`
+                <svg
+                  class="error-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="9" y1="9" x2="15" y2="15"></line>
+                  <line x1="15" y1="9" x2="9" y2="15"></line>
+                </svg>
+              `
+        }
       </div>
     `
   }

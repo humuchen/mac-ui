@@ -6,18 +6,18 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-button
- * @summary A versatile button component.
+ * @summary 一个多功能的按钮组件。
  *
- * @slot - The button's label.
- * @slot prefix - Content before the label.
- * @slot suffix - Content after the label.
+ * @slot - 按钮的文本标签。
+ * @slot prefix - 标签前的内容。
+ * @slot suffix - 标签后的内容。
  *
- * @csspart base - The button's base container.
- * @csspart label - The button's label.
- * @csspart prefix - The prefix container.
- * @csspart suffix - The suffix container.
+ * @csspart base - 按钮的基础容器。
+ * @csspart label - 按钮的标签。
+ * @csspart prefix - 前缀容器。
+ * @csspart suffix - 后缀容器。
  *
- * @event mac-click - Emitted when the button is clicked.
+ * @event mac-click - 点击按钮时触发。
  */
 @customElement('mac-button')
 export class MacButton extends BaseElement {
@@ -51,7 +51,7 @@ export class MacButton extends BaseElement {
         outline-offset: 2px;
       }
 
-      /* Variants */
+      /* 变体 */
       .button--primary {
         background-color: var(--md-color-primary);
         color: #fff;
@@ -87,7 +87,7 @@ export class MacButton extends BaseElement {
         background-color: var(--md-color-bg-secondary);
       }
 
-      /* Sizes */
+      /* 尺寸 */
       .button--sm {
         padding: var(--sm-button-padding-vertical) var(--sm-button-padding-horizontal);
         font-size: var(--sm-button-font-size);
@@ -102,14 +102,14 @@ export class MacButton extends BaseElement {
         border-radius: var(--lg-button-radius);
       }
 
-      /* Disabled */
+      /* 禁用 */
       .button:disabled {
         opacity: 0.5;
         cursor: not-allowed;
         pointer-events: none;
       }
 
-      /* Loading */
+      /* 加载中 */
       .button--loading {
         pointer-events: none;
       }
@@ -131,19 +131,19 @@ export class MacButton extends BaseElement {
     `,
   ]
 
-  /** The button's variant style. */
+  /** 按钮的变体样式。 */
   @property({ reflect: true }) variant: 'primary' | 'secondary' | 'text' = 'primary'
 
-  /** The button's size. */
+  /** 按钮的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Disables the button. */
+  /** 禁用按钮。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
-  /** Shows a loading spinner. */
+  /** 显示加载动画。 */
   @property({ type: Boolean, reflect: true }) loading = false
 
-  /** The button's type (form behavior). */
+  /** 按钮的类型（表单行为）。 */
   @property() type: 'button' | 'submit' | 'reset' = 'button'
 
   override willUpdate() {
@@ -166,9 +166,9 @@ export class MacButton extends BaseElement {
     return html`
       <button
         part="base"
-        class="button button--${this.variant} button--${size} ${this.loading
-          ? 'button--loading'
-          : ''}"
+        class="button button--${this.variant} button--${size} ${
+          this.loading ? 'button--loading' : ''
+        }"
         ?disabled=${isDisabled}
         type=${this.type}
         @click=${this._handleClick}

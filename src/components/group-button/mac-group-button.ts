@@ -12,15 +12,15 @@ export interface GroupButtonItem {
 
 /**
  * @tag mac-group-button
- * @summary A macOS-style segmented control component.
+ * @summary 一个 macOS 风格的分段控制组件。
  *
- * @slot - Default slot for group button items.
+ * @slot - 默认插槽，用于分组按钮项。
  *
- * @csspart container - The main container.
- * @csspart slider - The sliding background indicator.
- * @csspart button - Individual button elements.
+ * @csspart container - 主容器。
+ * @csspart slider - 滑动背景指示器。
+ * @csspart button - 单个按钮元素。
  *
- * @event mac-change - Emitted when the selected value changes.
+ * @event mac-change - 选中值变化时触发。
  */
 @customElement('mac-group-button')
 export class MacGroupButton extends BaseElement {
@@ -114,7 +114,7 @@ export class MacGroupButton extends BaseElement {
         outline-offset: 2px;
       }
 
-      /* Sizes */
+      /* 尺寸 */
       :host([size='sm']) .button {
         padding: var(--sm-group-button-item-padding-vertical)
           var(--sm-group-button-item-padding-horizontal);
@@ -142,16 +142,16 @@ export class MacGroupButton extends BaseElement {
     `,
   ]
 
-  /** The array of button items. */
+  /** 按钮项数组。 */
   @property({ type: Array }) items: GroupButtonItem[] = []
 
-  /** The currently selected value. */
+  /** 当前选中的值。 */
   @property({ reflect: true }) value = ''
 
-  /** The size of the buttons. */
+  /** 按钮的尺寸。 */
   @property({ reflect: true }) size?: 'sm' | 'md' | 'lg'
 
-  /** Disables all buttons. */
+  /** 禁用所有按钮。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
   @query('.slider') private slider!: HTMLElement
@@ -175,10 +175,10 @@ export class MacGroupButton extends BaseElement {
   protected override firstUpdated(changedProperties: PropertyValues) {
     super.firstUpdated(changedProperties)
 
-    // Set initial value if not provided
+    // 如果未提供初始值则设置
     this._setInitialValue()
 
-    // Update slider position after render
+    // 渲染后更新滑块位置
     requestAnimationFrame(() => {
       this._updateSliderPosition(false)
     })
@@ -188,7 +188,7 @@ export class MacGroupButton extends BaseElement {
     super.updated(changedProperties)
 
     if (changedProperties.has('items')) {
-      // Set initial value when items are updated
+      // 当项更新时设置初始值
       this._setInitialValue()
     }
 
@@ -225,13 +225,13 @@ export class MacGroupButton extends BaseElement {
         'transform 280ms cubic-bezier(0.4, 0, 0.2, 1), width 280ms cubic-bezier(0.4, 0, 0.2, 1)'
     }
 
-    // Use offsetLeft to get the button's position relative to the container
+    // 使用 offsetLeft 获取按钮相对于容器的位置
     const offset = button.offsetLeft
 
     this.slider.style.width = `${button.offsetWidth}px`
     this.slider.style.transform = `translateX(${offset}px)`
 
-    // Force reflow to ensure transition is applied
+    // 强制重排以确保过渡动画生效
     if (!animate) {
       this.slider.offsetHeight
       this.slider.style.transition =

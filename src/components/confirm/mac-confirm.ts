@@ -22,21 +22,21 @@ export interface ConfirmOptions {
 
 /**
  * @tag mac-confirm
- * @summary A macOS-style confirmation dialog with mask and centered content.
+ * @summary 带遮罩和居中内容的 macOS 风格确认对话框。
  *
- * @slot - The dialog body content (replaces the content property).
- * @slot footer - Custom footer content (replaces default buttons).
+ * @slot - 对话框主体内容（替换 content 属性）。
+ * @slot footer - 自定义底部内容（替换默认按钮）。
  *
- * @csspart mask - The mask/overlay element.
- * @csspart container - The dialog container.
- * @csspart title - The title text.
- * @csspart body - The body content area.
- * @csspart footer - The footer area.
+ * @csspart mask - 遮罩/覆盖层元素。
+ * @csspart container - 对话框容器。
+ * @csspart title - 标题文本。
+ * @csspart body - 主体内容区域。
+ * @csspart footer - 底部区域。
  *
- * @event mac-confirm-open - Emitted when the dialog opens.
- * @event mac-confirm-close - Emitted when the dialog closes.
- * @event mac-confirm-ok - Emitted when the OK button is clicked.
- * @event mac-confirm-cancel - Emitted when the Cancel button is clicked.
+ * @event mac-confirm-open - 对话框打开时触发。
+ * @event mac-confirm-close - 对话框关闭时触发。
+ * @event mac-confirm-ok - 点击确定按钮时触发。
+ * @event mac-confirm-cancel - 点击取消按钮时触发。
  */
 @customElement('mac-confirm')
 export class MacConfirm extends BaseElement {
@@ -96,7 +96,7 @@ export class MacConfirm extends BaseElement {
         opacity: 1;
       }
 
-      /* Title */
+      /* 标题 */
       .titlebar {
         display: flex;
         align-items: center;
@@ -148,7 +148,7 @@ export class MacConfirm extends BaseElement {
         line-height: 1.4;
       }
 
-      /* Body */
+      /* 主体 */
       .body {
         flex: 1;
         overflow: auto;
@@ -158,7 +158,7 @@ export class MacConfirm extends BaseElement {
         line-height: 1.6;
       }
 
-      /* Footer */
+      /* 底部 */
       .footer {
         display: flex;
         align-items: center;
@@ -220,7 +220,7 @@ export class MacConfirm extends BaseElement {
         background: var(--md-confirm-danger-hover-bg);
       }
 
-      /* Dark mode */
+      /* 暗黑模式 */
       :host([data-theme='dark']) .container {
         background: var(--md-confirm-dark-bg);
         box-shadow: var(--md-confirm-dark-shadow);
@@ -259,37 +259,37 @@ export class MacConfirm extends BaseElement {
     `,
   ]
 
-  /** Dialog title text */
+  /** 对话框标题文本 */
   @property({ reflect: true }) title = ''
 
-  /** Dialog title alignment: left | center | right */
+  /** 对话框标题对齐方式：left | center | right */
   @property({ reflect: true }) titleAlign: 'left' | 'center' | 'right' = 'left'
 
-  /** Dialog body content text */
+  /** 对话框主体内容文本 */
   @property() content = ''
 
-  /** Confirm button text */
+  /** 确认按钮文本 */
   @property({ attribute: 'confirm-text' }) confirmText = '确认'
 
-  /** Cancel button text */
+  /** 取消按钮文本 */
   @property({ attribute: 'cancel-text' }) cancelText = '取消'
 
-  /** Whether the confirm button uses danger style */
+  /** 确认按钮是否使用危险样式 */
   @property({ type: Boolean }) danger = false
 
-  /** Whether to show the icon */
+  /** 是否显示图标 */
   @property({ type: Boolean, attribute: 'show-icon' }) showIcon = true
 
-  /** Dialog width, e.g. '420px' or 420 */
+  /** 对话框宽度，例如 '420px' 或 420 */
   @property() width: string | number = '420px'
 
-  /** Whether the dialog is visible */
+  /** 对话框是否可见 */
   @property({ type: Boolean, reflect: true }) visible = false
 
-  /** Whether clicking the mask closes the dialog */
+  /** 点击遮罩是否关闭对话框 */
   @property({ type: Boolean, attribute: 'mask-closable' }) maskClosable = true
 
-  /** Whether to show the divider between title/body and body/footer */
+  /** 是否在标题/主体和主体/底部之间显示分隔线 */
   @property({ type: Boolean, attribute: 'show-divider', reflect: true }) showDivider = true
 
   override willUpdate(): void {
@@ -338,14 +338,14 @@ export class MacConfirm extends BaseElement {
     this.close()
   }
 
-  /** Open the dialog */
+  /** 打开对话框 */
   open(): void {
     if (this.visible) return
     this.visible = true
     this.emit('mac-confirm-open')
   }
 
-  /** Close the dialog */
+  /** 关闭对话框 */
   close(): void {
     if (!this.visible) return
     this.visible = false
@@ -358,13 +358,13 @@ export class MacConfirm extends BaseElement {
     return w
   }
 
-  // ─── Static imperative API ───
+  // ─── 静态命令式 API ───
 
   private static _activeInstance: MacConfirm | null = null
 
   /**
-   * Open a confirmation dialog imperatively.
-   * Returns a promise that resolves to true (ok) or false (cancel).
+   * 以命令式方式打开确认对话框。
+   * 返回一个 Promise，解析为 true（确定）或 false（取消）。
    */
   static open(options: ConfirmOptions): Promise<boolean> {
     return new Promise((resolve) => {
@@ -394,7 +394,7 @@ export class MacConfirm extends BaseElement {
         resolve(false)
       }
       const onClose = () => {
-        // If closed without explicit ok/cancel (e.g. mask click), treat as cancel
+        // 如果未明确点击确定/取消而关闭（例如点击遮罩），则视为取消
         setTimeout(() => {
           if (MacConfirm._activeInstance === el) {
             cleanup()
@@ -426,7 +426,7 @@ export class MacConfirm extends BaseElement {
     })
   }
 
-  /** Close the currently active imperative dialog */
+  /** 关闭当前活动的命令式对话框 */
   static close(): void {
     if (MacConfirm._activeInstance) {
       MacConfirm._activeInstance.close()
@@ -443,38 +443,44 @@ export class MacConfirm extends BaseElement {
     return html`
       <div class="mask" part="mask" @click=${this._onMaskClick}></div>
       <div class="container" part="container" style="--md-confirm-width: ${width}">
-        ${this.title
-          ? html`
-              <div
-                class="titlebar titlebar--${this.titleAlign} ${this.showDivider
-                  ? 'titlebar--divided'
-                  : ''}"
-                part="titlebar"
-              >
-                ${this.showIcon
-                  ? html`
-                      <div
-                        class="titlebar-icon ${this.danger ? 'titlebar-icon--danger' : ''}"
-                        part="titlebar-icon"
-                      >
-                        ${this.danger
-                          ? html`<svg viewBox="0 0 24 24" fill="currentColor">
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                              />
-                            </svg>`
-                          : html`<svg viewBox="0 0 24 24" fill="currentColor">
-                              <path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-                              />
-                            </svg>`}
-                      </div>
-                    `
-                  : ''}
-                <div class="title" part="title">${this.title}</div>
-              </div>
-            `
-          : ''}
+        ${
+          this.title
+            ? html`
+                <div
+                  class="titlebar titlebar--${this.titleAlign} ${
+                    this.showDivider ? 'titlebar--divided' : ''
+                  }"
+                  part="titlebar"
+                >
+                  ${
+                    this.showIcon
+                      ? html`
+                          <div
+                            class="titlebar-icon ${this.danger ? 'titlebar-icon--danger' : ''}"
+                            part="titlebar-icon"
+                          >
+                            ${
+                            this.danger
+                              ? html`<svg viewBox="0 0 24 24" fill="currentColor">
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                                  />
+                                </svg>`
+                              : html`<svg viewBox="0 0 24 24" fill="currentColor">
+                                  <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
+                                  />
+                                </svg>`
+                          }
+                          </div>
+                        `
+                      : ''
+                  }
+                  <div class="title" part="title">${this.title}</div>
+                </div>
+              `
+            : ''
+        }
         <div class="body" part="body">
           <slot>
             ${this.content ? html`<div class="content" part="content">${this.content}</div>` : ''}

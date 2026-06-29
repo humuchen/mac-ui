@@ -7,10 +7,10 @@ import type { DropdownItem } from '../dropdown/mac-dropdown'
 
 /**
  * @tag mac-menu
- * @summary A standalone menu component that can be displayed at any position.
+ * @summary 一个独立的菜单组件，可以在任何位置显示。
  *
- * @csspart base - The menu's base container.
- * @csspart item - A menu item.
+ * @csspart base - 菜单的基础容器。
+ * @csspart item - 菜单项。
  */
 @customElement('mac-menu')
 export class MacMenu extends BaseElement {
@@ -30,19 +30,19 @@ export class MacMenu extends BaseElement {
     `,
   ]
 
-  /** Menu items. */
+  /** 菜单项。 */
   @property({ type: Array }) items: DropdownItem[] = []
 
-  /** The currently active/selected value. */
+  /** 当前激活/选中的值。 */
   @property({ type: String }) value = ''
 
-  /** Whether the menu is visible. */
+  /** 菜单是否可见。 */
   @property({ type: Boolean, reflect: true }) visible = false
 
-  /** Menu position (x coordinate). */
+  /** 菜单位置（x 坐标）。 */
   @property({ type: Number }) x = 0
 
-  /** Menu position (y coordinate). */
+  /** 菜单位置（y 坐标）。 */
   @property({ type: Number }) y = 0
 
   @state() private _menuEl: HTMLElement | null = null
@@ -51,10 +51,10 @@ export class MacMenu extends BaseElement {
   private static _stylesInjected = false
 
   /**
-   * Show the menu at specified position with given items.
-   * @param x - X coordinate
-   * @param y - Y coordinate
-   * @param items - Menu items to display
+   * 在指定位置显示菜单，使用给定的项。
+   * @param x - X 坐标
+   * @param y - Y 坐标
+   * @param items - 要显示的菜单项
    */
   show(x: number, y: number, items?: DropdownItem[]) {
     if (items) this.items = items
@@ -66,7 +66,7 @@ export class MacMenu extends BaseElement {
   }
 
   /**
-   * Hide the menu.
+   * 隐藏菜单。
    */
   hide() {
     this.visible = false
@@ -75,7 +75,7 @@ export class MacMenu extends BaseElement {
   }
 
   /**
-   * Toggle menu visibility.
+   * 切换菜单可见性。
    */
   toggle(x: number, y: number, items?: DropdownItem[]) {
     if (this.visible) {
@@ -103,12 +103,12 @@ export class MacMenu extends BaseElement {
     if (MacMenu._stylesInjected) return
     MacMenu._stylesInjected = true
 
-    // Menu-specific theme variables
+    // 菜单专属主题变量
     const vars = document.createElement('style')
     vars.id = 'mac-menu-theme-vars'
     vars.textContent = `
       :root {
-        /* Menu-specific variables (only define variables not in theme.ts) */
+        /* 菜单专属变量（仅定义 theme.ts 中不存在的变量） */
         --md-spacing-container: 5px;
         --md-glass-brightness: 1.05;
 
@@ -135,7 +135,7 @@ export class MacMenu extends BaseElement {
         --md-menu-divider-color: rgba(0, 0, 0, 0.06);
         --md-menu-divider-margin: 5px 10px;
 
-        /* Dark Mode */
+        /* 深色模式 */
         --md-menu-container-dark-bg: rgba(30, 30, 30, 0.92);
         --md-menu-container-dark-border: rgba(255, 255, 255, 0.08);
         --md-menu-item-dark-hover-bg: rgba(255, 255, 255, 0.1);
@@ -293,7 +293,7 @@ export class MacMenu extends BaseElement {
         margin: var(--md-menu-divider-margin);
       }
 
-      /* Dark Mode */
+      /* 深色模式 */
       .mac-menu-portal[data-theme='dark'] {
         background: var(--md-menu-container-dark-bg);
         border-color: var(--md-menu-container-dark-border);
@@ -346,7 +346,7 @@ export class MacMenu extends BaseElement {
         color: var(--md-menu-shortcut-dark-color);
       }
 
-      /* Mobile responsive */
+      /* 移动端适配 */
       @media (max-width: 768px) {
         .mac-menu-portal {
           min-width: calc(100vw - 32px) !important;
@@ -396,7 +396,7 @@ export class MacMenu extends BaseElement {
 
     menu.innerHTML = this._renderItems()
 
-    // Calculate position
+    // 计算位置
     const pos = this._calcPosition()
     menu.style.left = `${pos.left}px`
     menu.style.top = `${pos.top}px`
@@ -404,7 +404,7 @@ export class MacMenu extends BaseElement {
     document.body.appendChild(menu)
     this._menuEl = menu
 
-    // Attach event listeners to items
+    // 为项附加事件监听器
     this._attachItemListeners(menu)
   }
 
@@ -425,7 +425,7 @@ export class MacMenu extends BaseElement {
     let left = isMobile ? 16 : this.x
     let top = this.y
 
-    // Adjust to viewport
+    // 调整到视口内
     if (left + menuWidth > vw - 8) left = vw - menuWidth - 8
     if (top + menuHeight > vh - 8) top = vh - menuHeight - 8
     if (left < 8) left = 8

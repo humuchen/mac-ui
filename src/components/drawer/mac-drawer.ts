@@ -6,31 +6,31 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-drawer
- * @summary A macOS-style drawer component that slides in from the edge of the viewport.
+ * @summary 一个 macOS 风格的抽屉组件，从视口边缘滑入。
  *
- * @slot - Default slot for drawer content.
- * @slot header - Custom header content (replaces default title + close).
- * @slot footer - Footer content (e.g. action buttons).
+ * @slot - 默认插槽，用于抽屉内容。
+ * @slot header - 自定义头部内容（替换默认标题和关闭按钮）。
+ * @slot footer - 底部内容（例如操作按钮）。
  *
- * @cssproperty --md-drawer-bg - Drawer panel background.
- * @cssproperty --md-drawer-border - Drawer panel border.
- * @cssproperty --md-drawer-shadow - Drawer panel shadow.
- * @cssproperty --md-drawer-header-padding - Header padding.
- * @cssproperty --md-drawer-header-border - Header bottom border.
- * @cssproperty --md-drawer-title-font-size - Title font size.
- * @cssproperty --md-drawer-title-color - Title text color.
- * @cssproperty --md-drawer-body-padding - Body padding.
- * @cssproperty --md-drawer-footer-padding - Footer padding.
- * @cssproperty --md-drawer-footer-border - Footer top border.
- * @cssproperty --md-drawer-close-color - Close icon color.
- * @cssproperty --md-drawer-close-hover-bg - Close icon hover background.
- * @cssproperty --md-drawer-mask-bg - Overlay mask background.
- * @cssproperty --md-drawer-radius - Drawer border radius (for the exposed edge).
+ * @cssproperty --md-drawer-bg - 抽屉面板背景。
+ * @cssproperty --md-drawer-border - 抽屉面板边框。
+ * @cssproperty --md-drawer-shadow - 抽屉面板阴影。
+ * @cssproperty --md-drawer-header-padding - 头部内边距。
+ * @cssproperty --md-drawer-header-border - 头部底边框。
+ * @cssproperty --md-drawer-title-font-size - 标题字体大小。
+ * @cssproperty --md-drawer-title-color - 标题文字颜色。
+ * @cssproperty --md-drawer-body-padding - 内容区内边距。
+ * @cssproperty --md-drawer-footer-padding - 底部内边距。
+ * @cssproperty --md-drawer-footer-border - 底部顶边框。
+ * @cssproperty --md-drawer-close-color - 关闭图标颜色。
+ * @cssproperty --md-drawer-close-hover-bg - 关闭图标悬停背景。
+ * @cssproperty --md-drawer-mask-bg - 遮罩层背景。
+ * @cssproperty --md-drawer-radius - 抽屉圆角（暴露边缘）。
  *
- * @event mac-drawer-open - Emitted after drawer opens.
- * @event mac-drawer-close - Emitted after drawer closes.
- * @event mac-drawer-after-open - Emitted after open animation completes.
- * @event mac-drawer-after-close - Emitted after close animation completes.
+ * @event mac-drawer-open - 抽屉打开后触发。
+ * @event mac-drawer-close - 抽屉关闭后触发。
+ * @event mac-drawer-after-open - 打开动画完成后触发。
+ * @event mac-drawer-after-close - 关闭动画完成后触发。
  */
 @customElement('mac-drawer')
 export class MacDrawer extends BaseElement {
@@ -56,7 +56,7 @@ export class MacDrawer extends BaseElement {
         --md-drawer-radius: var(--md-radius-lg);
       }
 
-      /* ─── Mask ─── */
+      /* ─── 遮罩层 ─── */
 
       .mask {
         position: fixed;
@@ -78,7 +78,7 @@ export class MacDrawer extends BaseElement {
         pointer-events: auto;
       }
 
-      /* ─── Drawer Panel ─── */
+      /* ─── 抽屉面板 ─── */
 
       .panel {
         position: fixed;
@@ -93,7 +93,7 @@ export class MacDrawer extends BaseElement {
         transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      /* ─── Placement ─── */
+      /* ─── 位置方向 ─── */
 
       .panel.right {
         top: 0;
@@ -157,7 +157,7 @@ export class MacDrawer extends BaseElement {
         transform: translateY(0);
       }
 
-      /* ─── Header ─── */
+      /* ─── 头部 ─── */
 
       .header {
         display: flex;
@@ -205,7 +205,7 @@ export class MacDrawer extends BaseElement {
         height: 16px;
       }
 
-      /* ─── Body ─── */
+      /* ─── 内容区 ─── */
 
       .body {
         flex: 1;
@@ -213,7 +213,7 @@ export class MacDrawer extends BaseElement {
         padding: var(--md-drawer-body-padding);
       }
 
-      /* ─── Footer ─── */
+      /* ─── 底部 ─── */
 
       .footer {
         display: flex;
@@ -229,7 +229,7 @@ export class MacDrawer extends BaseElement {
         display: none;
       }
 
-      /* ─── Resize Handle ─── */
+      /* ─── 调整大小手柄 ─── */
 
       .resize-handle {
         position: absolute;
@@ -294,61 +294,61 @@ export class MacDrawer extends BaseElement {
     `,
   ]
 
-  /** Whether the drawer is open */
+  /** 抽屉是否打开 */
   @property({ type: Boolean, reflect: true }) open = false
 
-  /** Drawer placement direction */
+  /** 抽屉放置方向 */
   @property({ reflect: true }) placement: 'top' | 'right' | 'bottom' | 'left' = 'right'
 
-  /** Drawer title */
+  /** 抽屉标题 */
   @property() title = ''
 
-  /** Drawer width (for left/right placement) */
+  /** 抽屉宽度（用于左/右放置） */
   @property({ type: String }) width = '360px'
 
-  /** Drawer height (for top/bottom placement) */
+  /** 抽屉高度（用于上/下放置） */
   @property({ type: String }) height = '360px'
 
-  /** Whether to show the close button */
+  /** 是否显示关闭按钮 */
   @property({ type: Boolean }) closable = true
 
-  /** Whether clicking the mask closes the drawer */
+  /** 点击遮罩是否关闭抽屉 */
   @property({ type: Boolean, attribute: 'mask-closable' }) maskClosable = true
 
-  /** Whether to show the mask overlay */
+  /** 是否显示遮罩层 */
   @property({ attribute: 'show-mask' }) showMask: boolean | 'transparent' = true
 
-  /** Whether pressing ESC closes the drawer */
+  /** 按 ESC 键是否关闭抽屉 */
   @property({ type: Boolean, attribute: 'close-on-esc' }) closeOnEsc = true
 
-  /** Whether the drawer can be resized */
+  /** 抽屉是否可调整大小 */
   @property({ type: Boolean }) resizable = false
 
-  /** Minimum width for resize (left/right) */
+  /** 调整大小时的最小宽度（左/右） */
   @property({ type: String, attribute: 'min-width' }) minWidth = '200px'
 
-  /** Maximum width for resize (left/right) */
+  /** 调整大小时的最大宽度（左/右） */
   @property({ type: String, attribute: 'max-width' }) maxWidth = '80vw'
 
-  /** Minimum height for resize (top/bottom) */
+  /** 调整大小时的最小高度（上/下） */
   @property({ type: String, attribute: 'min-height' }) minHeight = '200px'
 
-  /** Maximum height for resize (top/bottom) */
+  /** 调整大小时的最大高度（上/下） */
   @property({ type: String, attribute: 'max-height' }) maxHeight = '80vh'
 
   @state() private _isOpen = false
 
-  // Portal elements
+  // Portal 元素
   private _maskEl: HTMLElement | null = null
   private _panelEl: HTMLElement | null = null
 
-  // Resize state
+  // 调整大小状态
   private _isResizing = false
   private _resizeStartX = 0
   private _resizeStartY = 0
   private _resizeStartSize = 0
 
-  // Style injection
+  // 样式注入
   private static _stylesInjected = false
 
   override willUpdate(): void {
@@ -657,7 +657,7 @@ export class MacDrawer extends BaseElement {
   private _createPortal(): void {
     this._removePortal()
 
-    // Mask
+    // 遮罩层
     const mask = document.createElement('div')
     mask.className = 'mac-drawer-mask'
     if (this.showMask === 'transparent') {
@@ -673,18 +673,18 @@ export class MacDrawer extends BaseElement {
     document.body.appendChild(mask)
     this._maskEl = mask
 
-    // Panel
+    // 面板
     const panel = document.createElement('div')
     panel.className = `mac-drawer-panel ${this.placement}`
 
-    // Set size
+    // 设置大小
     if (this.placement === 'left' || this.placement === 'right') {
       panel.style.width = this.width
     } else {
       panel.style.height = this.height
     }
 
-    // Header
+    // 头部
     const header = document.createElement('div')
     header.className = 'mac-drawer-header'
 
@@ -703,11 +703,11 @@ export class MacDrawer extends BaseElement {
 
     panel.appendChild(header)
 
-    // Body - slot content will be moved here
+    // 内容区 - 插槽内容将被移到这里
     const body = document.createElement('div')
     body.className = 'mac-drawer-body'
 
-    // Move slotted children to portal body
+    // 将插槽子元素移动到 portal 内容区
     const children = Array.from(this.childNodes).filter(
       (node) => !((node as Element).slot === 'header' || (node as Element).slot === 'footer'),
     )
@@ -716,7 +716,7 @@ export class MacDrawer extends BaseElement {
 
     panel.appendChild(body)
 
-    // Footer
+    // 底部
     const footerSlot = this.querySelector('[slot="footer"]')
     if (footerSlot) {
       const footer = document.createElement('div')
@@ -725,7 +725,7 @@ export class MacDrawer extends BaseElement {
       panel.appendChild(footer)
     }
 
-    // Resize handle
+    // 调整大小手柄
     if (this.resizable) {
       const resizeHandle = document.createElement('div')
       resizeHandle.className = `mac-drawer-resize ${this.placement}`
@@ -740,7 +740,7 @@ export class MacDrawer extends BaseElement {
   private _slottedChildren: Node[] = []
 
   private _removePortal(): void {
-    // Return children to original host
+    // 将子元素返回到原始宿主
     if (this._slottedChildren.length > 0) {
       this._slottedChildren.forEach((child) => {
         if (child.parentNode) {
@@ -773,7 +773,7 @@ export class MacDrawer extends BaseElement {
     }
   }
 
-  // ─── Resize ───
+  // ─── 调整大小 ───
 
   private _onResizeStart(e: MouseEvent): void {
     if (e.button !== 0) return
@@ -836,7 +836,7 @@ export class MacDrawer extends BaseElement {
   }
 
   override render() {
-    // Component renders nothing in its own DOM; content is portaled to body
+    // 组件自身 DOM 不渲染任何内容；内容通过 portal 挂载到 body
     return html`<slot style="display:none"></slot>`
   }
 }

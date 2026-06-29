@@ -6,27 +6,27 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-popconfirm
- * @summary A macOS-style popover confirmation component.
+ * @summary macOS 风格的气泡确认组件。
  *
- * @slot - The trigger element.
- * @slot action - Custom action buttons (replaces default confirm/cancel).
+ * @slot - 触发元素。
+ * @slot action - 自定义操作按钮（替换默认确认/取消按钮）。
  *
- * @cssproperty --md-popconfirm-bg - Popover background.
- * @cssproperty --md-popconfirm-border - Popover border.
- * @cssproperty --md-popconfirm-shadow - Popover shadow.
- * @cssproperty --md-popconfirm-radius - Popover border radius.
- * @cssproperty --md-popconfirm-padding - Popover padding.
- * @cssproperty --md-popconfirm-icon-color - Icon color.
- * @cssproperty --md-popconfirm-title-color - Title text color.
- * @cssproperty --md-popconfirm-title-font-size - Title font size.
- * @cssproperty --md-popconfirm-desc-color - Description text color.
- * @cssproperty --md-popconfirm-desc-font-size - Description font size.
- * @cssproperty --md-popconfirm-btn-gap - Action button gap.
+ * @cssproperty --md-popconfirm-bg - 气泡背景。
+ * @cssproperty --md-popconfirm-border - 气泡边框。
+ * @cssproperty --md-popconfirm-shadow - 气泡阴影。
+ * @cssproperty --md-popconfirm-radius - 气泡圆角。
+ * @cssproperty --md-popconfirm-padding - 气泡内边距。
+ * @cssproperty --md-popconfirm-icon-color - 图标颜色。
+ * @cssproperty --md-popconfirm-title-color - 标题文字颜色。
+ * @cssproperty --md-popconfirm-title-font-size - 标题字体大小。
+ * @cssproperty --md-popconfirm-desc-color - 描述文字颜色。
+ * @cssproperty --md-popconfirm-desc-font-size - 描述字体大小。
+ * @cssproperty --md-popconfirm-btn-gap - 操作按钮间距。
  *
- * @event mac-popconfirm-confirm - Emitted when confirm button is clicked.
- * @event mac-popconfirm-cancel - Emitted when cancel button is clicked.
- * @event mac-popconfirm-open - Emitted when popover opens.
- * @event mac-popconfirm-close - Emitted when popover closes.
+ * @event mac-popconfirm-confirm - 点击确认按钮时触发。
+ * @event mac-popconfirm-cancel - 点击取消按钮时触发。
+ * @event mac-popconfirm-open - 气泡打开时触发。
+ * @event mac-popconfirm-close - 气泡关闭时触发。
  */
 @customElement('mac-popconfirm')
 export class MacPopconfirm extends BaseElement {
@@ -56,25 +56,25 @@ export class MacPopconfirm extends BaseElement {
     `,
   ]
 
-  /** Confirmation title text */
+  /** 确认标题文本 */
   @property() title = ''
 
-  /** Confirmation description text */
+  /** 确认描述文本 */
   @property() description = ''
 
-  /** Confirm button text */
+  /** 确认按钮文本 */
   @property({ attribute: 'confirm-text' }) confirmText = '确认'
 
-  /** Cancel button text */
+  /** 取消按钮文本 */
   @property({ attribute: 'cancel-text' }) cancelText = '取消'
 
-  /** Whether the confirm button is in danger style */
+  /** 确认按钮是否为危险样式 */
   @property({ type: Boolean, attribute: 'danger' }) danger = false
 
-  /** Whether to show the icon */
+  /** 是否显示图标 */
   @property({ type: Boolean, attribute: 'show-icon' }) showIcon = true
 
-  /** Popover placement */
+  /** 气泡位置 */
   @property() placement:
     | 'top'
     | 'top-start'
@@ -89,13 +89,13 @@ export class MacPopconfirm extends BaseElement {
     | 'right-start'
     | 'right-end' = 'top'
 
-  /** Trigger mode */
+  /** 触发模式 */
   @property() trigger: 'click' | 'hover' = 'click'
 
-  /** Whether the popconfirm is disabled */
+  /** 是否禁用气泡确认 */
   @property({ type: Boolean }) disabled = false
 
-  /** Width of the popover */
+  /** 气泡宽度 */
   @property({ type: String }) width = '240px'
 
   @state() private _visible = false
@@ -162,7 +162,7 @@ export class MacPopconfirm extends BaseElement {
         pointer-events: auto;
       }
 
-      /* Arrow */
+      /* 箭头 */
       .mac-popconfirm-portal .popconfirm-arrow {
         position: absolute;
         width: 10px;
@@ -196,7 +196,7 @@ export class MacPopconfirm extends BaseElement {
         border-right: none;
       }
 
-      /* Content */
+      /* 内容 */
       .mac-popconfirm-portal .popconfirm-body {
         display: flex;
         gap: 10px;
@@ -348,7 +348,7 @@ export class MacPopconfirm extends BaseElement {
     }
   }
 
-  // ─── Event Handlers ───
+  // ─── 事件处理器 ───
 
   private _handleDocumentClick = (e: Event): void => {
     if (!this._visible || !this._popoverEl) return
@@ -383,7 +383,7 @@ export class MacPopconfirm extends BaseElement {
     this._hoverTimeout = setTimeout(() => this._hide(), 200)
   }
 
-  // ─── Show / Hide ───
+  // ─── 显示/隐藏 ───
 
   private _show(): void {
     if (this._visible) return
@@ -409,7 +409,7 @@ export class MacPopconfirm extends BaseElement {
     this._hide()
   }
 
-  // ─── Positioning ───
+  // ─── 定位 ───
 
   private _calcPosition(
     anchorRect: DOMRect,
@@ -480,7 +480,7 @@ export class MacPopconfirm extends BaseElement {
 
     place(this.placement)
 
-    // Auto-flip: if overflows viewport, try opposite placement
+    // 自动翻转：如果溢出视口，尝试相反位置
     const isTop = this.placement.startsWith('top')
     const isBottom = this.placement.startsWith('bottom')
     const isLeft = this.placement.startsWith('left')
@@ -524,7 +524,7 @@ export class MacPopconfirm extends BaseElement {
       }
     }
 
-    // Clamp to viewport
+    // 限制在视口内
     if (left + pw > vw - 8) left = vw - pw - 8
     if (left < 8) left = 8
     if (top + ph > vh - 8) top = vh - ph - 8
@@ -581,16 +581,16 @@ export class MacPopconfirm extends BaseElement {
     }
     popover.style.width = this.width
 
-    // Arrow
+    // 箭头
     const arrow = document.createElement('div')
     arrow.className = 'popconfirm-arrow'
     popover.appendChild(arrow)
 
-    // Body
+    // 主体
     const body = document.createElement('div')
     body.className = 'popconfirm-body'
 
-    // Icon
+    // 图标
     if (this.showIcon) {
       const iconWrap = document.createElement('div')
       iconWrap.className = 'popconfirm-icon'
@@ -598,7 +598,7 @@ export class MacPopconfirm extends BaseElement {
       body.appendChild(iconWrap)
     }
 
-    // Content
+    // 内容
     const content = document.createElement('div')
     content.className = 'popconfirm-content'
 
@@ -619,23 +619,23 @@ export class MacPopconfirm extends BaseElement {
     body.appendChild(content)
     popover.appendChild(body)
 
-    // Actions
+    // 操作按钮
     const actions = document.createElement('div')
     actions.className = 'popconfirm-actions'
 
-    // Check for custom action slot
+    // 检查自定义操作插槽
     const customActionSlot = this.querySelector('[slot="action"]')
     if (customActionSlot) {
       actions.appendChild(customActionSlot.cloneNode(true))
     } else {
-      // Cancel button
+      // 取消按钮
       const cancelBtn = document.createElement('button')
       cancelBtn.className = 'popconfirm-btn popconfirm-btn-cancel'
       cancelBtn.textContent = this.cancelText
       cancelBtn.addEventListener('click', () => this._cancel())
       actions.appendChild(cancelBtn)
 
-      // Confirm button
+      // 确认按钮
       const confirmBtn = document.createElement('button')
       confirmBtn.className = `popconfirm-btn popconfirm-btn-confirm${this.danger ? ' popconfirm-btn-danger' : ''}`
       confirmBtn.textContent = this.confirmText
@@ -645,7 +645,7 @@ export class MacPopconfirm extends BaseElement {
 
     popover.appendChild(actions)
 
-    // Hover keep-alive
+    // 悬停保活
     popover.addEventListener('mouseenter', () => {
       if (this.trigger === 'hover' && this._hoverTimeout) {
         clearTimeout(this._hoverTimeout)
@@ -659,14 +659,14 @@ export class MacPopconfirm extends BaseElement {
       }
     })
 
-    // Render invisibly first to measure actual dimensions
+    // 先不可见渲染以测量实际尺寸
     popover.style.visibility = 'hidden'
     popover.style.left = '-9999px'
     popover.style.top = '-9999px'
     document.body.appendChild(popover)
     this._popoverEl = popover
 
-    // Measure and position
+    // 测量并定位
     requestAnimationFrame(() => {
       if (!this._popoverEl) return
       const popoverRect = popover.getBoundingClientRect()

@@ -6,11 +6,11 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-split-pane
- * @summary A pane container used inside mac-split.
+ * @summary 在 mac-split 内部使用的窗格容器。
  *
- * @slot - The pane's content.
+ * @slot - 窗格的内容。
  *
- * @csspart base - The pane's base container.
+ * @csspart base - 窗格的基础容器。
  */
 @customElement('mac-split-pane')
 export class MacSplitPane extends BaseElement {
@@ -48,20 +48,20 @@ declare global {
 
 /**
  * @tag mac-split
- * @summary A resizable split panel component with macOS-style design.
+ * @summary macOS 风格的可调整分割面板组件。
  *
- * @slot first - The first panel content.
- * @slot second - The second panel content.
+ * @slot first - 第一个面板的内容。
+ * @slot second - 第二个面板的内容。
  *
- * @csspart base - The split container.
- * @csspart first - The first panel wrapper.
- * @csspart second - The second panel wrapper.
- * @csspart resizer - The draggable resizer bar.
- * @csspart resizer-line - The visual line inside the resizer.
+ * @csspart base - 分割容器。
+ * @csspart first - 第一个面板的包装器。
+ * @csspart second - 第二个面板的包装器。
+ * @csspart resizer - 可拖拽的调整条。
+ * @csspart resizer-line - 调整条内的视觉线条。
  *
- * @event mac-split-change - Emitted when the split value changes. `detail: { value: number }`
- * @event mac-split-drag-start - Emitted when dragging starts.
- * @event mac-split-drag-end - Emitted when dragging ends.
+ * @event mac-split-change - 分割值变化时触发。`detail: { value: number }`
+ * @event mac-split-drag-start - 开始拖拽时触发。
+ * @event mac-split-drag-end - 拖拽结束时触发。
  */
 @customElement('mac-split')
 export class MacSplit extends BaseElement {
@@ -205,22 +205,22 @@ export class MacSplit extends BaseElement {
     `,
   ]
 
-  /** The split direction. */
+  /** 分割方向。 */
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
 
-  /** The initial split value as a ratio (0-1) or pixels. */
+  /** 初始分割值，比例（0-1）或像素。 */
   @property({ type: Number }) split = 0.5
 
-  /** The unit of the split value: 'ratio' (0-1) or 'pixel'. */
+  /** 分割值的单位：'ratio'（0-1）或 'pixel'。 */
   @property({ reflect: true }) unit: 'ratio' | 'pixel' = 'ratio'
 
-  /** Minimum size of the first panel in pixels. */
+  /** 第一个面板的最小尺寸（像素）。 */
   @property({ type: Number }) min = 0
 
-  /** Maximum size of the first panel in pixels. 0 means no limit. */
+  /** 第一个面板的最大尺寸（像素）。0 表示无限制。 */
   @property({ type: Number }) max = 0
 
-  /** Disables resizing. */
+  /** 禁用调整大小。 */
   @property({ type: Boolean, reflect: true }) disabled = false
 
   @state() private _dragging = false
@@ -281,7 +281,7 @@ export class MacSplit extends BaseElement {
       newSize = e.clientY - rect.top
     }
 
-    // Apply min/max constraints
+    // 应用最小/最大约束
     if (this.min > 0) {
       newSize = Math.max(newSize, this.min)
     }
@@ -289,7 +289,7 @@ export class MacSplit extends BaseElement {
       newSize = Math.min(newSize, this.max)
     }
 
-    // Convert to unit value
+    // 转换为单位值
     if (this.unit === 'ratio') {
       const total = this.direction === 'horizontal' ? rect.width : rect.height
       if (total > 0) {

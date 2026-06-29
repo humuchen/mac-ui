@@ -6,26 +6,26 @@ import { themeTokens } from '../../styles/theme'
 
 /**
  * @tag mac-modal
- * @summary A macOS-style modal/window with title bar, drag, and resize support.
+ * @summary macOS 风格的模态框/窗口，支持标题栏、拖拽和调整大小。
  *
- * @slot - The modal body content.
- * @slot titlebar - Custom title bar content (replaces default title + buttons).
- * @slot footer - Custom footer content.
+ * @slot - 模态框内容区。
+ * @slot titlebar - 自定义标题栏内容（替换默认标题和按钮）。
+ * @slot footer - 自定义底部内容。
  *
- * @csspart base - The modal container.
- * @csspart titlebar - The title bar area.
- * @csspart title - The title text.
- * @csspart body - The body content area.
- * @csspart footer - The footer area.
- * @csspart resize-handle - The resize handle at bottom-right.
+ * @csspart base - 模态框容器。
+ * @csspart titlebar - 标题栏区域。
+ * @csspart title - 标题文本。
+ * @csspart body - 内容区域。
+ * @csspart footer - 底部区域。
+ * @csspart resize-handle - 右下角调整大小手柄。
  *
- * @event mac-modal-close - Emitted when the close button is clicked.
- * @event mac-modal-minimize - Emitted when the minimize button is clicked.
- * @event mac-modal-maximize - Emitted when the maximize/fullscreen button is clicked.
- * @event mac-modal-move - Emitted when the modal is moved. Detail: { x, y }
- * @event mac-modal-resize - Emitted when the modal is resized. Detail: { width, height }
- * @event mac-modal-ok - Emitted when the default OK button is clicked.
- * @event mac-modal-cancel - Emitted when the default Cancel button is clicked.
+ * @event mac-modal-close - 点击关闭按钮时触发。
+ * @event mac-modal-minimize - 点击最小化按钮时触发。
+ * @event mac-modal-maximize - 点击最大化/全屏按钮时触发。
+ * @event mac-modal-move - 模态框移动时触发。Detail: { x, y }
+ * @event mac-modal-resize - 模态框调整大小时触发。Detail: { width, height }
+ * @event mac-modal-ok - 点击默认确认按钮时触发。
+ * @event mac-modal-cancel - 点击默认取消按钮时触发。
  */
 @customElement('mac-modal')
 export class MacModal extends BaseElement {
@@ -56,7 +56,7 @@ export class MacModal extends BaseElement {
         overflow: hidden;
       }
 
-      /* ─── Title Bar ─── */
+      /* ─── 标题栏 ─── */
 
       .titlebar {
         display: flex;
@@ -134,7 +134,7 @@ export class MacModal extends BaseElement {
         flex-shrink: 0;
       }
 
-      /* ─── Body ─── */
+      /* ─── 内容区 ─── */
 
       .body {
         flex: 1;
@@ -145,7 +145,7 @@ export class MacModal extends BaseElement {
         line-height: 1.5;
       }
 
-      /* ─── Footer ─── */
+      /* ─── 底部 ─── */
 
       .footer {
         display: flex;
@@ -200,7 +200,7 @@ export class MacModal extends BaseElement {
         display: contents;
       }
 
-      /* ─── Resize Handle ─── */
+      /* ─── 调整大小手柄 ─── */
 
       .resize-handle {
         position: absolute;
@@ -223,7 +223,7 @@ export class MacModal extends BaseElement {
         border-bottom: 2px solid var(--md-modal-resize-border);
       }
 
-      /* ─── Edge Resize Handles ─── */
+      /* ─── 边缘调整大小手柄 ─── */
 
       .resize-n {
         position: absolute;
@@ -297,14 +297,14 @@ export class MacModal extends BaseElement {
         cursor: nesw-resize;
       }
 
-      /* ─── Minimized ─── */
+      /* ─── 最小化 ─── */
 
       :host([minimized]) .body,
       :host([minimized]) .footer {
         display: none;
       }
 
-      /* ─── Maximized ─── */
+      /* ─── 最大化 ─── */
 
       :host([maximized]) {
         border-radius: 0;
@@ -326,7 +326,7 @@ export class MacModal extends BaseElement {
         display: none;
       }
 
-      /* ─── Inactive ─── */
+      /* ─── 非激活状态 ─── */
 
       :host(:not([active])) .titlebar {
         background: rgba(255, 255, 255, 0.03);
@@ -344,7 +344,7 @@ export class MacModal extends BaseElement {
         color: var(--md-modal-title-inactive-color);
       }
 
-      /* ─── Dark Mode ─── */
+      /* ─── 深色模式 ─── */
 
       :host([data-theme='dark']) {
         box-shadow: var(--md-modal-container-dark-shadow);
@@ -400,7 +400,7 @@ export class MacModal extends BaseElement {
         border-bottom-color: var(--md-modal-resize-dark-border);
       }
 
-      /* ─── Light Mode (manual via data-theme="light", overrides OS dark) ─── */
+      /* ─── 浅色模式（通过 data-theme="light" 手动设置，覆盖系统深色模式） ─── */
 
       :host([data-theme='light']) .titlebar {
         background: var(--md-modal-header-bg);
@@ -491,10 +491,10 @@ export class MacModal extends BaseElement {
     `,
   ]
 
-  /** Modal title */
+  /** 模态框标题 */
   @property({ reflect: true }) title = ''
 
-  /** Modal title text alignment */
+  /** 模态框标题文本对齐方式 */
   @property({ reflect: true }) titleAlign = 'center'
 
   override willUpdate(): void {
@@ -516,53 +516,53 @@ export class MacModal extends BaseElement {
     }
   }
 
-  /** Modal left position */
+  /** 模态框左侧位置 */
   @property({ type: Number }) x = 100
 
-  /** Modal top position */
+  /** 模态框顶部位置 */
   @property({ type: Number }) y = 100
 
-  /** Modal width */
+  /** 模态框宽度 */
   @property({ type: Number }) width = 480
 
-  /** Modal height */
+  /** 模态框高度 */
   @property({ type: Number }) height = 360
 
-  /** Whether the modal is active (focused) */
+  /** 模态框是否激活（聚焦） */
   @property({ type: Boolean, reflect: true }) active = true
 
-  /** Whether the modal can be dragged */
+  /** 模态框是否可拖拽 */
   @property({ type: Boolean }) draggable = true
 
-  /** Whether the modal can be resized */
+  /** 模态框是否可调整大小 */
   @property({ type: Boolean }) resizable = true
 
-  /** Whether to show traffic light buttons */
+  /** 是否显示红绿灯按钮 */
   @property({ type: Boolean }) showButtons = true
 
-  /** Whether to show the footer area */
+  /** 是否显示底部区域 */
   @property({ type: Boolean }) showFooter = true
 
-  /** Minimum width for resize */
+  /** 调整大小时的最小宽度 */
   @property({ type: Number }) minWidth = 280
 
-  /** Minimum height for resize */
+  /** 调整大小时的最小高度 */
   @property({ type: Number }) minHeight = 160
 
-  /** Whether the modal is minimized */
+  /** 模态框是否最小化 */
   @property({ type: Boolean, reflect: true }) minimized = false
 
-  /** Whether the modal is maximized */
+  /** 模态框是否最大化 */
   @property({ type: Boolean, reflect: true }) maximized = false
 
-  // Drag state
+  // 拖拽状态
   private _isDragging = false
   private _dragStartX = 0
   private _dragStartY = 0
   private _dragOffsetX = 0
   private _dragOffsetY = 0
 
-  // Resize state
+  // 调整大小状态
   private _isResizing = false
   private _resizeDir = ''
   private _resizeStartX = 0
@@ -572,11 +572,11 @@ export class MacModal extends BaseElement {
   private _resizeStartLeft = 0
   private _resizeStartTop = 0
 
-  // Drag/resize cleanup
+  // 拖拽/调整大小清理
   private _dragCleanup: (() => void) | null = null
   private _resizeCleanup: (() => void) | null = null
 
-  // Saved state for minimize/maximize restore
+  // 最小化/最大化恢复时保存的状态
   private _prevX = 100
   private _prevY = 100
   private _prevWidth = 480
@@ -613,11 +613,11 @@ export class MacModal extends BaseElement {
     this.style.height = `${this.height}px`
   }
 
-  // ─── Drag ───
+  // ─── 拖拽 ───
 
   private _onTitleBarMouseDown(e: MouseEvent): void {
     if (!this.draggable || e.button !== 0 || this.maximized) return
-    // 忽略点击在红绿灯按钮上
+    // 忽略红绿灯按钮上的点击
     if ((e.target as HTMLElement).closest('.traffic-light')) return
 
     e.preventDefault()
@@ -650,7 +650,7 @@ export class MacModal extends BaseElement {
     this._dragCleanup = onUp
   }
 
-  // ─── Resize ───
+  // ─── 调整大小 ───
 
   private _onResizeMouseDown(dir: string, e: MouseEvent): void {
     if (!this.resizable || e.button !== 0) return
@@ -726,7 +726,7 @@ export class MacModal extends BaseElement {
     this._resizeCleanup = onUp
   }
 
-  // ─── Traffic Light Buttons ───
+  // ─── 红绿灯按钮 ───
 
   private _onClose(): void {
     this.emit('mac-modal-close')
@@ -785,105 +785,109 @@ export class MacModal extends BaseElement {
     this.emit('mac-modal-ok')
   }
 
-  // ─── Render ───
+  // ─── 渲染 ───
 
   override render() {
     return html`
       <div class="modal" part="base">
         <div class="titlebar" part="titlebar" @mousedown=${this._onTitleBarMouseDown}>
-          ${this.showButtons
-            ? html`
-                <div class="traffic-lights">
-                  <div
-                    class="traffic-light traffic-light--close"
-                    @click=${this._onClose}
-                    title="关闭"
-                  >
-                    <svg viewBox="0 0 12 12">
-                      <line
-                        x1="3"
-                        y1="3"
-                        x2="9"
-                        y2="9"
-                        stroke="var(--md-modal-traffic-close-stroke)"
-                        stroke-width="1.2"
-                      />
-                      <line
-                        x1="9"
-                        y1="3"
-                        x2="3"
-                        y2="9"
-                        stroke="var(--md-modal-traffic-close-stroke)"
-                        stroke-width="1.2"
-                      />
-                    </svg>
+          ${
+            this.showButtons
+              ? html`
+                  <div class="traffic-lights">
+                    <div
+                      class="traffic-light traffic-light--close"
+                      @click=${this._onClose}
+                      title="关闭"
+                    >
+                      <svg viewBox="0 0 12 12">
+                        <line
+                          x1="3"
+                          y1="3"
+                          x2="9"
+                          y2="9"
+                          stroke="var(--md-modal-traffic-close-stroke)"
+                          stroke-width="1.2"
+                        />
+                        <line
+                          x1="9"
+                          y1="3"
+                          x2="3"
+                          y2="9"
+                          stroke="var(--md-modal-traffic-close-stroke)"
+                          stroke-width="1.2"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="traffic-light traffic-light--minimize"
+                      @click=${this._onMinimize}
+                      title=${this.minimized ? '恢复' : '最小化'}
+                    >
+                      <svg viewBox="0 0 12 12">
+                        <line
+                          x1="3"
+                          y1="6"
+                          x2="9"
+                          y2="6"
+                          stroke="var(--md-modal-traffic-minimize-stroke)"
+                          stroke-width="1.2"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="traffic-light traffic-light--maximize"
+                      @click=${this._onMaximize}
+                      title=${this.maximized ? '恢复' : '全屏'}
+                    >
+                      ${
+                        this.maximized
+                          ? html`
+                              <svg viewBox="0 0 12 12">
+                                <polyline
+                                  points="7.5,2 10,2 10,4.5"
+                                  fill="none"
+                                  stroke="var(--md-modal-traffic-maximize-stroke)"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <polyline
+                                  points="4.5,10 2,10 2,7.5"
+                                  fill="none"
+                                  stroke="var(--md-modal-traffic-maximize-stroke)"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            `
+                          : html`
+                              <svg viewBox="0 0 12 12">
+                                <polyline
+                                  points="4.5,2 2,2 2,4.5"
+                                  fill="none"
+                                  stroke="var(--md-modal-traffic-maximize-stroke)"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <polyline
+                                  points="7.5,10 10,10 10,7.5"
+                                  fill="none"
+                                  stroke="var(--md-modal-traffic-maximize-stroke)"
+                                  stroke-width="1.2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            `
+                      }
+                    </div>
                   </div>
-                  <div
-                    class="traffic-light traffic-light--minimize"
-                    @click=${this._onMinimize}
-                    title=${this.minimized ? '恢复' : '最小化'}
-                  >
-                    <svg viewBox="0 0 12 12">
-                      <line
-                        x1="3"
-                        y1="6"
-                        x2="9"
-                        y2="6"
-                        stroke="var(--md-modal-traffic-minimize-stroke)"
-                        stroke-width="1.2"
-                      />
-                    </svg>
-                  </div>
-                  <div
-                    class="traffic-light traffic-light--maximize"
-                    @click=${this._onMaximize}
-                    title=${this.maximized ? '恢复' : '全屏'}
-                  >
-                    ${this.maximized
-                      ? html`
-                          <svg viewBox="0 0 12 12">
-                            <polyline
-                              points="7.5,2 10,2 10,4.5"
-                              fill="none"
-                              stroke="var(--md-modal-traffic-maximize-stroke)"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <polyline
-                              points="4.5,10 2,10 2,7.5"
-                              fill="none"
-                              stroke="var(--md-modal-traffic-maximize-stroke)"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        `
-                      : html`
-                          <svg viewBox="0 0 12 12">
-                            <polyline
-                              points="4.5,2 2,2 2,4.5"
-                              fill="none"
-                              stroke="var(--md-modal-traffic-maximize-stroke)"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <polyline
-                              points="7.5,10 10,10 10,7.5"
-                              fill="none"
-                              stroke="var(--md-modal-traffic-maximize-stroke)"
-                              stroke-width="1.2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        `}
-                  </div>
-                </div>
-              `
-            : ''}
+                `
+              : ''
+          }
           <div class="title" part="title">${this.title}</div>
           ${this.showButtons ? html`<div class="titlebar-spacer"></div>` : ''}
         </div>
@@ -892,61 +896,65 @@ export class MacModal extends BaseElement {
           <slot></slot>
         </div>
 
-        ${this.showFooter
-          ? html`
-              <div class="footer" part="footer">
-                <slot name="footer">
-                  <div class="footer-actions">
-                    <button class="footer-btn footer-btn--cancel" @click=${this._onCancel}>
-                      取消
-                    </button>
-                    <button class="footer-btn footer-btn--ok" @click=${this._onOk}>确认</button>
-                  </div>
-                </slot>
-              </div>
-            `
-          : ''}
-        ${this.resizable
-          ? html`
-              <div
-                class="resize-n"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('n', e)}
-              ></div>
-              <div
-                class="resize-s"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('s', e)}
-              ></div>
-              <div
-                class="resize-e"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('e', e)}
-              ></div>
-              <div
-                class="resize-w"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('w', e)}
-              ></div>
-              <div
-                class="resize-ne"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('ne', e)}
-              ></div>
-              <div
-                class="resize-nw"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('nw', e)}
-              ></div>
-              <div
-                class="resize-se"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('se', e)}
-              ></div>
-              <div
-                class="resize-sw"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('sw', e)}
-              ></div>
-              <div
-                class="resize-handle"
-                part="resize-handle"
-                @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('se', e)}
-              ></div>
-            `
-          : ''}
+        ${
+          this.showFooter
+            ? html`
+                <div class="footer" part="footer">
+                  <slot name="footer">
+                    <div class="footer-actions">
+                      <button class="footer-btn footer-btn--cancel" @click=${this._onCancel}>
+                        取消
+                      </button>
+                      <button class="footer-btn footer-btn--ok" @click=${this._onOk}>确认</button>
+                    </div>
+                  </slot>
+                </div>
+              `
+            : ''
+        }
+        ${
+          this.resizable
+            ? html`
+                <div
+                  class="resize-n"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('n', e)}
+                ></div>
+                <div
+                  class="resize-s"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('s', e)}
+                ></div>
+                <div
+                  class="resize-e"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('e', e)}
+                ></div>
+                <div
+                  class="resize-w"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('w', e)}
+                ></div>
+                <div
+                  class="resize-ne"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('ne', e)}
+                ></div>
+                <div
+                  class="resize-nw"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('nw', e)}
+                ></div>
+                <div
+                  class="resize-se"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('se', e)}
+                ></div>
+                <div
+                  class="resize-sw"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('sw', e)}
+                ></div>
+                <div
+                  class="resize-handle"
+                  part="resize-handle"
+                  @mousedown=${(e: MouseEvent) => this._onResizeMouseDown('se', e)}
+                ></div>
+              `
+            : ''
+        }
       </div>
     `
   }
