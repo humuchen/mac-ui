@@ -1,5 +1,6 @@
 import { html, css } from 'lit'
 import { property, customElement, state } from 'lit/decorators.js'
+import type { PropertyValues } from 'lit'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
@@ -49,6 +50,8 @@ export class MacMenu extends BaseElement {
   @state() private _submenuOpen: string | null = null
 
   private static _stylesInjected = false
+  private _scrollHandler: ((e: Event) => void) | null = null
+  private _resizeHandler: (() => void) | null = null
 
   /**
    * 在指定位置显示菜单，使用给定的项。
@@ -62,6 +65,7 @@ export class MacMenu extends BaseElement {
     this.y = y
     this.visible = true
     this._createMenu()
+    this._addScrollListener()
     this.emit('mac-menu-open')
   }
 
@@ -70,6 +74,7 @@ export class MacMenu extends BaseElement {
    */
   hide() {
     this.visible = false
+    this._removeScrollListener()
     this._removeMenu()
     this.emit('mac-menu-close')
   }
@@ -96,7 +101,24 @@ export class MacMenu extends BaseElement {
     super.disconnectedCallback()
     document.removeEventListener('mousedown', this._handleDocumentClick)
     document.removeEventListener('keydown', this._handleKeyDown)
+    this._removeScrollListener()
     this._removeMenu()
+  }
+
+  override willUpdate(changedProperties: PropertyValues) {
+    super.willUpdate(changedProperties)
+    // 主题变化时同步更新已打开的 portal
+    if (this._menuEl) {
+      const theme = this._getPortalTheme()
+      const currentTheme = this._menuEl.getAttribute('data-theme')
+      if (theme !== currentTheme) {
+        if (theme) {
+          this._menuEl.setAttribute('data-theme', theme)
+        } else {
+          this._menuEl.removeAttribute('data-theme')
+        }
+      }
+    }
   }
 
   private static _injectStyles() {
@@ -326,6 +348,10 @@ export class MacMenu extends BaseElement {
         color: var(--md-menu-item-active-color);
       }
 
+      .mac-menu-portal[data-theme='dark'] .menu-item.active:hover {
+        background: var(--md-menu-item-dark-active-bg);
+      }
+
       .mac-menu-portal[data-theme='dark'] .menu-item.danger:hover:not(.disabled) {
         background: rgba(255, 59, 48, 0.15);
       }
@@ -384,12 +410,55 @@ export class MacMenu extends BaseElement {
     }
   }
 
+  private _getPortalTheme(): 'light' | 'dark' | undefined {
+    const resolvedTheme = this._resolvedTheme
+    if (resolvedTheme) return resolvedTheme
+
+    const docTheme = document.documentElement.getAttribute('data-theme') as 'light' | 'dark' | null
+    if (docTheme) return docTheme
+
+    const bodyTheme = document.body.getAttribute('data-theme') as 'light' | 'dark' | null
+    if (bodyTheme) return bodyTheme
+
+    return undefined
+  }
+
+  private _addScrollListener() {
+    if (this._scrollHandler) return
+
+    this._scrollHandler = (e: Event) => {
+      if (this.visible && this._menuEl && !this._menuEl.contains(e.target as Node)) {
+        this.hide()
+      }
+    }
+
+    this._resizeHandler = () => {
+      if (this.visible) {
+        this.hide()
+      }
+    }
+
+    window.addEventListener('scroll', this._scrollHandler, true)
+    window.addEventListener('resize', this._resizeHandler)
+  }
+
+  private _removeScrollListener() {
+    if (this._scrollHandler) {
+      window.removeEventListener('scroll', this._scrollHandler, true)
+      this._scrollHandler = null
+    }
+    if (this._resizeHandler) {
+      window.removeEventListener('resize', this._resizeHandler)
+      this._resizeHandler = null
+    }
+  }
+
   private _createMenu() {
     this._removeMenu()
 
     const menu = document.createElement('div')
     menu.className = 'mac-menu-portal open'
-    const theme = this._resolvedTheme
+    const theme = this._getPortalTheme()
     if (theme) {
       menu.setAttribute('data-theme', theme)
     }
