@@ -1012,6 +1012,68 @@ export const themeTokens: CSSResult = css`
     --md-tag-info-border: rgba(107, 114, 128, 0.2);
     --md-tag-info-close-hover-bg: rgba(107, 114, 128, 0.15);
     --md-tag-info-close-hover-color: #374151;
+
+    /* ═══════════════════════════════════════════════════
+       DataTable 数据表格  --{size}-data-table-{part}-{state}
+       ═══════════════════════════════════════════════════ */
+    --md-data-table-container-bg: var(--md-color-bg);
+    --md-data-table-container-border: var(--md-color-border);
+    --md-data-table-container-radius: var(--md-radius-lg);
+    --md-data-table-header-bg: var(--md-color-bg-secondary);
+    --md-data-table-header-color: var(--md-color-text-secondary);
+    --md-data-table-header-font-size: var(--md-font-size-sm);
+    --md-data-table-header-font-weight: 600;
+    --md-data-table-row-bg: transparent;
+    --md-data-table-row-color: var(--md-color-text);
+    --md-data-table-row-font-size: var(--md-font-size-base);
+    --md-data-table-row-hover-bg: rgba(0, 122, 255, 0.05);
+    --md-data-table-row-selected-bg: rgba(0, 122, 255, 0.08);
+    --md-data-table-row-selected-hover-bg: rgba(0, 122, 255, 0.12);
+    --md-data-table-row-striped-bg: rgba(0, 0, 0, 0.02);
+    --md-data-table-row-border: var(--md-glass-separator);
+    --md-data-table-cell-padding: var(--md-spacing-sm) var(--md-spacing-md);
+    --md-data-table-cell-border: var(--md-glass-separator);
+    --md-data-table-cell-color: var(--md-color-text);
+    --md-data-table-footer-bg: var(--md-color-bg-secondary);
+    --md-data-table-footer-border: var(--md-glass-separator);
+    --md-data-table-footer-padding: var(--md-spacing-sm) var(--md-spacing-md);
+    --md-data-table-empty-color: var(--md-color-text-secondary);
+    --md-data-table-empty-font-size: var(--md-font-size-base);
+    --md-data-table-empty-padding: var(--md-spacing-2xl) var(--md-spacing-md);
+    --md-data-table-sort-color: var(--md-color-text-secondary);
+    --md-data-table-sort-active-color: var(--md-color-primary);
+    --md-data-table-sort-hover-color: var(--md-color-text);
+
+    /* sm */
+    --sm-data-table-cell-padding: var(--md-spacing-xs) var(--md-spacing-sm);
+    --sm-data-table-header-font-size: var(--md-font-size-xs);
+    --sm-data-table-row-font-size: var(--md-font-size-sm);
+
+    /* lg */
+    --lg-data-table-cell-padding: var(--md-spacing-md) var(--md-spacing-lg);
+    --lg-data-table-header-font-size: var(--md-font-size-base);
+    --lg-data-table-row-font-size: var(--md-font-size-lg);
+
+    /* pagination */
+    --md-data-table-pagination-padding: var(--md-spacing-sm) var(--md-spacing-md);
+    --md-data-table-pagination-gap: var(--md-spacing-sm);
+    --md-data-table-pagination-color: var(--md-color-text-secondary);
+    --md-data-table-pagination-font-size: var(--md-font-size-sm);
+    --md-data-table-pagination-item-min-width: 32px;
+    --md-data-table-pagination-item-height: 32px;
+    --md-data-table-pagination-item-radius: var(--md-radius-md);
+    --md-data-table-pagination-item-bg: transparent;
+    --md-data-table-pagination-item-border: var(--md-color-border);
+    --md-data-table-pagination-item-color: var(--md-color-text);
+    --md-data-table-pagination-item-hover-bg: rgba(0, 122, 255, 0.06);
+    --md-data-table-pagination-item-hover-border: var(--md-color-primary);
+    --md-data-table-pagination-item-active-bg: var(--md-color-primary);
+    --md-data-table-pagination-item-active-border: var(--md-color-primary);
+    --md-data-table-pagination-item-active-color: #fff;
+    --md-data-table-pagination-item-disabled-opacity: 0.4;
+    --md-data-table-pagination-ellipsis-color: var(--md-color-text-secondary);
+    --md-data-table-pagination-jumper-input-width: 56px;
+    --md-data-table-pagination-size-select-width: 96px;
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -1171,6 +1233,14 @@ export const themeTokens: CSSResult = css`
 
       /* InputNumber —— 与 input 一致 */
       --md-input-number-btn-size: 36px;
+
+      /* DataTable —— 移动端增大触控目标 */
+      --md-data-table-cell-padding: var(--md-spacing-sm) var(--md-spacing-sm);
+      --md-data-table-pagination-item-min-width: 44px;
+      --md-data-table-pagination-item-height: 44px;
+      --md-data-table-pagination-font-size: var(--md-font-size-base);
+      --md-data-table-pagination-jumper-input-width: 64px;
+      --md-data-table-pagination-size-select-width: 110px;
     }
   }
 
@@ -1202,5 +1272,12 @@ export const themeTokens: CSSResult = css`
 
     /* macOS 风格 */
     --md-mac-text-primary: rgba(255, 255, 255, 0.92);
+
+    /* DataTable 暗色模式 */
+    --md-data-table-row-hover-bg: rgba(255, 255, 255, 0.06);
+    --md-data-table-row-selected-bg: rgba(0, 122, 255, 0.16);
+    --md-data-table-row-selected-hover-bg: rgba(0, 122, 255, 0.22);
+    --md-data-table-row-striped-bg: rgba(255, 255, 255, 0.03);
+    --md-data-table-pagination-item-hover-bg: rgba(255, 255, 255, 0.08);
   }
 `

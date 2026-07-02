@@ -52,6 +52,18 @@ export { MacProgress } from './components/progress/mac-progress'
 export type { CircleConfig, GradientConfig } from './components/progress/mac-progress'
 export { MacAlert } from './components/alert/mac-alert'
 export { MacAnimation } from './components/animation/mac-animation'
+export { MacDataTable } from './components/data-table/mac-data-table'
+export type {
+  DataTableColumn,
+  DataTablePagination,
+  DataTableRowSelection,
+  DataTableSortOrder,
+  DataTableSortInfo,
+  DataTableChangeDetail,
+  DataTableSelectDetail,
+  DataTableSortDetail,
+  DataTableRowClickDetail,
+} from './components/data-table/mac-data-table'
 export {
   registerAnimation,
   getAnimation,
