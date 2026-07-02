@@ -81,7 +81,7 @@ export class MacDock extends BaseElement {
       /* ─── 右键菜单（液态玻璃） ─── */
 
       .dock-context-menu {
-        position: fixed;
+        position: absolute;
         z-index: 200;
         min-width: 200px;
         background: var(--md-glass-menu-bg);
@@ -304,8 +304,14 @@ export class MacDock extends BaseElement {
     if (!item) return
 
     this._contextMenuItem = item
-    let x = e.clientX
-    let y = e.clientY
+
+    // 菜单使用 position: absolute，定位包含块为 :host（position: relative）。
+    // 将视口坐标 (clientX/clientY) 转换为 :host 相对坐标，可避免祖先
+    // transform/filter/backdrop-filter 创建包含块导致定位偏移——
+    // getBoundingClientRect() 返回的值已计入任何祖先 transform。
+    const hostRect = this.getBoundingClientRect()
+    let x = e.clientX - hostRect.left
+    let y = e.clientY - hostRect.top
 
     this._contextMenu.classList.add('visible')
 
@@ -314,21 +320,22 @@ export class MacDock extends BaseElement {
     const menuW = menuRect.width
     const menuH = menuRect.height
 
+    // 菜单在视口中的实际边界 = :host 偏移 + 相对坐标
     // 右边溢出
-    if (x + menuW > window.innerWidth) {
-      x = window.innerWidth - menuW - 4
+    if (hostRect.left + x + menuW > window.innerWidth) {
+      x = window.innerWidth - hostRect.left - menuW - 4
     }
     // 左边溢出
-    if (x < 4) {
-      x = 4
+    if (hostRect.left + x < 4) {
+      x = 4 - hostRect.left
     }
-    // 下边溢出
-    if (y + menuH > window.innerHeight) {
+    // 下边溢出：向上翻转
+    if (hostRect.top + y + menuH > window.innerHeight) {
       y = y - menuH
     }
     // 上边溢出
-    if (y < 4) {
-      y = 4
+    if (hostRect.top + y < 4) {
+      y = 4 - hostRect.top
     }
 
     this._contextMenu.style.left = `${x}px`
@@ -657,14 +664,15 @@ export class MacDock extends BaseElement {
         <div class="dock-items" part="items">
           <slot></slot>
         </div>
+      </div>
 
-        <!-- Right-click context menu -->
-        <div class="dock-context-menu">
-          <div class="dock-context-menu-item" @click=${this._onContextMenuOpen}>选项</div>
-          <div class="dock-context-menu-separator"></div>
-          <div class="dock-context-menu-item danger" @click=${this._onContextRemoveFromDock}>
-            从 Dock 中移除
-          </div>
+      <!-- Right-click context menu（作为 :host 直接子节点，以 :host 为定位包含块，
+           避免祖先 transform/filter 使 fixed 定位偏移） -->
+      <div class="dock-context-menu">
+        <div class="dock-context-menu-item" @click=${this._onContextMenuOpen}>选项</div>
+        <div class="dock-context-menu-separator"></div>
+        <div class="dock-context-menu-item danger" @click=${this._onContextRemoveFromDock}>
+          从 Dock 中移除
         </div>
       </div>
     `
