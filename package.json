@@ -30,9 +30,7 @@
   "files": [
     "dist"
   ],
-  "sideEffects": [
-    "./src/components/**/*.ts"
-  ],
+  "sideEffects": false,
   "scripts": {
     "dev": "vite",
     "build": "tsc --project tsconfig.build.json && vite build",
