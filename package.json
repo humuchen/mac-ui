@@ -15,17 +15,16 @@
     "type": "git",
     "url": "https://github.com/humuchen/mac-ui"
   },
-  "main": "./dist/@hy/mac-ui.cjs.js",
-  "module": "./dist/@hy/mac-ui.es.js",
-  "unpkg": "./dist/@hy/mac-ui.umd.js",
-  "types": "./dist/types/@hy/mac-ui.d.ts",
+  "main": "./dist/mac-ui.cjs.js",
+  "module": "./dist/mac-ui.es.js",
+  "unpkg": "./dist/mac-ui.umd.js",
+  "types": "./dist/types/mac-ui.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/@hy/mac-ui.d.ts",
-      "import": "./dist/@hy/mac-ui.es.js",
-      "require": "./dist/@hy/mac-ui.cjs.js"
-    },
-    "./styles/*": "./dist/@hy/styles/*"
+      "types": "./dist/types/mac-ui.d.ts",
+      "import": "./dist/mac-ui.es.js",
+      "require": "./dist/mac-ui.cjs.js"
+    }
   },
   "files": [
     "dist"

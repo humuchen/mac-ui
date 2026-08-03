@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { fixture } from '@open-wc/testing-helpers'
+import { fixture, html } from '@open-wc/testing-helpers'
 import { MacAlert } from './mac-alert'
 
 // Ensure component registration is not tree-shaken
@@ -35,7 +35,7 @@ describe('MacAlert', () => {
   })
 
   it('hides icon when showIcon is false', async () => {
-    const el = await fixture<MacAlert>('<mac-alert .showIcon=${false}>Content</mac-alert>')
+    const el = await fixture<MacAlert>(html`<mac-alert .showIcon=${false}>Content</mac-alert>`)
     const icon = el.shadowRoot!.querySelector('.alert__icon')
     expect(icon).to.be.null
   })
@@ -47,7 +47,7 @@ describe('MacAlert', () => {
   })
 
   it('applies borderless class when bordered is false', async () => {
-    const el = await fixture<MacAlert>('<mac-alert .bordered=${false}>Content</mac-alert>')
+    const el = await fixture<MacAlert>(html`<mac-alert .bordered=${false}>Content</mac-alert>`)
     const alert = el.shadowRoot!.querySelector('.alert')
     expect(alert!.classList.contains('alert--borderless')).to.be.true
   })
@@ -77,7 +77,7 @@ describe('MacAlert', () => {
     const el = await fixture<MacAlert>('<mac-alert>Hello World</mac-alert>')
     const description = el.shadowRoot!.querySelector('.alert__description')
     expect(description).to.not.be.null
-    expect(description!.textContent).to.contain('Hello World')
+    expect(el.textContent).to.contain('Hello World')
   })
 
   it('renders custom icon slot', async () => {

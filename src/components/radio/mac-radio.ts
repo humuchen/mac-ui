@@ -185,6 +185,8 @@ export class MacRadio extends BaseElement {
   }
 
   private _findGroup(): MacRadioGroup | null {
+    // Walk the light-DOM ancestry; the element itself is the starting node.
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let el: Element | null = this
     while (el) {
       if (el.tagName.toLowerCase() === 'mac-radio-group') {
