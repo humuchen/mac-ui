@@ -10,11 +10,11 @@
 ## Installation
 
 ```bash
-npm install mac-ui
+npm install @hy/mac-ui
 # or
-pnpm add mac-ui
+pnpm add @hy/mac-ui
 # or
-yarn add mac-ui
+yarn add @hy/mac-ui
 ```
 
 Peer dependency: `lit@^3.0.0`
@@ -24,13 +24,13 @@ Peer dependency: `lit@^3.0.0`
 ### Import All Components
 
 ```js
-import 'mac-ui'
+import '@hy/mac-ui'
 ```
 
 ### Import Specific Components
 
 ```js
-import 'mac-ui/dist/mac-ui.es.js'
+import '@hy/mac-ui'
 ```
 
 ### Use in HTML
@@ -50,7 +50,7 @@ import 'mac-ui/dist/mac-ui.es.js'
 ### Use in TypeScript
 
 ```ts
-import { MacButton, MacCard, MacInput } from 'mac-ui'
+import { MacButton, MacCard, MacInput } from '@hy/mac-ui'
 ```
 
 ## Components

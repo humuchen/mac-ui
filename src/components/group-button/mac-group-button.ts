@@ -258,7 +258,7 @@ export class MacGroupButton extends BaseElement {
   private _handleKeyDown(event: KeyboardEvent, item: GroupButtonItem, index: number) {
     if (this.disabled) return
 
-    let newIndex = index
+    let newIndex: number
 
     switch (event.key) {
       case 'ArrowLeft':

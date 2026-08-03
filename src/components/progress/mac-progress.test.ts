@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { fixture } from '@open-wc/testing-helpers'
+import { fixture, html } from '@open-wc/testing-helpers'
 import { MacProgress } from './mac-progress'
 
 // Ensure component registration is not tree-shaken
@@ -47,7 +47,7 @@ describe('MacProgress', () => {
 
   it('hides percentage text when showText is false', async () => {
     const el = await fixture<MacProgress>(
-      '<mac-progress percentage="42" .showText=${false}></mac-progress>',
+      html`<mac-progress percentage="42" .showText=${false}></mac-progress>`,
     )
     const text = el.shadowRoot!.querySelector('[part="text"]')
     expect(text).to.be.null
@@ -112,7 +112,10 @@ describe('MacProgress', () => {
      ═══════════════════════════════════════════════════ */
   it('renders multiple circles when circles prop is set', async () => {
     const el = await fixture<MacProgress>(
-      '<mac-progress type="circle" .circles=${[{percentage: 80}, {percentage: 60}]}></mac-progress>',
+      html`<mac-progress
+        type="circle"
+        .circles=${[{ percentage: 80 }, { percentage: 60 }]}
+      ></mac-progress>`,
     )
     const circles = el.shadowRoot!.querySelectorAll('.progress-circle__fill')
     expect(circles.length).to.be.at.least(2)
@@ -123,7 +126,10 @@ describe('MacProgress', () => {
      ═══════════════════════════════════════════════════ */
   it('renders line progress with gradient', async () => {
     const el = await fixture<MacProgress>(
-      '<mac-progress percentage="50" .gradient=${{from: "#3b82f6", to: "#22c55e"}}></mac-progress>',
+      html`<mac-progress
+        percentage="50"
+        .gradient=${{ from: '#3b82f6', to: '#22c55e' }}
+      ></mac-progress>`,
     )
     const fill = el.shadowRoot!.querySelector('.progress-line__fill') as HTMLElement
     expect(fill.style.background).to.include('linear-gradient')
@@ -131,7 +137,11 @@ describe('MacProgress', () => {
 
   it('renders circle progress with gradient', async () => {
     const el = await fixture<MacProgress>(
-      '<mac-progress type="circle" percentage="50" .gradient=${{from: "#3b82f6", to: "#22c55e"}}></mac-progress>',
+      html`<mac-progress
+        type="circle"
+        percentage="50"
+        .gradient=${{ from: '#3b82f6', to: '#22c55e' }}
+      ></mac-progress>`,
     )
     const defs = el.shadowRoot!.querySelector('defs')
     expect(defs).to.not.be.null

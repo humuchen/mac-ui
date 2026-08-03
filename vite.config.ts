@@ -4,6 +4,8 @@ import { resolve } from 'path'
 export default defineConfig({
   plugins: [],
   build: {
+    // TypeScript declarations are emitted to dist before Vite runs. Keep them.
+    emptyOutDir: false,
     lib: {
       entry: resolve(__dirname, 'src/mac-ui.ts'),
       name: 'mac-ui',

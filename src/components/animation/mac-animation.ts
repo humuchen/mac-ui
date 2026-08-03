@@ -52,7 +52,7 @@ export class MacAnimation extends BaseElement {
   @property({ reflect: true }) type = 'fadeIn'
 
   /** 动画时长，如 '1s' / '500ms' */
-  @property() duration = '250ms'
+  @property() duration = '1s'
 
   /** 延迟时间 */
   @property() delay = '0s'

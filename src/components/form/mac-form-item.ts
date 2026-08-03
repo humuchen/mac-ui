@@ -187,6 +187,8 @@ export class MacFormItem extends BaseElement {
   }
 
   private _findForm(): MacForm | undefined {
+    // Walk the light-DOM ancestry; the element itself is the starting node.
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let el: Element | null = this
     while (el) {
       if (el.tagName.toLowerCase() === 'mac-form') {
@@ -495,21 +497,27 @@ export class MacFormItem extends BaseElement {
 
     return html`
       <div part="base" class="form-item ${isTop ? 'form-item--top' : ''}">
-        ${this._showLabel && this.label
-          ? html`
-              <label part="label" class="form-item__label form-item__label--${labelAlign}">
-                ${this.required || this._resolvedRules.some((r) => r.required)
-                  ? html`<span class="required">*</span>`
-                  : nothing}
-                ${this.label}
-              </label>
-            `
-          : nothing}
+        ${
+          this._showLabel && this.label
+            ? html`
+                <label part="label" class="form-item__label form-item__label--${labelAlign}">
+                  ${
+                    this.required || this._resolvedRules.some((r) => r.required)
+                      ? html`<span class="required">*</span>`
+                      : nothing
+                  }
+                  ${this.label}
+                </label>
+              `
+            : nothing
+        }
         <div part="content" class="form-item__content">
           <slot></slot>
-          ${this._showFeedback && this._errorMessage
-            ? html`<div part="error" class="form-item__error">${this._errorMessage}</div>`
-            : nothing}
+          ${
+            this._showFeedback && this._errorMessage
+              ? html`<div part="error" class="form-item__error">${this._errorMessage}</div>`
+              : nothing
+          }
         </div>
       </div>
     `
