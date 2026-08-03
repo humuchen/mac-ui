@@ -3,6 +3,7 @@ import { property, customElement, state, query } from 'lit/decorators.js'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
+import { booleanAttribute } from '../../internal/property-converters'
 
 /**
  * @tag mac-carousel-item
@@ -317,7 +318,7 @@ export class MacCarousel extends BaseElement {
   @property({ type: Number }) interval = 5000
 
   /** 是否循环播放。 */
-  @property({ type: Boolean }) loop = true
+  @property({ converter: booleanAttribute }) loop = true
 
   /** 滑动方向。 */
   @property({ reflect: true }) direction: 'horizontal' | 'vertical' = 'horizontal'
@@ -329,10 +330,10 @@ export class MacCarousel extends BaseElement {
   @property({ type: Number, attribute: 'slides-per-view', reflect: true }) slidesPerView = 1
 
   /** 是否显示导航箭头。 */
-  @property({ type: Boolean, attribute: 'show-arrow' }) showArrow = true
+  @property({ converter: booleanAttribute, attribute: 'show-arrow' }) showArrow = true
 
   /** 是否显示指示器圆点。 */
-  @property({ type: Boolean, attribute: 'show-dots' }) showDots = true
+  @property({ converter: booleanAttribute, attribute: 'show-dots' }) showDots = true
 
   /** 指示器圆点样式。 */
   @property({ attribute: 'dot-type' }) dotType: 'dot' | 'line' = 'dot'
@@ -520,7 +521,7 @@ export class MacCarousel extends BaseElement {
     })
   }
 
-  private _goTo(index: number, fromUser = false) {
+  private _goTo(index: number, _fromUser = false) {
     const count = this._slideCount
     if (count <= 0) return
 
@@ -533,7 +534,8 @@ export class MacCarousel extends BaseElement {
     }
 
     const fromIndex = this._resolvedIndex
-    if (target === fromIndex && !fromUser) return
+    // At either end in non-looping mode, navigation is a no-op.
+    if (target === fromIndex) return
 
     if (!this._isControlled) {
       this._activeIndex = target

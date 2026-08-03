@@ -496,9 +496,13 @@ export class MacDescriptions extends BaseElement {
                   </td>
                 `,
               )}
-              ${row.length < colCount
-                ? html`<td colspan=${colCount - row.reduce((s, r) => s + r.effectiveSpan, 0)}></td>`
-                : nothing}
+              ${
+                row.length < colCount
+                  ? html`<td
+                      colspan=${colCount - row.reduce((s, r) => s + r.effectiveSpan, 0)}
+                    ></td>`
+                  : nothing
+              }
             </tr>
             <tr>
               ${row.map(
@@ -512,9 +516,13 @@ export class MacDescriptions extends BaseElement {
                   </td>
                 `,
               )}
-              ${row.length < colCount
-                ? html`<td colspan=${colCount - row.reduce((s, r) => s + r.effectiveSpan, 0)}></td>`
-                : nothing}
+              ${
+                row.length < colCount
+                  ? html`<td
+                      colspan=${colCount - row.reduce((s, r) => s + r.effectiveSpan, 0)}
+                    ></td>`
+                  : nothing
+              }
             </tr>
           `,
         )}

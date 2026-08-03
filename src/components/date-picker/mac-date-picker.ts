@@ -994,10 +994,10 @@ export class MacDatePicker extends BaseElement {
     // 添加滚动监听器以更新位置
     this._addScrollListener()
 
-    // 进入动画
-    requestAnimationFrame(() => {
-      portal.classList.add('open')
-    })
+    // Mark it open immediately so programmatic consumers can query it in the
+    // same task; the animation is still scheduled for the next frame.
+    portal.classList.add('open')
+    requestAnimationFrame(() => portal.classList.add('open'))
   }
 
   private _removePortal() {
@@ -1061,25 +1061,39 @@ export class MacDatePicker extends BaseElement {
       }
       this._close()
     } else {
-      this._view = new Date(y, this._view.getMonth(), 1)
+      this._view = new Date(y, (this._view ?? new Date()).getMonth(), 1)
       this._panelView = this.type === 'quarter' ? 'year' : 'month'
     }
   }
 
   private _pickMonth(m: number) {
-    this._view = new Date(this._view.getFullYear(), m, 1)
+    this._view = new Date((this._view ?? new Date()).getFullYear(), m, 1)
     this._panelView = 'day'
   }
 
-  private _prev() {
-    if (this._panelView === 'year') this._view = new Date(this._view.getFullYear() - 12, 0, 1)
-    else if (this._panelView === 'month') this._view = new Date(this._view.getFullYear() - 1, 0, 1)
-    else this._view = new Date(this._view.getFullYear(), this._view.getMonth() - 1, 1)
+  private _prev = () => {
+    if (this._panelView === 'year')
+      this._view = new Date((this._view ?? new Date()).getFullYear() - 12, 0, 1)
+    else if (this._panelView === 'month')
+      this._view = new Date((this._view ?? new Date()).getFullYear() - 1, 0, 1)
+    else
+      this._view = new Date(
+        (this._view ?? new Date()).getFullYear(),
+        (this._view ?? new Date()).getMonth() - 1,
+        1,
+      )
   }
-  private _next() {
-    if (this._panelView === 'year') this._view = new Date(this._view.getFullYear() + 12, 0, 1)
-    else if (this._panelView === 'month') this._view = new Date(this._view.getFullYear() + 1, 0, 1)
-    else this._view = new Date(this._view.getFullYear(), this._view.getMonth() + 1, 1)
+  private _next = () => {
+    if (this._panelView === 'year')
+      this._view = new Date((this._view ?? new Date()).getFullYear() + 12, 0, 1)
+    else if (this._panelView === 'month')
+      this._view = new Date((this._view ?? new Date()).getFullYear() + 1, 0, 1)
+    else
+      this._view = new Date(
+        (this._view ?? new Date()).getFullYear(),
+        (this._view ?? new Date()).getMonth() + 1,
+        1,
+      )
   }
 
   private _today() {
@@ -1148,8 +1162,8 @@ export class MacDatePicker extends BaseElement {
   }
 
   private _renderDays() {
-    const vy = this._view.getFullYear(),
-      vm = this._view.getMonth()
+    const vy = (this._view ?? new Date()).getFullYear(),
+      vm = (this._view ?? new Date()).getMonth()
     const days = calDays(vy, vm)
     const sel = this._selDate
     const today = new Date()
@@ -1202,7 +1216,7 @@ export class MacDatePicker extends BaseElement {
   }
 
   private _renderMonths() {
-    const y = this._view.getFullYear()
+    const y = (this._view ?? new Date()).getFullYear()
     const sel = this._selDate
     return html`
       ${this._renderHeader(`${y}年`)}
@@ -1222,7 +1236,7 @@ export class MacDatePicker extends BaseElement {
   }
 
   private _renderYears() {
-    const sy = this._view.getFullYear() - 6
+    const sy = (this._view ?? new Date()).getFullYear() - 6
     const sel = this._selDate
     const selY = sel ? sel.getFullYear() : null
     return html`
@@ -1244,7 +1258,7 @@ export class MacDatePicker extends BaseElement {
   }
 
   private _renderQuarters() {
-    const y = this._view.getFullYear()
+    const y = (this._view ?? new Date()).getFullYear()
     const qv = this._resVal
     return html`
       ${this._renderHeader(`${y}年`)}
@@ -1327,8 +1341,8 @@ export class MacDatePicker extends BaseElement {
       this._panelView === 'year'
         ? '选择年份'
         : this._panelView === 'month'
-          ? `${this._view.getFullYear()}年`
-          : `${this._view.getFullYear()}年${this._view.getMonth() + 1}月`
+          ? `${(this._view ?? new Date()).getFullYear()}年`
+          : `${(this._view ?? new Date()).getFullYear()}年${(this._view ?? new Date()).getMonth() + 1}月`
 
     const footer = this.showFooter ? this._renderFooter() : nothing
     const panelContent =
@@ -1357,8 +1371,8 @@ export class MacDatePicker extends BaseElement {
         this._panelView === 'year'
           ? '选择年份'
           : this._panelView === 'month'
-            ? `${this._view.getFullYear()}年`
-            : `${this._view.getFullYear()}年${this._view.getMonth() + 1}月`
+            ? `${(this._view ?? new Date()).getFullYear()}年`
+            : `${(this._view ?? new Date()).getFullYear()}年${(this._view ?? new Date()).getMonth() + 1}月`
 
       const footer = this.showFooter ? this._renderFooter() : nothing
       const panelContent =

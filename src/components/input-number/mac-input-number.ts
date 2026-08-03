@@ -3,6 +3,7 @@ import { property, customElement, state, query } from 'lit/decorators.js'
 import { BaseElement } from '../../internal/base-element'
 import { sharedStyles } from '../../styles/shared-styles'
 import { themeTokens } from '../../styles/theme'
+import { booleanAttribute } from '../../internal/property-converters'
 
 /**
  * @tag mac-input-number
@@ -378,7 +379,7 @@ export class MacInputNumber extends BaseElement {
   @property({ type: Boolean }) readonly = false
 
   /** 显示步进按钮。 */
-  @property({ type: Boolean, attribute: 'show-button' }) showButton = true
+  @property({ converter: booleanAttribute, attribute: 'show-button' }) showButton = true
 
   /** 按钮位置。 */
   @property({ attribute: 'button-placement' }) buttonPlacement: 'inside' | 'outside' = 'inside'
@@ -471,6 +472,10 @@ export class MacInputNumber extends BaseElement {
 
   private _setValue(val: number | undefined) {
     if (this._isControlled) {
+      // Update the local value immediately as well as notifying the owner.
+      // This keeps imperative actions such as clear usable before the next
+      // controlled-model update arrives.
+      this.value = val
       this.emit('mac-input-number', { detail: { value: val } })
     } else {
       this.defaultValue = val

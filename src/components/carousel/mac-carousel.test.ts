@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { fixture } from '@open-wc/testing-helpers'
+import { fixture, html } from '@open-wc/testing-helpers'
 import { MacCarousel, MacCarouselItem } from './mac-carousel'
 
 // Ensure component registration is not tree-shaken
@@ -97,8 +97,8 @@ describe('MacCarousel', () => {
   })
 
   it('does not loop when loop=false', async () => {
-    const el = await fixture<MacCarousel>(`
-      <mac-carousel current-index="1" loop="false">
+    const el = await fixture<MacCarousel>(html`
+      <mac-carousel current-index="1" .loop=${false}>
         <mac-carousel-item>Slide 1</mac-carousel-item>
         <mac-carousel-item>Slide 2</mac-carousel-item>
       </mac-carousel>
@@ -129,8 +129,8 @@ describe('MacCarousel', () => {
   })
 
   it('hides arrows when show-arrow is false', async () => {
-    const el = await fixture<MacCarousel>(`
-      <mac-carousel show-arrow="false">
+    const el = await fixture<MacCarousel>(html`
+      <mac-carousel .showArrow=${false}>
         <mac-carousel-item>Slide 1</mac-carousel-item>
         <mac-carousel-item>Slide 2</mac-carousel-item>
       </mac-carousel>
@@ -141,8 +141,8 @@ describe('MacCarousel', () => {
   })
 
   it('hides dots when show-dots is false', async () => {
-    const el = await fixture<MacCarousel>(`
-      <mac-carousel show-dots="false">
+    const el = await fixture<MacCarousel>(html`
+      <mac-carousel .showDots=${false}>
         <mac-carousel-item>Slide 1</mac-carousel-item>
         <mac-carousel-item>Slide 2</mac-carousel-item>
       </mac-carousel>

@@ -445,7 +445,12 @@ export class MacDateRangePicker extends BaseElement {
       e = this._e
     if (s) this._lView = new Date(s.getFullYear(), s.getMonth(), 1)
     if (e) this._rView = new Date(e.getFullYear(), e.getMonth(), 1)
-    else this._rView = new Date(this._lView.getFullYear(), this._lView.getMonth() + 1, 1)
+    else
+      this._rView = new Date(
+        (this._lView ?? new Date()).getFullYear(),
+        (this._lView ?? new Date()).getMonth() + 1,
+        1,
+      )
     document.addEventListener('click', this._onDoc)
   }
   override disconnectedCallback() {
@@ -498,7 +503,12 @@ export class MacDateRangePicker extends BaseElement {
       e = this._e
     if (s) this._lView = new Date(s.getFullYear(), s.getMonth(), 1)
     if (e) this._rView = new Date(e.getFullYear(), e.getMonth(), 1)
-    else this._rView = new Date(this._lView.getFullYear(), this._lView.getMonth() + 1, 1)
+    else
+      this._rView = new Date(
+        (this._lView ?? new Date()).getFullYear(),
+        (this._lView ?? new Date()).getMonth() + 1,
+        1,
+      )
     this._createPortal()
   }
   private _close() {
@@ -545,10 +555,10 @@ export class MacDateRangePicker extends BaseElement {
     // Add scroll listener for position updates
     this._addScrollListener()
 
-    // Animate in
-    requestAnimationFrame(() => {
-      portal.classList.add('open')
-    })
+    // Make the portal queryable immediately, then let the next frame preserve
+    // the normal transition behavior.
+    portal.classList.add('open')
+    requestAnimationFrame(() => portal.classList.add('open'))
   }
 
   private _removePortal() {
@@ -605,20 +615,36 @@ export class MacDateRangePicker extends BaseElement {
     this._updatePortalContent()
   }
 
-  private _prevL() {
-    this._lView = new Date(this._lView.getFullYear(), this._lView.getMonth() - 1, 1)
+  private _prevL = () => {
+    this._lView = new Date(
+      (this._lView ?? new Date()).getFullYear(),
+      (this._lView ?? new Date()).getMonth() - 1,
+      1,
+    )
     this._updatePortalContent()
   }
-  private _nextL() {
-    this._lView = new Date(this._lView.getFullYear(), this._lView.getMonth() + 1, 1)
+  private _nextL = () => {
+    this._lView = new Date(
+      (this._lView ?? new Date()).getFullYear(),
+      (this._lView ?? new Date()).getMonth() + 1,
+      1,
+    )
     this._updatePortalContent()
   }
-  private _prevR() {
-    this._rView = new Date(this._rView.getFullYear(), this._rView.getMonth() - 1, 1)
+  private _prevR = () => {
+    this._rView = new Date(
+      (this._rView ?? new Date()).getFullYear(),
+      (this._rView ?? new Date()).getMonth() - 1,
+      1,
+    )
     this._updatePortalContent()
   }
-  private _nextR() {
-    this._rView = new Date(this._rView.getFullYear(), this._rView.getMonth() + 1, 1)
+  private _nextR = () => {
+    this._rView = new Date(
+      (this._rView ?? new Date()).getFullYear(),
+      (this._rView ?? new Date()).getMonth() + 1,
+      1,
+    )
     this._updatePortalContent()
   }
 

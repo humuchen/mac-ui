@@ -1198,10 +1198,10 @@ export class MacSelect extends BaseElement {
                         const opt = this._getAllOptions().find((o) => o.value === this.value)
                         return html`
                           ${
-                          opt?.icon
-                            ? html`<span class="select-option-icon">${opt.icon}</span>`
-                            : nothing
-                        }
+                            opt?.icon
+                              ? html`<span class="select-option-icon">${opt.icon}</span>`
+                              : nothing
+                          }
                           <span class="select-value-text">${displayValue}</span>
                         `
                       })()}

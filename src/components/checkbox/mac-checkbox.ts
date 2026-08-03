@@ -210,6 +210,8 @@ export class MacCheckbox extends BaseElement {
   }
 
   private _findGroup(): MacCheckboxGroup | null {
+    // Walk the light-DOM ancestry; the element itself is the starting node.
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let el: Element | null = this
     while (el) {
       if (el.tagName.toLowerCase() === 'mac-checkbox-group') {

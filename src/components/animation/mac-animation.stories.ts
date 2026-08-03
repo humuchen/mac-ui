@@ -348,8 +348,7 @@ registerAnimation({
 })
 
 // 注册后即可使用
-&lt;mac-animation type=<b>"myGlow"</b>&gt;...&lt;/mac-animation&gt;</pre
-        >
+&lt;mac-animation type=<b>"myGlow"</b>&gt;...&lt;/mac-animation&gt;</pre>
       </div>
     `
   },
