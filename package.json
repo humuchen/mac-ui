@@ -1,5 +1,5 @@
 {
-  "name": "@hy/mac-ui",
+  "name": "@humuchen/mac-ui",
   "version": "0.0.1",
   "type": "module",
   "description": "A modern web component library built with Lit",
@@ -15,16 +15,17 @@
     "type": "git",
     "url": "https://github.com/humuchen/mac-ui"
   },
-  "main": "./dist/mac-ui.cjs.js",
-  "module": "./dist/mac-ui.es.js",
-  "unpkg": "./dist/mac-ui.umd.js",
-  "types": "./dist/types/mac-ui.d.ts",
+  "main": "./dist/@humuchen/mac-ui.cjs.js",
+  "module": "./dist/@humuchen/mac-ui.es.js",
+  "unpkg": "./dist/@humuchen/mac-ui.umd.js",
+  "types": "./dist/types/@humuchen/mac-ui.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/mac-ui.d.ts",
-      "import": "./dist/mac-ui.es.js",
-      "require": "./dist/mac-ui.cjs.js"
-    }
+      "types": "./dist/types/@humuchen/mac-ui.d.ts",
+      "import": "./dist/@humuchen/mac-ui.es.js",
+      "require": "./dist/@humuchen/mac-ui.cjs.js"
+    },
+    "./styles/*": "./dist/@humuchen/styles/*"
   },
   "files": [
     "dist"
