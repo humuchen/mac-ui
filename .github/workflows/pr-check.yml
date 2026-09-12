@@ -1,11 +1,11 @@
-name: Publish to npm
+name: PR Check
 
 on:
-  release:
-    types: [published] # 当你发布 GitHub Release 时触发，也可以改为 push
+  pull_request:
+    branches: [main, master]
 
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,10 +26,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Type check
+        run: pnpm run type-check
+
+      - name: Lint check
+        run: pnpm run lint
+
+      - name: Run tests
+        run: pnpm run test
+
       - name: Build package
         run: pnpm run build
-
-      - name: Publish Package
-        run: pnpm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # 自动注入 Token 认证

@@ -3,8 +3,13 @@
   "compilerOptions": {
     "noEmit": false,
     "declaration": true,
-    "declarationDir": "./dist/types",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
+    "declarationDir": "./dist/types",
     "rootDir": "./src"
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts"],

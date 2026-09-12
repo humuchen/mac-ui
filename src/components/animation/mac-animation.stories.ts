@@ -47,7 +47,7 @@ const meta: Meta = {
 
 **2. 样式类模式** —— 直接使用 \`.mac-anim-{name}\` 类，或通过 \`buildAnimationShorthand()\` 生成 inline 样式：
 \`\`\`ts
-import { animationStyleSheet, buildAnimationShorthand } from '@hy/mac-ui'
+import { animationStyleSheet, buildAnimationShorthand } from '@humuchen/mac-ui'
 // 将 animationStyleSheet 注入到你的样式作用域后：
 // <div class="mac-anim-bounceIn" style="animation-duration: 0.8s"></div>
 // 或动态生成：
@@ -338,7 +338,7 @@ export const CustomAnimation: Story = {
           <div class="cust-box"></div>
         </mac-animation>
         <pre class="cust-code">
-import { registerAnimation } from '@hy/mac-ui'
+import { registerAnimation } from '@humuchen/mac-ui'
 
 registerAnimation({
   name: <b>'myGlow'</b>,

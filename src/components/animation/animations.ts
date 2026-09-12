@@ -234,7 +234,7 @@ export const builtInKeyframes: CSSResult = css([
  *
  * 使用方式（在任意自定义元素中 adoptedStyleSheets 或 css`` 拼接）：
  * ```ts
- * import { animationStyleSheet } from '@hy/mac-ui'
+ * import { animationStyleSheet } from '@humuchen/mac-ui'
  * ```
  * 也可直接在普通 HTML 中通过 `<style>` 注入 `animationStyleSheet.cssText`。
  */
