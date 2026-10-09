@@ -432,6 +432,9 @@ export class MacDatePicker extends BaseElement {
       :host([data-theme='dark']) .panel-nav-btn:hover {
         background: rgba(255, 255, 255, 0.08);
       }
+      :host([data-theme='dark']) .panel-header-title:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
       :host([data-theme='dark']) .day--today {
         background: var(--md-color-primary);
       }
@@ -853,6 +856,9 @@ export class MacDatePicker extends BaseElement {
         border-color: var(--md-color-border);
       }
       .mac-date-picker-portal[data-theme='dark'] .panel-nav-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .mac-date-picker-portal[data-theme='dark'] .panel-header-title:hover {
         background: rgba(255, 255, 255, 0.08);
       }
       .mac-date-picker-portal[data-theme='dark'] .day--today {

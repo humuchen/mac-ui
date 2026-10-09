@@ -329,6 +329,10 @@ export class MacTabs extends BaseElement {
         --md-tabs-segment-item-hover-bg: rgba(255, 255, 255, 0.08);
       }
 
+      :host([data-theme='dark'][type='card']) .tab-item {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
       :host([data-theme='light']) {
         --md-tabs-nav-border: var(--md-glass-separator);
         --md-tabs-item-color: var(--md-color-text-secondary);

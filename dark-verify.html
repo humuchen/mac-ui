@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mac UI - DarkMode 全组件验证</title>
+    <script type="module" src="/src/mac-ui.ts"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+        background: #16161a;
+        color: #e0e0e0;
+        min-height: 100vh;
+        padding: 24px;
+      }
+      .page-title { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+      .page-sub { font-size: 13px; color: #8e8ea0; margin-bottom: 24px; }
+      section {
+        margin-bottom: 28px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      section > h2 { font-size: 15px; color: #6db2ff; margin-bottom: 12px; font-weight: 600; }
+      .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 10px; }
+      .row:last-child { margin-bottom: 0; }
+      .col { display: flex; flex-direction: column; gap: 12px; }
+      .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .light-compare {
+        background: #f5f5f7;
+        border-radius: 8px;
+        padding: 12px;
+        color: #1d1d1f;
+      }
+      .light-compare > h3 { font-size: 13px; margin-bottom: 8px; color: #555; }
+      mac-data-table { width: 100%; }
+      .demo-box { border-radius: 12px; background: linear-gradient(135deg, #0a84ff, #bf5af2); color: #fff; display: flex; align-items: center; justify-content: center; }
+      /* 让浮层组件的触发器有稳定快照容器 */
+      .overlay-hosts { display: flex; flex-wrap: wrap; gap: 16px; }
+    </style>
+  </head>
+  <body>
+    <div class="page-title">DarkMode 全组件验证</div>
+    <p class="page-sub">所有组件均处于 mac-config-provider theme="dark" 环境下</p>
+
+    <mac-config-provider theme="dark">
+
+      <!-- 1. Button -->
+      <section id="s-button">
+        <h2>1. Button 按钮</h2>
+        <div class="row">
+          <mac-button>默认</mac-button>
+          <mac-button variant="primary">主要</mac-button>
+          <mac-button variant="secondary">次要</mac-button>
+          <mac-button variant="text">文字</mac-button>
+          <mac-button variant="danger">危险</mac-button>
+          <mac-button disabled>禁用</mac-button>
+          <mac-button loading>加载中</mac-button>
+        </div>
+        <div class="row">
+          <mac-button size="sm">小</mac-button>
+          <mac-button size="md">中</mac-button>
+          <mac-button size="lg">大</mac-button>
+          <mac-button block>块级按钮</mac-button>
+        </div>
+      </section>
+
+      <!-- 2. Input / InputNumber -->
+      <section id="s-input">
+        <h2>2. Input 输入框 / InputNumber 数字输入</h2>
+        <div class="grid2">
+          <div class="col">
+            <mac-input placeholder="默认输入框"></mac-input>
+            <mac-input variant="filled" placeholder="filled 输入框"></mac-input>
+            <mac-input variant="glass" placeholder="glass 输入框"></mac-input>
+            <mac-input variant="underline" placeholder="underline 输入框"></mac-input>
+            <mac-input status="error" placeholder="错误状态"></mac-input>
+            <mac-input status="success" placeholder="成功状态"></mac-input>
+            <mac-input disabled placeholder="禁用状态"></mac-input>
+            <mac-input clearable value="可清空内容"></mac-input>
+          </div>
+          <div class="col">
+            <mac-input-number value="5" style="width: 180px"></mac-input-number>
+            <mac-input-number value="5" buttons="outside" style="width: 180px"></mac-input-number>
+            <mac-input-number value="5" disabled style="width: 180px"></mac-input-number>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Select / TreeSelect / DynamicTags -->
+      <section id="s-select">
+        <h2>3. Select 选择器 / TreeSelect / DynamicTags</h2>
+        <div class="row">
+          <mac-select id="sel1" placeholder="单选" style="width: 200px"></mac-select>
+          <mac-select id="sel2" multiple placeholder="多选" style="width: 240px"></mac-select>
+          <mac-tree-select id="tsel1" placeholder="树选择" style="width: 200px"></mac-tree-select>
+          <mac-dynamic-tags id="dtags1"></mac-dynamic-tags>
+        </div>
+      </section>
+
+      <!-- 4. Radio / Checkbox / GroupButton -->
+      <section id="s-choice">
+        <h2>4. Radio / Checkbox / GroupButton</h2>
+        <div class="row">
+          <mac-radio-group id="rg1"></mac-radio-group>
+          <mac-checkbox-group id="cg1"></mac-checkbox-group>
+        </div>
+        <div class="row">
+          <mac-radio label="单个单选" checked></mac-radio>
+          <mac-checkbox label="单个复选" checked></mac-checkbox>
+          <mac-group-button id="gb1"></mac-group-button>
+        </div>
+      </section>
+
+      <!-- 5. DatePicker / DateRangePicker -->
+      <section id="s-date">
+        <h2>5. DatePicker / DateRangePicker</h2>
+        <div class="row">
+          <mac-date-picker id="dp1" placeholder="选择日期" style="width: 220px"></mac-date-picker>
+          <mac-date-range-picker id="drp1" start-placeholder="开始日期" end-placeholder="结束日期" style="width: 320px"></mac-date-range-picker>
+        </div>
+      </section>
+
+      <!-- 6. DataTable（重点：分页下拉框） -->
+      <section id="s-table">
+        <h2>6. DataTable 数据表格（分页 + size changer + 快速跳页 + 选择）</h2>
+        <mac-data-table id="table1"></mac-data-table>
+        <div class="light-compare" style="margin-top: 12px">
+          <h3>Light 对照（同配置）</h3>
+          <mac-data-table id="table2" theme="light"></mac-data-table>
+        </div>
+      </section>
+
+      <!-- 7. Alert / Tag -->
+      <section id="s-alert-tag">
+        <h2>7. Alert 警示 / Tag 标签（全部语义色）</h2>
+        <div class="col">
+          <mac-alert type="default" title="默认提示" description="这是一段默认说明文字" show-icon closable></mac-alert>
+          <mac-alert type="primary" title="主要提示" description="这是一段主要说明文字" show-icon closable></mac-alert>
+          <mac-alert type="success" title="成功提示" description="操作已成功完成" show-icon closable></mac-alert>
+          <mac-alert type="warning" title="警告提示" description="请注意潜在的风险" show-icon closable></mac-alert>
+          <mac-alert type="error" title="错误提示" description="操作失败，请重试" show-icon closable></mac-alert>
+          <mac-alert type="info" title="信息提示" description="这是一条中性信息" show-icon closable></mac-alert>
+        </div>
+        <div class="row" style="margin-top: 12px">
+          <mac-tag>默认</mac-tag>
+          <mac-tag type="primary">主要</mac-tag>
+          <mac-tag type="success">成功</mac-tag>
+          <mac-tag type="warning">警告</mac-tag>
+          <mac-tag type="danger">危险</mac-tag>
+          <mac-tag type="info">信息</mac-tag>
+          <mac-tag type="primary" closable>可关闭</mac-tag>
+          <mac-tag type="success" round>圆角</mac-tag>
+        </div>
+      </section>
+
+      <!-- 8. Card -->
+      <section id="s-card">
+        <h2>8. Card 卡片（全部变体）</h2>
+        <div class="grid2">
+          <div class="col">
+            <mac-card variant="default" header="默认卡片" footer="页脚">
+              <div style="padding: 8px">默认变体内容</div>
+            </mac-card>
+            <mac-card variant="elevated" header="阴影卡片">
+              <div style="padding: 8px">elevated 变体内容</div>
+            </mac-card>
+          </div>
+          <div class="col">
+            <mac-card variant="outlined" header="描边卡片">
+              <div style="padding: 8px">outlined 变体内容</div>
+            </mac-card>
+            <mac-card variant="gradient" header="渐变卡片">
+              <div style="padding: 8px">gradient 变体内容</div>
+            </mac-card>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. Tabs / Descriptions -->
+      <section id="s-tabs">
+        <h2>9. Tabs（line / card / segment）/ Descriptions</h2>
+        <mac-tabs id="tabs1"></mac-tabs>
+        <mac-tabs id="tabs2" type="card" style="margin-top: 12px"></mac-tabs>
+        <mac-tabs id="tabs3" type="segment" style="margin-top: 12px"></mac-tabs>
+        <mac-descriptions id="desc1" title="描述列表" style="margin-top: 12px"></mac-descriptions>
+      </section>
+
+      <!-- 10. Progress / Rating / NumberAnimation -->
+      <section id="s-progress">
+        <h2>10. Progress / Rating / NumberAnimation / TextEllipsis</h2>
+        <div class="col">
+          <mac-progress percent="70"></mac-progress>
+          <mac-progress percent="45" status="success"></mac-progress>
+          <mac-progress percent="85" status="error"></mac-progress>
+          <div class="row">
+            <mac-progress type="circle" percent="70" style="width: 90px"></mac-progress>
+            <mac-rating value="3"></mac-rating>
+            <mac-number-animation from="0" to="1024"></mac-number-animation>
+            <mac-text-ellipsis line-clamp="2" tooltip style="max-width: 240px">这是一段很长的文本用于测试文本省略组件在暗色模式下的展示效果，展开后可以查看全部内容。</mac-text-ellipsis>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. Tree -->
+      <section id="s-tree">
+        <h2>11. Tree 树</h2>
+        <mac-tree id="tree1" style="max-width: 320px"></mac-tree>
+      </section>
+
+      <!-- 12. Menu / Dropdown（浮层交互） -->
+      <section id="s-menu">
+        <h2>12. Menu / Dropdown（点击展开验证浮层）</h2>
+        <div class="overlay-hosts">
+          <mac-menu id="menu1" style="width: 220px"></mac-menu>
+          <mac-dropdown id="dd1">
+            <mac-button slot="trigger">下拉菜单 ▾</mac-button>
+          </mac-dropdown>
+          <mac-popconfirm id="pc1" title="确定删除吗？" description="删除后不可恢复">
+            <mac-button slot="trigger" variant="danger">Popconfirm</mac-button>
+          </mac-popconfirm>
+        </div>
+      </section>
+
+      <!-- 13. Carousel / LazyImage -->
+      <section id="s-carousel">
+        <h2>13. Carousel / LazyImage</h2>
+        <div class="row" style="align-items: flex-start">
+          <mac-carousel id="car1" style="width: 360px; height: 180px"></mac-carousel>
+          <mac-lazy-image id="img1" style="width: 240px; height: 180px"></mac-lazy-image>
+        </div>
+      </section>
+
+      <!-- 14. Split / InfiniteScroll / Animation -->
+      <section id="s-misc">
+        <h2>14. Split / InfiniteScroll / Animation</h2>
+        <mac-split id="split1" style="height: 140px"></mac-split>
+        <div class="row" style="margin-top: 12px">
+          <mac-infinite-scroll id="is1" style="width: 280px"><div style="padding: 8px">滚动内容区域</div></mac-infinite-scroll>
+          <mac-animation type="bounce" iteration-count="infinite" style="display:inline-block"><div class="demo-box" style="width: 64px; height: 64px; border-radius: 12px;">动画</div></mac-animation>
+        </div>
+      </section>
+
+      <!-- 15. Dock / DesktopIcon -->
+      <section id="s-dock" style="padding-bottom: 60px">
+        <h2>15. Dock / DesktopIcon</h2>
+        <mac-dock id="dock1"></mac-dock>
+        <div class="row" style="margin-top: 12px">
+          <mac-desktop-icon id="dicon1" label="文件夹"><div class="demo-box" style="width: 56px; height: 56px; border-radius: 14px; font-size: 26px;">📂</div></mac-desktop-icon>
+        </div>
+      </section>
+    </mac-config-provider>
+
+    <!-- 16. Modal / Drawer / Confirm（浮层，脚本触发） -->
+    <section id="s-overlay">
+      <h2>16. Modal / Drawer / Confirm（浮层暗色验证）</h2>
+      <div class="row">
+        <mac-button id="btn-modal">显示 Modal</mac-button>
+        <mac-button id="btn-drawer">打开 Drawer</mac-button>
+        <mac-button id="btn-confirm">打开 Confirm</mac-button>
+      </div>
+    </section>
+
+    <script type="module">
+      const $ = (id) => document.getElementById(id)
+
+      // Select
+      $('sel1').options = [
+        { label: '苹果', value: 'apple' },
+        { label: '香蕉', value: 'banana' },
+        { label: '樱桃', value: 'cherry' },
+      ]
+      $('sel1').value = 'apple'
+      $('sel2').options = $('sel1').options
+      $('sel2').value = ['apple', 'banana']
+
+      // TreeSelect
+      $('tsel1').options = [
+        {
+          label: '华东',
+          value: 'east',
+          children: [
+            { label: '上海', value: 'sh' },
+            { label: '杭州', value: 'hz' },
+          ],
+        },
+        { label: '华南', value: 'south', children: [{ label: '广州', value: 'gz' }] },
+      ]
+
+      // DynamicTags
+      $('dtags1').value = ['标签一', '标签二']
+
+      // Radio / Checkbox / GroupButton
+      $('rg1').options = [
+        { label: '选项一', value: 'a' },
+        { label: '选项二', value: 'b' },
+      ]
+      $('rg1').value = 'a'
+      $('cg1').options = [
+        { label: '苹果', value: 'apple' },
+        { label: '香蕉', value: 'banana' },
+        { label: '禁用项', value: 'c', disabled: true },
+      ]
+      $('cg1').value = ['apple']
+      $('gb1').items = [
+        { label: '日', value: 'day' },
+        { label: '周', value: 'week' },
+        { label: '月', value: 'month' },
+      ]
+      $('gb1').value = 'week'
+
+      // DataTable
+      const makeData = (n) =>
+        Array.from({ length: n }, (_, i) => ({
+          id: i + 1,
+          name: `用户 ${i + 1}`,
+          age: 20 + (i % 30),
+          city: ['北京', '上海', '广州', '深圳'][i % 4],
+          status: ['活跃', '休眠', '注销'][i % 3],
+        }))
+      const columns = [
+        { key: 'id', title: 'ID', width: 60 },
+        { key: 'name', title: '姓名' },
+        { key: 'age', title: '年龄', sortable: true, sorter: (a, b) => a.age - b.age },
+        { key: 'city', title: '城市' },
+        { key: 'status', title: '状态' },
+      ]
+      const pagination = {
+        total: 95,
+        showSizeChanger: true,
+        showQuickJumper: true,
+        showTotal: true,
+      }
+      for (const id of ['table1', 'table2']) {
+        const t = $(id)
+        t.columns = columns
+        t.data = makeData(95)
+        t.rowKey = 'id'
+        t.pagination = pagination
+        t.rowSelection = { type: 'checkbox' }
+        t.striped = true
+      }
+
+      // Tabs
+      const tabItems = [
+        { label: '标签一', value: 'a' },
+        { label: '标签二', value: 'b' },
+        { label: '标签三', value: 'c' },
+      ]
+      for (const id of ['tabs1', 'tabs2', 'tabs3']) {
+        const t = $(id)
+        t.items = tabItems
+        t.value = 'a'
+        const pane = document.createElement('mac-tab-pane')
+        t.appendChild(pane)
+      }
+
+      // Descriptions
+      $('desc1').items = [
+        { label: '用户名', value: 'huyang' },
+        { label: '邮箱', value: 'huyang@example.com' },
+        { label: '城市', value: '上海' },
+        { label: '状态', value: '活跃' },
+      ]
+
+      // Menu
+      $('menu1').items = [
+        { label: '文件', value: 'file', children: [
+          { label: '新建', value: 'new', shortcut: '⌘N' },
+          { label: '打开', value: 'open', shortcut: '⌘O' },
+        ] },
+        { label: '编辑', value: 'edit' },
+        { label: '视图', value: 'view' },
+      ]
+
+      // Dropdown
+      $('dd1').items = [
+        { label: '复制', value: 'copy', shortcut: '⌘C' },
+        { label: '粘贴', value: 'paste', shortcut: '⌘V' },
+        { type: 'separator' },
+        { label: '删除', value: 'delete', danger: true },
+      ]
+
+      // Tree
+      $('tree1').data = [
+        {
+          label: '一级 1',
+          key: '1',
+          children: [
+            { label: '二级 1-1', key: '1-1' },
+            { label: '二级 1-2', key: '1-2', children: [{ label: '三级 1-2-1', key: '1-2-1' }] },
+          ],
+        },
+        { label: '一级 2', key: '2', children: [{ label: '二级 2-1', key: '2-1' }] },
+        { label: '一级 3（禁用）', key: '3', disabled: true },
+      ]
+      $('tree1').expandedKeys = ['1']
+      $('tree1').checkable = true
+      $('tree1').showLine = true
+
+      // Carousel / LazyImage
+      const px = (c, t) =>
+        'data:image/svg+xml;utf8,' +
+        encodeURIComponent(
+          `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200"><rect width="400" height="200" fill="${c}"/><text x="200" y="105" font-size="28" fill="#fff" text-anchor="middle" font-family="sans-serif">${t}</text></svg>`,
+        )
+      $('car1').autoplay = false
+      const ci = document.createElement('mac-carousel-item')
+      ci.innerHTML = `<img src="${px('#0a84ff', '1')}" style="width:100%;height:100%;object-fit:cover">`
+      const ci2 = document.createElement('mac-carousel-item')
+      ci2.innerHTML = `<img src="${px('#bf5af2', '2')}" style="width:100%;height:100%;object-fit:cover">`
+      $('car1').append(ci, ci2)
+      $('img1').src = px('#30d158', 'Lazy')
+
+      // Split
+      const sp = $('split1')
+      const left = document.createElement('mac-split-pane')
+      left.slot = 'left'
+      left.innerHTML = '<div style="padding:12px">左侧面板</div>'
+      const right = document.createElement('mac-split-pane')
+      right.slot = 'right'
+      right.innerHTML = '<div style="padding:12px">右侧面板</div>'
+      sp.append(left, right)
+
+      // InfiniteScroll
+      $('is1').loadMoreText = '加载更多…'
+      $('is1').noMoreText = '没有更多了'
+      $('is1').loading = false
+
+      // Dock（slot 容器 + mac-dock-item）
+      const dock = $('dock1')
+      const dockApps = [
+        { label: '访达', color: '#0a84ff', glyph: '🗂' },
+        { label: '邮件', color: '#30d158', glyph: '✉️' },
+        { label: '照片', color: '#bf5af2', glyph: '🌄' },
+        { label: '音乐', color: '#ff9f0a', glyph: '🎵' },
+      ]
+      for (const app of dockApps) {
+        const item = document.createElement('mac-dock-item')
+        item.setAttribute('item-id', app.label)
+        item.setAttribute('label', app.label)
+        item.setAttribute('color', app.color)
+        item.innerHTML = `<div class="demo-box" style="width:48px;height:48px;border-radius:12px;font-size:24px;background:${app.color}">${app.glyph}</div>`
+        dock.appendChild(item)
+      }
+
+      // Modal（active 控制显示，窗口式浮层）
+      const modal = document.createElement('mac-modal')
+      modal.title = '暗色模态框'
+      modal.active = false
+      modal.x = 120
+      modal.y = 120
+      modal.innerHTML = '<div style="padding:8px">这是暗色模式下的模态框内容。</div>'
+      document.body.appendChild(modal)
+      $('btn-modal').addEventListener('click', () => {
+        modal.active = true
+      })
+
+      // Drawer
+      const drawer = document.createElement('mac-drawer')
+      drawer.setAttribute('title', '暗色抽屉')
+      drawer.innerHTML = '<div style="padding:8px">这是暗色模式下的抽屉内容。</div>'
+      document.body.appendChild(drawer)
+      $('btn-drawer').addEventListener('click', () => {
+        drawer.setAttribute('open', '')
+      })
+
+      // Confirm（静态方法）
+      $('btn-confirm').addEventListener('click', async () => {
+        const { MacConfirm } = await import('/src/components/confirm/mac-confirm.ts')
+        MacConfirm.open({ title: '暗色确认框', message: '确定要执行此操作吗？' })
+      })
+
+      window.__ready = true
+    </script>
+  </body>
+</html>

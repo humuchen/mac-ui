@@ -578,6 +578,19 @@ export class MacDataTable extends BaseElement {
         --md-data-table-pagination-color: rgba(255, 255, 255, 0.55);
       }
 
+      /* 暗色模式：分页原生 select / option / input 适配
+         （color-scheme: dark 由主题 token 提供，此处补齐显式背景，
+          避免 Windows 浏览器原生下拉弹出层保持白色） */
+      :host([data-theme='dark']) .pg-size select,
+      :host([data-theme='dark']) .pg-jumper input,
+      :host([data-theme='dark']) .pg-simple-input {
+        background: rgba(255, 255, 255, 0.06);
+      }
+      :host([data-theme='dark']) .pg-size select option {
+        background: #2c2c2e;
+        color: rgba(255, 255, 255, 0.92);
+      }
+
       /* ─── Mobile ─── */
       @media (max-width: 768px) {
         .pagination {

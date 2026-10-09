@@ -213,6 +213,7 @@ export class MacTree extends BaseElement {
 
       /* 深色模式 */
       :host([data-theme='dark']) .tree-toggle:hover {
+        background: rgba(255, 255, 255, 0.08);
         color: var(--md-color-text);
       }
 

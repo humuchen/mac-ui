@@ -11,6 +11,9 @@ import { css, CSSResult } from 'lit'
  */
 export const themeTokens: CSSResult = css`
   :host {
+    /* 原生表单控件（select 弹出层、input、滚动条等）跟随组件主题渲染 */
+    color-scheme: light;
+
     /* ═══════════════════════════════════════════════════
        基础颜色  --{size}-color-{part}-{state}
        ═══════════════════════════════════════════════════ */
@@ -1259,6 +1262,9 @@ export const themeTokens: CSSResult = css`
   }
 
   :host([data-theme='dark']) {
+    /* 原生表单控件（select 弹出层、input、滚动条等）跟随组件主题渲染 */
+    color-scheme: dark;
+
     /* 基础颜色 */
     --md-color-text: rgba(255, 255, 255, 0.92);
     --md-color-text-secondary: rgba(255, 255, 255, 0.55);
@@ -1279,5 +1285,90 @@ export const themeTokens: CSSResult = css`
     --md-data-table-row-selected-hover-bg: rgba(0, 122, 255, 0.22);
     --md-data-table-row-striped-bg: rgba(255, 255, 255, 0.03);
     --md-data-table-pagination-item-hover-bg: rgba(255, 255, 255, 0.08);
+
+    /* Alert 暗色模式 */
+    --md-alert-close-hover-bg: rgba(255, 255, 255, 0.1);
+    --md-alert-default-bg: rgba(255, 255, 255, 0.05);
+    --md-alert-default-border: rgba(255, 255, 255, 0.1);
+    --md-alert-default-icon: rgba(255, 255, 255, 0.55);
+    --md-alert-default-title: rgba(255, 255, 255, 0.92);
+    --md-alert-default-content: rgba(255, 255, 255, 0.6);
+
+    --md-alert-primary-bg: rgba(0, 122, 255, 0.14);
+    --md-alert-primary-border: rgba(0, 122, 255, 0.4);
+    --md-alert-primary-icon: #0a84ff;
+    --md-alert-primary-title: #6db2ff;
+    --md-alert-primary-content: #8ec4ff;
+
+    --md-alert-success-bg: rgba(34, 197, 94, 0.12);
+    --md-alert-success-border: rgba(34, 197, 94, 0.4);
+    --md-alert-success-icon: #30d158;
+    --md-alert-success-title: #5dd879;
+    --md-alert-success-content: #7ee2a0;
+
+    --md-alert-warning-bg: rgba(245, 158, 11, 0.12);
+    --md-alert-warning-border: rgba(245, 158, 11, 0.4);
+    --md-alert-warning-icon: #ffb340;
+    --md-alert-warning-title: #ffc76b;
+    --md-alert-warning-content: #ffd694;
+
+    --md-alert-error-bg: rgba(239, 68, 68, 0.12);
+    --md-alert-error-border: rgba(239, 68, 68, 0.4);
+    --md-alert-error-icon: #ff6b6b;
+    --md-alert-error-title: #ff8a8a;
+    --md-alert-error-content: #ffabab;
+
+    --md-alert-info-bg: rgba(142, 142, 147, 0.12);
+    --md-alert-info-border: rgba(142, 142, 147, 0.3);
+    --md-alert-info-icon: #a1a1aa;
+    --md-alert-info-title: #c7c7cc;
+    --md-alert-info-content: #d1d1d6;
+
+    /* Tag 暗色模式 */
+    --md-tag-default-bg: rgba(255, 255, 255, 0.08);
+    --md-tag-default-text: rgba(255, 255, 255, 0.85);
+    --md-tag-default-border: rgba(255, 255, 255, 0.15);
+    --md-tag-default-close-hover-bg: rgba(255, 255, 255, 0.12);
+    --md-tag-default-close-hover-color: rgba(255, 255, 255, 0.9);
+
+    --md-tag-primary-bg: rgba(0, 122, 255, 0.22);
+    --md-tag-primary-text: #6db2ff;
+    --md-tag-primary-border: rgba(0, 122, 255, 0.4);
+    --md-tag-primary-close-hover-bg: rgba(0, 122, 255, 0.3);
+    --md-tag-primary-close-hover-color: #8ec4ff;
+
+    --md-tag-success-bg: rgba(34, 197, 94, 0.18);
+    --md-tag-success-text: #5dd879;
+    --md-tag-success-border: rgba(34, 197, 94, 0.4);
+    --md-tag-success-close-hover-bg: rgba(34, 197, 94, 0.28);
+    --md-tag-success-close-hover-color: #7ee2a0;
+
+    --md-tag-warning-bg: rgba(245, 158, 11, 0.18);
+    --md-tag-warning-text: #ffc76b;
+    --md-tag-warning-border: rgba(245, 158, 11, 0.4);
+    --md-tag-warning-close-hover-bg: rgba(245, 158, 11, 0.28);
+    --md-tag-warning-close-hover-color: #ffd694;
+
+    --md-tag-danger-bg: rgba(239, 68, 68, 0.18);
+    --md-tag-danger-text: #ff8a8a;
+    --md-tag-danger-border: rgba(239, 68, 68, 0.4);
+    --md-tag-danger-close-hover-bg: rgba(239, 68, 68, 0.28);
+    --md-tag-danger-close-hover-color: #ffabab;
+
+    --md-tag-info-bg: rgba(142, 142, 147, 0.18);
+    --md-tag-info-text: #c7c7cc;
+    --md-tag-info-border: rgba(142, 142, 147, 0.35);
+    --md-tag-info-close-hover-bg: rgba(142, 142, 147, 0.28);
+    --md-tag-info-close-hover-color: #d1d1d6;
+
+    /* Carousel 暗色模式 */
+    --md-carousel-arrow-bg: rgba(60, 60, 60, 0.72);
+    --md-carousel-arrow-color: rgba(255, 255, 255, 0.92);
+    --md-carousel-arrow-hover-bg: rgba(90, 90, 90, 0.85);
+
+    /* Tree 暗色模式 */
+    --md-tree-node-hover-bg: rgba(255, 255, 255, 0.06);
+    --md-tree-node-selected-bg: rgba(0, 122, 255, 0.2);
+    --md-tree-node-selected-hover-bg: rgba(0, 122, 255, 0.28);
   }
 `

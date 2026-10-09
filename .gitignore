@@ -29,3 +29,4 @@ storybook-static
 .npmrc
 .package-lock.json
 .skills/
+.workbuddy/*
