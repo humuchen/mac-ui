@@ -9,7 +9,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/mac-ui.ts'),
       name: 'mac-ui',
-      formats: ['es', 'cjs', 'umd'],
+      formats: ['es', 'umd'],
       fileName: (format) => `mac-ui.${format}.js`,
     },
     rollupOptions: {
